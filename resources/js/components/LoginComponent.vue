@@ -10,8 +10,20 @@
                      <v-row>
                         <v-col cols="12" md="8">
                           <v-card-text class="mt-12">
-                            <h1 class="text-center display-2 teal--text text--accent-3">Sign in to OSCS</h1>
-                            <div class="text-center pb-2 mt-4">
+                             
+                               
+                            <div class="text-center pb-4 mt-4">
+                            
+                                 <v-btn class="mx-2" fab  >
+                                 <v-img
+                                    src="http://parsu-oscs.herokuapp.com/img/profile/picture.jpg"
+                                    alt="Vuetify"  
+                                    width="100px" 
+                                ></v-img>
+                              </v-btn>
+                            </div>
+                            <h1 class="text-center display-2 teal--text text--accent-4">Sign in to OSCS</h1>
+                            <!-- <div class="text-center pb-2 mt-4">
                               <v-btn class="mx-2" fab  >
                                 <v-icon>mdi mdi-facebook</v-icon>
                               </v-btn>
@@ -21,19 +33,20 @@
                               <v-btn class="mx-2" fab  >
                                 <v-icon>mdi mdi-linkedin</v-icon>
                               </v-btn> 
-                            </div>
+                            </div> -->
                             
-                            <h4 class="text-center mt-4">Ensure your email for registration</h4>
+                            <h4 class="text-center mt-4">Ensure your email for sign in</h4>
                             <v-form>
                               <v-text-field
                               label="Email"
                               name="Email"
                               prepend-icon="mdi-email"
                               type="text"
-                              color="teal accent-3" />
+                              color="teal accent-4" />
                               <v-text-field 
                               :type="showPassword ? 'text' : 'password'" 
                               label="Password"
+                              color="teal accent-4"
                               prepend-icon="mdi-account-lock-outline"
                               :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
                               @click:append="showPassword = !showPassword"
@@ -41,48 +54,118 @@
                             </v-form>
                             <h3 class="text-center mt-3">Forgot your password?</h3>
                           </v-card-text>
-                          <div class="text-center mt-3">
+                          <div class="text-center mt-3 pb-3">
                             <v-btn rounded color="blue accent-3" dark>SIGN IN</v-btn>
                           </div>
                         </v-col>
-                        <v-col cols="12" md="4" class="teal accent-3">
-                          <v-card-text class="whitee--text mt-12">
+                        <v-col cols="12" md="4" class="teal accent-4">
+                          <v-card-text class="white--text mt-12">
                             <h1 class="text-center display-1">Hello, Friends !</h1>
                             <h5 class="text-center">Enter your activation code and start journey with us</h5>
                           </v-card-text>
                           <div class="text-center">
-                            <v-btn rounded outlined="" dark @click="step++">SIGN UP</v-btn>
+                            <v-btn rounded outlined="" dark @click="step++">ACTIVATE ACCOUNT</v-btn>
                           </div> 
                         </v-col>
                       </v-row>                                  
                   </v-window-item> 
                   <v-window-item :value="2">
                       <v-row class="fill-height">
-                        <v-col cols="12" md="4" class="teal accent-3">
+                        <v-col cols="12" md="4" class="teal accent-4">
                           <v-card-text class="white--text mt-12">
                             <h1 class="text-center display-1">Welcome Back!</h1>
-                            <h5 class="text-center">To Keep connected with us please activate your account with your activation code</h5>
+                            <h5 class="text-center">To Keep connected with us please please login with your personal info</h5>
                           </v-card-text>
                           <div class="text-center">
-                            <v-btn rounded outlined dark @click="step--">SIGN IN</v-btn>
+                            <v-btn rounded outlined dark @click="step--">BACK</v-btn>
                           </div>
                         </v-col>
                         <v-col cols="12" md="8">
                           <v-card-text class="mt-12">
-                            <h1 class="text-center desplay-2 teal--text text--accent3">Activate Account</h1>
-                             <div class="text-center pb-2 mt-4">
-                              <v-btn class="mx-2" fab  >
-                                <v-icon>mdi mdi-facebook</v-icon>
-                              </v-btn>
-                              <v-btn class="mx-2" fab  >
-                                <v-icon>mdi mdi-google-plus</v-icon>
-                              </v-btn>
-                              <v-btn class="mx-2" fab  >
-                                <v-icon>mdi mdi-linkedin</v-icon>
-                              </v-btn> 
-                            </div>
+                            <h1 class="text-center desplay-2 teal--text text--accent4">Activate Account</h1>
+                            
                             <h4 class="text-center mt-4">Ensure your activation code for activation</h4> 
+                            <v-form>
+                               <v-text-field
+                              label="Activation Code"
+                              name="ActivationCode"
+                              prepend-icon="mdi-account-details"
+                              type="text"
+                              color="teal accent-4" />
+                            </v-form>
                           </v-card-text>
+                          <div class="text-center mt-3 pb-3">
+                            <v-btn rounded color="blue accent-3" dark @click="step++">ACTIVATE</v-btn>
+                          </div>
+                        </v-col>
+                      </v-row>
+                  </v-window-item>
+                  <v-window-item :value="3">
+                      <v-row class="fill-height">
+                        <v-col cols="12" md="4" class="teal accent-4">
+                          <v-card-text class="white--text mt-12">
+                            <h1 class="text-center display-1">Welcome Back!</h1>
+                            <h5 class="text-center">To Keep connected with us please please login with your personal info</h5>
+                          </v-card-text>
+                          <div class="text-center">
+                            <v-btn rounded outlined dark @click="step--"> SIGN IN</v-btn>
+                          </div>
+                        </v-col>
+                        <v-col cols="12" md="8">
+                          <v-card-text class="mt-12">
+                            <h1 class="text-center desplay-2 teal--text text--accent4">Register Account</h1>
+                            
+                            <h4 class="text-center mt-4">Ensure your email for registration</h4> 
+                            <v-form>
+                               <v-text-field
+                              label="Student ID Number"
+                              name="ActivationCode"
+                              prepend-icon="mdi-ticket-account"
+                              type="text"
+                              color="teal accent-4" 
+                              disabled/>
+                                <v-text-field
+                              label="Name"
+                              name="name"
+                              prepend-icon="mdi-account"
+                              type="text"
+                              color="teal accent-4" 
+                              disabled/>
+                                <v-text-field
+                              label="Program"
+                              name="program"
+                              prepend-icon="mdi-clipboard-list-outline"
+                              type="text"
+                              color="teal accent-4" 
+                              disabled/>
+                                 <v-text-field
+                              label="Email"
+                              name="Email"
+                              prepend-icon="mdi-email"
+                              type="text"
+                              color="teal accent-4" />
+                              <v-text-field 
+                              :type="showPassword ? 'text' : 'password'" 
+                              label="Password"
+                              color="teal accent-4"
+                              prepend-icon="mdi-account-lock-outline"
+                              :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                              @click:append="showPassword = !showPassword"
+                              />
+                              <v-text-field 
+                                :type="showPasswordc ? 'text' : 'password'" 
+                                label="Confirm Password"
+                                color="teal accent-4"
+                                prepend-icon="mdi-account-lock-outline"
+                                :append-icon="showPasswordc ? 'mdi-eye' : 'mdi-eye-off'"
+                                @click:append="showPasswordc = !showPasswordc"
+                              />
+                                
+                            </v-form>
+                          </v-card-text>
+                          <div class="text-center mt-3 pb-3">
+                            <v-btn rounded color="blue accent-3" dark>REGISTER</v-btn>
+                          </div>
                         </v-col>
                       </v-row>
                   </v-window-item>
@@ -98,11 +181,15 @@
 <script>
 export default {
  data: () => ({
-   step: 1
+   step: 1,
+   showPassword: false,
+   showPasswordc: false,
  }),
  props: {
    source: String
- }
+ },
+ name: 'App',
+  
 }
 </script>
 
