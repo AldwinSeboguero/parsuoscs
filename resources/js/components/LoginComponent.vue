@@ -12,17 +12,17 @@
                           <v-card-text class="mt-12">
                              
                                
-                            <div class="text-center pb-4 mt-4">
+                            <div class="text-center pb-5 mt-4">
                             
-                                 <v-btn class="mx-2" fab  >
+                                 <v-btn class="mx-2 pb-5" icon >
                                  <v-img
                                     src="http://parsu-oscs.herokuapp.com/img/profile/picture.jpg"
-                                    alt="Vuetify"  
+                                    alt="Parsu"  
                                     width="100px" 
                                 ></v-img>
                               </v-btn>
                             </div>
-                            <h1 class="text-center display-2 teal--text text--accent-4">Sign in to OSCS</h1>
+                            <h1 class="text-center display-2 primary--text text--accent-4">Sign in to OSCS</h1>
                             <!-- <div class="text-center pb-2 mt-4">
                               <v-btn class="mx-2" fab  >
                                 <v-icon>mdi mdi-facebook</v-icon>
@@ -58,7 +58,7 @@
                             <v-btn rounded color="blue accent-3" dark>SIGN IN</v-btn>
                           </div>
                         </v-col>
-                        <v-col cols="12" md="4" class="teal accent-4">
+                        <v-col cols="12" md="4" class="primary accent-4">
                           <v-card-text class="white--text mt-12">
                             <h1 class="text-center display-1">Hello, Friends !</h1>
                             <h5 class="text-center">Enter your activation code and start journey with us</h5>
@@ -71,7 +71,7 @@
                   </v-window-item> 
                   <v-window-item :value="2">
                       <v-row class="fill-height">
-                        <v-col cols="12" md="4" class="teal accent-4">
+                        <v-col cols="12" md="4" class="primary accent-4">
                           <v-card-text class="white--text mt-12">
                             <h1 class="text-center display-1">Welcome Back!</h1>
                             <h5 class="text-center">To Keep connected with us please please login with your personal info</h5>
@@ -82,7 +82,7 @@
                         </v-col>
                         <v-col cols="12" md="8">
                           <v-card-text class="mt-12">
-                            <h1 class="text-center desplay-2 teal--text text--accent4">Activate Account</h1>
+                            <h1 class="text-center desplay-2 primary--text text--accent4">Activate Account</h1>
                             
                             <h4 class="text-center mt-4">Ensure your activation code for activation</h4> 
                             <v-form>
@@ -102,18 +102,18 @@
                   </v-window-item>
                   <v-window-item :value="3">
                       <v-row class="fill-height">
-                        <v-col cols="12" md="4" class="teal accent-4">
+                        <v-col cols="12" md="4" class="primary accent-4">
                           <v-card-text class="white--text mt-12">
                             <h1 class="text-center display-1">Welcome Back!</h1>
                             <h5 class="text-center">To Keep connected with us please please login with your personal info</h5>
                           </v-card-text>
                           <div class="text-center">
-                            <v-btn rounded outlined dark @click="step--"> SIGN IN</v-btn>
+                            <v-btn rounded outlined dark @click="step=1"> SIGN IN</v-btn>
                           </div>
                         </v-col>
                         <v-col cols="12" md="8">
                           <v-card-text class="mt-12">
-                            <h1 class="text-center desplay-2 teal--text text--accent4">Register Account</h1>
+                            <h1 class="text-center desplay-2 primary--text text--accent4">Register Account</h1>
                             
                             <h4 class="text-center mt-4">Ensure your email for registration</h4> 
                             <v-form>

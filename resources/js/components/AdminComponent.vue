@@ -2,7 +2,7 @@
   <v-app id="inspire">
     <v-navigation-drawer
       v-model="drawer"
-      :clipped="$vuetify.breakpoint.lgAndUp"
+      :clipped="$vuetify.breakpoint.lgAndUp" 
       app
       > 
           
@@ -93,8 +93,9 @@
     <v-app-bar
       :clipped-left="$vuetify.breakpoint.lgAndUp"
       app
-      color="teal accent-4"
+      color="primary accent-4"
       dark
+       src="https://cdn.vuetifyjs.com/images/backgrounds/bg-2.jpg"
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <!-- <v-avatar
@@ -137,6 +138,7 @@
     <v-main>
       <v-container fluid> 
        <router-view></router-view>
+      
       </v-container>
       <v-footer
         dark
@@ -150,13 +152,35 @@
         >
           <v-card-text>
             <v-btn
-              v-for="icon in icons"
-              :key="icon"
               class="mx-4 black--text"
               icon
             >
               <v-icon size="24px">
-                {{ icon }}
+                mdi-web
+              </v-icon>
+            </v-btn>
+            <v-btn
+              class="mx-4 black--text"
+              icon
+            >
+              <v-icon size="24px">
+                mdi-facebook
+              </v-icon>
+            </v-btn>
+            <v-btn
+              class="mx-4 black--text"
+              icon
+            >
+              <v-icon size="24px">
+                mdi-twitter
+              </v-icon>
+            </v-btn>
+            <v-btn
+              class="mx-4 black--text"
+              icon
+            >
+              <v-icon size="24px">
+                mdi-youtube
               </v-icon>
             </v-btn>
           </v-card-text>
@@ -186,6 +210,7 @@
       dialog: false,
       drawer: null,
       items: [
+        { icon: 'mdi-view-dashboard', text: 'Dashboard', link : '/admin/dashboard' },
         { icon: 'mdi-account-multiple', text: 'Student List', link : '/admin/student/list' },
             {
           icon: 'mdi-chevron-up',
@@ -210,16 +235,7 @@
         { icon: 'mdi-cog', text: 'Settings', link : '/admin/settings'  },
         { icon: 'mdi-logout', text: 'Logout' ,link : '/login'},
      
-      ],
-      icons: [
-        'mdi-web',
-        'mdi-facebook',
-        'mdi-twitter',
-        'mdi-youtube',
-        
-      ],
-     
-    
+      ], 
     }),
    
     

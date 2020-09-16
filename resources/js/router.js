@@ -3,6 +3,8 @@ import VueRouter from 'vue-router';
 import LoginComponent from './components/LoginComponent';
 import AdminComponent from './components/AdminComponent';
 //Admin Import Component
+import AdminDashboardComponent from './components/admin/DashboardComponent';
+import AdminDashboardComponentt from './components/admin/DashboardComponentt';
 import StudentListComponent from './components/StudentListComponent';
 import CollegesComponent from './components/admin/CollegesComponent';
 import GraduationsComponent from './components/admin/GraduationsComponent';
@@ -32,12 +34,19 @@ const routes =[
         path: '/login',
         component: LoginComponent
     },
+    
     {
         path: '/admin',
         component: AdminComponent,
-        name: 'Admin',
+        name: 'Admin', 
+        redirect: '/admin/dashboard',
         children: [
             //Admin Routes
+                {
+                    path: 'dashboard',
+                    component: AdminDashboardComponent,
+                    name: 'Dashboard'
+                },
                 {
                     path: 'student/list',
                     component: StudentListComponent,
