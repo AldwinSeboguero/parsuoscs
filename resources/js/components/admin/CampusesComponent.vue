@@ -1,4 +1,3 @@
-
 <template>
 
   <v-data-table
@@ -7,8 +6,7 @@
     :loading = "loading"
     loading-text="Loading... Please wait"
     :headers="headers"
-    :items="purposes"
-    sort-by="calories" 
+    :items="campuses" 
     color="error"
   >
    <template v-slot:top>
@@ -16,7 +14,7 @@
         flat
         color="white"
       >
-        <v-toolbar-title>Purposes</v-toolbar-title>
+        <v-toolbar-title>Campuses</v-toolbar-title>
          
         <v-spacer></v-spacer>
         <v-dialog
@@ -49,18 +47,14 @@
                   >
                     <v-text-field
                       v-model="editedItem.name"
-                      label="College Name"
+                      label="Campus Name"
                     ></v-text-field>
                   </v-col>
                   <v-col
                     cols="12"
                     sm="12"
                     md="12"
-                  >
-                    <v-text-field
-                      v-model="editedItem.campus.name"
-                      label="Campus"
-                    ></v-text-field>
+                  > 
                   </v-col>
                   
                 </v-row>
@@ -118,11 +112,11 @@
           align: 'left',
           sortable: false,
           value: 'id',
-        }, 
-        { text: 'Purpose', value: 'purpose' },  
+        },
+        { text: 'Campus Name', value: 'name' }, 
         { text: 'Action', value: 'actions' },
       ],
-      purposes: [],
+      campuses: [],
       editedIndex: -1,
       editedItem: {
         name: '',
@@ -158,7 +152,7 @@
 
     methods: {
       initialize () {
-        this.purposes = [
+        this.campuses = [
          
         ],
         axios.interceptors.request.use(config => {
@@ -176,9 +170,9 @@
         this.loading = false;
         return Promise.reject(error);
         });
-      axios.get('/api/purposes',{})
+      axios.get('/api/campuses',{})
       .then(res => {
-        this.purposes = res.data.purposes
+        this.campuses = res.data.campuses
       })
       .catch(err => {
         console.error(err); 
@@ -187,14 +181,14 @@
       },
      
       editItem (item) {
-        this.editedIndex = this.purposes.indexOf(item)
+        this.editedIndex = this.campuses.indexOf(item)
         this.editedItem = Object.assign({}, item)
         this.dialog = true
       },
 
       deleteItem (item) {
-        const index = this.purposes.indexOf(item)
-        confirm('Are you sure you want to delete this item?') && this.purposes.splice(index, 1)
+        const index = this.campuses.indexOf(item)
+        confirm('Are you sure you want to delete this item?') && this.campuses.splice(index, 1)
       },
 
       close () {
@@ -207,9 +201,9 @@
 
       save () {
         if (this.editedIndex > -1) {
-          Object.assign(this.purposes[this.editedIndex], this.editedItem)
+          Object.assign(this.campuses[this.editedIndex], this.editedItem)
         } else {
-          this.purposes.push(this.editedItem)
+          this.campuses.push(this.editedItem)
         }
         this.close()
       },

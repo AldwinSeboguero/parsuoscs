@@ -5,7 +5,7 @@
     :loading = "loading"
     loading-text="Loading... Please wait"
     :headers="headers"
-    :items="desserts"
+    :items="students"
     sort-by="calories" 
     color="error"
   >
@@ -144,18 +144,18 @@
           text: 'No',
           align: 'left',
           sortable: false,
-          value: 'name',
+          value: 'id',
         },
-        { text: 'Student Number', value: 'calories' },
-        { text: 'Name', value: 'fat' },
-        { text: 'Year', value: 'carbs' },
-        { text: 'Section', value: 'protein' },
-        { text: 'Program', value: 'protein', sortable: false },
-        { text: 'Campus', value: 'protein' },
-        { text: 'Code', value: 'protein' },
+        { text: 'Student Number', value: 'student_number' },
+        { text: 'Name', value: 'name' },
+        { text: 'Year', value: 'year' },
+        { text: 'Section', value: 'section.name' },
+        { text: 'Program', value: 'program.name', sortable: false },
+        { text: 'Campus', value: 'program.campus.name' },
+        { text: 'Code', value: 'initial_password' },
         { text: 'Action', value: 'actions' },
       ],
-      desserts: [],
+      students: [],
       editedIndex: -1,
       editedItem: {
         name: '',
@@ -191,89 +191,43 @@
 
     methods: {
       initialize () {
-        this.desserts = [
-          {
-            name: 'Frozen Yogurt',
-            calories: 159,
-            fat: 6.0,
-            carbs: 24,
-            protein: 4.0,
-          },
-          {
-            name: 'Ice cream sandwich',
-            calories: 237,
-            fat: 9.0,
-            carbs: 37,
-            protein: 4.3,
-          },
-          {
-            name: 'Eclair',
-            calories: 262,
-            fat: 16.0,
-            carbs: 23,
-            protein: 6.0,
-          },
-          {
-            name: 'Cupcake',
-            calories: 305,
-            fat: 3.7,
-            carbs: 67,
-            protein: 4.3,
-          },
-          {
-            name: 'Gingerbread',
-            calories: 356,
-            fat: 16.0,
-            carbs: 49,
-            protein: 3.9,
-          },
-          {
-            name: 'Jelly bean',
-            calories: 375,
-            fat: 0.0,
-            carbs: 94,
-            protein: 0.0,
-          },
-          {
-            name: 'Lollipop',
-            calories: 392,
-            fat: 0.2,
-            carbs: 98,
-            protein: 0,
-          },
-          {
-            name: 'Honeycomb',
-            calories: 408,
-            fat: 3.2,
-            carbs: 87,
-            protein: 6.5,
-          },
-          {
-            name: 'Donut',
-            calories: 452,
-            fat: 25.0,
-            carbs: 51,
-            protein: 4.9,
-          },
-          {
-            name: 'KitKat',
-            calories: 518,
-            fat: 26.0,
-            carbs: 65,
-            protein: 7,
-          },
-        ]
-      },
+        this.students = [
+         
+        ],
+        axios.interceptors.request.use(config => {
+        this.loading = true;
+        return config;
+        },error => {
+        this.loading = false;
+        return Promise.reject(error);
+        });
+        
+        axios.interceptors.response.use(response => {
+        this.loading = false;
+        return response;
+        },error => {
+        this.loading = false;
+        return Promise.reject(error);
+        });
+      axios.get('/api/students',{})
+      .then(res => { 
+        this.students = res.data.students
+      })
+      .catch(err => {
+        console.error(err); 
+      })
 
+      },
+     
       editItem (item) {
-        this.editedIndex = this.desserts.indexOf(item)
+        this.editedIndex = this.students.indexOf(item)
         this.editedItem = Object.assign({}, item)
         this.dialog = true
       },
 
       deleteItem (item) {
-        const index = this.desserts.indexOf(item)
-        confirm('Are you sure you want to delete this item?') && this.desserts.splice(index, 1)
+        const index = this.students.indexOf(item)
+        confirm('Are you sure you want to delete this item?') && this.students.splice(index, 1)
       },
 
       close () {
@@ -286,9 +240,9 @@
 
       save () {
         if (this.editedIndex > -1) {
-          Object.assign(this.desserts[this.editedIndex], this.editedItem)
+          Object.assign(this.students[this.editedIndex], this.editedItem)
         } else {
-          this.desserts.push(this.editedItem)
+          this.students.push(this.editedItem)
         }
         this.close()
       },

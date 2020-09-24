@@ -95,6 +95,7 @@
       app
       color="primary accent-4"
       dark
+      flat
        src="https://cdn.vuetifyjs.com/images/backgrounds/bg-2.jpg"
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
@@ -218,6 +219,7 @@
           text: 'Admin Setup',
           model: false,
           children: [
+            { text: 'Campuses', link : '/admin/campuses' },
             { text: 'Colleges', link : '/admin/colleges' },
             { text: 'Programs', link : '/admin/programs' },
             { text: 'Sections', link : '/admin/sections' },

@@ -73,9 +73,10 @@
     :loading = "loading"
     loading-text="Loading... Please wait"
     :headers="headers"
-    :items="colleges"
+    :items="offices"
     sort-by="calories" 
     color="error"
+    
     
   >
    <template v-slot:top>
@@ -84,7 +85,7 @@
         color="primary accent-4"
         class="white--text"
       >
-        <v-toolbar-title>Activity Logs</v-toolbar-title>
+        <v-toolbar-title>Clearance Request Status by Office</v-toolbar-title>
          
         <v-spacer></v-spacer>
         <v-dialog
@@ -193,12 +194,19 @@ const gradients = [
           text: 'No',
           align: 'left',
           sortable: false,
-          value: 'id',
+          value: 'no',
         },
-        { text: 'Activity', value: 'name' }, 
-        { text: 'Created At', value: 'created_at' },  
+        { text: 'Office', value: 'office' }, 
+        { text: 'Total Approved', value: 'approved' },  
+        { text: 'Pending Request', value: 'pending' },  
       ],
-      colleges: [],
+      offices: [
+        {no: 1,office: 'Cashier(Goa Campus)',approved: 3308,pending: 16},
+        {no: 2,office: 'Library(Goa Campus)',approved: 3292,pending: 0},
+        {no: 3,office: 'OSAS(Goa Campus)',approved: 3291,pending: 0},
+        {no: 4,office: 'Registrar(Goa Campus)',approved: 3048,pending: 112},
+
+      ],
       editedIndex: -1,
       editedItem: {
         name: '',
@@ -283,7 +291,7 @@ const gradients = [
         });
       axios.get('/api/colleges',{})
       .then(res => {
-        this.colleges = res.data.colleges
+        // this.colleges = res.data.colleges
       })
       .catch(err => {
         console.error(err); 
@@ -291,33 +299,7 @@ const gradients = [
 
       },
      
-      editItem (item) {
-        this.editedIndex = this.colleges.indexOf(item)
-        this.editedItem = Object.assign({}, item)
-        this.dialog = true
-      },
-
-      deleteItem (item) {
-        const index = this.colleges.indexOf(item)
-        confirm('Are you sure you want to delete this item?') && this.colleges.splice(index, 1)
-      },
-
-      close () {
-        this.dialog = false
-        this.$nextTick(() => {
-          this.editedItem = Object.assign({}, this.defaultItem)
-          this.editedIndex = -1
-        })
-      },
-
-      save () {
-        if (this.editedIndex > -1) {
-          Object.assign(this.colleges[this.editedIndex], this.editedItem)
-        } else {
-          this.colleges.push(this.editedItem)
-        }
-        this.close()
-      },
+      
     },
   }
 </script>

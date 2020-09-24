@@ -19,3 +19,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::resource('colleges', 'Admin\CollegeController');
+Route::resource('programs', 'Admin\ProgramController');
+Route::resource('sections', 'Admin\SectionController');
+Route::resource('semesters', 'Admin\SemesterController');
+Route::resource('purposes', 'Admin\PurposeController');
+Route::resource('campuses', 'Admin\CampusController');
+Route::resource('students', 'Admin\StudentController');

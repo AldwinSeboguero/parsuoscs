@@ -7,6 +7,7 @@ import AdminDashboardComponent from './components/admin/DashboardComponent';
 import AdminDashboardComponentt from './components/admin/DashboardComponentt';
 import StudentListComponent from './components/StudentListComponent';
 import CollegesComponent from './components/admin/CollegesComponent';
+import CampusesComponent from './components/admin/CampusesComponent';
 import GraduationsComponent from './components/admin/GraduationsComponent';
 import ProgramsComponent from './components/admin/ProgramsComponent';
 import PurposesComponent from './components/admin/PurposesComponent';
@@ -56,6 +57,11 @@ const routes =[
                     path: 'colleges',
                     component: CollegesComponent,
                     name: 'Colleges'
+                },
+                {
+                    path: 'campuses',
+                    component: CampusesComponent,
+                    name: 'Campuses'
                 },
                 {
                     path: 'programs',
