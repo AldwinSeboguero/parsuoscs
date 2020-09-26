@@ -25,3 +25,6 @@ Route::resource('semesters', 'Admin\SemesterController');
 Route::resource('purposes', 'Admin\PurposeController');
 Route::resource('campuses', 'Admin\CampusController');
 Route::resource('students', 'Admin\StudentController');
+
+Route::post('login','UserController@login')->name('login');
+

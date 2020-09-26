@@ -1,16 +1,23 @@
 <template>
   <v-app id="inspire">
-    <v-content>
+    <v-main>
       <v-container class="fill-height" fluid>
           <v-row align="center" justify="center">
             <v-col cols="12" sm="8" md="8">
-              <v-card class="elevation-12">
+              <v-card class="elevation-12">  
                 <v-window v-model="step">
                   <v-window-item :value="1">
                      <v-row>
-                        <v-col cols="12" md="8">
+                        <v-progress-linear
+                          :active="loading"
+                          :indeterminate="loading"
+                          absolute
+                          top
+                          color="blue accent-3"
+                        ></v-progress-linear>
+                        <v-col cols="12" md="8"> 
                           <v-card-text class="mt-12">
-                             
+                              
                                
                             <div class="text-center pb-5 mt-4">
                             
@@ -40,12 +47,14 @@
                               <v-text-field
                               label="Email"
                               name="Email"
+                              v-model="email"
                               prepend-icon="mdi-email"
                               type="text"
                               color="teal accent-4" />
                               <v-text-field 
                               :type="showPassword ? 'text' : 'password'" 
                               label="Password"
+                              v-model="password"
                               color="teal accent-4"
                               prepend-icon="mdi-account-lock-outline"
                               :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
@@ -55,7 +64,7 @@
                             <h3 class="text-center mt-3">Forgot your password?</h3>
                           </v-card-text>
                           <div class="text-center mt-3 pb-3">
-                            <v-btn rounded color="blue accent-3" dark>SIGN IN</v-btn>
+                            <v-btn rounded color="blue accent-3" @click="login" dark >SIGN IN</v-btn>
                           </div>
                         </v-col>
                         <v-col cols="12" md="4" class="primary accent-4">
@@ -171,10 +180,27 @@
                   </v-window-item>
                 </v-window>
               </v-card>
+              <v-snackbar
+                  v-model="snackbar"
+                  top
+                >
+                  {{ text }}
+
+                  <template v-slot:action="{ attrs }">
+                    <v-btn
+                      color="pink"
+                      text
+                      v-bind="attrs"
+                      @click="snackbar = false" 
+                    >
+                      Close
+                    </v-btn>
+                  </template>
+                </v-snackbar>
             </v-col>
           </v-row>
       </v-container>
-    </v-content>
+    </v-main>
   </v-app>
 </template>
 
@@ -184,7 +210,41 @@ export default {
    step: 1,
    showPassword: false,
    showPasswordc: false,
+   email:'',
+   password:'',
+   loading: false,
+   snackbar: false,
+   text: '',
  }),
+ methods: {
+   login: function(){
+     axios.interceptors.request.use((config) => {
+      this.loading=true; 
+        return config;
+      }, (error) =>{ 
+         this.loading=false
+        return Promise.reject(error);
+      });
+
+    // Add a response interceptor
+    axios.interceptors.response.use((response) => { 
+        this.loading=false;
+        return response;
+      }, (error) => {  
+        this.loading=false;
+        return Promise.reject(error);
+      });
+      axios.post('/api/login',{'email': this.email, 'password': this.password})
+      .then(res =>{   
+        this.snackbar = true;
+      })
+      .catch(err => { 
+        console.dir(err);
+        this.text = err.response.data.status ;
+        this.snackbar = true;
+      });
+   }
+ },
  props: {
    source: String
  },

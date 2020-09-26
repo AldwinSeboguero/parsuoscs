@@ -2208,6 +2208,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'main-app',
   props: {
@@ -2503,13 +2505,75 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       step: 1,
       showPassword: false,
-      showPasswordc: false
+      showPasswordc: false,
+      email: '',
+      password: '',
+      loading: false,
+      snackbar: false,
+      text: ''
     };
+  },
+  methods: {
+    login: function login() {
+      var _this = this;
+
+      axios.interceptors.request.use(function (config) {
+        _this.loading = true;
+        return config;
+      }, function (error) {
+        _this.loading = false;
+        return Promise.reject(error);
+      }); // Add a response interceptor
+
+      axios.interceptors.response.use(function (response) {
+        _this.loading = false;
+        return response;
+      }, function (error) {
+        _this.loading = false;
+        return Promise.reject(error);
+      });
+      axios.post('/api/login', {
+        'email': this.email,
+        'password': this.password
+      }).then(function (res) {
+        _this.snackbar = true;
+      })["catch"](function (err) {
+        console.dir(err);
+        _this.text = err.response.data.status;
+        _this.snackbar = true;
+      });
+    }
   },
   props: {
     source: String
@@ -24681,7 +24745,7 @@ var render = function() {
     { attrs: { id: "inspire" } },
     [
       _c(
-        "v-content",
+        "v-main",
         [
           _c(
             "v-container",
@@ -24718,6 +24782,16 @@ var render = function() {
                                   _c(
                                     "v-row",
                                     [
+                                      _c("v-progress-linear", {
+                                        attrs: {
+                                          active: _vm.loading,
+                                          indeterminate: _vm.loading,
+                                          absolute: "",
+                                          top: "",
+                                          color: "blue accent-3"
+                                        }
+                                      }),
+                                      _vm._v(" "),
                                       _c(
                                         "v-col",
                                         { attrs: { cols: "12", md: "8" } },
@@ -24788,6 +24862,13 @@ var render = function() {
                                                         "mdi-email",
                                                       type: "text",
                                                       color: "teal accent-4"
+                                                    },
+                                                    model: {
+                                                      value: _vm.email,
+                                                      callback: function($$v) {
+                                                        _vm.email = $$v
+                                                      },
+                                                      expression: "email"
                                                     }
                                                   }),
                                                   _vm._v(" "),
@@ -24810,6 +24891,13 @@ var render = function() {
                                                       ) {
                                                         _vm.showPassword = !_vm.showPassword
                                                       }
+                                                    },
+                                                    model: {
+                                                      value: _vm.password,
+                                                      callback: function($$v) {
+                                                        _vm.password = $$v
+                                                      },
+                                                      expression: "password"
                                                     }
                                                   })
                                                 ],
@@ -24846,7 +24934,8 @@ var render = function() {
                                                     rounded: "",
                                                     color: "blue accent-3",
                                                     dark: ""
-                                                  }
+                                                  },
+                                                  on: { click: _vm.login }
                                                 },
                                                 [_vm._v("SIGN IN")]
                                               )
@@ -25314,6 +25403,58 @@ var render = function() {
                           )
                         ],
                         1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-snackbar",
+                        {
+                          attrs: { top: "" },
+                          scopedSlots: _vm._u([
+                            {
+                              key: "action",
+                              fn: function(ref) {
+                                var attrs = ref.attrs
+                                return [
+                                  _c(
+                                    "v-btn",
+                                    _vm._b(
+                                      {
+                                        attrs: { color: "pink", text: "" },
+                                        on: {
+                                          click: function($event) {
+                                            _vm.snackbar = false
+                                          }
+                                        }
+                                      },
+                                      "v-btn",
+                                      attrs,
+                                      false
+                                    ),
+                                    [
+                                      _vm._v(
+                                        "\n                    Close\n                  "
+                                      )
+                                    ]
+                                  )
+                                ]
+                              }
+                            }
+                          ]),
+                          model: {
+                            value: _vm.snackbar,
+                            callback: function($$v) {
+                              _vm.snackbar = $$v
+                            },
+                            expression: "snackbar"
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                " +
+                              _vm._s(_vm.text) +
+                              "\n\n                "
+                          )
+                        ]
                       )
                     ],
                     1
@@ -88726,6 +88867,13 @@ var routes = [{
   path: '/admin',
   component: _components_AdminComponent__WEBPACK_IMPORTED_MODULE_3__["default"],
   name: 'Admin',
+  beforeEnter: function beforeEnter(to, from, next) {
+    if (localStorage.getItem('token')) {
+      next();
+    } else {
+      next('/login');
+    }
+  },
   redirect: '/admin/dashboard',
   children: [//Admin Routes
   {
