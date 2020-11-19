@@ -176,7 +176,7 @@
         this.loading = false;
         return Promise.reject(error);
         });
-      axios.get('/api/purposes',{})
+      axios.get('/api/v1/purposes',{})
       .then(res => {
         this.purposes = res.data.purposes
       })

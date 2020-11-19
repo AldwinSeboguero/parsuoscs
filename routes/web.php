@@ -20,3 +20,6 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/{any}', function(){
+//     return redirect('http://oscs.parsu.edu.ph');
+// })->where('any','.*');

@@ -177,7 +177,7 @@
         this.loading = false;
         return Promise.reject(error);
         });
-      axios.get('/api/programs',{})
+      axios.get('/api/v1/programs',{})
       .then(res => {
         this.programs = res.data.programs
       })

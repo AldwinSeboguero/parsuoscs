@@ -178,7 +178,7 @@
         this.loading = false;
         return Promise.reject(error);
         });
-      axios.get('/api/colleges',{})
+      axios.get('/api/v1/colleges',{})
       .then(res => {
         this.colleges = res.data.colleges
       })

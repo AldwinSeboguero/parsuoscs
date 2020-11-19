@@ -170,7 +170,7 @@
         this.loading = false;
         return Promise.reject(error);
         });
-      axios.get('/api/campuses',{})
+      axios.get('/api/v1/campuses',{})
       .then(res => {
         this.campuses = res.data.campuses
       })

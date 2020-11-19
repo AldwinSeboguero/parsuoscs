@@ -14,11 +14,13 @@ import router from './router';
 
 import App from './components/AppComponent';
 import Login from './components/LoginComponent';
+import store from "./store";
 
 new Vue({
     el: '#app',
     router,
     vuetify,
+    store,
     components:{
         'app' : App
     }

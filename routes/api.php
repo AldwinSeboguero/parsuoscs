@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Routing\RouteGroup;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,17 +15,48 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+
+ 
+ Route::group(['middleware' => ['auth'],'namespace'=>'Admin'], function() {
+     //
+ });
+ 
+    Route::get('verify', 'Admin\UserController@verify');
+    Route::resource('colleges', 'Admin\CollegeController');
+    Route::resource('programs', 'Admin\ProgramController');
+    Route::resource('sections', 'Admin\SectionController');
+    Route::resource('semesters', 'Admin\SemesterController');
+    Route::resource('purposes', 'Admin\PurposeController');
+    Route::resource('campuses', 'Admin\CampusController');
+    Route::resource('students', 'Admin\StudentController');
+    Route::resource('users', 'Admin\UserController');
+    Route::resource('roles', 'Admin\RoleController');
+    Route::resource('clearancerequests', 'Admin\ClearanceRequestController');
+    Route::resource('submittedclearances', 'Admin\SubmittedController');
+    Route::resource('cashiers', 'Admin\CashierController');
+    Route::post('users/delete', 'Admin\UserController@deleteAll');
+    
+    Route::post('email/verify', 'Admin\UserController@verifyEmail');
+    
+    Route::post('user/role','Admin\UserController@changeRole');
+    
+    Route::get('authuser','Admin\UserController@userInfo');
+    
+    
+    
+    
+    Route::resource('completed', 'Admin\CompletedClearanceController');
+ 
+
+
+
+
+Route::post('login','Admin\UserController@login')->name('login');
+
+Route::prefix('/user')->group(function(){
+        
+        Route::post('/login','api\v1\LoginController@login');
+        Route::middleware('auth:api')->get('/all','api\v1\user\UserController@index');
+        
 });
-
-Route::resource('colleges', 'Admin\CollegeController');
-Route::resource('programs', 'Admin\ProgramController');
-Route::resource('sections', 'Admin\SectionController');
-Route::resource('semesters', 'Admin\SemesterController');
-Route::resource('purposes', 'Admin\PurposeController');
-Route::resource('campuses', 'Admin\CampusController');
-Route::resource('students', 'Admin\StudentController');
-
-Route::post('login','UserController@login')->name('login');
 

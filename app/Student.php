@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Campus;
 class Student extends Model
 {
+	protected $guarded = [];
     protected $table='students';
     protected $fillable=['student_number','slug','name','year','section_id','program_id','initial_password'];
 	protected $searchable = [

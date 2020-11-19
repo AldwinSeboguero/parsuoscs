@@ -178,7 +178,7 @@
         this.loading = false;
         return Promise.reject(error);
         });
-      axios.get('/api/semesters',{})
+      axios.get('/api/v1/semesters',{})
       .then(res => {
         this.semesters = res.data.semesters
       })

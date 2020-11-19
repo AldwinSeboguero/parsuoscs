@@ -23,6 +23,16 @@ import ClearanceListComponent from './components/ClearanceListComponent';
 import DeficiencyListComponent from './components/DeficiencyListComponent';
 //Settings Import Component
 import SettingsComponent from './components/SettingsComponent';
+//Users Import Component
+import UsersComponent from './components/admin/UsersComponent';
+//Signatories Admin Component
+import CashierComponent from './components/signatory/CashierComponent';
+import DeanComponent from './components/signatory/DeanComponent';
+import LibraryComponent from './components/signatory/LibraryComponent';
+import OSASComponent from './components/signatory/OSASComponent';
+import ProgramDirectorComponent from './components/signatory/ProgramDirectorComponent';
+import StudentCouncilComponent from './components/signatory/StudentCouncilComponent';
+import RegistrarComponent from './components/signatory/RegistrarComponent';
 
 Vue.use(VueRouter);
 
@@ -95,6 +105,41 @@ const routes =[
                     component: PurposesComponent,
                     name: 'Purposes'
                 },
+                {
+                    path: 'stcouncils',
+                    component: StudentCouncilComponent,
+                    name: 'Student Council'
+                },
+                {
+                    path: 'deans',
+                    component: DeanComponent,
+                    name: 'Dean'
+                },
+                {
+                    path: 'osas',
+                    component: OSASComponent,
+                    name: 'OSAS'
+                },
+                {
+                    path: 'library',
+                    component: LibraryComponent,
+                    name: 'Library'
+                },
+                {
+                    path: 'cashiers',
+                    component: CashierComponent,
+                    name: 'Cashier'
+                },
+                {
+                    path: 'registrar',
+                    component: RegistrarComponent,
+                    name: 'Registrar'
+                }, 
+                {
+                    path: 'programdirector',
+                    component: ProgramDirectorComponent,
+                    name: 'Program Director'
+                }, 
                 //Signatories Routes
                 {
                     path: 'clearance/requests',
@@ -133,10 +178,27 @@ const routes =[
                     component: SettingsComponent,
                     name: 'Settings'
                 },
+                //Users Route
+                {
+                    path: 'users',
+                    component: UsersComponent,
+                    name: 'Users'
+                },
+
         ],
+        // beforeEnter: (to, from, next) =>{
+        //    axios.get('/api/verify',{'user' : localStorage.getItem('user')})
+        //    .then(res => next())
+        //    .catch(err => next('/login'))
+        // }
     },
     
     
 ];
-
+const router = new VueRouter({routes})
+router.beforeEach((to,from,next) => {
+    const token = localStorage.getItem('token') || null
+    window.axios.defaults.headers['Authorization'] = "Bearer" + token;
+    next();
+})
 export default new VueRouter({routes});

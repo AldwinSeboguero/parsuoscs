@@ -176,7 +176,7 @@
         this.loading = false;
         return Promise.reject(error);
         });
-      axios.get('/api/sections',{})
+      axios.get('/api/v1/sections',{})
       .then(res => {
         this.sections = res.data.sections
       })

@@ -5,6 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Student;
+use App\Http\Resources\Student as StudentResource;
+use App\Http\Resources\StudentCollection;
+use App\Campus;
+use App\Program;
+use App\Section;
 class StudentController extends Controller
 {
     /**
@@ -12,9 +17,14 @@ class StudentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return response()->json(['students'=> Student::with('section')->with('program')->with('program.campus')->get()],200);
+        $per_page = $request->per_page;
+        return response()->json(['students'=> new StudentCollection(Student::with('section')->with('program')->with('program.campus')->paginate($per_page)),
+        'campuses' => Campus::pluck('name')->all(),
+        'programs' => Program::pluck('name')->all(),
+        'sections' => Section::pluck('name')->all(),
+        ],200);
     }
 
     /**
@@ -46,10 +56,12 @@ class StudentController extends Controller
      */
     public function show($id)
     {
-        //
+        $students = Student::with('section')->with('program')->with('program.campus')->where('name','ILIKE','%'.$id.'%')->paginate();
+        
+        return response()->json(['students'=> $students],200);
     }
 
-    /**
+    /** 
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
