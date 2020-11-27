@@ -69,6 +69,7 @@ export default {
       { text: "Student Number", value: "student_number" },
       { text: "Program", value: "program" },
        { text: "Purpose", value: "purpose" },
+       { text: "Signatory", value: "staff" },
       { text: "Action", value: "actions" },
     ],
     clearancerequests: [], 
@@ -80,6 +81,7 @@ export default {
       student_number: "",
       program: "",
       purpose: "", 
+      staff: "",
     },
     defaultItem: {
       id: "",
@@ -88,6 +90,7 @@ export default {
       student_number: "",
       program: "",
       purpose: "", 
+      staff:"",
     },
   }),
 

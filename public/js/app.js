@@ -2733,6 +2733,9 @@ __webpack_require__.r(__webpack_exports__);
         text: "Purpose",
         value: "purpose"
       }, {
+        text: "Signatory",
+        value: "staff"
+      }, {
         text: "Action",
         value: "actions"
       }],
@@ -2744,7 +2747,8 @@ __webpack_require__.r(__webpack_exports__);
         name: "",
         student_number: "",
         program: "",
-        purpose: ""
+        purpose: "",
+        staff: ""
       },
       defaultItem: {
         id: "",
@@ -2752,7 +2756,8 @@ __webpack_require__.r(__webpack_exports__);
         name: "",
         student_number: "",
         program: "",
-        purpose: ""
+        purpose: "",
+        staff: ""
       }
     };
   },
@@ -3606,9 +3611,9 @@ __webpack_require__.r(__webpack_exports__);
         axios.get("/api/v1/students/".concat(d)).then(function (res) {
           _this2.loading = false;
           _this2.students = res.data.students;
-          _this2.campuses = response.data.campuses;
-          _this2.programs = response.data.programs;
-          _this2.sections = response.data.sections;
+          _this2.campuses = res.data.campuses;
+          _this2.programs = res.data.programs;
+          _this2.sections = res.data.sections;
           _this2.totalStudents = res.data.students.total;
           _this2.numberOfPages = res.data.students.last_page;
         })["catch"](function (err) {
@@ -3623,9 +3628,9 @@ __webpack_require__.r(__webpack_exports__);
           }
         }).then(function (res) {
           _this2.loading = false;
-          _this2.campuses = response.data.campuses;
-          _this2.programs = response.data.programs;
-          _this2.sections = response.data.sections;
+          _this2.campuses = res.data.campuses;
+          _this2.programs = res.data.programs;
+          _this2.sections = res.data.sections;
           _this2.students = res.data.students;
           _this2.totalStudents = res.data.students.total;
           _this2.numberOfPages = res.data.students.last_page;

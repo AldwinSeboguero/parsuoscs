@@ -23,7 +23,7 @@ class ClearanceRequestController extends Controller
     {
         $per_page =$request->per_page ? $request->per_page : 5; 
         return response()->json([
-        'clearancerequests' => new ClearanceRequestCollection(ClearanceRequest::with('student')->with('student.program')->paginate($per_page)) 
+        'clearancerequests' => new ClearanceRequestCollection(ClearanceRequest::with('student')->with('student.program')->with('staff')->with('staff.user')->paginate($per_page)) 
         ],200);
     }
 

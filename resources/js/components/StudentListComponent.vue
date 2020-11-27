@@ -306,9 +306,9 @@ export default {
           .then((res) => {
             this.loading = false;
             this.students = res.data.students;
-            this.campuses = response.data.campuses;
-            this.programs = response.data.programs;
-            this.sections = response.data.sections;
+            this.campuses = res.data.campuses;
+            this.programs = res.data.programs;
+            this.sections = res.data.sections;
             this.totalStudents = res.data.students.total;
             this.numberOfPages = res.data.students.last_page;
           })
@@ -323,9 +323,9 @@ export default {
           })
           .then((res) => {
             this.loading = false;
-            this.campuses = response.data.campuses;
-            this.programs = response.data.programs;
-            this.sections = response.data.sections;
+            this.campuses = res.data.campuses;
+            this.programs = res.data.programs;
+            this.sections = res.data.sections;
             this.students = res.data.students;
             this.totalStudents = res.data.students.total;
             this.numberOfPages = res.data.students.last_page;
