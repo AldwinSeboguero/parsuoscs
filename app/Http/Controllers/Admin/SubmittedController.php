@@ -2,14 +2,18 @@
 
 namespace App\Http\Controllers\Admin;
 
+
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use DB;
-use App\SubmitClearance;
+use Illuminate\Http\Request; 
+use App\SubmitClearance; 
+use App\Role; 
+use App\User; 
+use Illuminate\Support\Facades\Hash; 
 use App\Http\Resources\SubmittedClearance as SubmittedClearanceResource;
 use App\Http\Resources\SubmittedClearanceCollection;
 class SubmittedController extends Controller
 {
+    
     /**
      * Display a listing of the resource.
      *
@@ -18,11 +22,9 @@ class SubmittedController extends Controller
     public function index(Request $request)
     {
         $per_page =$request->per_page ? $request->per_page : 10; 
-        $students =  new SubmittedClearanceCollection(SubmitClearance::with('clearance')->with('clearance.student')->with('clearance.student.program')
-        ->paginate($per_page));
         return response()->json([
-            'students' => $students
-            ],200);
+        'submittedclearances' => new SubmittedClearanceCollection(SubmitClearance::with('clearance')->with('clearance.purpose')->with('staff')->with('staff.user')->paginate($per_page)) 
+        ],200);
     }
 
     /**
@@ -43,7 +45,8 @@ class SubmittedController extends Controller
      */
     public function store(Request $request)
     {
-        //
+           
+     
     }
 
     /**
@@ -54,7 +57,27 @@ class SubmittedController extends Controller
      */
     public function show($id)
     {
-        //
+        return response()->json([
+            'submittedclearances' => new SubmittedClearanceCollection(
+                SubmitClearance::with('clearance')
+                ->with('clearance.purpose')
+                ->with('clearance.student')  
+                ->with('staff')
+                ->with('staff.user') 
+                ->whereHas('clearance.student', function($q) use ($id){
+                    $q->where('name', 'ILIKE', '%' . $id . '%');
+                })  
+                ->orWhereHas('clearance.student', function($q) use ($id){
+                    $q->where('student_number', 'ILIKE', '%' . $id . '%');
+                })  
+                ->orWhereHas('staff.user', function($q) use ($id){
+                    $q->where('name', 'ILIKE', '%' . $id . '%');
+                })  
+                ->orWhereHas('clearance.purpose', function($q) use ($id){
+                    $q->where('purpose', 'ILIKE', '%' . $id . '%');
+                })
+                ->paginate(10))  
+            ],200);
     }
 
     /**
@@ -77,7 +100,8 @@ class SubmittedController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
+
     }
 
     /**
@@ -88,6 +112,12 @@ class SubmittedController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::find($id)->delete();
+        return response()->json(['user' => $user],200);
+    }
+    public function deleteAll(Request $request)
+    {
+       User::whereIn('id', $request->users)->delete();
+        return response()->json(['message' , 'Records Deleted Successfully'],200);
     }
 }

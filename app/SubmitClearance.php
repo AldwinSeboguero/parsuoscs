@@ -13,4 +13,8 @@ class SubmitClearance extends Model
     {
         return $this->belongsTo('App\Clearance','clearance_id');
     }
+    public function staff()
+    {
+        return $this->belongsTo('App\Staff','staff_id');
+    }
 }

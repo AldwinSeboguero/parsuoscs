@@ -19,7 +19,7 @@
       </template>
 
       <v-divider></v-divider>
-
+  <div  v-slimscroll="scrollOptions">
       <v-list dense>
         <template v-for="item in items">
           <v-row v-if="item.heading" :key="item.heading" align="center">
@@ -85,6 +85,7 @@
             </v-list-item-content>
           </v-list-item>
       </v-list>
+  </div>
     </v-navigation-drawer>
     <v-app-bar
       :clipped-left="$vuetify.breakpoint.lgAndUp"
@@ -172,6 +173,9 @@ export default {
     dialog: false,
     drawer: null,
     user: '',
+     scrollOptions:{
+                    height:'100%',  
+                },
     items: [
       {
         icon: "mdi-view-dashboard",
@@ -324,4 +328,5 @@ computed: {
   //   }
   // },
 };
+
 </script>

@@ -2,31 +2,29 @@
 
 namespace App\Http\Controllers\Admin;
 
+
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\SubmitClearance;
-use App\Student;
-use App\ClearanceRequest;
+use Illuminate\Http\Request; 
+use App\ClearanceRequest; 
+use App\Role; 
+use App\User; 
+use Illuminate\Support\Facades\Hash; 
+use App\Http\Resources\ClearanceRequest as ClearanceRequestResource;
+use App\Http\Resources\ClearanceRequestCollection;
 class CompletedClearanceController extends Controller
 {
+    
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $pendingClearanceRequest = ClearanceRequest::where('status',false)->get()->count();
-        $totalClearanceRequest = ClearanceRequest::all()->count();
-        $totalActivatedAccount = Student::where('is_activated', true)->get()->count();
+        $per_page =$request->per_page ? $request->per_page : 10; 
         return response()->json([
-        'completed'=> SubmitClearance::all()->count(),
-        'totalStudent'=> Student::all()->count(),
-        'pendingRequest' => $pendingClearanceRequest,
-        'totalClearanceRequest' => $totalClearanceRequest,
-        'totalActivatedAccount' => $totalActivatedAccount,
+        'clearancerequests' => new ClearanceRequestCollection(ClearanceRequest::where('status', true)->with('purpose')->with('student')->with('student.program')->with('staff')->with('staff.user')->paginate($per_page)) 
         ],200);
-        
     }
 
     /**
@@ -47,7 +45,16 @@ class CompletedClearanceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'username' => $request->username,
+            ]);
+            $role =Role::select('id')->where('name','user')->first();
+            $user->roles()->attach($role);
+            return response()->json(['user'=>$user],200);
+     
     }
 
     /**
@@ -58,7 +65,27 @@ class CompletedClearanceController extends Controller
      */
     public function show($id)
     {
-        //
+        return response()->json([
+            'clearancerequests' => new ClearanceRequestCollection(
+                ClearanceRequest::where('status', true)
+                ->with('purpose')->with('student')
+                ->with('student.program')
+                ->with('staff')
+                ->with('staff.user') 
+                ->whereHas('student', function($q) use ($id){
+                    $q->where('name', 'ILIKE', '%' . $id . '%');
+                })  
+                ->orWhereHas('student', function($q) use ($id){
+                    $q->where('student_number', 'ILIKE', '%' . $id . '%');
+                })  
+                ->orWhereHas('staff.user', function($q) use ($id){
+                    $q->where('name', 'ILIKE', '%' . $id . '%');
+                })  
+                ->orWhereHas('purpose', function($q) use ($id){
+                    $q->where('purpose', 'ILIKE', '%' . $id . '%');
+                })
+                ->paginate(10))  
+            ],200);
     }
 
     /**
@@ -81,7 +108,15 @@ class CompletedClearanceController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::find($id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+        $user->username = $request->username;
+        $user->save();
+        
+        return response()->json(['user' => $user],200);
+
     }
 
     /**
@@ -92,6 +127,12 @@ class CompletedClearanceController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::find($id)->delete();
+        return response()->json(['user' => $user],200);
+    }
+    public function deleteAll(Request $request)
+    {
+       User::whereIn('id', $request->users)->delete();
+        return response()->json(['message' , 'Records Deleted Successfully'],200);
     }
 }

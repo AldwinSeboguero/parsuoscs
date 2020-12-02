@@ -2437,6 +2437,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "main-app",
   props: {
@@ -2447,6 +2448,9 @@ __webpack_require__.r(__webpack_exports__);
       dialog: false,
       drawer: null,
       user: '',
+      scrollOptions: {
+        height: '100%'
+      },
       items: [{
         icon: "mdi-view-dashboard",
         text: "Dashboard",
@@ -2644,15 +2648,52 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ClearanceRequestsComponent.vue?vue&type=script&lang=js&":
-/*!*************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ClearanceRequestsComponent.vue?vue&type=script&lang=js& ***!
-  \*************************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ClearanceListComponent.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ClearanceListComponent.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2713,19 +2754,352 @@ __webpack_require__.r(__webpack_exports__);
       text: "",
       success: "",
       error: "",
+      snackbarColor: "",
       headers: [{
         text: "No",
         align: "left",
-        value: ""
+        value: "id"
       }, {
-        text: "Request Id",
-        value: "token"
+        text: "Clearance Id",
+        value: "clearance_id"
+      }, {
+        text: "Student Number",
+        value: "student_number"
       }, {
         text: "Name",
         value: "name"
       }, {
+        text: "Program",
+        value: "program"
+      }, {
+        text: "Purpose",
+        value: "purpose"
+      }, {
+        text: "Semester",
+        value: "semester"
+      }, {
+        text: "Action",
+        value: "actions"
+      }],
+      page: 0,
+      totalclearances: 0,
+      numberOfPages: 0,
+      options: {},
+      clearances: [],
+      editedIndex: -1,
+      editedItem: {
+        id: "",
+        name: "",
+        student_number: "",
+        program: "",
+        purpose: "",
+        semester: ""
+      },
+      defaultItem: {
+        id: "",
+        name: "",
+        student_number: "",
+        program: "",
+        purpose: "",
+        semester: ""
+      }
+    };
+  },
+  computed: {},
+  watch: {
+    dialog: function dialog(val) {
+      val || this.close();
+    },
+    options: {
+      handler: function handler() {
+        this.readDataFromAPI();
+      }
+    },
+    deep: true
+  },
+  created: function created() {
+    this.initialize();
+  },
+  methods: {
+    readDataFromAPI: function readDataFromAPI() {
+      var _this = this;
+
+      this.loading = true;
+      var _this$options = this.options,
+          page = _this$options.page,
+          itemsPerPage = _this$options.itemsPerPage;
+      var pageNumber = page;
+      axios.get("/api/v1/clearances?page=" + pageNumber, {
+        params: {
+          'per_page': itemsPerPage
+        }
+      }).then(function (response) {
+        //Then injecting the result to datatable parameters.
+        _this.loading = false;
+        _this.clearances = response.data.clearances;
+        _this.totalclearances = response.data.clearances.total;
+        _this.numberOfPages = response.data.clearances.last_page;
+      });
+    },
+    searchIt: function searchIt(d) {
+      var _this2 = this;
+
+      if (d.length > 2) {
+        var _this$options2 = this.options,
+            page = _this$options2.page,
+            itemsPerPage = _this$options2.itemsPerPage;
+        axios.get("/api/v1/clearances/".concat(d)).then(function (res) {
+          _this2.loading = false;
+          _this2.clearances = res.data.clearances;
+          _this2.totalclearances = res.data.clearances.total;
+          _this2.numberOfPages = res.data.clearances.last_page;
+        })["catch"](function (err) {
+          console.error(err);
+        });
+      }
+
+      if (d.length <= 0) {
+        axios.get("/api/v1/clearances?page=".concat(d.page), {
+          params: {
+            'per_page': d.itemsPerPage
+          }
+        }).then(function (res) {
+          _this2.loading = false;
+          _this2.clearances = res.data.clearances;
+          _this2.totalclearances = res.data.clearances.total;
+          _this2.numberOfPages = res.data.clearances.last_page;
+        })["catch"](function (err) {
+          console.error(err);
+        });
+      }
+    },
+    initialize: function initialize() {
+      var _this3 = this;
+
+      axios.interceptors.request.use(function (config) {
+        _this3.loading = true;
+        return config;
+      }, function (error) {
+        _this3.loading = false;
+        return Promise.reject(error);
+      });
+      axios.interceptors.response.use(function (response) {
+        _this3.loading = false;
+        return response;
+      }, function (error) {
+        _this3.loading = false;
+        return Promise.reject(error);
+      });
+    },
+    editItem: function editItem(item) {
+      this.editedIndex = this.clearances.data.indexOf(item);
+      this.editedItem = Object.assign({}, item);
+      this.dialog = true;
+    },
+    deleteItem: function deleteItem(item) {
+      var _this4 = this;
+
+      var index = this.clearances.data.indexOf(item);
+      var decide = confirm("Are you sure you want to delete this item?");
+
+      if (decide) {
+        axios["delete"]("/api/v1/clearances/" + item.id).then(function (res) {
+          _this4.text = "Record Deleted Successfully!";
+          _this4.snackbarColor = "primary darken-1";
+          _this4.snackbar = true;
+
+          _this4.clearances.data.splice(index, 1);
+        })["catch"](function (err) {
+          console.log(err.response);
+          _this4.text = "Error Deleting Record";
+          _this4.snackbarColor = "error darken-1";
+          _this4.snackbar = true;
+        });
+      }
+    },
+    close: function close() {
+      var _this5 = this;
+
+      this.dialog = false;
+      setTimeout(function () {
+        _this5.editedItem = Object.assign({}, _this5.defaultItem);
+        _this5.editedIndex = -1;
+      }, 300);
+    },
+    save: function save() {
+      var _this6 = this;
+
+      console.log(this.editedItem);
+
+      if (this.editedIndex > -1) {
+        var index = this.editedIndex;
+        axios.put("/api/v1/clearances/" + this.editedItem.id, this.editedItem).then(function (res) {
+          _this6.text = "Record Updated Successfully!";
+          _this6.snackbarColor = "primary darken-1";
+          _this6.snackbar = true;
+          Object.assign(_this6.clearances.data[index], res.data.clearance);
+        })["catch"](function (err) {
+          console.log(err.response);
+          _this6.text = "Error Updating Record";
+          _this6.snackbarColor = "error darken-1";
+          _this6.snackbar = true;
+        });
+      } else {
+        axios.post("/api/v1/clearances", this.editedItem).then(function (res) {
+          _this6.text = "Record Added Successfully!";
+          _this6.snackbarColor = "primary darken-1";
+          _this6.snackbar = true; // this.students.data.push(res.data.student); 
+
+          _this6.clearances = res.data.clearances;
+        })["catch"](function (err) {
+          console.dir(err);
+          _this6.text = "Error Inserting Record";
+          _this6.snackbarColor = "error darken-1";
+          _this6.snackbar = true;
+        });
+      }
+
+      this.close();
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ClearanceRequestsComponent.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ClearanceRequestsComponent.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      valid: true,
+      dialog: false,
+      loading: false,
+      snackbar: false,
+      selected: [],
+      text: "",
+      success: "",
+      error: "",
+      snackbarColor: "",
+      headers: [{
+        text: "No",
+        align: "left",
+        value: "id"
+      }, {
         text: "Student Number",
         value: "student_number"
+      }, {
+        text: "Name",
+        value: "name"
       }, {
         text: "Program",
         value: "program"
@@ -2739,6 +3113,10 @@ __webpack_require__.r(__webpack_exports__);
         text: "Action",
         value: "actions"
       }],
+      page: 0,
+      totalclearancerequests: 0,
+      numberOfPages: 0,
+      options: {},
       clearancerequests: [],
       editedIndex: -1,
       editedItem: {
@@ -2765,44 +3143,85 @@ __webpack_require__.r(__webpack_exports__);
   watch: {
     dialog: function dialog(val) {
       val || this.close();
-    }
+    },
+    options: {
+      handler: function handler() {
+        this.readDataFromAPI();
+      }
+    },
+    deep: true
   },
   created: function created() {
     this.initialize();
   },
   methods: {
-    paginate: function paginate(e) {
+    readDataFromAPI: function readDataFromAPI() {
       var _this = this;
 
-      axios.get("/api/v1/clearancerequests?page=".concat(e.page), {
+      this.loading = true;
+      var _this$options = this.options,
+          page = _this$options.page,
+          itemsPerPage = _this$options.itemsPerPage;
+      var pageNumber = page;
+      axios.get("/api/v1/clearancerequests?page=" + pageNumber, {
         params: {
-          'per_page': e.itemsPerPage
+          'per_page': itemsPerPage
         }
-      }).then(function (res) {
-        _this.clearancerequests = res.data.clearancerequests;
-      })["catch"](function (err) {
-        if (err.response.status == 401) {
-          localStorage.removeItem("token");
-
-          _this.$router.push("/login");
-        }
+      }).then(function (response) {
+        //Then injecting the result to datatable parameters.
+        _this.loading = false;
+        _this.clearancerequests = response.data.clearancerequests;
+        _this.totalclearancerequests = response.data.clearancerequests.total;
+        _this.numberOfPages = response.data.clearancerequests.last_page;
       });
     },
-    initialize: function initialize() {
+    searchIt: function searchIt(d) {
       var _this2 = this;
 
+      if (d.length > 2) {
+        var _this$options2 = this.options,
+            page = _this$options2.page,
+            itemsPerPage = _this$options2.itemsPerPage;
+        axios.get("/api/v1/clearancerequests/".concat(d)).then(function (res) {
+          _this2.loading = false;
+          _this2.clearancerequests = res.data.clearancerequests;
+          _this2.totalclearancerequests = res.data.clearancerequests.total;
+          _this2.numberOfPages = res.data.clearancerequests.last_page;
+        })["catch"](function (err) {
+          console.error(err);
+        });
+      }
+
+      if (d.length <= 0) {
+        axios.get("/api/v1/clearancerequests?page=".concat(d.page), {
+          params: {
+            'per_page': d.itemsPerPage
+          }
+        }).then(function (res) {
+          _this2.loading = false;
+          _this2.clearancerequests = res.data.clearancerequests;
+          _this2.totalclearancerequests = res.data.clearancerequests.total;
+          _this2.numberOfPages = res.data.clearancerequests.last_page;
+        })["catch"](function (err) {
+          console.error(err);
+        });
+      }
+    },
+    initialize: function initialize() {
+      var _this3 = this;
+
       axios.interceptors.request.use(function (config) {
-        _this2.loading = true;
+        _this3.loading = true;
         return config;
       }, function (error) {
-        _this2.loading = false;
+        _this3.loading = false;
         return Promise.reject(error);
       });
       axios.interceptors.response.use(function (response) {
-        _this2.loading = false;
+        _this3.loading = false;
         return response;
       }, function (error) {
-        _this2.loading = false;
+        _this3.loading = false;
         return Promise.reject(error);
       });
     },
@@ -2812,46 +3231,384 @@ __webpack_require__.r(__webpack_exports__);
       this.dialog = true;
     },
     deleteItem: function deleteItem(item) {
-      var _this3 = this;
+      var _this4 = this;
 
       var index = this.clearancerequests.data.indexOf(item);
       var decide = confirm("Are you sure you want to delete this item?");
 
       if (decide) {
         axios["delete"]("/api/v1/clearancerequests/" + item.id).then(function (res) {
-          _this3.text = "Record Deleted Successfully!";
-          _this3.snackbar = true;
+          _this4.text = "Record Deleted Successfully!";
+          _this4.snackbarColor = "primary darken-1";
+          _this4.snackbar = true;
 
-          _this3.clearancerequests.data.splice(index, 1);
+          _this4.clearancerequests.data.splice(index, 1);
         })["catch"](function (err) {
           console.log(err.response);
-          _this3.text = "Error Deleting Record";
-          _this3.snackbar = true;
+          _this4.text = "Error Deleting Record";
+          _this4.snackbarColor = "error darken-1";
+          _this4.snackbar = true;
         });
       }
     },
     close: function close() {
-      var _this4 = this;
+      var _this5 = this;
 
       this.dialog = false;
       setTimeout(function () {
-        _this4.editedItem = Object.assign({}, _this4.defaultItem);
-        _this4.editedIndex = -1;
+        _this5.editedItem = Object.assign({}, _this5.defaultItem);
+        _this5.editedIndex = -1;
       }, 300);
     },
     save: function save() {
-      var _this5 = this;
+      var _this6 = this;
+
+      console.log(this.editedItem);
 
       if (this.editedIndex > -1) {
         var index = this.editedIndex;
         axios.put("/api/v1/clearancerequests/" + this.editedItem.id, this.editedItem).then(function (res) {
-          _this5.text = "Record Updated Successfully!";
-          _this5.snackbar = true;
-          Object.assign(_this5.clearancerequests.data[index], res.data.clearancerequests);
+          _this6.text = "Record Updated Successfully!";
+          _this6.snackbarColor = "primary darken-1";
+          _this6.snackbar = true;
+          Object.assign(_this6.clearancerequests.data[index], res.data.clearancerequest);
         })["catch"](function (err) {
           console.log(err.response);
-          _this5.text = "Error Updating Record";
-          _this5.snackbar = true;
+          _this6.text = "Error Updating Record";
+          _this6.snackbarColor = "error darken-1";
+          _this6.snackbar = true;
+        });
+      } else {
+        axios.post("/api/v1/clearancerequests", this.editedItem).then(function (res) {
+          _this6.text = "Record Added Successfully!";
+          _this6.snackbarColor = "primary darken-1";
+          _this6.snackbar = true; // this.students.data.push(res.data.student); 
+
+          _this6.clearancerequests = res.data.clearancerequests;
+        })["catch"](function (err) {
+          console.dir(err);
+          _this6.text = "Error Inserting Record";
+          _this6.snackbarColor = "error darken-1";
+          _this6.snackbar = true;
+        });
+      }
+
+      this.close();
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ClearedClearancesComponent.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ClearedClearancesComponent.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      valid: true,
+      dialog: false,
+      loading: false,
+      snackbar: false,
+      selected: [],
+      text: "",
+      success: "",
+      error: "",
+      snackbarColor: "",
+      headers: [{
+        text: "No",
+        align: "left",
+        value: "id"
+      }, {
+        text: "Student Number",
+        value: "student_number"
+      }, {
+        text: "Name",
+        value: "name"
+      }, {
+        text: "Program",
+        value: "program"
+      }, {
+        text: "Purpose",
+        value: "purpose"
+      }, {
+        text: "Signatory",
+        value: "staff"
+      }, {
+        text: "Action",
+        value: "actions"
+      }],
+      page: 0,
+      totalclearancerequests: 0,
+      numberOfPages: 0,
+      options: {},
+      clearancerequests: [],
+      editedIndex: -1,
+      editedItem: {
+        id: "",
+        token: "",
+        name: "",
+        student_number: "",
+        program: "",
+        purpose: "",
+        staff: ""
+      },
+      defaultItem: {
+        id: "",
+        token: "",
+        name: "",
+        student_number: "",
+        program: "",
+        purpose: "",
+        staff: ""
+      }
+    };
+  },
+  computed: {},
+  watch: {
+    dialog: function dialog(val) {
+      val || this.close();
+    },
+    options: {
+      handler: function handler() {
+        this.readDataFromAPI();
+      }
+    },
+    deep: true
+  },
+  created: function created() {
+    this.initialize();
+  },
+  methods: {
+    readDataFromAPI: function readDataFromAPI() {
+      var _this = this;
+
+      this.loading = true;
+      var _this$options = this.options,
+          page = _this$options.page,
+          itemsPerPage = _this$options.itemsPerPage;
+      var pageNumber = page;
+      axios.get("/api/v1/clearedclearancerequests?page=" + pageNumber, {
+        params: {
+          'per_page': itemsPerPage
+        }
+      }).then(function (response) {
+        //Then injecting the result to datatable parameters.
+        _this.loading = false;
+        _this.clearancerequests = response.data.clearancerequests;
+        _this.totalclearancerequests = response.data.clearancerequests.total;
+        _this.numberOfPages = response.data.clearancerequests.last_page;
+      });
+    },
+    searchIt: function searchIt(d) {
+      var _this2 = this;
+
+      if (d.length > 2) {
+        var _this$options2 = this.options,
+            page = _this$options2.page,
+            itemsPerPage = _this$options2.itemsPerPage;
+        axios.get("/api/v1/clearedclearancerequests/".concat(d)).then(function (res) {
+          _this2.loading = false;
+          _this2.clearancerequests = res.data.clearancerequests;
+          _this2.totalclearancerequests = res.data.clearancerequests.total;
+          _this2.numberOfPages = res.data.clearancerequests.last_page;
+        })["catch"](function (err) {
+          console.error(err);
+        });
+      }
+
+      if (d.length <= 0) {
+        axios.get("/api/v1/clearedclearancerequests?page=".concat(d.page), {
+          params: {
+            'per_page': d.itemsPerPage
+          }
+        }).then(function (res) {
+          _this2.loading = false;
+          _this2.clearancerequests = res.data.clearancerequests;
+          _this2.totalclearancerequests = res.data.clearancerequests.total;
+          _this2.numberOfPages = res.data.clearancerequests.last_page;
+        })["catch"](function (err) {
+          console.error(err);
+        });
+      }
+    },
+    initialize: function initialize() {
+      var _this3 = this;
+
+      axios.interceptors.request.use(function (config) {
+        _this3.loading = true;
+        return config;
+      }, function (error) {
+        _this3.loading = false;
+        return Promise.reject(error);
+      });
+      axios.interceptors.response.use(function (response) {
+        _this3.loading = false;
+        return response;
+      }, function (error) {
+        _this3.loading = false;
+        return Promise.reject(error);
+      });
+    },
+    editItem: function editItem(item) {
+      this.editedIndex = this.clearancerequests.data.indexOf(item);
+      this.editedItem = Object.assign({}, item);
+      this.dialog = true;
+    },
+    deleteItem: function deleteItem(item) {
+      var _this4 = this;
+
+      var index = this.clearancerequests.data.indexOf(item);
+      var decide = confirm("Are you sure you want to delete this item?");
+
+      if (decide) {
+        axios["delete"]("/api/v1/clearedclearancerequests/" + item.id).then(function (res) {
+          _this4.text = "Record Deleted Successfully!";
+          _this4.snackbarColor = "primary darken-1";
+          _this4.snackbar = true;
+
+          _this4.clearancerequests.data.splice(index, 1);
+        })["catch"](function (err) {
+          console.log(err.response);
+          _this4.text = "Error Deleting Record";
+          _this4.snackbarColor = "error darken-1";
+          _this4.snackbar = true;
+        });
+      }
+    },
+    close: function close() {
+      var _this5 = this;
+
+      this.dialog = false;
+      setTimeout(function () {
+        _this5.editedItem = Object.assign({}, _this5.defaultItem);
+        _this5.editedIndex = -1;
+      }, 300);
+    },
+    save: function save() {
+      var _this6 = this;
+
+      console.log(this.editedItem);
+
+      if (this.editedIndex > -1) {
+        var index = this.editedIndex;
+        axios.put("/api/v1/clearedclearancerequests/" + this.editedItem.id, this.editedItem).then(function (res) {
+          _this6.text = "Record Updated Successfully!";
+          _this6.snackbarColor = "primary darken-1";
+          _this6.snackbar = true;
+          Object.assign(_this6.clearancerequests.data[index], res.data.clearancerequest);
+        })["catch"](function (err) {
+          console.log(err.response);
+          _this6.text = "Error Updating Record";
+          _this6.snackbarColor = "error darken-1";
+          _this6.snackbar = true;
+        });
+      } else {
+        axios.post("/api/v1/clearedclearancerequests", this.editedItem).then(function (res) {
+          _this6.text = "Record Added Successfully!";
+          _this6.snackbarColor = "primary darken-1";
+          _this6.snackbar = true; // this.students.data.push(res.data.student); 
+
+          _this6.clearancerequests = res.data.clearancerequests;
+        })["catch"](function (err) {
+          console.dir(err);
+          _this6.text = "Error Inserting Record";
+          _this6.snackbarColor = "error darken-1";
+          _this6.snackbar = true;
         });
       }
 
@@ -3471,6 +4228,75 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -3482,6 +4308,7 @@ __webpack_require__.r(__webpack_exports__);
       text: "",
       success: "",
       error: "",
+      snackbarColor: "",
       headers: [{
         text: "No",
         align: "left",
@@ -3540,6 +4367,10 @@ __webpack_require__.r(__webpack_exports__);
         campus: "",
         section: "",
         program: "",
+        campus_id: "",
+        section_id: "",
+        program_id: "",
+        code: "",
         year: "",
         created_at: ""
       },
@@ -3550,6 +4381,10 @@ __webpack_require__.r(__webpack_exports__);
         campus: "",
         section: "",
         program: "",
+        campus_id: "",
+        section_id: "",
+        program_id: "",
+        code: "",
         year: "",
         created_at: ""
       }
@@ -3557,10 +4392,10 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     formTitle: function formTitle() {
-      return this.editedIndex === -1 ? "New Student" : "Edit Student";
+      return this.editedIndex === -1 ? "New Item" : "Edit Item";
     },
     formIcon: function formIcon() {
-      return this.editedIndex === -1 ? "mdi-account-plus" : "mdi-account-edit";
+      return this.editedIndex === -1 ? "mdi-plus" : "mdi-pen";
     }
   },
   watch: {
@@ -3588,7 +4423,7 @@ __webpack_require__.r(__webpack_exports__);
       var pageNumber = page;
       axios.get("/api/v1/students?page=" + pageNumber, {
         params: {
-          per_page: itemsPerPage
+          'per_page': itemsPerPage
         }
       }).then(function (response) {
         //Then injecting the result to datatable parameters.
@@ -3604,16 +4439,14 @@ __webpack_require__.r(__webpack_exports__);
     searchIt: function searchIt(d) {
       var _this2 = this;
 
-      if (d.length > 3) {
+      if (d.length > 2) {
         var _this$options2 = this.options,
             page = _this$options2.page,
             itemsPerPage = _this$options2.itemsPerPage;
         axios.get("/api/v1/students/".concat(d)).then(function (res) {
           _this2.loading = false;
           _this2.students = res.data.students;
-          _this2.campuses = res.data.campuses;
-          _this2.programs = res.data.programs;
-          _this2.sections = res.data.sections;
+          console.log(_this2.students);
           _this2.totalStudents = res.data.students.total;
           _this2.numberOfPages = res.data.students.last_page;
         })["catch"](function (err) {
@@ -3624,13 +4457,10 @@ __webpack_require__.r(__webpack_exports__);
       if (d.length <= 0) {
         axios.get("/api/v1/students?page=".concat(d.page), {
           params: {
-            per_page: d.itemsPerPage
+            'per_page': d.itemsPerPage
           }
         }).then(function (res) {
           _this2.loading = false;
-          _this2.campuses = res.data.campuses;
-          _this2.programs = res.data.programs;
-          _this2.sections = res.data.sections;
           _this2.students = res.data.students;
           _this2.totalStudents = res.data.students.total;
           _this2.numberOfPages = res.data.students.last_page;
@@ -3660,68 +4490,120 @@ __webpack_require__.r(__webpack_exports__);
     editItem: function editItem(item) {
       this.editedIndex = this.students.data.indexOf(item);
       this.editedItem = Object.assign({}, item);
+      console.log(this.editedItem);
       this.dialog = true;
     },
-    deleteItem: function deleteItem(item) {
+    campusListener: function campusListener() {
       var _this4 = this;
+
+      axios.post("/api/v1/campusListener", {
+        'campus_id': this.editedItem.campus_id
+      }).then(function (res) {
+        _this4.programs = res.data.programs;
+        _this4.sections = '';
+      })["catch"](function (err) {
+        console.error(err);
+      });
+    },
+    programListener: function programListener() {
+      var _this5 = this;
+
+      axios.post("/api/v1/programListener", {
+        'program_id': this.editedItem.program_id
+      }).then(function (res) {
+        _this5.sections = res.data.sections;
+      })["catch"](function (err) {
+        console.error(err);
+      });
+    },
+    campusListenerNew: function campusListenerNew() {
+      var _this6 = this;
+
+      axios.post("/api/v1/campusListener", {
+        'campus_id': this.editedItem.campus
+      }).then(function (res) {
+        _this6.programs = res.data.programs;
+        _this6.sections = '';
+      })["catch"](function (err) {
+        console.error(err);
+      });
+    },
+    programListenerNew: function programListenerNew() {
+      var _this7 = this;
+
+      axios.post("/api/v1/programListener", {
+        'program_id': this.editedItem.program
+      }).then(function (res) {
+        _this7.sections = res.data.sections;
+      })["catch"](function (err) {
+        console.error(err);
+      });
+    },
+    deleteItem: function deleteItem(item) {
+      var _this8 = this;
 
       var index = this.students.data.indexOf(item);
       var decide = confirm("Are you sure you want to delete this item?");
 
       if (decide) {
         axios["delete"]("/api/v1/students/" + item.id).then(function (res) {
-          _this4.text = "Record Deleted Successfully!";
-          _this4.snackbar = true;
+          _this8.text = "Record Deleted Successfully!";
+          _this8.snackbarColor = "primary darken-1";
+          _this8.snackbar = true;
 
-          _this4.users.data.splice(index, 1);
+          _this8.students.data.splice(index, 1);
         })["catch"](function (err) {
           console.log(err.response);
-          _this4.text = "Error Deleting Record";
-          _this4.snackbar = true;
+          _this8.text = "Error Deleting Record";
+          _this8.snackbarColor = "error darken-1";
+          _this8.snackbar = true;
         });
       }
     },
     close: function close() {
-      var _this5 = this;
+      var _this9 = this;
 
       this.dialog = false;
       setTimeout(function () {
-        _this5.editedItem = Object.assign({}, _this5.defaultItem);
-        _this5.editedIndex = -1;
+        _this9.editedItem = Object.assign({}, _this9.defaultItem);
+        _this9.editedIndex = -1;
       }, 300);
     },
     save: function save() {
-      // if (this.editedIndex > -1) {
-      //   const index = this.editedIndex;
-      //   axios
-      //     .put("/api/v1/students/" + this.editedItem.id, this.editedItem)
-      //     .then((res) => {
-      //       this.text = "Record Updated Successfully!";
-      //       this.snackbar = true;
-      //       Object.assign(this.students.data[index], res.data.user);
-      //     })
-      //     .catch((err) => {
-      //       console.log(err.response);
-      //       this.text = "Error Updating Record";
-      //       this.snackbar = true;
-      //     });
-      // } else {
-      //   axios
-      //     .post("/api/v1/students", this.editedItem)
-      //     .then((res) => {
-      //       this.text = "Record Added Successfully!";
-      //       this.snackbar = true;
-      //       this.students.data.push(res.data.student);
-      //       console.log(res);
-      //     })
-      //     .catch((err) => {
-      //       console.dir(err);
-      //       this.text = "Error Inserting Record";
-      //       this.snackbar = true;
-      //     });
-      // }
-      // this.close();
+      var _this10 = this;
+
       console.log(this.editedItem);
+
+      if (this.editedIndex > -1) {
+        var index = this.editedIndex;
+        axios.put("/api/v1/students/" + this.editedItem.id, this.editedItem).then(function (res) {
+          _this10.text = "Record Updated Successfully!";
+          _this10.snackbarColor = "primary darken-1";
+          _this10.snackbar = true;
+          Object.assign(_this10.students.data[index], res.data.student);
+          console.log(_this10.editedItem);
+        })["catch"](function (err) {
+          console.log(err.response);
+          _this10.text = "Error Updating Record";
+          _this10.snackbarColor = "error darken-1";
+          _this10.snackbar = true;
+        });
+      } else {
+        axios.post("/api/v1/students", this.editedItem).then(function (res) {
+          _this10.text = "Record Added Successfully!";
+          _this10.snackbarColor = "primary darken-1";
+          _this10.snackbar = true; // this.students.data.push(res.data.student); 
+
+          _this10.students = res.data.students;
+        })["catch"](function (err) {
+          console.dir(err);
+          _this10.text = "Error Inserting Record";
+          _this10.snackbarColor = "error darken-1";
+          _this10.snackbar = true;
+        });
+      }
+
+      this.close();
     }
   }
 });
@@ -3830,78 +4712,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -3913,205 +4723,207 @@ __webpack_require__.r(__webpack_exports__);
       text: "",
       success: "",
       error: "",
+      snackbarColor: "",
       headers: [{
         text: "No",
         align: "left",
         value: "id"
       }, {
-        text: "Clearance Id",
-        value: "clearance_id"
+        text: "Student Number",
+        value: "student_number"
       }, {
         text: "Name",
         value: "name"
       }, {
-        text: "Student Number",
-        value: "student_number"
-      }, {
         text: "Program",
         value: "program"
+      }, {
+        text: "Clearance Id",
+        value: "clearance_id"
+      }, {
+        text: "Date Submitted",
+        value: "datesubmitted"
       }, {
         text: "Action",
         value: "actions"
       }],
-      submittedClearances: [],
-      roles: [],
-      rules: {
-        required: function required(v) {
-          return !!v || "This Field is Required";
-        },
-        min: function min(v) {
-          return v.length >= 5 || "Minimum 5 Characters Required";
-        },
-        validEmail: function validEmail(v) {
-          return /.+@.+\..+/.test(v) || "Email must be valid";
-        }
-      },
+      page: 0,
+      totalsubmittedclearances: 0,
+      numberOfPages: 0,
+      options: {},
+      submittedclearances: [],
       editedIndex: -1,
       editedItem: {
         id: "",
+        token: "",
         name: "",
-        email: "",
-        role: "",
-        password: "",
-        rpassword: "",
-        created_at: ""
+        student_number: "",
+        program: "",
+        purpose: "",
+        staff: ""
       },
       defaultItem: {
         id: "",
+        token: "",
         name: "",
-        email: "",
-        password: "",
-        rpassword: "",
-        role: "",
-        created_at: ""
+        student_number: "",
+        program: "",
+        purpose: "",
+        staff: ""
       }
     };
   },
-  computed: {
-    formTitle: function formTitle() {
-      return this.editedIndex === -1 ? "New User" : "Edit User";
-    },
-    formIcon: function formIcon() {
-      return this.editedIndex === -1 ? "mdi-account-plus" : "mdi-account-edit";
-    },
-    passwordmatch: function passwordmatch() {
-      return this.editedItem.password != this.editedItem.rpassword ? "Password Does Not Match" : true;
-    },
-    checkEmail: function checkEmail() {
-      var _this = this;
-
-      if (/.+@.+\..+/.test(this.editedItem.email)) {
-        axios.post("/api/v1/email/verify", {
-          email: this.editedItem.email
-        }).then(function (res) {
-          _this.success = res.data.message;
-          _this.error = "";
-        })["catch"](function (err) {
-          _this.success = "";
-          _this.error = "Email Already Exist";
-        });
-      }
-    }
-  },
+  computed: {},
   watch: {
     dialog: function dialog(val) {
       val || this.close();
-    }
+    },
+    options: {
+      handler: function handler() {
+        this.readDataFromAPI();
+      }
+    },
+    deep: true
   },
   created: function created() {
     this.initialize();
   },
   methods: {
-    updateRole: function updateRole(item) {
+    readDataFromAPI: function readDataFromAPI() {
+      var _this = this;
+
+      this.loading = true;
+      var _this$options = this.options,
+          page = _this$options.page,
+          itemsPerPage = _this$options.itemsPerPage;
+      var pageNumber = page;
+      axios.get("/api/v1/submittedclearances?page=" + pageNumber, {
+        params: {
+          'per_page': itemsPerPage
+        }
+      }).then(function (response) {
+        //Then injecting the result to datatable parameters.
+        _this.loading = false;
+        _this.submittedclearances = response.data.submittedclearances;
+        _this.totalsubmittedclearances = response.data.submittedclearances.total;
+        _this.numberOfPages = response.data.submittedclearances.last_page;
+      });
+    },
+    searchIt: function searchIt(d) {
       var _this2 = this;
 
-      var index = this.users.data.indexOf(item);
-      axios.post('/api/v1/user/role', {
-        'role': item.role,
-        'user': item.id
-      }).then(function (res) {
-        _this2.text = res.data.user.name + "'s Role Updated to " + res.data.user.role;
-        _this2.snackbar = true;
-      })["catch"](function (err) {
-        console.error(err);
-      });
-    },
-    paginate: function paginate(e) {
-      var _this3 = this;
+      if (d.length > 2) {
+        var _this$options2 = this.options,
+            page = _this$options2.page,
+            itemsPerPage = _this$options2.itemsPerPage;
+        axios.get("/api/v1/submittedclearances/".concat(d)).then(function (res) {
+          _this2.loading = false;
+          _this2.submittedclearances = res.data.submittedclearances;
+          _this2.totalsubmittedclearances = res.data.submittedclearances.total;
+          _this2.numberOfPages = res.data.submittedclearances.last_page;
+        })["catch"](function (err) {
+          console.error(err);
+        });
+      }
 
-      axios.get("/api/v1/submittedclearances?page=".concat(e.page), {
-        params: {
-          'per_page': e.itemsPerPage
-        }
-      }).then(function (res) {
-        console.dir(res.data.students);
-        _this3.submittedClearances = res.data.students;
-        _this3.roles = res.data.roles;
-      })["catch"](function (err) {
-        if (err.response.status == 401) {
-          localStorage.removeItem("token");
-
-          _this3.$router.push("/login");
-        }
-      });
+      if (d.length <= 0) {
+        axios.get("/api/v1/submittedclearances?page=".concat(d.page), {
+          params: {
+            'per_page': d.itemsPerPage
+          }
+        }).then(function (res) {
+          _this2.loading = false;
+          _this2.submittedclearances = res.data.submittedclearances;
+          _this2.totalsubmittedclearances = res.data.submittedclearances.total;
+          _this2.numberOfPages = res.data.submittedclearances.last_page;
+        })["catch"](function (err) {
+          console.error(err);
+        });
+      }
     },
     initialize: function initialize() {
-      var _this4 = this;
+      var _this3 = this;
 
       axios.interceptors.request.use(function (config) {
-        _this4.loading = true;
+        _this3.loading = true;
         return config;
       }, function (error) {
-        _this4.loading = false;
+        _this3.loading = false;
         return Promise.reject(error);
       });
       axios.interceptors.response.use(function (response) {
-        _this4.loading = false;
+        _this3.loading = false;
         return response;
       }, function (error) {
-        _this4.loading = false;
+        _this3.loading = false;
         return Promise.reject(error);
       });
     },
     editItem: function editItem(item) {
-      this.editedIndex = this.users.data.indexOf(item);
+      this.editedIndex = this.submittedclearances.data.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
     },
     deleteItem: function deleteItem(item) {
-      var _this5 = this;
+      var _this4 = this;
 
-      var index = this.users.data.indexOf(item);
+      var index = this.submittedclearances.data.indexOf(item);
       var decide = confirm("Are you sure you want to delete this item?");
 
       if (decide) {
-        axios["delete"]("/api/v1/users/" + item.id).then(function (res) {
-          _this5.text = "Record Deleted Successfully!";
-          _this5.snackbar = true;
+        axios["delete"]("/api/v1/submittedclearances/" + item.id).then(function (res) {
+          _this4.text = "Record Deleted Successfully!";
+          _this4.snackbarColor = "primary darken-1";
+          _this4.snackbar = true;
 
-          _this5.users.data.splice(index, 1);
+          _this4.submittedclearances.data.splice(index, 1);
         })["catch"](function (err) {
           console.log(err.response);
-          _this5.text = "Error Deleting Record";
-          _this5.snackbar = true;
+          _this4.text = "Error Deleting Record";
+          _this4.snackbarColor = "error darken-1";
+          _this4.snackbar = true;
         });
       }
     },
     close: function close() {
-      var _this6 = this;
+      var _this5 = this;
 
       this.dialog = false;
       setTimeout(function () {
-        _this6.editedItem = Object.assign({}, _this6.defaultItem);
-        _this6.editedIndex = -1;
+        _this5.editedItem = Object.assign({}, _this5.defaultItem);
+        _this5.editedIndex = -1;
       }, 300);
     },
     save: function save() {
-      var _this7 = this;
+      var _this6 = this;
+
+      console.log(this.editedItem);
 
       if (this.editedIndex > -1) {
         var index = this.editedIndex;
-        axios.put("/api/v1/users/" + this.editedItem.id, this.editedItem).then(function (res) {
-          _this7.text = "Record Updated Successfully!";
-          _this7.snackbar = true;
-          Object.assign(_this7.users.data[index], res.data.user);
+        axios.put("/api/v1/submittedclearances/" + this.editedItem.id, this.editedItem).then(function (res) {
+          _this6.text = "Record Updated Successfully!";
+          _this6.snackbarColor = "primary darken-1";
+          _this6.snackbar = true;
+          Object.assign(_this6.submittedclearances.data[index], res.data.submittedclearance);
         })["catch"](function (err) {
           console.log(err.response);
-          _this7.text = "Error Updating Record";
-          _this7.snackbar = true;
+          _this6.text = "Error Updating Record";
+          _this6.snackbarColor = "error darken-1";
+          _this6.snackbar = true;
         });
       } else {
-        axios.post("/api/v1/users", this.editedItem).then(function (res) {
-          _this7.text = "Record Added Successfully!";
-          _this7.snackbar = true;
+        axios.post("/api/v1/submittedclearances", this.editedItem).then(function (res) {
+          _this6.text = "Record Added Successfully!";
+          _this6.snackbarColor = "primary darken-1";
+          _this6.snackbar = true; // this.students.data.push(res.data.student); 
 
-          _this7.users.data.push(res.data.user);
-
-          console.log(res);
+          _this6.submittedclearances = res.data.submittedclearances;
         })["catch"](function (err) {
           console.dir(err);
-          _this7.text = "Error Inserting Record";
-          _this7.snackbar = true;
+          _this6.text = "Error Inserting Record";
+          _this6.snackbarColor = "error darken-1";
+          _this6.snackbar = true;
         });
       }
 
@@ -26594,192 +27406,216 @@ var render = function() {
           _c("v-divider"),
           _vm._v(" "),
           _c(
-            "v-list",
-            { attrs: { dense: "" } },
+            "div",
+            {
+              directives: [
+                {
+                  name: "slimscroll",
+                  rawName: "v-slimscroll",
+                  value: _vm.scrollOptions,
+                  expression: "scrollOptions"
+                }
+              ]
+            },
             [
-              _vm._l(_vm.items, function(item) {
-                return [
-                  item.heading
-                    ? _c(
-                        "v-row",
-                        { key: item.heading, attrs: { align: "center" } },
-                        [
-                          _c(
-                            "v-col",
-                            { attrs: { cols: "6" } },
-                            [
-                              item.heading
-                                ? _c("v-subheader", [
-                                    _vm._v(
-                                      "\n              " +
-                                        _vm._s(item.heading) +
-                                        "\n            "
-                                    )
-                                  ])
-                                : _vm._e()
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-col",
-                            {
-                              staticClass: "text-center",
-                              attrs: { cols: "6" }
-                            },
+              _c(
+                "v-list",
+                { attrs: { dense: "" } },
+                [
+                  _vm._l(_vm.items, function(item) {
+                    return [
+                      item.heading
+                        ? _c(
+                            "v-row",
+                            { key: item.heading, attrs: { align: "center" } },
                             [
                               _c(
-                                "a",
+                                "v-col",
+                                { attrs: { cols: "6" } },
+                                [
+                                  item.heading
+                                    ? _c("v-subheader", [
+                                        _vm._v(
+                                          "\n              " +
+                                            _vm._s(item.heading) +
+                                            "\n            "
+                                        )
+                                      ])
+                                    : _vm._e()
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-col",
                                 {
-                                  staticClass: "body-2 black--text",
-                                  attrs: { href: "#!" }
+                                  staticClass: "text-center",
+                                  attrs: { cols: "6" }
                                 },
-                                [_vm._v("EDIT")]
+                                [
+                                  _c(
+                                    "a",
+                                    {
+                                      staticClass: "body-2 black--text",
+                                      attrs: { href: "#!" }
+                                    },
+                                    [_vm._v("EDIT")]
+                                  )
+                                ]
                               )
-                            ]
+                            ],
+                            1
                           )
-                        ],
-                        1
-                      )
-                    : item.children
-                    ? _c(
-                        "v-list-group",
-                        {
-                          key: item.text,
-                          attrs: {
-                            "prepend-icon": item.model
-                              ? item.icon
-                              : item["icon-alt"],
-                            "append-icon": ""
-                          },
-                          scopedSlots: _vm._u(
+                        : item.children
+                        ? _c(
+                            "v-list-group",
+                            {
+                              key: item.text,
+                              attrs: {
+                                "prepend-icon": item.model
+                                  ? item.icon
+                                  : item["icon-alt"],
+                                "append-icon": ""
+                              },
+                              scopedSlots: _vm._u(
+                                [
+                                  {
+                                    key: "activator",
+                                    fn: function() {
+                                      return [
+                                        _c(
+                                          "v-list-item-content",
+                                          [
+                                            _c("v-list-item-title", [
+                                              _vm._v(
+                                                "\n                " +
+                                                  _vm._s(item.text) +
+                                                  "\n              "
+                                              )
+                                            ])
+                                          ],
+                                          1
+                                        )
+                                      ]
+                                    },
+                                    proxy: true
+                                  }
+                                ],
+                                null,
+                                true
+                              ),
+                              model: {
+                                value: item.model,
+                                callback: function($$v) {
+                                  _vm.$set(item, "model", $$v)
+                                },
+                                expression: "item.model"
+                              }
+                            },
                             [
-                              {
-                                key: "activator",
-                                fn: function() {
-                                  return [
+                              _vm._v(" "),
+                              _vm._l(item.children, function(child, i) {
+                                return _c(
+                                  "v-list-item",
+                                  {
+                                    key: i,
+                                    attrs: { to: child.link, link: "" }
+                                  },
+                                  [
+                                    child.icon
+                                      ? _c(
+                                          "v-list-item-action",
+                                          [
+                                            _c("v-icon", [
+                                              _vm._v(_vm._s(child.icon))
+                                            ])
+                                          ],
+                                          1
+                                        )
+                                      : _vm._e(),
+                                    _vm._v(" "),
                                     _c(
                                       "v-list-item-content",
+                                      {
+                                        staticStyle: { "padding-left": "20px" }
+                                      },
                                       [
                                         _c("v-list-item-title", [
                                           _vm._v(
                                             "\n                " +
-                                              _vm._s(item.text) +
+                                              _vm._s(child.text) +
                                               "\n              "
                                           )
                                         ])
                                       ],
                                       1
                                     )
-                                  ]
-                                },
-                                proxy: true
-                              }
-                            ],
-                            null,
-                            true
-                          ),
-                          model: {
-                            value: item.model,
-                            callback: function($$v) {
-                              _vm.$set(item, "model", $$v)
-                            },
-                            expression: "item.model"
-                          }
-                        },
-                        [
-                          _vm._v(" "),
-                          _vm._l(item.children, function(child, i) {
-                            return _c(
-                              "v-list-item",
-                              { key: i, attrs: { to: child.link, link: "" } },
-                              [
-                                child.icon
-                                  ? _c(
-                                      "v-list-item-action",
-                                      [
-                                        _c("v-icon", [
-                                          _vm._v(_vm._s(child.icon))
-                                        ])
-                                      ],
-                                      1
-                                    )
-                                  : _vm._e(),
-                                _vm._v(" "),
-                                _c(
-                                  "v-list-item-content",
-                                  { staticStyle: { "padding-left": "20px" } },
-                                  [
-                                    _c("v-list-item-title", [
-                                      _vm._v(
-                                        "\n                " +
-                                          _vm._s(child.text) +
-                                          "\n              "
-                                      )
-                                    ])
                                   ],
                                   1
                                 )
-                              ],
-                              1
-                            )
-                          })
-                        ],
-                        2
-                      )
-                    : _c(
-                        "v-list-item",
-                        { key: item.text, attrs: { to: item.link, link: "" } },
-                        [
-                          _c(
-                            "v-list-item-action",
-                            [_c("v-icon", [_vm._v(_vm._s(item.icon))])],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-list-item-content",
+                              })
+                            ],
+                            2
+                          )
+                        : _c(
+                            "v-list-item",
+                            {
+                              key: item.text,
+                              attrs: { to: item.link, link: "" }
+                            },
                             [
-                              _c("v-list-item-title", [
-                                _vm._v(
-                                  "\n              " +
-                                    _vm._s(item.text) +
-                                    "\n            "
-                                )
-                              ])
+                              _c(
+                                "v-list-item-action",
+                                [_c("v-icon", [_vm._v(_vm._s(item.icon))])],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-list-item-content",
+                                [
+                                  _c("v-list-item-title", [
+                                    _vm._v(
+                                      "\n              " +
+                                        _vm._s(item.text) +
+                                        "\n            "
+                                    )
+                                  ])
+                                ],
+                                1
+                              )
                             ],
                             1
                           )
+                    ]
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "v-list-item",
+                    { on: { click: _vm.logout } },
+                    [
+                      _c(
+                        "v-list-item-action",
+                        [_c("v-icon", [_vm._v("mdi-logout-variant")])],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-list-item-content",
+                        [
+                          _c("v-list-item-title", [
+                            _vm._v("\n              Logout\n            ")
+                          ])
                         ],
                         1
                       )
-                ]
-              }),
-              _vm._v(" "),
-              _c(
-                "v-list-item",
-                { on: { click: _vm.logout } },
-                [
-                  _c(
-                    "v-list-item-action",
-                    [_c("v-icon", [_vm._v("mdi-logout-variant")])],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-list-item-content",
-                    [
-                      _c("v-list-item-title", [
-                        _vm._v("\n              Logout\n            ")
-                      ])
                     ],
                     1
                   )
                 ],
-                1
+                2
               )
             ],
-            2
+            1
           )
         ],
         1
@@ -26984,6 +27820,200 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ClearanceListComponent.vue?vue&type=template&id=4bae00ee&":
+/*!*************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ClearanceListComponent.vue?vue&type=template&id=4bae00ee& ***!
+  \*************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-sheet",
+    [
+      _c(
+        "v-card",
+        [
+          _c(
+            "v-container",
+            [
+              _c("v-data-table", {
+                staticClass: "elevation-0",
+                attrs: {
+                  "item-key": "id",
+                  loading: _vm.loading,
+                  "loading-text": "Loading... Please wait",
+                  headers: _vm.headers,
+                  page: _vm.page + 1,
+                  pageCount: _vm.numberOfPages,
+                  items: _vm.clearances.data,
+                  options: _vm.options,
+                  "server-items-length": _vm.totalclearances,
+                  "items-per-page": 10,
+                  "show-select": "",
+                  "footer-props": {
+                    itemsPerPageOptions: [5, 10, 15],
+                    itemsPerPageText: "Clearance Request Per Page",
+                    "show-current-page": true,
+                    "show-first-last-page": true
+                  }
+                },
+                on: {
+                  "update:options": function($event) {
+                    _vm.options = $event
+                  }
+                },
+                scopedSlots: _vm._u([
+                  {
+                    key: "top",
+                    fn: function() {
+                      return [
+                        _c("v-text-field", {
+                          attrs: {
+                            "append-icon": "mdi-magnify",
+                            label: "Search"
+                          },
+                          on: { input: _vm.searchIt }
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "v-toolbar",
+                          { attrs: { flat: "", color: "white" } },
+                          [
+                            _c("div", { staticClass: "overline text-h6" }, [
+                              _vm._v(
+                                "\n            Clearance List\n            \n          "
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("v-spacer")
+                          ],
+                          1
+                        )
+                      ]
+                    },
+                    proxy: true
+                  },
+                  {
+                    key: "item.id",
+                    fn: function(ref) {
+                      var item = ref.item
+                      return [
+                        _c("td", [
+                          _vm._v(_vm._s(_vm.clearances.data.indexOf(item) + 1))
+                        ])
+                      ]
+                    }
+                  },
+                  {
+                    key: "item.actions",
+                    fn: function(ref) {
+                      var item = ref.item
+                      return [
+                        [
+                          _c(
+                            "v-btn",
+                            {
+                              staticClass: "ma-2",
+                              attrs: {
+                                color: "primary",
+                                depressed: "",
+                                small: ""
+                              }
+                            },
+                            [_vm._v("View")]
+                          )
+                        ]
+                      ]
+                    }
+                  }
+                ])
+              }),
+              _vm._v(" "),
+              _c(
+                "v-snackbar",
+                {
+                  attrs: {
+                    color: _vm.snackbarColor,
+                    right: "",
+                    timeout: "5000",
+                    outlined: "",
+                    top: "",
+                    width: "50"
+                  },
+                  scopedSlots: _vm._u([
+                    {
+                      key: "action",
+                      fn: function(ref) {
+                        var attrs = ref.attrs
+                        return [
+                          _c(
+                            "v-btn",
+                            _vm._b(
+                              {
+                                attrs: { color: _vm.snackbarColor, text: "" },
+                                on: {
+                                  click: function($event) {
+                                    _vm.snackbar = false
+                                  }
+                                }
+                              },
+                              "v-btn",
+                              attrs,
+                              false
+                            ),
+                            [
+                              _c("v-icon", { attrs: { dark: "", left: "" } }, [
+                                _vm._v("\n        mdi-close\n      ")
+                              ]),
+                              _vm._v("close\n    ")
+                            ],
+                            1
+                          )
+                        ]
+                      }
+                    }
+                  ]),
+                  model: {
+                    value: _vm.snackbar,
+                    callback: function($$v) {
+                      _vm.snackbar = $$v
+                    },
+                    expression: "snackbar"
+                  }
+                },
+                [
+                  _c("v-icon", { attrs: { left: "" } }, [
+                    _vm._v("\n        mdi-error\n      ")
+                  ]),
+                  _vm._v(_vm._s(_vm.text) + "\n\n    ")
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ClearanceRequestsComponent.vue?vue&type=template&id=1d0bdc08&":
 /*!*****************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ClearanceRequestsComponent.vue?vue&type=template&id=1d0bdc08& ***!
@@ -27000,127 +28030,414 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "v-app",
+    "v-sheet",
     [
-      _c("v-data-table", {
-        staticClass: "elevation-1",
-        attrs: {
-          "item-key": "name",
-          loading: _vm.loading,
-          "loading-text": "Loading... Please wait",
-          headers: _vm.headers,
-          "server-items-length": _vm.clearancerequests.total,
-          items: _vm.clearancerequests.data,
-          "sort-by": "name",
-          color: "error",
-          "items-per-page": 10,
-          "show-select": "",
-          "footer-props": {
-            itemsPerPageOptions: [5, 10, 15, 100],
-            itemsPerPageText: "Request Per Page",
-            "show-current-page": true,
-            "show-first-last-page": true
-          }
-        },
-        on: { pagination: _vm.paginate },
-        scopedSlots: _vm._u([
-          {
-            key: "top",
-            fn: function() {
-              return [
-                _c(
-                  "v-toolbar",
-                  { attrs: { flat: "", color: "white" } },
-                  [
-                    _c("v-toolbar-title", [_vm._v("Clearance Request List")]),
-                    _vm._v(" "),
-                    _c("v-spacer")
-                  ],
-                  1
-                )
-              ]
-            },
-            proxy: true
-          },
-          {
-            key: "item.actions",
-            fn: function(ref) {
-              var item = ref.item
-              return [
-                _c(
-                  "v-icon",
-                  {
-                    staticClass: "mr-2",
-                    attrs: { small: "" },
-                    on: {
-                      click: function($event) {
-                        return _vm.editItem(item)
-                      }
-                    }
-                  },
-                  [_vm._v(" mdi-pencil ")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "v-icon",
-                  {
-                    staticClass: "mr-2",
-                    attrs: { small: "" },
-                    on: {
-                      click: function($event) {
-                        return _vm.deleteItem(item)
-                      }
-                    }
-                  },
-                  [_vm._v("\n        mdi-delete-forever\n      ")]
-                )
-              ]
-            }
-          },
-          {
-            key: "no-data",
-            fn: function() {
-              return [
-                _c(
-                  "v-btn",
-                  {
-                    attrs: { color: "primary" },
-                    on: { click: _vm.initialize }
-                  },
-                  [_vm._v(" Reset ")]
-                )
-              ]
-            },
-            proxy: true
-          }
-        ])
-      }),
-      _vm._v(" "),
       _c(
-        "v-snackbar",
-        {
-          attrs: { bottom: "" },
-          model: {
-            value: _vm.snackbar,
-            callback: function($$v) {
-              _vm.snackbar = $$v
-            },
-            expression: "snackbar"
-          }
-        },
+        "v-card",
         [
-          _vm._v("\n    " + _vm._s(_vm.text) + "\n\n    "),
           _c(
-            "v-btn",
-            {
-              attrs: { color: "pink", text: "" },
-              on: {
-                click: function($event) {
-                  _vm.snackbar = false
-                }
-              }
-            },
-            [_vm._v(" Close ")]
+            "v-container",
+            [
+              _c("v-data-table", {
+                staticClass: "elevation-0",
+                attrs: {
+                  "item-key": "id",
+                  loading: _vm.loading,
+                  "loading-text": "Loading... Please wait",
+                  headers: _vm.headers,
+                  page: _vm.page + 1,
+                  pageCount: _vm.numberOfPages,
+                  items: _vm.clearancerequests.data,
+                  options: _vm.options,
+                  "server-items-length": _vm.totalclearancerequests,
+                  "items-per-page": 10,
+                  "show-select": "",
+                  "footer-props": {
+                    itemsPerPageOptions: [5, 10, 15],
+                    itemsPerPageText: "Clearance Request Per Page",
+                    "show-current-page": true,
+                    "show-first-last-page": true
+                  }
+                },
+                on: {
+                  "update:options": function($event) {
+                    _vm.options = $event
+                  }
+                },
+                scopedSlots: _vm._u([
+                  {
+                    key: "top",
+                    fn: function() {
+                      return [
+                        _c("v-text-field", {
+                          attrs: {
+                            "append-icon": "mdi-magnify",
+                            label: "Search"
+                          },
+                          on: { input: _vm.searchIt }
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "v-toolbar",
+                          { attrs: { flat: "", color: "white" } },
+                          [
+                            _c("div", { staticClass: "overline text-h6" }, [
+                              _vm._v(
+                                "\n            Clearance Request List\n            "
+                              ),
+                              _c(
+                                "span",
+                                { staticClass: "font-italic subtitle-2" },
+                                [_vm._v("(2nd Semester A/Y 2020-2021 )")]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("v-spacer")
+                          ],
+                          1
+                        )
+                      ]
+                    },
+                    proxy: true
+                  },
+                  {
+                    key: "item.id",
+                    fn: function(ref) {
+                      var item = ref.item
+                      return [
+                        _c("td", [
+                          _vm._v(
+                            _vm._s(_vm.clearancerequests.data.indexOf(item) + 1)
+                          )
+                        ])
+                      ]
+                    }
+                  },
+                  {
+                    key: "item.actions",
+                    fn: function(ref) {
+                      var item = ref.item
+                      return [
+                        [
+                          _c(
+                            "v-btn",
+                            {
+                              staticClass: "ma-2",
+                              attrs: {
+                                color: "success",
+                                depressed: "",
+                                "x-small": ""
+                              }
+                            },
+                            [
+                              _c(
+                                "v-icon",
+                                { attrs: { dark: "", "x-small": "" } },
+                                [
+                                  _vm._v(
+                                    "\n        mdi-check-circle-outline\n      "
+                                  )
+                                ]
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        _vm._v(" "),
+                        [
+                          _c(
+                            "v-btn",
+                            {
+                              staticClass: "ma-2",
+                              attrs: {
+                                color: "error",
+                                depressed: "",
+                                "x-small": ""
+                              }
+                            },
+                            [
+                              _c(
+                                "v-icon",
+                                { attrs: { dark: "", "x-small": "" } },
+                                [
+                                  _vm._v(
+                                    "\n        mdi-close-circle-outline\n      "
+                                  )
+                                ]
+                              )
+                            ],
+                            1
+                          )
+                        ]
+                      ]
+                    }
+                  }
+                ])
+              }),
+              _vm._v(" "),
+              _c(
+                "v-snackbar",
+                {
+                  attrs: {
+                    color: _vm.snackbarColor,
+                    right: "",
+                    timeout: "5000",
+                    outlined: "",
+                    top: "",
+                    width: "50"
+                  },
+                  scopedSlots: _vm._u([
+                    {
+                      key: "action",
+                      fn: function(ref) {
+                        var attrs = ref.attrs
+                        return [
+                          _c(
+                            "v-btn",
+                            _vm._b(
+                              {
+                                attrs: { color: _vm.snackbarColor, text: "" },
+                                on: {
+                                  click: function($event) {
+                                    _vm.snackbar = false
+                                  }
+                                }
+                              },
+                              "v-btn",
+                              attrs,
+                              false
+                            ),
+                            [
+                              _c("v-icon", { attrs: { dark: "", left: "" } }, [
+                                _vm._v("\n        mdi-close\n      ")
+                              ]),
+                              _vm._v("close\n    ")
+                            ],
+                            1
+                          )
+                        ]
+                      }
+                    }
+                  ]),
+                  model: {
+                    value: _vm.snackbar,
+                    callback: function($$v) {
+                      _vm.snackbar = $$v
+                    },
+                    expression: "snackbar"
+                  }
+                },
+                [
+                  _c("v-icon", { attrs: { left: "" } }, [
+                    _vm._v("\n        mdi-error\n      ")
+                  ]),
+                  _vm._v(_vm._s(_vm.text) + "\n\n    ")
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ClearedClearancesComponent.vue?vue&type=template&id=0d6c8b76&":
+/*!*****************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ClearedClearancesComponent.vue?vue&type=template&id=0d6c8b76& ***!
+  \*****************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-sheet",
+    [
+      _c(
+        "v-card",
+        [
+          _c(
+            "v-container",
+            [
+              _c("v-data-table", {
+                staticClass: "elevation-0",
+                attrs: {
+                  "item-key": "id",
+                  loading: _vm.loading,
+                  "loading-text": "Loading... Please wait",
+                  headers: _vm.headers,
+                  page: _vm.page + 1,
+                  pageCount: _vm.numberOfPages,
+                  items: _vm.clearancerequests.data,
+                  options: _vm.options,
+                  "server-items-length": _vm.totalclearancerequests,
+                  "items-per-page": 10,
+                  "show-select": "",
+                  "footer-props": {
+                    itemsPerPageOptions: [5, 10, 15],
+                    itemsPerPageText: "Clearance Request Per Page",
+                    "show-current-page": true,
+                    "show-first-last-page": true
+                  }
+                },
+                on: {
+                  "update:options": function($event) {
+                    _vm.options = $event
+                  }
+                },
+                scopedSlots: _vm._u([
+                  {
+                    key: "top",
+                    fn: function() {
+                      return [
+                        _c("v-text-field", {
+                          attrs: {
+                            "append-icon": "mdi-magnify",
+                            label: "Search"
+                          },
+                          on: { input: _vm.searchIt }
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "v-toolbar",
+                          { attrs: { flat: "", color: "white" } },
+                          [
+                            _c("div", { staticClass: "overline text-h6" }, [
+                              _vm._v(
+                                "\n            Approved Clearance Request List\n            "
+                              ),
+                              _c(
+                                "span",
+                                { staticClass: "font-italic subtitle-2" },
+                                [_vm._v("(2nd Semester A/Y 2020-2021 )")]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("v-spacer")
+                          ],
+                          1
+                        )
+                      ]
+                    },
+                    proxy: true
+                  },
+                  {
+                    key: "item.id",
+                    fn: function(ref) {
+                      var item = ref.item
+                      return [
+                        _c("td", [
+                          _vm._v(
+                            _vm._s(_vm.clearancerequests.data.indexOf(item) + 1)
+                          )
+                        ])
+                      ]
+                    }
+                  },
+                  {
+                    key: "item.actions",
+                    fn: function(ref) {
+                      var item = ref.item
+                      return [
+                        [
+                          _c(
+                            "v-btn",
+                            {
+                              staticClass: "ma-2",
+                              attrs: {
+                                color: "primary",
+                                depressed: "",
+                                small: ""
+                              }
+                            },
+                            [_vm._v("View")]
+                          )
+                        ]
+                      ]
+                    }
+                  }
+                ])
+              }),
+              _vm._v(" "),
+              _c(
+                "v-snackbar",
+                {
+                  attrs: {
+                    color: _vm.snackbarColor,
+                    right: "",
+                    timeout: "5000",
+                    outlined: "",
+                    top: "",
+                    width: "50"
+                  },
+                  scopedSlots: _vm._u([
+                    {
+                      key: "action",
+                      fn: function(ref) {
+                        var attrs = ref.attrs
+                        return [
+                          _c(
+                            "v-btn",
+                            _vm._b(
+                              {
+                                attrs: { color: _vm.snackbarColor, text: "" },
+                                on: {
+                                  click: function($event) {
+                                    _vm.snackbar = false
+                                  }
+                                }
+                              },
+                              "v-btn",
+                              attrs,
+                              false
+                            ),
+                            [
+                              _c("v-icon", { attrs: { dark: "", left: "" } }, [
+                                _vm._v("\n        mdi-close\n      ")
+                              ]),
+                              _vm._v("close\n    ")
+                            ],
+                            1
+                          )
+                        ]
+                      }
+                    }
+                  ]),
+                  model: {
+                    value: _vm.snackbar,
+                    callback: function($$v) {
+                      _vm.snackbar = $$v
+                    },
+                    expression: "snackbar"
+                  }
+                },
+                [
+                  _c("v-icon", { attrs: { left: "" } }, [
+                    _vm._v("\n        mdi-error\n      ")
+                  ]),
+                  _vm._v(_vm._s(_vm.text) + "\n\n    ")
+                ],
+                1
+              )
+            ],
+            1
           )
         ],
         1
@@ -28094,420 +29411,782 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "v-card",
+    "v-sheet",
     [
       _c(
-        "v-container",
+        "v-card",
         [
-          _c("v-data-table", {
-            staticClass: "elevation-0",
-            attrs: {
-              "item-key": "id",
-              loading: _vm.loading,
-              "loading-text": "Loading... Please wait",
-              headers: _vm.headers,
-              page: _vm.page + 1,
-              pageCount: _vm.numberOfPages,
-              items: _vm.students.data,
-              options: _vm.options,
-              "server-items-length": _vm.totalStudents,
-              "items-per-page": 10,
-              "show-select": "",
-              "footer-props": {
-                itemsPerPageOptions: [5, 10, 15],
-                itemsPerPageText: "Students Per Page",
-                "show-current-page": true,
-                "show-first-last-page": true
-              }
-            },
-            on: {
-              "update:options": function($event) {
-                _vm.options = $event
-              }
-            },
-            scopedSlots: _vm._u([
-              {
-                key: "top",
-                fn: function() {
-                  return [
-                    _c("v-text-field", {
-                      attrs: { "append-icon": "mdi-magnify", label: "Search" },
-                      on: { input: _vm.searchIt }
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "v-toolbar",
-                      { attrs: { flat: "", color: "white" } },
-                      [
-                        _c("div", { staticClass: "overline text-h6" }, [
-                          _vm._v("\n            Student List\n            "),
-                          _c(
-                            "span",
-                            { staticClass: "font-italic subtitle-2" },
-                            [_vm._v("(2nd Semester A/Y 2020-2021 )")]
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("v-spacer"),
+          _c(
+            "v-container",
+            [
+              _c("v-data-table", {
+                staticClass: "elevation-0",
+                attrs: {
+                  "item-key": "id",
+                  loading: _vm.loading,
+                  "loading-text": "Loading... Please wait",
+                  headers: _vm.headers,
+                  page: _vm.page + 1,
+                  pageCount: _vm.numberOfPages,
+                  items: _vm.students.data,
+                  options: _vm.options,
+                  "server-items-length": _vm.totalStudents,
+                  "items-per-page": 10,
+                  "show-select": "",
+                  "footer-props": {
+                    itemsPerPageOptions: [5, 10, 15],
+                    itemsPerPageText: "Student Per Page",
+                    "show-current-page": true,
+                    "show-first-last-page": true
+                  }
+                },
+                on: {
+                  "update:options": function($event) {
+                    _vm.options = $event
+                  }
+                },
+                scopedSlots: _vm._u([
+                  {
+                    key: "top",
+                    fn: function() {
+                      return [
+                        _c("v-text-field", {
+                          attrs: {
+                            "append-icon": "mdi-magnify",
+                            label: "Search"
+                          },
+                          on: { input: _vm.searchIt }
+                        }),
                         _vm._v(" "),
                         _c(
-                          "v-dialog",
-                          {
-                            attrs: { "max-width": "500px" },
-                            scopedSlots: _vm._u([
-                              {
-                                key: "activator",
-                                fn: function(ref) {
-                                  var on = ref.on
-                                  var attrs = ref.attrs
-                                  return [
-                                    _c(
-                                      "v-btn",
-                                      _vm._g(
-                                        _vm._b(
-                                          {
-                                            staticClass: "mb-2",
-                                            attrs: {
-                                              color: "primary",
-                                              dark: ""
-                                            }
-                                          },
-                                          "v-btn",
-                                          attrs,
-                                          false
-                                        ),
-                                        on
-                                      ),
-                                      [
-                                        _vm._v(
-                                          "\n                New Student\n              "
-                                        )
-                                      ]
-                                    )
-                                  ]
-                                }
-                              }
-                            ]),
-                            model: {
-                              value: _vm.dialog,
-                              callback: function($$v) {
-                                _vm.dialog = $$v
-                              },
-                              expression: "dialog"
-                            }
-                          },
+                          "v-toolbar",
+                          { attrs: { flat: "", color: "white" } },
                           [
+                            _c("div", { staticClass: "overline text-h6" }, [
+                              _vm._v(
+                                "\n            Student List\n            "
+                              ),
+                              _c(
+                                "span",
+                                { staticClass: "font-italic subtitle-2" },
+                                [_vm._v("(2nd Semester A/Y 2020-2021 )")]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("v-spacer"),
                             _vm._v(" "),
                             _c(
-                              "v-card",
+                              "v-dialog",
+                              {
+                                attrs: { scrollable: "", "max-width": "500px" },
+                                scopedSlots: _vm._u([
+                                  {
+                                    key: "activator",
+                                    fn: function(ref) {
+                                      var on = ref.on
+                                      var attrs = ref.attrs
+                                      return [
+                                        _c(
+                                          "v-btn",
+                                          _vm._g(
+                                            _vm._b(
+                                              {
+                                                staticClass: "mb-2",
+                                                attrs: {
+                                                  color: "primary",
+                                                  dark: ""
+                                                }
+                                              },
+                                              "v-btn",
+                                              attrs,
+                                              false
+                                            ),
+                                            on
+                                          ),
+                                          [
+                                            _vm._v(
+                                              "\n              New Student\n            "
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    }
+                                  }
+                                ]),
+                                model: {
+                                  value: _vm.dialog,
+                                  callback: function($$v) {
+                                    _vm.dialog = $$v
+                                  },
+                                  expression: "dialog"
+                                }
+                              },
                               [
-                                _c(
-                                  "v-card-title",
-                                  { staticClass: "primary white--text" },
-                                  [
-                                    _c(
-                                      "v-icon",
-                                      {
-                                        staticClass: "white--text",
-                                        staticStyle: { "padding-right": "8px" }
-                                      },
-                                      [_vm._v(_vm._s(_vm.formIcon))]
-                                    ),
-                                    _vm._v(" "),
-                                    _c("span", { staticClass: "headline" }, [
-                                      _vm._v(_vm._s(_vm.formTitle))
-                                    ])
-                                  ],
-                                  1
-                                ),
                                 _vm._v(" "),
                                 _c(
-                                  "v-form",
-                                  {
-                                    attrs: { method: "post" },
-                                    on: {
-                                      submit: function($event) {
-                                        $event.stopPropagation()
-                                        $event.preventDefault()
-                                        return _vm.save($event)
-                                      }
-                                    },
-                                    model: {
-                                      value: _vm.valid,
-                                      callback: function($$v) {
-                                        _vm.valid = $$v
-                                      },
-                                      expression: "valid"
-                                    }
-                                  },
+                                  "v-card",
                                   [
                                     _c(
-                                      "v-card-text",
+                                      "v-card-title",
+                                      { staticClass: "primary white--text" },
                                       [
                                         _c(
-                                          "v-container",
+                                          "v-icon",
+                                          {
+                                            staticClass: "white--text",
+                                            staticStyle: {
+                                              "padding-right": "8px"
+                                            }
+                                          },
+                                          [_vm._v(_vm._s(_vm.formIcon))]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "span",
+                                          { staticClass: "headline" },
+                                          [_vm._v(_vm._s(_vm.formTitle))]
+                                        )
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c("v-divider"),
+                                    _vm._v(" "),
+                                    _c(
+                                      "v-card-text",
+                                      { staticStyle: { height: "500px" } },
+                                      [
+                                        _c(
+                                          "v-form",
+                                          {
+                                            attrs: { method: "post" },
+                                            on: {
+                                              submit: function($event) {
+                                                $event.stopPropagation()
+                                                $event.preventDefault()
+                                                return _vm.save($event)
+                                              }
+                                            },
+                                            model: {
+                                              value: _vm.valid,
+                                              callback: function($$v) {
+                                                _vm.valid = $$v
+                                              },
+                                              expression: "valid"
+                                            }
+                                          },
                                           [
-                                            _c(
-                                              "v-row",
-                                              [
-                                                _c(
-                                                  "v-col",
-                                                  {
-                                                    attrs: {
-                                                      cols: "12",
-                                                      sm: "12"
-                                                    }
-                                                  },
+                                            _vm.editedIndex != -1
+                                              ? _c(
+                                                  "v-container",
                                                   [
-                                                    _c("v-text-field", {
-                                                      attrs: {
-                                                        label: "Student Number",
-                                                        rules: [
-                                                          _vm.rules.required,
-                                                          _vm.rules.min
-                                                        ]
-                                                      },
-                                                      model: {
-                                                        value:
-                                                          _vm.editedItem
-                                                            .student_number,
-                                                        callback: function(
-                                                          $$v
-                                                        ) {
-                                                          _vm.$set(
-                                                            _vm.editedItem,
-                                                            "student_number",
-                                                            $$v
-                                                          )
-                                                        },
-                                                        expression:
-                                                          "editedItem.student_number"
-                                                      }
-                                                    })
-                                                  ],
-                                                  1
-                                                ),
-                                                _vm._v(" "),
-                                                _c(
-                                                  "v-col",
-                                                  {
-                                                    attrs: {
-                                                      cols: "12",
-                                                      sm: "12"
-                                                    }
-                                                  },
-                                                  [
-                                                    _c("v-text-field", {
-                                                      attrs: {
-                                                        label: "Full Name",
-                                                        rules: [
-                                                          _vm.rules.required,
-                                                          _vm.rules.min
-                                                        ]
-                                                      },
-                                                      model: {
-                                                        value:
-                                                          _vm.editedItem.name,
-                                                        callback: function(
-                                                          $$v
-                                                        ) {
-                                                          _vm.$set(
-                                                            _vm.editedItem,
-                                                            "name",
-                                                            $$v
-                                                          )
-                                                        },
-                                                        expression:
-                                                          "editedItem.name"
-                                                      }
-                                                    })
-                                                  ],
-                                                  1
-                                                ),
-                                                _vm._v(" "),
-                                                _c(
-                                                  "v-col",
-                                                  {
-                                                    staticStyle: {
-                                                      margin: "0"
-                                                    },
-                                                    attrs: {
-                                                      cols: "12",
-                                                      sm: "12"
-                                                    }
-                                                  },
-                                                  [
-                                                    _c("v-select", {
-                                                      attrs: {
-                                                        items: _vm.campuses,
-                                                        label: "Select Campus",
-                                                        value:
-                                                          "editedItem.campus",
-                                                        color: "primary",
-                                                        rules: [
-                                                          _vm.rules.required
-                                                        ]
-                                                      },
-                                                      model: {
-                                                        value:
-                                                          _vm.editedItem.campus,
-                                                        callback: function(
-                                                          $$v
-                                                        ) {
-                                                          _vm.$set(
-                                                            _vm.editedItem,
-                                                            "campus",
-                                                            $$v
-                                                          )
-                                                        },
-                                                        expression:
-                                                          "editedItem.campus"
-                                                      }
-                                                    })
-                                                  ],
-                                                  1
-                                                ),
-                                                _vm._v(" "),
-                                                _c(
-                                                  "v-col",
-                                                  {
-                                                    staticStyle: {
-                                                      margin: "0"
-                                                    },
-                                                    attrs: {
-                                                      cols: "12",
-                                                      sm: "12"
-                                                    }
-                                                  },
-                                                  [
-                                                    _c("v-select", {
-                                                      attrs: {
-                                                        items: _vm.programs,
-                                                        label: "Select Program",
-                                                        value:
-                                                          "editedItem.program",
-                                                        color: "primary",
-                                                        rules: [
-                                                          _vm.rules.required
-                                                        ]
-                                                      },
-                                                      model: {
-                                                        value:
-                                                          _vm.editedItem
-                                                            .program,
-                                                        callback: function(
-                                                          $$v
-                                                        ) {
-                                                          _vm.$set(
-                                                            _vm.editedItem,
-                                                            "program",
-                                                            $$v
-                                                          )
-                                                        },
-                                                        expression:
-                                                          "editedItem.program"
-                                                      }
-                                                    })
-                                                  ],
-                                                  1
-                                                ),
-                                                _vm._v(" "),
-                                                _c(
-                                                  "v-col",
-                                                  {
-                                                    staticStyle: {
-                                                      margin: "0"
-                                                    },
-                                                    attrs: {
-                                                      cols: "12",
-                                                      sm: "12"
-                                                    }
-                                                  },
-                                                  [
-                                                    _c("v-select", {
-                                                      attrs: {
-                                                        items: _vm.sections,
-                                                        label: "Select Section",
-                                                        value:
-                                                          "editedItem.section",
-                                                        color: "primary",
-                                                        rules: [
-                                                          _vm.rules.required
-                                                        ]
-                                                      },
-                                                      model: {
-                                                        value:
-                                                          _vm.editedItem
-                                                            .section,
-                                                        callback: function(
-                                                          $$v
-                                                        ) {
-                                                          _vm.$set(
-                                                            _vm.editedItem,
-                                                            "section",
-                                                            $$v
-                                                          )
-                                                        },
-                                                        expression:
-                                                          "editedItem.section"
-                                                      }
-                                                    })
-                                                  ],
-                                                  1
-                                                ),
-                                                _vm._v(" "),
-                                                _c(
-                                                  "v-col",
-                                                  {
-                                                    staticStyle: {
-                                                      margin: "0"
-                                                    },
-                                                    attrs: {
-                                                      cols: "12",
-                                                      sm: "12"
-                                                    }
-                                                  },
-                                                  [
-                                                    _c("v-select", {
-                                                      attrs: {
-                                                        items: _vm.years,
-                                                        label:
-                                                          "Select Year Level",
-                                                        value:
-                                                          "editedItem.year",
-                                                        color: "primary",
-                                                        rules: [
-                                                          _vm.rules.required
-                                                        ]
-                                                      },
-                                                      model: {
-                                                        value:
-                                                          _vm.editedItem.year,
-                                                        callback: function(
-                                                          $$v
-                                                        ) {
-                                                          _vm.$set(
-                                                            _vm.editedItem,
-                                                            "year",
-                                                            $$v
-                                                          )
-                                                        },
-                                                        expression:
-                                                          "editedItem.year"
-                                                      }
-                                                    })
+                                                    _c(
+                                                      "v-row",
+                                                      [
+                                                        _c(
+                                                          "v-col",
+                                                          {
+                                                            attrs: {
+                                                              cols: "12",
+                                                              sm: "12"
+                                                            }
+                                                          },
+                                                          [
+                                                            _c("v-text-field", {
+                                                              attrs: {
+                                                                label:
+                                                                  "Student Number",
+                                                                rules: [
+                                                                  _vm.rules
+                                                                    .required,
+                                                                  _vm.rules.min
+                                                                ]
+                                                              },
+                                                              model: {
+                                                                value:
+                                                                  _vm.editedItem
+                                                                    .student_number,
+                                                                callback: function(
+                                                                  $$v
+                                                                ) {
+                                                                  _vm.$set(
+                                                                    _vm.editedItem,
+                                                                    "student_number",
+                                                                    $$v
+                                                                  )
+                                                                },
+                                                                expression:
+                                                                  "editedItem.student_number"
+                                                              }
+                                                            })
+                                                          ],
+                                                          1
+                                                        ),
+                                                        _vm._v(" "),
+                                                        _c(
+                                                          "v-col",
+                                                          {
+                                                            attrs: {
+                                                              cols: "12",
+                                                              sm: "12"
+                                                            }
+                                                          },
+                                                          [
+                                                            _c("v-text-field", {
+                                                              attrs: {
+                                                                label:
+                                                                  "Full Name",
+                                                                rules: [
+                                                                  _vm.rules
+                                                                    .required,
+                                                                  _vm.rules.min
+                                                                ]
+                                                              },
+                                                              model: {
+                                                                value:
+                                                                  _vm.editedItem
+                                                                    .name,
+                                                                callback: function(
+                                                                  $$v
+                                                                ) {
+                                                                  _vm.$set(
+                                                                    _vm.editedItem,
+                                                                    "name",
+                                                                    $$v
+                                                                  )
+                                                                },
+                                                                expression:
+                                                                  "editedItem.name"
+                                                              }
+                                                            })
+                                                          ],
+                                                          1
+                                                        ),
+                                                        _vm._v(" "),
+                                                        _c(
+                                                          "v-col",
+                                                          {
+                                                            staticStyle: {
+                                                              margin: "0"
+                                                            },
+                                                            attrs: {
+                                                              cols: "12",
+                                                              sm: "12"
+                                                            }
+                                                          },
+                                                          [
+                                                            _c("v-select", {
+                                                              attrs: {
+                                                                items:
+                                                                  _vm.campuses,
+                                                                "item-text":
+                                                                  "name",
+                                                                label:
+                                                                  "Select Campus",
+                                                                "item-value":
+                                                                  "id",
+                                                                color:
+                                                                  "primary",
+                                                                rules: [
+                                                                  _vm.rules
+                                                                    .required
+                                                                ]
+                                                              },
+                                                              on: {
+                                                                change:
+                                                                  _vm.campusListener
+                                                              },
+                                                              model: {
+                                                                value:
+                                                                  _vm.editedItem
+                                                                    .campus_id,
+                                                                callback: function(
+                                                                  $$v
+                                                                ) {
+                                                                  _vm.$set(
+                                                                    _vm.editedItem,
+                                                                    "campus_id",
+                                                                    $$v
+                                                                  )
+                                                                },
+                                                                expression:
+                                                                  "editedItem.campus_id"
+                                                              }
+                                                            })
+                                                          ],
+                                                          1
+                                                        ),
+                                                        _vm._v(" "),
+                                                        _c(
+                                                          "v-col",
+                                                          {
+                                                            staticStyle: {
+                                                              margin: "0"
+                                                            },
+                                                            attrs: {
+                                                              cols: "12",
+                                                              sm: "12"
+                                                            }
+                                                          },
+                                                          [
+                                                            _c("v-select", {
+                                                              attrs: {
+                                                                items:
+                                                                  _vm.programs,
+                                                                label:
+                                                                  "Select Program",
+                                                                "item-value":
+                                                                  "id",
+                                                                "item-text":
+                                                                  "name",
+                                                                color:
+                                                                  "primary",
+                                                                rules: [
+                                                                  _vm.rules
+                                                                    .required
+                                                                ]
+                                                              },
+                                                              on: {
+                                                                change:
+                                                                  _vm.programListener
+                                                              },
+                                                              model: {
+                                                                value:
+                                                                  _vm.editedItem
+                                                                    .program_id,
+                                                                callback: function(
+                                                                  $$v
+                                                                ) {
+                                                                  _vm.$set(
+                                                                    _vm.editedItem,
+                                                                    "program_id",
+                                                                    $$v
+                                                                  )
+                                                                },
+                                                                expression:
+                                                                  "editedItem.program_id"
+                                                              }
+                                                            })
+                                                          ],
+                                                          1
+                                                        ),
+                                                        _vm._v(" "),
+                                                        _c(
+                                                          "v-col",
+                                                          {
+                                                            staticStyle: {
+                                                              margin: "0"
+                                                            },
+                                                            attrs: {
+                                                              cols: "12",
+                                                              sm: "12"
+                                                            }
+                                                          },
+                                                          [
+                                                            _c("v-select", {
+                                                              attrs: {
+                                                                items:
+                                                                  _vm.sections,
+                                                                label:
+                                                                  "Select Section",
+                                                                "item-value":
+                                                                  "id",
+                                                                "item-text":
+                                                                  "name",
+                                                                color:
+                                                                  "primary",
+                                                                rules: [
+                                                                  _vm.rules
+                                                                    .required
+                                                                ]
+                                                              },
+                                                              model: {
+                                                                value:
+                                                                  _vm.editedItem
+                                                                    .section_id,
+                                                                callback: function(
+                                                                  $$v
+                                                                ) {
+                                                                  _vm.$set(
+                                                                    _vm.editedItem,
+                                                                    "section_id",
+                                                                    $$v
+                                                                  )
+                                                                },
+                                                                expression:
+                                                                  "editedItem.section_id"
+                                                              }
+                                                            })
+                                                          ],
+                                                          1
+                                                        ),
+                                                        _vm._v(" "),
+                                                        _c(
+                                                          "v-col",
+                                                          {
+                                                            staticStyle: {
+                                                              margin: "0"
+                                                            },
+                                                            attrs: {
+                                                              cols: "12",
+                                                              sm: "12"
+                                                            }
+                                                          },
+                                                          [
+                                                            _c("v-select", {
+                                                              attrs: {
+                                                                items:
+                                                                  _vm.years,
+                                                                label:
+                                                                  "Select Year Level",
+                                                                "item-value":
+                                                                  "id",
+                                                                "item-text":
+                                                                  "name",
+                                                                color:
+                                                                  "primary",
+                                                                rules: [
+                                                                  _vm.rules
+                                                                    .required
+                                                                ]
+                                                              },
+                                                              model: {
+                                                                value:
+                                                                  _vm.editedItem
+                                                                    .year,
+                                                                callback: function(
+                                                                  $$v
+                                                                ) {
+                                                                  _vm.$set(
+                                                                    _vm.editedItem,
+                                                                    "year",
+                                                                    $$v
+                                                                  )
+                                                                },
+                                                                expression:
+                                                                  "editedItem.year"
+                                                              }
+                                                            })
+                                                          ],
+                                                          1
+                                                        )
+                                                      ],
+                                                      1
+                                                    )
                                                   ],
                                                   1
                                                 )
-                                              ],
-                                              1
-                                            )
+                                              : _vm._e(),
+                                            _vm._v(" "),
+                                            _vm.editedIndex == -1
+                                              ? _c(
+                                                  "v-container",
+                                                  [
+                                                    _c(
+                                                      "v-row",
+                                                      [
+                                                        _c(
+                                                          "v-col",
+                                                          {
+                                                            attrs: {
+                                                              cols: "12",
+                                                              sm: "12"
+                                                            }
+                                                          },
+                                                          [
+                                                            _c("v-text-field", {
+                                                              attrs: {
+                                                                label:
+                                                                  "Student Number",
+                                                                rules: [
+                                                                  _vm.rules
+                                                                    .required,
+                                                                  _vm.rules.min
+                                                                ]
+                                                              },
+                                                              model: {
+                                                                value:
+                                                                  _vm.editedItem
+                                                                    .student_number,
+                                                                callback: function(
+                                                                  $$v
+                                                                ) {
+                                                                  _vm.$set(
+                                                                    _vm.editedItem,
+                                                                    "student_number",
+                                                                    $$v
+                                                                  )
+                                                                },
+                                                                expression:
+                                                                  "editedItem.student_number"
+                                                              }
+                                                            })
+                                                          ],
+                                                          1
+                                                        ),
+                                                        _vm._v(" "),
+                                                        _c(
+                                                          "v-col",
+                                                          {
+                                                            attrs: {
+                                                              cols: "12",
+                                                              sm: "12"
+                                                            }
+                                                          },
+                                                          [
+                                                            _c("v-text-field", {
+                                                              attrs: {
+                                                                label:
+                                                                  "Full Name",
+                                                                rules: [
+                                                                  _vm.rules
+                                                                    .required,
+                                                                  _vm.rules.min
+                                                                ]
+                                                              },
+                                                              model: {
+                                                                value:
+                                                                  _vm.editedItem
+                                                                    .name,
+                                                                callback: function(
+                                                                  $$v
+                                                                ) {
+                                                                  _vm.$set(
+                                                                    _vm.editedItem,
+                                                                    "name",
+                                                                    $$v
+                                                                  )
+                                                                },
+                                                                expression:
+                                                                  "editedItem.name"
+                                                              }
+                                                            })
+                                                          ],
+                                                          1
+                                                        ),
+                                                        _vm._v(" "),
+                                                        _c(
+                                                          "v-col",
+                                                          {
+                                                            staticStyle: {
+                                                              margin: "0"
+                                                            },
+                                                            attrs: {
+                                                              cols: "12",
+                                                              sm: "12"
+                                                            }
+                                                          },
+                                                          [
+                                                            _c("v-select", {
+                                                              attrs: {
+                                                                items:
+                                                                  _vm.campuses,
+                                                                label:
+                                                                  "Select Campus",
+                                                                "item-value":
+                                                                  "id",
+                                                                "item-text":
+                                                                  "name",
+                                                                color:
+                                                                  "primary",
+                                                                rules: [
+                                                                  _vm.rules
+                                                                    .required
+                                                                ]
+                                                              },
+                                                              on: {
+                                                                change:
+                                                                  _vm.campusListenerNew
+                                                              },
+                                                              model: {
+                                                                value:
+                                                                  _vm.editedItem
+                                                                    .campus,
+                                                                callback: function(
+                                                                  $$v
+                                                                ) {
+                                                                  _vm.$set(
+                                                                    _vm.editedItem,
+                                                                    "campus",
+                                                                    $$v
+                                                                  )
+                                                                },
+                                                                expression:
+                                                                  "editedItem.campus"
+                                                              }
+                                                            })
+                                                          ],
+                                                          1
+                                                        ),
+                                                        _vm._v(" "),
+                                                        _c(
+                                                          "v-col",
+                                                          {
+                                                            staticStyle: {
+                                                              margin: "0"
+                                                            },
+                                                            attrs: {
+                                                              cols: "12",
+                                                              sm: "12"
+                                                            }
+                                                          },
+                                                          [
+                                                            _c("v-select", {
+                                                              attrs: {
+                                                                items:
+                                                                  _vm.programs,
+                                                                label:
+                                                                  "Select Program",
+                                                                "item-value":
+                                                                  "id",
+                                                                "item-text":
+                                                                  "name",
+                                                                color:
+                                                                  "primary",
+                                                                rules: [
+                                                                  _vm.rules
+                                                                    .required
+                                                                ]
+                                                              },
+                                                              on: {
+                                                                change:
+                                                                  _vm.programListenerNew
+                                                              },
+                                                              model: {
+                                                                value:
+                                                                  _vm.editedItem
+                                                                    .program,
+                                                                callback: function(
+                                                                  $$v
+                                                                ) {
+                                                                  _vm.$set(
+                                                                    _vm.editedItem,
+                                                                    "program",
+                                                                    $$v
+                                                                  )
+                                                                },
+                                                                expression:
+                                                                  "editedItem.program"
+                                                              }
+                                                            })
+                                                          ],
+                                                          1
+                                                        ),
+                                                        _vm._v(" "),
+                                                        _c(
+                                                          "v-col",
+                                                          {
+                                                            staticStyle: {
+                                                              margin: "0"
+                                                            },
+                                                            attrs: {
+                                                              cols: "12",
+                                                              sm: "12"
+                                                            }
+                                                          },
+                                                          [
+                                                            _c("v-select", {
+                                                              attrs: {
+                                                                items:
+                                                                  _vm.sections,
+                                                                label:
+                                                                  "Select Section",
+                                                                "item-value":
+                                                                  "id",
+                                                                "item-text":
+                                                                  "name",
+                                                                color:
+                                                                  "primary",
+                                                                rules: [
+                                                                  _vm.rules
+                                                                    .required
+                                                                ]
+                                                              },
+                                                              model: {
+                                                                value:
+                                                                  _vm.editedItem
+                                                                    .section,
+                                                                callback: function(
+                                                                  $$v
+                                                                ) {
+                                                                  _vm.$set(
+                                                                    _vm.editedItem,
+                                                                    "section",
+                                                                    $$v
+                                                                  )
+                                                                },
+                                                                expression:
+                                                                  "editedItem.section"
+                                                              }
+                                                            })
+                                                          ],
+                                                          1
+                                                        ),
+                                                        _vm._v(" "),
+                                                        _c(
+                                                          "v-col",
+                                                          {
+                                                            staticStyle: {
+                                                              margin: "0"
+                                                            },
+                                                            attrs: {
+                                                              cols: "12",
+                                                              sm: "12"
+                                                            }
+                                                          },
+                                                          [
+                                                            _c("v-select", {
+                                                              attrs: {
+                                                                items:
+                                                                  _vm.years,
+                                                                label:
+                                                                  "Select Year Level",
+                                                                "item-value":
+                                                                  "id",
+                                                                "item-text":
+                                                                  "name",
+                                                                color:
+                                                                  "primary",
+                                                                rules: [
+                                                                  _vm.rules
+                                                                    .required
+                                                                ]
+                                                              },
+                                                              model: {
+                                                                value:
+                                                                  _vm.editedItem
+                                                                    .year,
+                                                                callback: function(
+                                                                  $$v
+                                                                ) {
+                                                                  _vm.$set(
+                                                                    _vm.editedItem,
+                                                                    "year",
+                                                                    $$v
+                                                                  )
+                                                                },
+                                                                expression:
+                                                                  "editedItem.year"
+                                                              }
+                                                            })
+                                                          ],
+                                                          1
+                                                        )
+                                                      ],
+                                                      1
+                                                    )
+                                                  ],
+                                                  1
+                                                )
+                                              : _vm._e()
                                           ],
                                           1
                                         )
                                       ],
                                       1
                                     ),
+                                    _vm._v(" "),
+                                    _c("v-divider"),
                                     _vm._v(" "),
                                     _c(
                                       "v-card-actions",
@@ -28564,168 +30243,118 @@ var render = function() {
                           ],
                           1
                         )
-                      ],
-                      1
-                    )
-                  ]
-                },
-                proxy: true
-              },
-              {
-                key: "item.role",
-                fn: function(ref) {
-                  var item = ref.item
-                  return [
-                    _c(
-                      "v-edit-dialog",
-                      {
-                        attrs: {
-                          large: "",
-                          block: "",
-                          persistent: "",
-                          "return-value": item.role
-                        },
-                        on: {
-                          "update:returnValue": function($event) {
-                            return _vm.$set(item, "role", $event)
-                          },
-                          "update:return-value": function($event) {
-                            return _vm.$set(item, "role", $event)
-                          },
-                          save: function($event) {
-                            return _vm.updateRole(item)
-                          }
-                        },
-                        scopedSlots: _vm._u(
-                          [
-                            {
-                              key: "input",
-                              fn: function() {
-                                return [
-                                  _c("v-select", {
-                                    attrs: {
-                                      items: _vm.roles,
-                                      label: "Select Role",
-                                      value: "editedItem.role",
-                                      color: "primary",
-                                      rules: [_vm.rules.required]
-                                    },
-                                    model: {
-                                      value: item.role,
-                                      callback: function($$v) {
-                                        _vm.$set(item, "role", $$v)
-                                      },
-                                      expression: "item.role"
-                                    }
-                                  })
-                                ]
-                              },
-                              proxy: true
+                      ]
+                    },
+                    proxy: true
+                  },
+                  {
+                    key: "item.id",
+                    fn: function(ref) {
+                      var item = ref.item
+                      return [
+                        _c("td", [
+                          _vm._v(_vm._s(_vm.students.data.indexOf(item) + 1))
+                        ])
+                      ]
+                    }
+                  },
+                  {
+                    key: "item.actions",
+                    fn: function(ref) {
+                      var item = ref.item
+                      return [
+                        _c(
+                          "v-icon",
+                          {
+                            staticClass: "mr-2",
+                            attrs: { small: "" },
+                            on: {
+                              click: function($event) {
+                                return _vm.editItem(item)
+                              }
                             }
-                          ],
-                          null,
-                          true
-                        )
-                      },
-                      [
-                        _vm._v(
-                          "\n          " + _vm._s(item.role) + "\n          "
+                          },
+                          [_vm._v(" mdi-pencil ")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "v-icon",
+                          {
+                            staticClass: "mr-2",
+                            attrs: { small: "" },
+                            on: {
+                              click: function($event) {
+                                return _vm.deleteItem(item)
+                              }
+                            }
+                          },
+                          [_vm._v("\n        mdi-delete-forever\n      ")]
                         )
                       ]
-                    )
-                  ]
-                }
-              },
-              {
-                key: "item.id",
-                fn: function(ref) {
-                  var item = ref.item
-                  return [
-                    _c("td", [
-                      _vm._v(_vm._s(_vm.students.data.indexOf(item) + 1))
-                    ])
-                  ]
-                }
-              },
-              {
-                key: "item.actions",
-                fn: function(ref) {
-                  var item = ref.item
-                  return [
-                    _c(
-                      "v-icon",
-                      {
-                        staticClass: "mr-2",
-                        attrs: { small: "" },
-                        on: {
-                          click: function($event) {
-                            return _vm.editItem(item)
-                          }
-                        }
-                      },
-                      [_vm._v("\n          mdi-pencil\n        ")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "v-icon",
-                      {
-                        staticClass: "mr-2",
-                        attrs: { small: "" },
-                        on: {
-                          click: function($event) {
-                            return _vm.deleteItem(item)
-                          }
-                        }
-                      },
-                      [_vm._v("\n          mdi-delete-forever\n        ")]
-                    )
-                  ]
-                }
-              },
-              {
-                key: "no-data",
-                fn: function() {
-                  return [
-                    _c(
-                      "v-btn",
-                      {
-                        attrs: { color: "primary" },
-                        on: { click: _vm.initialize }
-                      },
-                      [_vm._v(" Reset ")]
-                    )
-                  ]
-                },
-                proxy: true
-              }
-            ])
-          }),
-          _vm._v(" "),
-          _c(
-            "v-snackbar",
-            {
-              attrs: { bottom: "" },
-              model: {
-                value: _vm.snackbar,
-                callback: function($$v) {
-                  _vm.snackbar = $$v
-                },
-                expression: "snackbar"
-              }
-            },
-            [
-              _vm._v("\n      " + _vm._s(_vm.text) + "\n\n      "),
-              _c(
-                "v-btn",
-                {
-                  attrs: { color: "pink", text: "" },
-                  on: {
-                    click: function($event) {
-                      _vm.snackbar = false
                     }
                   }
+                ])
+              }),
+              _vm._v(" "),
+              _c(
+                "v-snackbar",
+                {
+                  attrs: {
+                    color: _vm.snackbarColor,
+                    right: "",
+                    timeout: "5000",
+                    outlined: "",
+                    top: "",
+                    width: "50"
+                  },
+                  scopedSlots: _vm._u([
+                    {
+                      key: "action",
+                      fn: function(ref) {
+                        var attrs = ref.attrs
+                        return [
+                          _c(
+                            "v-btn",
+                            _vm._b(
+                              {
+                                attrs: { color: _vm.snackbarColor, text: "" },
+                                on: {
+                                  click: function($event) {
+                                    _vm.snackbar = false
+                                  }
+                                }
+                              },
+                              "v-btn",
+                              attrs,
+                              false
+                            ),
+                            [
+                              _c("v-icon", { attrs: { dark: "", left: "" } }, [
+                                _vm._v("\n        mdi-close\n      ")
+                              ]),
+                              _vm._v("close\n    ")
+                            ],
+                            1
+                          )
+                        ]
+                      }
+                    }
+                  ]),
+                  model: {
+                    value: _vm.snackbar,
+                    callback: function($$v) {
+                      _vm.snackbar = $$v
+                    },
+                    expression: "snackbar"
+                  }
                 },
-                [_vm._v(" Close ")]
+                [
+                  _c("v-icon", { attrs: { left: "" } }, [
+                    _vm._v("\n        mdi-error\n      ")
+                  ]),
+                  _vm._v(_vm._s(_vm.text) + "\n\n    ")
+                ],
+                1
               )
             ],
             1
@@ -28760,551 +30389,203 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "v-app",
+    "v-sheet",
     [
-      _c("v-data-table", {
-        staticClass: "elevation-1",
-        attrs: {
-          "item-key": "name",
-          loading: _vm.loading,
-          "loading-text": "Loading... Please wait",
-          headers: _vm.headers,
-          "server-items-length": _vm.submittedClearances.total,
-          items: _vm.submittedClearances.data,
-          "sort-by": "name",
-          color: "error",
-          "items-per-page": 10,
-          "footer-props": {
-            itemsPerPageOptions: [5, 10, 15, 100],
-            itemsPerPageText: "Users Per Page",
-            "show-current-page": true,
-            "show-first-last-page": true
-          }
-        },
-        on: { pagination: _vm.paginate },
-        scopedSlots: _vm._u([
-          {
-            key: "top",
-            fn: function() {
-              return [
-                _c(
-                  "v-toolbar",
-                  { attrs: { flat: "", color: "white" } },
-                  [
-                    _c("v-toolbar-title", [_vm._v("Submitted Clearance List")]),
-                    _vm._v(" "),
-                    _c("v-spacer"),
-                    _vm._v(" "),
-                    _c(
-                      "v-dialog",
-                      {
-                        attrs: { "max-width": "500px" },
-                        model: {
-                          value: _vm.dialog,
-                          callback: function($$v) {
-                            _vm.dialog = $$v
+      _c(
+        "v-card",
+        [
+          _c(
+            "v-container",
+            [
+              _c("v-data-table", {
+                staticClass: "elevation-0",
+                attrs: {
+                  "item-key": "id",
+                  loading: _vm.loading,
+                  "loading-text": "Loading... Please wait",
+                  headers: _vm.headers,
+                  page: _vm.page + 1,
+                  pageCount: _vm.numberOfPages,
+                  items: _vm.submittedclearances.data,
+                  options: _vm.options,
+                  "server-items-length": _vm.totalsubmittedclearances,
+                  "items-per-page": 10,
+                  "show-select": "",
+                  "footer-props": {
+                    itemsPerPageOptions: [5, 10, 15],
+                    itemsPerPageText: "Clearance Request Per Page",
+                    "show-current-page": true,
+                    "show-first-last-page": true
+                  }
+                },
+                on: {
+                  "update:options": function($event) {
+                    _vm.options = $event
+                  }
+                },
+                scopedSlots: _vm._u([
+                  {
+                    key: "top",
+                    fn: function() {
+                      return [
+                        _c("v-text-field", {
+                          attrs: {
+                            "append-icon": "mdi-magnify",
+                            label: "Search"
                           },
-                          expression: "dialog"
-                        }
-                      },
-                      [
+                          on: { input: _vm.searchIt }
+                        }),
+                        _vm._v(" "),
                         _c(
-                          "v-card",
+                          "v-toolbar",
+                          { attrs: { flat: "", color: "white" } },
                           [
-                            _c(
-                              "v-card-title",
-                              { staticClass: "primary white--text" },
-                              [
-                                _c(
-                                  "v-icon",
-                                  {
-                                    staticClass: "white--text",
-                                    staticStyle: { "padding-right": "8px" }
-                                  },
-                                  [_vm._v(_vm._s(_vm.formIcon))]
-                                ),
-                                _vm._v(" "),
-                                _c("span", { staticClass: "headline" }, [
-                                  _vm._v(_vm._s(_vm.formTitle))
-                                ])
-                              ],
-                              1
-                            ),
+                            _c("div", { staticClass: "overline text-h6" }, [
+                              _vm._v(
+                                "\n            Submitted Clearance Request List\n            "
+                              ),
+                              _c(
+                                "span",
+                                { staticClass: "font-italic subtitle-2" },
+                                [_vm._v("(2nd Semester A/Y 2020-2021 )")]
+                              )
+                            ]),
                             _vm._v(" "),
-                            _c(
-                              "v-form",
-                              {
-                                attrs: { method: "post" },
-                                on: {
-                                  submit: function($event) {
-                                    $event.stopPropagation()
-                                    $event.preventDefault()
-                                    return _vm.save($event)
-                                  }
-                                },
-                                model: {
-                                  value: _vm.valid,
-                                  callback: function($$v) {
-                                    _vm.valid = $$v
-                                  },
-                                  expression: "valid"
-                                }
-                              },
-                              [
-                                _c(
-                                  "v-card-text",
-                                  [
-                                    _c(
-                                      "v-container",
-                                      [
-                                        _c(
-                                          "v-row",
-                                          [
-                                            _c(
-                                              "v-col",
-                                              {
-                                                attrs: { cols: "12", sm: "12" }
-                                              },
-                                              [
-                                                _c("v-text-field", {
-                                                  attrs: {
-                                                    label: "Name",
-                                                    rules: [
-                                                      _vm.rules.required,
-                                                      _vm.rules.min
-                                                    ]
-                                                  },
-                                                  model: {
-                                                    value: _vm.editedItem.name,
-                                                    callback: function($$v) {
-                                                      _vm.$set(
-                                                        _vm.editedItem,
-                                                        "name",
-                                                        $$v
-                                                      )
-                                                    },
-                                                    expression:
-                                                      "editedItem.name"
-                                                  }
-                                                })
-                                              ],
-                                              1
-                                            ),
-                                            _vm._v(" "),
-                                            _vm.editedIndex == -1
-                                              ? _c(
-                                                  "v-col",
-                                                  {
-                                                    attrs: {
-                                                      cols: "12",
-                                                      sm: "12"
-                                                    }
-                                                  },
-                                                  [
-                                                    _c("v-text-field", {
-                                                      attrs: {
-                                                        type: "password",
-                                                        color: "primary",
-                                                        label: "Type Password",
-                                                        rules: [
-                                                          _vm.rules.required,
-                                                          _vm.rules.min
-                                                        ]
-                                                      },
-                                                      model: {
-                                                        value:
-                                                          _vm.editedItem
-                                                            .password,
-                                                        callback: function(
-                                                          $$v
-                                                        ) {
-                                                          _vm.$set(
-                                                            _vm.editedItem,
-                                                            "password",
-                                                            $$v
-                                                          )
-                                                        },
-                                                        expression:
-                                                          "editedItem.password"
-                                                      }
-                                                    })
-                                                  ],
-                                                  1
-                                                )
-                                              : _vm._e(),
-                                            _vm._v(" "),
-                                            _vm.editedIndex == -1
-                                              ? _c(
-                                                  "v-col",
-                                                  {
-                                                    attrs: {
-                                                      cols: "12",
-                                                      sm: "12"
-                                                    }
-                                                  },
-                                                  [
-                                                    _c("v-text-field", {
-                                                      attrs: {
-                                                        type: "password",
-                                                        color: "primary",
-                                                        label:
-                                                          "Retype Password",
-                                                        rules: [
-                                                          _vm.rules.required,
-                                                          _vm.rules.min,
-                                                          _vm.passwordmatch
-                                                        ]
-                                                      },
-                                                      model: {
-                                                        value:
-                                                          _vm.editedItem
-                                                            .rpassword,
-                                                        callback: function(
-                                                          $$v
-                                                        ) {
-                                                          _vm.$set(
-                                                            _vm.editedItem,
-                                                            "rpassword",
-                                                            $$v
-                                                          )
-                                                        },
-                                                        expression:
-                                                          "editedItem.rpassword"
-                                                      }
-                                                    })
-                                                  ],
-                                                  1
-                                                )
-                                              : _vm._e(),
-                                            _vm._v(" "),
-                                            _vm.editedIndex == -1
-                                              ? _c(
-                                                  "v-col",
-                                                  {
-                                                    attrs: {
-                                                      cols: "12",
-                                                      sm: "12"
-                                                    }
-                                                  },
-                                                  [
-                                                    _c("v-text-field", {
-                                                      attrs: {
-                                                        type: "email",
-                                                        "success-messages":
-                                                          _vm.success,
-                                                        "error-messages":
-                                                          _vm.error,
-                                                        blur: _vm.checkEmail,
-                                                        label: "Email",
-                                                        rules: [
-                                                          _vm.rules.required,
-                                                          _vm.rules.validEmail
-                                                        ]
-                                                      },
-                                                      model: {
-                                                        value:
-                                                          _vm.editedItem.email,
-                                                        callback: function(
-                                                          $$v
-                                                        ) {
-                                                          _vm.$set(
-                                                            _vm.editedItem,
-                                                            "email",
-                                                            $$v
-                                                          )
-                                                        },
-                                                        expression:
-                                                          "editedItem.email"
-                                                      }
-                                                    })
-                                                  ],
-                                                  1
-                                                )
-                                              : _vm._e(),
-                                            _vm._v(" "),
-                                            _vm.editedIndex > -1
-                                              ? _c(
-                                                  "v-col",
-                                                  {
-                                                    attrs: {
-                                                      cols: "12",
-                                                      sm: "12"
-                                                    }
-                                                  },
-                                                  [
-                                                    _c("v-text-field", {
-                                                      attrs: {
-                                                        type: "email",
-                                                        label: "Email",
-                                                        rules: [
-                                                          _vm.rules.required,
-                                                          _vm.rules.validEmail
-                                                        ]
-                                                      },
-                                                      model: {
-                                                        value:
-                                                          _vm.editedItem.email,
-                                                        callback: function(
-                                                          $$v
-                                                        ) {
-                                                          _vm.$set(
-                                                            _vm.editedItem,
-                                                            "email",
-                                                            $$v
-                                                          )
-                                                        },
-                                                        expression:
-                                                          "editedItem.email"
-                                                      }
-                                                    })
-                                                  ],
-                                                  1
-                                                )
-                                              : _vm._e(),
-                                            _vm._v(" "),
-                                            _c(
-                                              "v-col",
-                                              {
-                                                staticStyle: { margin: "0" },
-                                                attrs: { cols: "12", sm: "12" }
-                                              },
-                                              [
-                                                _c("v-select", {
-                                                  attrs: {
-                                                    items: _vm.roles,
-                                                    label: "Select Role",
-                                                    value: "editedItem.role",
-                                                    color: "primary",
-                                                    rules: [_vm.rules.required]
-                                                  },
-                                                  model: {
-                                                    value: _vm.editedItem.role,
-                                                    callback: function($$v) {
-                                                      _vm.$set(
-                                                        _vm.editedItem,
-                                                        "role",
-                                                        $$v
-                                                      )
-                                                    },
-                                                    expression:
-                                                      "editedItem.role"
-                                                  }
-                                                })
-                                              ],
-                                              1
-                                            )
-                                          ],
-                                          1
-                                        )
-                                      ],
-                                      1
-                                    )
-                                  ],
-                                  1
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "v-card-actions",
-                                  [
-                                    _c("v-spacer"),
-                                    _vm._v(" "),
-                                    _c(
-                                      "v-btn",
-                                      {
-                                        attrs: {
-                                          color: "blue darken-1",
-                                          text: ""
-                                        },
-                                        on: { click: _vm.close }
-                                      },
-                                      [
-                                        _vm._v(
-                                          "\n                  Cancel\n                "
-                                        )
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "v-btn",
-                                      {
-                                        attrs: {
-                                          color: "blue darken-1",
-                                          text: "",
-                                          type: "submit",
-                                          disabled: !_vm.valid
-                                        },
-                                        on: {
-                                          click: function($event) {
-                                            $event.preventDefault()
-                                            return _vm.save($event)
-                                          }
-                                        }
-                                      },
-                                      [
-                                        _vm._v(
-                                          "\n                  Save\n                "
-                                        )
-                                      ]
-                                    )
-                                  ],
-                                  1
-                                )
-                              ],
-                              1
-                            )
+                            _c("v-spacer")
                           ],
                           1
                         )
-                      ],
-                      1
-                    )
-                  ],
-                  1
-                )
-              ]
-            },
-            proxy: true
-          },
-          {
-            key: "item.role",
-            fn: function(ref) {
-              var item = ref.item
-              return [
-                _c(
-                  "v-edit-dialog",
+                      ]
+                    },
+                    proxy: true
+                  },
                   {
-                    attrs: {
-                      large: "",
-                      block: "",
-                      persistent: "",
-                      "return-value": item.role
-                    },
-                    on: {
-                      "update:returnValue": function($event) {
-                        return _vm.$set(item, "role", $event)
-                      },
-                      "update:return-value": function($event) {
-                        return _vm.$set(item, "role", $event)
-                      },
-                      save: function($event) {
-                        return _vm.updateRole(item)
-                      }
-                    },
-                    scopedSlots: _vm._u(
-                      [
-                        {
-                          key: "input",
-                          fn: function() {
-                            return [
-                              _c("v-select", {
-                                attrs: {
-                                  items: _vm.roles,
-                                  label: "Select Role",
-                                  value: "editedItem.role",
-                                  color: "primary",
-                                  rules: [_vm.rules.required]
-                                },
-                                model: {
-                                  value: item.role,
-                                  callback: function($$v) {
-                                    _vm.$set(item, "role", $$v)
-                                  },
-                                  expression: "item.role"
-                                }
-                              })
-                            ]
+                    key: "item.id",
+                    fn: function(ref) {
+                      var item = ref.item
+                      return [
+                        _c("td", [
+                          _vm._v(
+                            _vm._s(
+                              _vm.submittedclearances.data.indexOf(item) + 1
+                            )
+                          )
+                        ])
+                      ]
+                    }
+                  },
+                  {
+                    key: "item.datesubmitted",
+                    fn: function(ref) {
+                      var item = ref.item
+                      return [
+                        _c(
+                          "v-chip",
+                          {
+                            attrs: {
+                              "text-color": "white",
+                              color: "success",
+                              small: ""
+                            }
                           },
-                          proxy: true
-                        }
-                      ],
-                      null,
-                      true
-                    )
-                  },
-                  [_vm._v("\n        " + _vm._s(item.role) + "\n        ")]
-                )
-              ]
-            }
-          },
-          {
-            key: "item.actions",
-            fn: function(ref) {
-              var item = ref.item
-              return [
-                _c(
-                  "v-icon",
-                  {
-                    staticClass: "mr-2",
-                    attrs: { small: "" },
-                    on: {
-                      click: function($event) {
-                        return _vm.editItem(item)
-                      }
+                          [
+                            _vm._v(
+                              "\n         \n          " +
+                                _vm._s(item.datesubmitted) +
+                                "\n      "
+                            )
+                          ]
+                        )
+                      ]
                     }
                   },
-                  [_vm._v(" mdi-pencil ")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "v-icon",
                   {
-                    staticClass: "mr-2",
-                    attrs: { small: "" },
-                    on: {
-                      click: function($event) {
-                        return _vm.deleteItem(item)
+                    key: "item.actions",
+                    fn: function(ref) {
+                      var item = ref.item
+                      return [
+                        [
+                          _c(
+                            "v-btn",
+                            {
+                              staticClass: "ma-2",
+                              attrs: {
+                                color: "primary",
+                                depressed: "",
+                                small: ""
+                              }
+                            },
+                            [_vm._v("View")]
+                          )
+                        ]
+                      ]
+                    }
+                  }
+                ])
+              }),
+              _vm._v(" "),
+              _c(
+                "v-snackbar",
+                {
+                  attrs: {
+                    color: _vm.snackbarColor,
+                    right: "",
+                    timeout: "5000",
+                    outlined: "",
+                    top: "",
+                    width: "50"
+                  },
+                  scopedSlots: _vm._u([
+                    {
+                      key: "action",
+                      fn: function(ref) {
+                        var attrs = ref.attrs
+                        return [
+                          _c(
+                            "v-btn",
+                            _vm._b(
+                              {
+                                attrs: { color: _vm.snackbarColor, text: "" },
+                                on: {
+                                  click: function($event) {
+                                    _vm.snackbar = false
+                                  }
+                                }
+                              },
+                              "v-btn",
+                              attrs,
+                              false
+                            ),
+                            [
+                              _c("v-icon", { attrs: { dark: "", left: "" } }, [
+                                _vm._v("\n        mdi-close\n      ")
+                              ]),
+                              _vm._v("close\n    ")
+                            ],
+                            1
+                          )
+                        ]
                       }
                     }
-                  },
-                  [_vm._v("\n        mdi-delete-forever\n      ")]
-                )
-              ]
-            }
-          },
-          {
-            key: "no-data",
-            fn: function() {
-              return [
-                _c(
-                  "v-btn",
-                  {
-                    attrs: { color: "primary" },
-                    on: { click: _vm.initialize }
-                  },
-                  [_vm._v(" Reset ")]
-                )
-              ]
-            },
-            proxy: true
-          }
-        ])
-      }),
-      _vm._v(" "),
-      _c(
-        "v-snackbar",
-        {
-          attrs: { bottom: "" },
-          model: {
-            value: _vm.snackbar,
-            callback: function($$v) {
-              _vm.snackbar = $$v
-            },
-            expression: "snackbar"
-          }
-        },
-        [
-          _vm._v("\n    " + _vm._s(_vm.text) + "\n\n    "),
-          _c(
-            "v-btn",
-            {
-              attrs: { color: "pink", text: "" },
-              on: {
-                click: function($event) {
-                  _vm.snackbar = false
-                }
-              }
-            },
-            [_vm._v(" Close ")]
+                  ]),
+                  model: {
+                    value: _vm.snackbar,
+                    callback: function($$v) {
+                      _vm.snackbar = $$v
+                    },
+                    expression: "snackbar"
+                  }
+                },
+                [
+                  _c("v-icon", { attrs: { left: "" } }, [
+                    _vm._v("\n        mdi-error\n      ")
+                  ]),
+                  _vm._v(_vm._s(_vm.text) + "\n\n    ")
+                ],
+                1
+              )
+            ],
+            1
           )
         ],
         1
@@ -36224,6 +37505,704 @@ if (inBrowser && window.Vue) {
 
 /* harmony default export */ __webpack_exports__["default"] = (VueRouter);
 
+
+/***/ }),
+
+/***/ "./node_modules/vue-slimscroll/index.js":
+/*!**********************************************!*\
+  !*** ./node_modules/vue-slimscroll/index.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var SlimScroll = (function () {
+    function $(el) {
+        if (!(this instanceof $)) {
+            return new $(el)
+        }
+        if (typeof el === 'string') {
+            var r = /<(\w+)><\/\1>$/.exec(el)
+            if (r) {
+                el = document.createElement(r[1])
+            } else {
+                el = document.querySelector(el)
+            }
+        }
+        this.el = (el && el.nodeType === 1) ? el : document.documentElement
+        return this
+    }
+
+    $.prototype = {
+        parent: function () {
+            return $(this.el.parentNode || this.el.parentElement)
+        },
+        closest: function (selector) {
+            if (!selector) return $(document)
+            var parent = this.parent()
+            while (parent.el !== $(selector).el) {
+                parent = parent.parent()
+            }
+            return parent
+        },
+        is: function (obj) {
+            if (this.el === obj.el) {
+                return true
+            }
+            return false
+        },
+        hasClass: function (className) {
+            if (this.el.className.indexOf(className) >= 0) {
+                return true
+            }
+            return false
+        },
+        addClass: function (className) {
+            if (!className || typeof className === 'undefined') return
+            if (this.hasClass(className)) return
+            var cls = this.el.className.split(' ')
+            cls.push(className)
+            this.el.className = cls.join(' ').trim()
+            return this
+        },
+        css: function (styleObj) {
+            if (typeof styleObj === 'string') {
+                return this.el.style[styleObj].replace('px', '')
+            }
+            for (var key in styleObj) {
+                if (typeof styleObj[key] === 'number' && parseInt(styleObj[key])) styleObj[key] = parseInt(styleObj[key]) + 'px'
+                if (key === 'zIndex') styleObj[key] = parseInt(styleObj[key])
+                this.el.style[key] = styleObj[key]
+            }
+            return this
+        },
+        show: function () {
+            this.el.style.display = 'block'
+        },
+        hide: function () {
+            this.el.style.display = 'none'
+        },
+        wrap: function (obj) {
+            this.parent().el.insertBefore(obj.el, this.el)
+            obj.append(this)
+            return this
+        },
+        append: function (obj) {
+            this.el.appendChild(obj.el)
+            return this
+        },
+        scrollTop: function (y) {
+            if (typeof y !== 'undefined') {
+                this.el.scrollTop = parseInt(y)
+                return this
+            }
+            return this.el.scrollTop
+        },
+        outerHeight: function () {
+            return this.el.offsetHeight || this.el.clientHeight
+        },
+        hover: function (hoverIn, hoverOut) {
+            this.bind('mouseenter', hoverIn)
+            this.bind('mouseleave', hoverOut)
+        },
+        bind: function (type, fn, capture) {
+            var el = this.el;
+
+            if (window.addEventListener) {
+                el.addEventListener(type, fn, capture);
+
+                var ev = document.createEvent('HTMLEvents');
+                ev.initEvent(type, capture || false, false);
+                // 在元素上存储创建的事件，方便自定义触发
+                if (!el['ev' + type]) {
+                    el['ev' + type] = ev;
+                }
+
+            } else if (window.attachEvent) {
+                el.attachEvent('on' + type, fn);
+                if (isNaN(el['cu' + type])) {
+                    // 自定义属性，触发事件用
+                    el['cu' + type] = 0;
+                }
+
+                var fnEv = function (event) {
+                    if (event.propertyName === 'cu' + type) {
+                        fn.call(el);
+                    }
+                };
+
+                el.attachEvent('onpropertychange', fnEv);
+
+                // 在元素上存储绑定的propertychange事件，方便删除
+                if (!el['ev' + type]) {
+                    el['ev' + type] = [fnEv];
+                } else {
+                    el['ev' + type].push(fnEv);
+                }
+            }
+
+            return this;
+        },
+        trigger: function (type) {
+            var el = this.el;
+            if (typeof type === 'string') {
+                if (document.dispatchEvent) {
+                    if (el['ev' + type]) {
+                        el.dispatchEvent(el['ev' + type]);
+                    }
+                } else if (document.attachEvent) {
+                    // 改变对应自定义属性，触发自定义事件
+                    el['cu' + type]++;
+                }
+            }
+            return this;
+        },
+        unbind: function (type, fn, capture) {
+            var el = this.el;
+            if (window.removeEventListener) {
+                el.removeEventListener(type, fn, capture || false);
+            } else if (document.attachEvent) {
+                el.detachEvent('on' + type, fn);
+                var arrEv = el['ev' + type];
+                if (arrEv instanceof Array) {
+                    for (var i = 0; i < arrEv.length; i += 1) {
+                        // 删除该方法名下所有绑定的propertychange事件
+                        el.detachEvent('onpropertychange', arrEv[i]);
+                    }
+                }
+            }
+            return this;
+        }
+    }
+
+    $.extend = function (deep) {
+        var start = 1
+        if (typeof deep === 'object') {
+            start = 0
+        }
+        var objs = Array.prototype.slice.call(arguments, start),
+            newObj = {}
+
+        for (var i = 0; i < objs.length; i++) {
+            if (typeof objs !== 'object') return
+            for (var key in objs[i]) {
+                newObj[key] = typeof objs[i][key] === 'object' && deep === true ? $.extend(true, objs[i][key]) : objs[i][key]
+            }
+        }
+        return newObj
+    }
+
+    $.isPlainObject = function (obj) {
+        return typeof obj === 'object' && !(obj instanceof Array)
+    }
+
+    function SlimScroll(el, options) {
+        var defaults = {
+
+            // width in pixels of the visible scroll area
+            width: 'auto',
+
+            // height in pixels of the visible scroll area
+            height: '250px',
+
+            // width in pixels of the scrollbar and rail
+            size: '7px',
+
+            // scrollbar color, accepts any hex/color value
+            color: '#000',
+
+            // scrollbar position - left/right
+            position: 'right',
+
+            // distance in pixels between the side edge and the scrollbar
+            distance: '1px',
+
+            // default scroll position on load - top / bottom / $('selector')
+            start: 'top',
+
+            // sets scrollbar opacity
+            opacity: 0.4,
+
+            // enables always-on mode for the scrollbar
+            alwaysVisible: false,
+
+            // check if we should hide the scrollbar when user is hovering over
+            disableFadeOut: false,
+
+            // sets visibility of the rail
+            railVisible: false,
+
+            // sets rail color
+            railColor: '#333',
+
+            // sets rail opacity
+            railOpacity: 0.2,
+
+            // whether  we should use jQuery UI Draggable to enable bar dragging
+            railDraggable: true,
+
+            // defautlt CSS class of the slimscroll rail
+            railClass: 'slimScrollRail',
+
+            // defautlt CSS class of the slimscroll bar
+            barClass: 'slimScrollBar',
+
+            // defautlt CSS class of the slimscroll wrapper
+            wrapperClass: 'slimScrollDiv',
+
+            // check if mousewheel should scroll the window if we reach top/bottom
+            allowPageScroll: false,
+
+            // scroll amount applied to each mouse wheel step
+            wheelStep: 20,
+
+            // scroll amount applied when user is using gestures
+            touchScrollStep: 200,
+
+            // sets border radius
+            borderRadius: '7px',
+
+            // sets border radius of the rail
+            railBorderRadius: '7px'
+        };
+
+        var o = $.extend(defaults, options)
+
+        // do it for every element that matches selector
+        // this.each(function () {
+
+        var isOverPanel, isOverBar, isDragg, queueHide, touchDif,
+            barHeight, percentScroll, lastScroll,
+            divS = '<div></div>',
+            minBarHeight = 30,
+            releaseScroll = false;
+
+        // used in event handlers and for better minification
+        // var me = $(this);
+        var me = $(el);
+
+        // ensure we are not binding it again
+        if (me.parent().hasClass(o.wrapperClass)) {
+            // start from last bar position
+            var offset = me.scrollTop();
+
+            // find bar and rail
+            bar = me.siblings('.' + o.barClass);
+            rail = me.siblings('.' + o.railClass);
+
+            getBarHeight();
+
+            // check if we should scroll existing instance
+            if ($.isPlainObject(options)) {
+                // Pass height: auto to an existing slimscroll object to force a resize after contents have changed
+                if ('height' in options && options.height === 'auto') {
+                    me.parent().css({ height: 'auto' });
+                    me.css({ height: 'auto' });
+                    var height = me.parent().parent().outerHeight();
+                    me.parent().css({ height: height });
+                    me.css({ height: height });
+                } else if ('height' in options) {
+                    var h = options.height;
+                    me.parent().css({ height: h });
+                    me.css({ height: h });
+                }
+
+                if ('scrollTo' in options) {
+                    // jump to a static point
+                    offset = parseInt(o.scrollTo);
+                }
+                else if ('scrollBy' in options) {
+                    // jump by value pixels
+                    offset += parseInt(o.scrollBy);
+                }
+                else if ('destroy' in options) {
+                    // remove slimscroll elements
+                    bar.remove();
+                    rail.remove();
+                    me.unwrap();
+                    return;
+                }
+
+                // scroll content by the given offset
+                scrollContent(offset, false, true);
+            }
+
+            return;
+        } else if ($.isPlainObject(options)) {
+            if ('destroy' in options) {
+                return;
+            }
+        }
+
+        // optionally set height to the parent's height
+        o.height = (o.height === 'auto') ? me.parent().outerHeight() : o.height;
+
+        // wrap content
+        var wrapper = $(divS)
+            .addClass(o.wrapperClass)
+            .css({
+                position: 'relative',
+                overflow: 'hidden',
+                width: o.width,
+                height: o.height
+            });
+
+        // update style for the div
+        me.css({
+            overflow: 'hidden',
+            width: o.width,
+            height: o.height
+        });
+
+        // create scrollbar rail
+        var rail = $(divS)
+            .addClass(o.railClass)
+            .css({
+                width: o.size,
+                height: '100%',
+                position: 'absolute',
+                top: 0,
+                display: (o.alwaysVisible && o.railVisible) ? 'block' : 'none',
+                'border-radius': o.railBorderRadius,
+                background: o.railColor,
+                opacity: o.railOpacity,
+                zIndex: 998
+            });
+
+        // create scrollbar
+        var bar = $(divS)
+            .addClass(o.barClass)
+            .css({
+                background: o.color,
+                width: o.size,
+                position: 'absolute',
+                top: 0,
+                opacity: o.opacity,
+                display: o.alwaysVisible ? 'block' : 'none',
+                'border-radius': o.borderRadius,
+                BorderRadius: o.borderRadius,
+                MozBorderRadius: o.borderRadius,
+                WebkitBorderRadius: o.borderRadius,
+                zIndex: 999
+            });
+
+        // set position
+        var posCss = (o.position === 'right') ? { right: o.distance } : { left: o.distance };
+        rail.css(posCss);
+        bar.css(posCss);
+
+        // wrap it
+        me.wrap(wrapper);
+
+        // append to parent div
+        me.parent().append(bar);
+        me.parent().append(rail);
+
+
+        //all binding events callback
+        var events = {
+            touchStart: function (e, b) {
+                if (e.originalEvent.touches.length) {
+                    // record where touch started
+                    touchDif = e.originalEvent.touches[0].pageY;
+                }
+            },
+            touchMove: function (e) {
+                // prevent scrolling the page if necessary
+                if (!releaseScroll) {
+                    e.originalEvent.preventDefault();
+                }
+                if (e.originalEvent.touches.length) {
+                    // see how far user swiped
+                    var diff = (touchDif - e.originalEvent.touches[0].pageY) / o.touchScrollStep;
+                    // scroll content
+                    scrollContent(diff, true);
+                    touchDif = e.originalEvent.touches[0].pageY;
+                }
+            },
+            hoverIn: function () {
+                isOverPanel = true;
+                showBar();
+                hideBar();
+            },
+            hoverOut: function () {
+                isOverPanel = false;
+                hideBar();
+            },
+            barHoverIn: function () {
+                isOverBar = true;
+            },
+            barHoverOut: function () {
+                isOverBar = false;
+            },
+            railHoverIn: function () {
+                showBar();
+            },
+            railHoverOut: function () {
+                hideBar();
+            },
+            barMouseDown: function (e) {
+                var $doc = $(document);
+                var t = parseFloat(bar.css('top'));
+                var pageY = e.pageY;
+                isDragg = true;
+
+                function mousemove(e) {
+                    var currTop = t + e.pageY - pageY;
+                    bar.css({ top: currTop });
+                    scrollContent(0, currTop, false);// scroll content
+                }
+
+                function mouseup(e) {
+                    isDragg = false; hideBar();
+                    $doc.unbind('mousemove', mousemove);
+                    $doc.unbind('mouseup', mouseup);
+                }
+
+                $doc.bind('mousemove', mousemove);
+
+                $doc.bind('mouseup', mouseup);
+                return false;
+            },
+            barSelectedStart: function (e) {
+                e.stopPropagation();
+                e.preventDefault();
+                return false;
+            }
+        }
+
+        // make it draggable and no longer dependent on the jqueryUI
+        if (o.railDraggable) {
+            bar.bind('mousedown', events.barMouseDown).bind('selectstart', events.barSelectedStart);
+        }
+
+        // on rail over
+        rail.hover(events.railHoverIn, events.railHoverOut);
+
+        // on bar over
+        bar.hover(events.barHoverIn, events.barHoverOut);
+
+        // show on parent mouseover
+        me.hover(events.hoverIn, events.hoverOut);
+
+        // support for mobile
+        me.bind('touchstart', events.touchStart);
+
+        me.bind('touchmove', events.touchMove);
+
+        // set up initial height
+        getBarHeight();
+
+        // check start position
+        if (o.start === 'bottom') {
+            // scroll content to bottom
+            bar.css({ top: me.outerHeight() - bar.outerHeight() });
+            scrollContent(0, true);
+        }
+        else if (o.start !== 'top') {
+            // assume jQuery selector
+            scrollContent($(o.start).position().top, null, true);
+
+            // make sure bar stays hidden
+            if (!o.alwaysVisible) { bar.hide(); }
+        }
+
+        // attach scroll events
+        attachWheel(el);
+
+        function _onWheel(e) {
+            // use mouse wheel only when mouse is over
+            if (!isOverPanel) { return; }
+
+            e = e || window.event;
+
+            var delta = 0;
+            if (e.wheelDelta) { delta = -e.wheelDelta / 120; }
+            if (e.detail) { delta = e.detail / 3; }
+
+            var target = e.target || e.srcTarget || e.srcElement;
+            if ($(target).closest('.' + o.wrapperClass).is(me.parent())) {
+                // scroll content
+                scrollContent(delta, true);
+            }
+
+            // stop window scroll
+            if (e.preventDefault && !releaseScroll) { e.preventDefault(); }
+            if (!releaseScroll) { e.returnValue = false; }
+        }
+
+        function scrollContent(y, isWheel, isJump) {
+            releaseScroll = false;
+            var delta = y;
+            var maxTop = me.outerHeight() - bar.outerHeight();
+
+            if (isWheel) {
+                // move bar with mouse wheel
+                delta = parseInt(bar.css('top')) + y * parseInt(o.wheelStep) / 100 * bar.outerHeight();
+
+                // move bar, make sure it doesn't go out
+                delta = Math.min(Math.max(delta, 0), maxTop);
+
+                // if scrolling down, make sure a fractional change to the
+                // scroll position isn't rounded away when the scrollbar's CSS is set
+                // this flooring of delta would happened automatically when
+                // bar.css is set below, but we floor here for clarity
+                delta = (y > 0) ? Math.ceil(delta) : Math.floor(delta);
+
+                // scroll the scrollbar
+                bar.css({ top: delta + 'px' });
+            }
+
+            // calculate actual scroll amount
+            percentScroll = parseInt(bar.css('top')) / (me.outerHeight() - bar.outerHeight());
+            // delta = percentScroll * (me[0].scrollHeight - me.outerHeight());
+            delta = percentScroll * (me.el.scrollHeight - me.outerHeight());
+
+            if (isJump) {
+                delta = y;
+                // var offsetTop = delta / me[0].scrollHeight * me.outerHeight();
+                var offsetTop = delta / me.el.scrollHeight * me.outerHeight();
+                offsetTop = Math.min(Math.max(offsetTop, 0), maxTop);
+                bar.css({ top: offsetTop + 'px' });
+            }
+
+            // scroll content
+            me.scrollTop(delta);
+
+            // fire scrolling event
+            me.trigger('slimscrolling', ~~delta);
+
+            // ensure bar is visible
+            showBar();
+
+            // trigger hide when scroll is stopped
+            hideBar();
+        }
+
+        function attachWheel(target) {
+            if (window.addEventListener) {
+                target.addEventListener('DOMMouseScroll', _onWheel, false);
+                target.addEventListener('mousewheel', _onWheel, false);
+            }
+            else {
+                document.attachEvent('onmousewheel', _onWheel)
+            }
+        }
+
+        function getBarHeight() {
+            // calculate scrollbar height and make sure it is not too small
+            barHeight = Math.max((me.outerHeight() / me.el.scrollHeight) * me.outerHeight(), minBarHeight);
+            bar.css({ height: barHeight + 'px' });
+
+            // hide scrollbar if content is not long enough
+            var display = barHeight == me.outerHeight() ? 'none' : 'block';
+            bar.css({ display: display });
+        }
+
+        function showBar() {
+            // recalculate bar height
+            getBarHeight();
+            clearTimeout(queueHide);
+
+            // when bar reached top or bottom
+            if (percentScroll == ~~percentScroll) {
+                //release wheel
+                releaseScroll = o.allowPageScroll;
+
+                // publish approporiate event
+                if (lastScroll != percentScroll) {
+                    var msg = (~~percentScroll == 0) ? 'top' : 'bottom';
+                    me.trigger('slimscroll', msg);
+                }
+            }
+            else {
+                releaseScroll = false;
+            }
+            lastScroll = percentScroll;
+
+            // show only when required
+            if (barHeight >= me.outerHeight()) {
+                //allow window scroll
+                releaseScroll = true;
+                return;
+            }
+            // bar.stop(true, true).fadeIn('fast');
+            bar.show()
+            // if (o.railVisible) { rail.stop(true, true).fadeIn('fast'); }
+            if (o.railVisible) { rail.show(); }
+        }
+
+        function hideBar() {
+            // only hide when options allow it
+            if (!o.alwaysVisible) {
+                queueHide = setTimeout(function () {
+                    if (!(o.disableFadeOut && isOverPanel) && !isOverBar && !isDragg) {
+                        // bar.fadeOut('slow');
+                        // rail.fadeOut('slow');
+                        bar.hide()
+                        rail.hide()
+                    }
+                }, 1000);
+            }
+        }
+
+        // });
+
+        function unbind() {
+            // make it draggable and no longer dependent on the jqueryUI
+            bar.unbind('mousedown', events.barMouseDown).unbind('selectstart', events.barSelectedStart);
+            // on rail over
+            rail.unbind('mouseenter', events.railHoverIn).unbind('mouseleave', events.railHoverOut);
+
+            // on bar over
+            bar.unbind('mouseenter', events.barHoverIn).unbind('mouseleave', events.barHoverOut);
+
+            // show on parent mouseover
+            me.unbind('mouseenter', events.hoverIn).unbind('mouseleave', events.hoverOut);
+
+            // support for mobile
+            me.unbind('touchstart', events.touchStart);
+
+            me.unbind('touchmove', events.touchMove);
+        }
+        return {
+            unbind: function () {
+                bar.unbind('mousedown', events.barMouseDown)
+                    .unbind('mouseenter', events.barHoverIn)
+                    .unbind('mouseleave', events.barHoverOut)
+                    .unbind('selectstart', events.barSelectedStart);
+                rail.unbind('mouseenter', events.railHoverIn)
+                    .unbind('mouseleave', events.railHoverOut);
+                bar.unbind('mouseenter', events.barHoverIn)
+                    .unbind('mouseleave', events.barHoverOut);
+                me.unbind('mouseenter', events.hoverIn)
+                    .unbind('mouseleave', events.hoverOut)
+                    .unbind('touchstart', events.touchStart)
+                    .unbind('touchmove', events.touchMove);
+            }
+        }
+    }
+
+    return SlimScroll
+})()
+
+var VueSlimScroll = {}
+
+VueSlimScroll.install = function (Vue) {
+    var ss
+    Vue.directive('slimscroll', {
+        inserted: function (el, binding) {
+            ss = SlimScroll(el, binding.value)
+        },
+        unbind: function () {
+            ss.unbind()
+        }
+    })
+}
+
+
+if (true) {
+    module.exports = VueSlimScroll
+} else {}
 
 /***/ }),
 
@@ -93320,6 +95299,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_AppComponent__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/AppComponent */ "./resources/js/components/AppComponent.vue");
 /* harmony import */ var _components_LoginComponent__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/LoginComponent */ "./resources/js/components/LoginComponent.vue");
 /* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./store */ "./resources/js/store/index.js");
+/* harmony import */ var vue_slimscroll__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vue-slimscroll */ "./node_modules/vue-slimscroll/index.js");
+/* harmony import */ var vue_slimscroll__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(vue_slimscroll__WEBPACK_IMPORTED_MODULE_7__);
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -93335,6 +95316,8 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 
 
 
+
+Vue.use(vue_slimscroll__WEBPACK_IMPORTED_MODULE_7___default.a);
 new Vue({
   el: '#app',
   router: _router__WEBPACK_IMPORTED_MODULE_3__["default"],
@@ -93601,17 +95584,20 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-var render, staticRenderFns
-var script = {}
+/* harmony import */ var _ClearanceListComponent_vue_vue_type_template_id_4bae00ee___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ClearanceListComponent.vue?vue&type=template&id=4bae00ee& */ "./resources/js/components/ClearanceListComponent.vue?vue&type=template&id=4bae00ee&");
+/* harmony import */ var _ClearanceListComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ClearanceListComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/ClearanceListComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
 
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_0__["default"])(
-  script,
-  render,
-  staticRenderFns,
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ClearanceListComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ClearanceListComponent_vue_vue_type_template_id_4bae00ee___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ClearanceListComponent_vue_vue_type_template_id_4bae00ee___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -93619,8 +95605,42 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
   
 )
 
+/* hot reload */
+if (false) { var api; }
 component.options.__file = "resources/js/components/ClearanceListComponent.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/ClearanceListComponent.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/components/ClearanceListComponent.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ClearanceListComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./ClearanceListComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ClearanceListComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ClearanceListComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/ClearanceListComponent.vue?vue&type=template&id=4bae00ee&":
+/*!*******************************************************************************************!*\
+  !*** ./resources/js/components/ClearanceListComponent.vue?vue&type=template&id=4bae00ee& ***!
+  \*******************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ClearanceListComponent_vue_vue_type_template_id_4bae00ee___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./ClearanceListComponent.vue?vue&type=template&id=4bae00ee& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ClearanceListComponent.vue?vue&type=template&id=4bae00ee&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ClearanceListComponent_vue_vue_type_template_id_4bae00ee___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ClearanceListComponent_vue_vue_type_template_id_4bae00ee___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
 
 /***/ }),
 
@@ -93702,17 +95722,20 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-var render, staticRenderFns
-var script = {}
+/* harmony import */ var _ClearedClearancesComponent_vue_vue_type_template_id_0d6c8b76___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ClearedClearancesComponent.vue?vue&type=template&id=0d6c8b76& */ "./resources/js/components/ClearedClearancesComponent.vue?vue&type=template&id=0d6c8b76&");
+/* harmony import */ var _ClearedClearancesComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ClearedClearancesComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/ClearedClearancesComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
 
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_0__["default"])(
-  script,
-  render,
-  staticRenderFns,
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ClearedClearancesComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ClearedClearancesComponent_vue_vue_type_template_id_0d6c8b76___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ClearedClearancesComponent_vue_vue_type_template_id_0d6c8b76___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -93720,8 +95743,42 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
   
 )
 
+/* hot reload */
+if (false) { var api; }
 component.options.__file = "resources/js/components/ClearedClearancesComponent.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/ClearedClearancesComponent.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/components/ClearedClearancesComponent.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ClearedClearancesComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./ClearedClearancesComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ClearedClearancesComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ClearedClearancesComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/ClearedClearancesComponent.vue?vue&type=template&id=0d6c8b76&":
+/*!***********************************************************************************************!*\
+  !*** ./resources/js/components/ClearedClearancesComponent.vue?vue&type=template&id=0d6c8b76& ***!
+  \***********************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ClearedClearancesComponent_vue_vue_type_template_id_0d6c8b76___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./ClearedClearancesComponent.vue?vue&type=template&id=0d6c8b76& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ClearedClearancesComponent.vue?vue&type=template&id=0d6c8b76&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ClearedClearancesComponent_vue_vue_type_template_id_0d6c8b76___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ClearedClearancesComponent_vue_vue_type_template_id_0d6c8b76___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
 
 /***/ }),
 

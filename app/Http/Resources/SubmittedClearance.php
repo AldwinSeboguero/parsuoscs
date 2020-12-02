@@ -20,6 +20,9 @@ class SubmittedClearance extends JsonResource
             'name' => $this->clearance->student->name,
             'student_number' => $this->clearance->student->student_number,
             'program' => $this->clearance->student->program->name,
+            'purpose' => $this->clearance->purpose->purpose,
+            'datesubmitted' => $this->created_at->toDayDateTimeString(), 
+            
         ];
     }
 }

@@ -21,9 +21,9 @@ class ClearanceRequestController extends Controller
      */
     public function index(Request $request)
     {
-        $per_page =$request->per_page ? $request->per_page : 5; 
+        $per_page =$request->per_page ? $request->per_page : 10; 
         return response()->json([
-        'clearancerequests' => new ClearanceRequestCollection(ClearanceRequest::with('student')->with('student.program')->with('staff')->with('staff.user')->paginate($per_page)) 
+        'clearancerequests' => new ClearanceRequestCollection(ClearanceRequest::where('status', false)->with('purpose')->with('student')->with('student.program')->with('staff')->with('staff.user')->paginate($per_page)) 
         ],200);
     }
 
@@ -65,8 +65,27 @@ class ClearanceRequestController extends Controller
      */
     public function show($id)
     {
-        $users = User::where('name','LIKE',"%id%")->paginate();
-        return response()->json(['users' => $users],200);
+        return response()->json([
+            'clearancerequests' => new ClearanceRequestCollection(
+                ClearanceRequest::where('status', false)
+                ->with('purpose')->with('student')
+                ->with('student.program')
+                ->with('staff')
+                ->with('staff.user') 
+                ->whereHas('student', function($q) use ($id){
+                    $q->where('name', 'ILIKE', '%' . $id . '%');
+                })  
+                ->orWhereHas('student', function($q) use ($id){
+                    $q->where('student_number', 'ILIKE', '%' . $id . '%');
+                })  
+                ->orWhereHas('staff.user', function($q) use ($id){
+                    $q->where('name', 'ILIKE', '%' . $id . '%');
+                })  
+                ->orWhereHas('purpose', function($q) use ($id){
+                    $q->where('purpose', 'ILIKE', '%' . $id . '%');
+                })
+                ->paginate(10))  
+            ],200);
     }
 
     /**

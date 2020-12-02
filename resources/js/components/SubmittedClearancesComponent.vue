@@ -1,167 +1,95 @@
 <template>
-  <v-app>
-    <v-data-table
-      item-key="name"
-      class="elevation-1"
-      :loading="loading"
-      loading-text="Loading... Please wait"
-      :headers="headers"
-      @pagination="paginate"
-      :server-items-length="submittedClearances.total"
-      :items="submittedClearances.data"
-      sort-by="name" 
-      color="error"
-      :items-per-page="10" 
-      :footer-props="{
-        itemsPerPageOptions: [5, 10, 15, 100],
-        itemsPerPageText: 'Users Per Page',
-        'show-current-page': true,
-        'show-first-last-page': true,
-      }"
-    >
+  <v-sheet>
+   <v-card>
+    <v-container>
+     <v-data-table
+        item-key="id"
+        class="elevation-0"
+        :loading="loading"
+        loading-text="Loading... Please wait"
+        :headers="headers"
+        :page="page + 1"
+        :pageCount="numberOfPages"
+        :items="submittedclearances.data"
+        :options.sync="options"
+        :server-items-length="totalsubmittedclearances"
+        :items-per-page="10" 
+        show-select 
+        :footer-props="{
+          itemsPerPageOptions: [5, 10, 15],
+          itemsPerPageText: 'Clearance Request Per Page',
+          'show-current-page': true,
+          'show-first-last-page': true,
+        }"
+      >
       <template v-slot:top>
+        <v-text-field 
+            append-icon="mdi-magnify"
+            label="Search"
+            @input="searchIt"
+          ></v-text-field>
         <v-toolbar flat color="white">
-          <v-toolbar-title>Submitted Clearance List</v-toolbar-title>
-
-          <v-spacer></v-spacer>
-
-          <v-dialog v-model="dialog" max-width="500px">
-             
-            <v-card>
-              <v-card-title class="primary white--text">
-                <v-icon class="white--text" style="padding-right: 8px">{{
-                  formIcon
-                }}</v-icon>
-                <span class="headline">{{ formTitle }}</span>
-              </v-card-title>
-              <v-form
-                v-model="valid"
-                method="post"
-                v-on:submit.stop.prevent="save"
+          <div class="overline text-h6">
+              Submitted Clearance Request List
+              <span class="font-italic subtitle-2"
+                >(2nd Semester A/Y 2020-2021 )</span
               >
-                <v-card-text>
-                  <v-container>
-                    <v-row>
-                      <v-col cols="12" sm="12">
-                        <v-text-field
-                          v-model="editedItem.name"
-                          label="Name"
-                          :rules="[rules.required, rules.min]"
-                        ></v-text-field>
-                      </v-col>
-                      <v-col cols="12" sm="12" v-if="editedIndex == -1">
-                        <v-text-field
-                          type="password"
-                          color="primary"
-                          v-model="editedItem.password"
-                          label="Type Password"
-                          :rules="[rules.required, rules.min]"
-                        ></v-text-field>
-                      </v-col>
-                      <v-col cols="12" sm="12" v-if="editedIndex == -1">
-                        <v-text-field
-                          type="password"
-                          color="primary"
-                          v-model="editedItem.rpassword"
-                          label="Retype Password"
-                          :rules="[rules.required, rules.min, passwordmatch]"
-                        ></v-text-field>
-                      </v-col>
-
-                      <v-col cols="12" sm="12" v-if="editedIndex == -1">
-                        <v-text-field
-                          v-model="editedItem.email"
-                          type="email"
-                          :success-messages="success"
-                          :error-messages="error"
-                          :blur="checkEmail"
-                          label="Email"
-                          :rules="[rules.required, rules.validEmail]"
-                        ></v-text-field>
-                      </v-col>
-                      <v-col cols="12" sm="12" v-if="editedIndex > -1">
-                        <v-text-field
-                          v-model="editedItem.email"
-                          type="email" 
-                          label="Email"
-                          :rules="[rules.required, rules.validEmail]"
-                        ></v-text-field>
-                      </v-col>
-                      <v-col cols="12" sm="12" style="margin: 0">
-                        <v-select
-                          v-model="editedItem.role"
-                          :items="roles"
-                          label="Select Role"
-                          value="editedItem.role"
-                          color="primary"
-                          :rules="[rules.required]"
-                        ></v-select>
-                      </v-col>
-                    </v-row>
-                  </v-container>
-                </v-card-text>
-
-                <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn color="blue darken-1" text @click="close">
-                    Cancel
-                  </v-btn>
-                  <v-btn
-                    color="blue darken-1"
-                    text
-                    type="submit"
-                    :disabled="!valid"
-                    @click.prevent="save"
-                  >
-                    Save
-                  </v-btn>
-                </v-card-actions>
-              </v-form>
-            </v-card>
-          </v-dialog>
+            </div>
+          <v-spacer></v-spacer> 
         </v-toolbar>
       </template>
-      <template v-slot:item.role="{ item }">
-        <v-edit-dialog
-        large
-        block
-        persistent
-        :return-value.sync ="item.role"
-        @save="updateRole(item)"
-        >
-          {{ item.role }}
-          <template v-slot:input>
-            <h2>Change Role</h2>
-          </template>
-          <template v-slot:input>
-            <v-select
-              v-model="item.role"
-              :items="roles"
-              label="Select Role"
-              value="editedItem.role"
-              color="primary"
-              :rules="[rules.required]"
-            ></v-select>
-          </template>
-        </v-edit-dialog>
-      </template>
-
+      <template v-slot:item.id="{ item }">
+      <td>{{submittedclearances.data.indexOf(item)+1}}</td> 
+    </template>
+       <template v-slot:item.datesubmitted="{ item }" >
+        <v-chip text-color="white" color="success" small >
+           
+            {{ item.datesubmitted }}
+        </v-chip>
+         </template>
       <template v-slot:item.actions="{ item }">
-        <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil </v-icon>
-        <v-icon small class="mr-2" @click="deleteItem(item)">
-          mdi-delete-forever
-        </v-icon>
-      </template>
-      <template v-slot:no-data>
-        <v-btn color="primary" @click="initialize"> Reset </v-btn>
+          <template>
+        <v-btn class="ma-2" color="primary" depressed small 
+          >View</v-btn
+        >  
+          </template>
       </template>
     </v-data-table>
-    <v-snackbar v-model="snackbar" bottom>
-      {{ text }}
+  <v-snackbar
+      v-model="snackbar" 
+      :color="snackbarColor" 
+      right
+      timeout="5000" 
+      outlined
+     top
+     width="50" 
+    >
+       <v-icon 
+          left
+        >
+          mdi-error
+        </v-icon>{{ text }}
 
-      <v-btn color="pink" text @click="snackbar = false"> Close </v-btn>
+      <template v-slot:action="{ attrs }">
+        
+          <v-btn
+        :color="snackbarColor"
+          text
+          v-bind="attrs"
+          @click="snackbar = false"
+      >
+        <v-icon
+          dark
+          left
+        >
+          mdi-close
+        </v-icon>close
+      </v-btn>
+      </template>
     </v-snackbar>
-  </v-app>
+    </v-container>
+    </v-card>
+  </v-sheet>
 </template>
 <script>
 export default {
@@ -174,78 +102,60 @@ export default {
     text: "",
     success: "",
     error: "", 
-    headers: [
+    snackbarColor:"",
+      headers: [
       {
         text: "No",
         align: "left",
         value: "id",
-      },
-      { text: "Clearance Id", value: "clearance_id" },
-      { text: "Name", value: "name" },
+      }, 
       { text: "Student Number", value: "student_number" },
+      { text: "Name", value: "name" },
       { text: "Program", value: "program" }, 
+      { text: "Clearance Id", value: "clearance_id" }, 
+      { text: "Date Submitted", value: "datesubmitted" }, 
       { text: "Action", value: "actions" },
-    ],
-    submittedClearances: [],
-    roles: [],
-    rules: {
-      required: (v) => !!v || "This Field is Required",
-      min: (v) => v.length >= 5 || "Minimum 5 Characters Required",
-      validEmail: (v) => /.+@.+\..+/.test(v) || "Email must be valid",
-    },
+    ], 
+    page: 0,
+    totalsubmittedclearances: 0,
+    numberOfPages: 0,
+    options: {},
+     submittedclearances: [], 
     editedIndex: -1,
     editedItem: {
       id: "",
+      token: "",
       name: "",
-      email: "",
-      role: "",
-      password: "",
-      rpassword: "",
-      created_at: "",
+      student_number: "",
+      program: "",
+      purpose: "", 
+      staff: "",
     },
     defaultItem: {
       id: "",
+      token: "",
       name: "",
-      email: "",
-      password: "",
-      rpassword: "",
-      role: "",
-      created_at: "",
-    },
+      student_number: "",
+      program: "",
+      purpose: "", 
+      staff:"",
+    }, 
   }),
 
   computed: {
-    formTitle() {
-      return this.editedIndex === -1 ? "New User" : "Edit User";
-    },
-    formIcon() {
-      return this.editedIndex === -1 ? "mdi-account-plus" : "mdi-account-edit";
-    },
-    passwordmatch() {
-      return this.editedItem.password != this.editedItem.rpassword
-        ? "Password Does Not Match"
-        : true;
-    },
-    checkEmail() {
-      if (/.+@.+\..+/.test(this.editedItem.email)) {
-        axios
-          .post("/api/v1/email/verify", { email: this.editedItem.email })
-          .then((res) => {
-            this.success = res.data.message;
-            this.error = "";
-          })
-          .catch((err) => {
-            this.success = "";
-            this.error = "Email Already Exist";
-          });
-      }
-    },
+   
   },
 
   watch: {
     dialog(val) {
       val || this.close();
     },
+     options: {
+      handler() {
+        this.readDataFromAPI();
+      },
+    },
+    deep: true,
   },
 
   created() {
@@ -253,35 +163,54 @@ export default {
   },
 
   methods: {
-    updateRole(item){
-      const index = this.users.data.indexOf(item);
-      axios.post('/api/v1/user/role',{'role': item.role, 'user' : item.id})
-      .then(res =>{
-        this.text = res.data.user.name+"'s Role Updated to "+ res.data.user.role
-        this.snackbar = true
-      })
-      .catch(err => {
-        console.error(err); 
-      })
-    },
-
-    paginate(e) { 
+     readDataFromAPI() {
+      this.loading = true;
+      const { page, itemsPerPage } = this.options;
+      let pageNumber = page;
       axios
-        .get(`/api/v1/submittedclearances?page=${e.page}`, {
-          params: { 'per_page': e.itemsPerPage},
+        .get(`/api/v1/submittedclearances?page=` + pageNumber, {
+          params: { 'per_page': itemsPerPage },
         })
-        .then(res => {
-            console.dir(res.data.students)
-          this.submittedClearances = res.data.students;
-          this.roles = res.data.roles;
-        })
-        .catch(err => {
-          if (err.response.status == 401) {
-            localStorage.removeItem("token");
-            this.$router.push("/login");
-          }
+        .then((response) => {
+          //Then injecting the result to datatable parameters.
+          this.loading = false;
+         this.submittedclearances = response.data.submittedclearances; 
+          this.totalsubmittedclearances = response.data.submittedclearances.total;
+          this.numberOfPages = response.data.submittedclearances.last_page;
         });
     },
+
+    searchIt(d) {
+      if (d.length > 2) {
+        const { page, itemsPerPage } = this.options;
+        axios
+          .get(`/api/v1/submittedclearances/${d}`)
+          .then((res) => {
+            this.loading = false;  
+            this.submittedclearances = res.data.submittedclearances; 
+            this.totalsubmittedclearances = res.data.submittedclearances.total;
+            this.numberOfPages = res.data.submittedclearances.last_page;
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      }
+      if (d.length <= 0) {
+        axios
+          .get(`/api/v1/submittedclearances?page=${d.page}`, {
+            params: { 'per_page': d.itemsPerPage },
+          })
+          .then((res) => {
+            this.loading = false;  
+            this.submittedclearances = res.data.submittedclearances;
+            this.totalsubmittedclearances = res.data.submittedclearances.total;
+            this.numberOfPages = res.data.submittedclearances.last_page;
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      }
+    },  
     initialize() {
       axios.interceptors.request.use(
         (config) => {
@@ -307,26 +236,28 @@ export default {
     },
 
     editItem(item) {
-      this.editedIndex = this.users.data.indexOf(item);
-      this.editedItem = Object.assign({}, item);
+      this.editedIndex = this.submittedclearances.data.indexOf(item);
+      this.editedItem = Object.assign({}, item); 
       this.dialog = true;
-    },
-
+    },    
     deleteItem(item) {
-      const index = this.users.data.indexOf(item);
+      const index = this.submittedclearances.data.indexOf(item);
       let decide = confirm("Are you sure you want to delete this item?");
       if (decide) {
         axios
-          .delete("/api/v1/users/" + item.id)
+          .delete("/api/v1/submittedclearances/" + item.id)
           .then((res) => {
-            this.text = "Record Deleted Successfully!";
+            this.text = "Record Deleted Successfully!"; 
+            this.snackbarColor ="primary darken-1";
             this.snackbar = true;
-            this.users.data.splice(index, 1);
+            this.submittedclearances.data.splice(index, 1);
           })
           .catch((err) => {
             console.log(err.response);
             this.text = "Error Deleting Record";
+            this.snackbarColor ="error darken-1";
             this.snackbar = true;
+
           });
       }
     },
@@ -337,39 +268,45 @@ export default {
         this.editedItem = Object.assign({}, this.defaultItem);
         this.editedIndex = -1;
       }, 300);
-    },
-
+    }, 
     save() {
+      console.log(this.editedItem);
       if (this.editedIndex > -1) {
         const index = this.editedIndex;
         axios
-          .put("/api/v1/users/" + this.editedItem.id, this.editedItem)
+          .put("/api/v1/submittedclearances/" + this.editedItem.id, this.editedItem)
           .then((res) => {
             this.text = "Record Updated Successfully!";
+            this.snackbarColor ="primary darken-1";
             this.snackbar = true;
-            Object.assign(this.users.data[index], res.data.user);
+            Object.assign(this.submittedclearances.data[index], res.data.submittedclearance); 
           })
           .catch((err) => {
             console.log(err.response);
             this.text = "Error Updating Record";
+            this.snackbarColor ="error darken-1";
             this.snackbar = true;
           });
       } else {
         axios
-          .post("/api/v1/users", this.editedItem)
+          .post("/api/v1/submittedclearances", this.editedItem)
           .then((res) => {
             this.text = "Record Added Successfully!";
+            this.snackbarColor ="primary darken-1";
             this.snackbar = true;
-            this.users.data.push(res.data.user);
-            console.log(res);
+            // this.students.data.push(res.data.student); 
+            this.submittedclearances = res.data.submittedclearances
           })
           .catch((err) => {
             console.dir(err);
             this.text = "Error Inserting Record";
+            this.snackbarColor ="error darken-1";
             this.snackbar = true;
           });
-      }
-      this.close();
+          
+      } 
+        this.close();
+     
     },
   },
 };

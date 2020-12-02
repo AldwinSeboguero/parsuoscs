@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddColumnSemesterIdClearanceRequest extends Migration
+class ChangePurposeIdClearanceRequestForiengKey extends Migration
 {
     /**
      * Run the migrations.
@@ -14,10 +14,9 @@ class AddColumnSemesterIdClearanceRequest extends Migration
     public function up()
     {
         Schema::table('clearance_requests', function (Blueprint $table) {
-            $table->biginteger('semester_id')->unsigned()->nullable();
-            $table->foreign('semester_id')->references('id')->on('semesters');
-            //change to not nullable
-            //  $table->biginteger('semester_id')->unsigned(false)->change();
+            $table->dropForeign(['purpose_id']);
+            $table->foreign('purpose_id')
+            ->references('id')->on('purposes');
         });
     }
 

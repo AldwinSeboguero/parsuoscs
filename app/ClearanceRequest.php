@@ -29,7 +29,11 @@ class ClearanceRequest extends Model
     }
     public function purpose()
     {
-        return $this->belongsTo('App\StudentPurposeSetup','purpose_id');
+        return $this->belongsTo('App\Purpose','purpose_id');
+    }
+    public function semester()
+    {
+        return $this->belongsTo('App\Semester','semester_id');
     }
     protected $dates = ['request_at','approved_at'];
 }

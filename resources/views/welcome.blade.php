@@ -10,6 +10,18 @@
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
         <script src="{{ asset('js/app.js') }}" defer></script> 
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+        <style>
+            .v-navigation-drawer__content {
+              overflow: hidden !important;
+              scrollbar-width: none;
+              -ms-overflow-style: none;
+            }
+            
+            .v-navigation-drawer::-webkit-scrollbar {
+              width: 0;
+              height: 0;
+            }
+            </style>
     </head>
     <body>
         <div id="app">
