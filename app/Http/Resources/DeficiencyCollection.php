@@ -6,7 +6,7 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class DeficiencyCollection extends ResourceCollection
 {
-    public $collects = 'App\http\Resources\ClearanceRequest';
+    public $collects = 'App\http\Resources\Deficiency';
     /**
      * Transform the resource collection into an array.
      *

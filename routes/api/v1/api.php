@@ -35,11 +35,13 @@ use Illuminate\Support\Facades\Route;
     Route::resource('users', 'Admin\UserController');
     Route::resource('roles', 'Admin\RoleController');
     Route::resource('clearancerequests', 'Admin\ClearanceRequestController');
+    Route::post('approveclearancerequest', 'Admin\ClearanceRequestController@approveRequest');
     Route::resource('clearedclearancerequests', 'Admin\CompletedClearanceController');
 
     
     Route::resource('submittedclearances', 'Admin\SubmittedController');
     Route::resource('clearances', 'Admin\ClearanceController');
+    Route::resource('deficiencies', 'Admin\DeficiencyController');
 
     Route::resource('cashiers', 'Admin\CashierController');
     Route::post('users/delete', 'Admin\UserController@deleteAll');

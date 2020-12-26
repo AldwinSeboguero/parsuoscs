@@ -44,7 +44,7 @@
        
       <template v-slot:item.actions="{ item }">
           <template>
-        <v-btn class="ma-2" color="success" depressed x-small 
+        <v-btn class="ma-2" color="success" depressed x-small @click="approve(item)"
           ><v-icon
           dark
           x-small
@@ -269,6 +269,28 @@ export default {
             this.snackbarColor ="error darken-1";
             this.snackbar = true;
 
+          });
+      }
+    },
+    approve(item) {
+      const index = this.clearancerequests.data.indexOf(item);
+      let decide = confirm("Are you sure you want to approve this request?");
+      if (decide) {
+        axios
+          .post("/api/v1/approveclearancerequest", item)
+          .then((res) => {
+            this.text = "Request Approved Successfully!";
+            this.snackbarColor ="primary darken-1";
+            this.snackbar = true;
+           this.clearancerequests = res.data.clearancerequests; 
+          this.totalclearancerequests = res.data.clearancerequests.total;
+          this.numberOfPages = res.data.clearancerequests.last_page;
+          })
+          .catch((err) => {
+            console.log(err.response);
+            this.text = "Error Approving Request";
+            this.snackbarColor ="error darken-1";
+            this.snackbar = true;
           });
       }
     },

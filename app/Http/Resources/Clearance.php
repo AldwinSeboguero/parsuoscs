@@ -20,7 +20,8 @@ class Clearance extends JsonResource
             'name' => $this->student->name,
             'student_number' => $this->student->student_number,
             'program' => $this->student->program->name,
-            'purpose' => $this->purpose->purpose, 
+            'purpose' => json_decode(json_decode($this->purpose)->purpose)->name.' '.
+            json_decode(json_decode($this->purpose)->purpose)->description,
             'semester' => $this->semester->semester, 
             
         ];

@@ -224,7 +224,7 @@ export default {
         .get("/api/v1/completed", {})
         .then((res) => {
           console.dir(res.completed);
-          this.completed = res.data.completed;
+          this.completed = res.data.clearancerequests.count;
           this.totalStudent = res.data.totalStudent;
           this.stats = [
             { name: "Total Students", total: this.totalStudent },

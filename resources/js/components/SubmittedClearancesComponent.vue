@@ -112,7 +112,7 @@ export default {
       { text: "Student Number", value: "student_number" },
       { text: "Name", value: "name" },
       { text: "Program", value: "program" }, 
-      { text: "Clearance Id", value: "clearance_id" }, 
+      { text: "Purpose", value: "purpose" }, 
       { text: "Date Submitted", value: "datesubmitted" }, 
       { text: "Action", value: "actions" },
     ], 

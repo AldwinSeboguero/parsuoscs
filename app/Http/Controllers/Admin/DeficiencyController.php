@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use App\Http\Resources\Deficiency as DeficiencyResource;
+use App\Http\Resources\DeficiencyCollection;
+use App\Deficiency; 
 class DeficiencyController extends Controller
 {
     /**
@@ -12,11 +14,13 @@ class DeficiencyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $per_page =$request->per_page ? $request->per_page : 10; 
+        return response()->json([
+        'deficiencies' => new DeficiencyCollection(Deficiency::with('staff.user')->with('designee')->with('semester')->with('student')->paginate($per_page)) 
+        ],200);
     }
-
     /**
      * Show the form for creating a new resource.
      *

@@ -3251,45 +3251,67 @@ __webpack_require__.r(__webpack_exports__);
         });
       }
     },
-    close: function close() {
+    approve: function approve(item) {
       var _this5 = this;
+
+      var index = this.clearancerequests.data.indexOf(item);
+      var decide = confirm("Are you sure you want to approve this request?");
+
+      if (decide) {
+        axios.post("/api/v1/approveclearancerequest", item).then(function (res) {
+          _this5.text = "Request Approved Successfully!";
+          _this5.snackbarColor = "primary darken-1";
+          _this5.snackbar = true;
+          _this5.clearancerequests = res.data.clearancerequests;
+          _this5.totalclearancerequests = res.data.clearancerequests.total;
+          _this5.numberOfPages = res.data.clearancerequests.last_page;
+        })["catch"](function (err) {
+          console.log(err.response);
+          _this5.text = "Error Approving Request";
+          _this5.snackbarColor = "error darken-1";
+          _this5.snackbar = true;
+        });
+      }
+    },
+    close: function close() {
+      var _this6 = this;
 
       this.dialog = false;
       setTimeout(function () {
-        _this5.editedItem = Object.assign({}, _this5.defaultItem);
-        _this5.editedIndex = -1;
+        _this6.editedItem = Object.assign({}, _this6.defaultItem);
+        _this6.editedIndex = -1;
       }, 300);
     },
     save: function save() {
-      var _this6 = this;
+      var _this7 = this;
 
       console.log(this.editedItem);
 
       if (this.editedIndex > -1) {
         var index = this.editedIndex;
         axios.put("/api/v1/clearancerequests/" + this.editedItem.id, this.editedItem).then(function (res) {
-          _this6.text = "Record Updated Successfully!";
-          _this6.snackbarColor = "primary darken-1";
-          _this6.snackbar = true;
-          Object.assign(_this6.clearancerequests.data[index], res.data.clearancerequest);
+          _this7.text = "Record Updated Successfully!";
+          _this7.snackbarColor = "primary darken-1";
+          _this7.snackbar = true;
+          Object.assign(_this7.clearancerequests.data[index], res.data.clearancerequest);
         })["catch"](function (err) {
           console.log(err.response);
-          _this6.text = "Error Updating Record";
-          _this6.snackbarColor = "error darken-1";
-          _this6.snackbar = true;
+          _this7.text = "Error Updating Record";
+          _this7.snackbarColor = "error darken-1";
+          _this7.snackbar = true;
         });
       } else {
         axios.post("/api/v1/clearancerequests", this.editedItem).then(function (res) {
-          _this6.text = "Record Added Successfully!";
-          _this6.snackbarColor = "primary darken-1";
-          _this6.snackbar = true; // this.students.data.push(res.data.student); 
+          _this7.text = "Record Added Successfully!";
+          _this7.snackbarColor = "primary darken-1";
+          _this7.snackbar = true; // this.students.data.push(res.data.student); 
 
-          _this6.clearancerequests = res.data.clearancerequests;
+          _this7.clearancerequests = res.data.clearancerequests;
         })["catch"](function (err) {
           console.dir(err);
-          _this6.text = "Error Inserting Record";
-          _this6.snackbarColor = "error darken-1";
-          _this6.snackbar = true;
+          _this7.text = "Error Inserting Record";
+          _this7.snackbarColor = "error darken-1";
+          _this7.snackbar = true;
         });
       }
 
@@ -3604,6 +3626,328 @@ __webpack_require__.r(__webpack_exports__);
           _this6.snackbar = true; // this.students.data.push(res.data.student); 
 
           _this6.clearancerequests = res.data.clearancerequests;
+        })["catch"](function (err) {
+          console.dir(err);
+          _this6.text = "Error Inserting Record";
+          _this6.snackbarColor = "error darken-1";
+          _this6.snackbar = true;
+        });
+      }
+
+      this.close();
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/DeficiencyListComponent.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/DeficiencyListComponent.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      valid: true,
+      dialog: false,
+      loading: false,
+      snackbar: false,
+      selected: [],
+      text: "",
+      success: "",
+      error: "",
+      snackbarColor: "",
+      headers: [{
+        text: "No",
+        align: "left",
+        value: "id"
+      }, {
+        text: "Student Number",
+        value: "student_number"
+      }, {
+        text: "Name",
+        value: "student_name"
+      }, {
+        text: "Completed",
+        value: "completed"
+      }, {
+        text: "Deficiency",
+        value: "deficiency"
+      }, {
+        text: "Staff",
+        value: "staff"
+      }, {
+        text: "Action",
+        value: "actions"
+      }],
+      page: 0,
+      totaldeficiencies: 0,
+      numberOfPages: 0,
+      options: {},
+      deficiencies: [],
+      editedIndex: -1,
+      editedItem: {
+        id: "",
+        name: "",
+        student_number: "",
+        program: "",
+        semester: ""
+      },
+      defaultItem: {
+        id: "",
+        name: "",
+        student_number: "",
+        program: "",
+        semester: ""
+      }
+    };
+  },
+  computed: {},
+  watch: {
+    dialog: function dialog(val) {
+      val || this.close();
+    },
+    options: {
+      handler: function handler() {
+        this.readDataFromAPI();
+      }
+    },
+    deep: true
+  },
+  created: function created() {
+    this.initialize();
+  },
+  methods: {
+    readDataFromAPI: function readDataFromAPI() {
+      var _this = this;
+
+      this.loading = true;
+      var _this$options = this.options,
+          page = _this$options.page,
+          itemsPerPage = _this$options.itemsPerPage;
+      var pageNumber = page;
+      axios.get("/api/v1/deficiencies?page=" + pageNumber, {
+        params: {
+          'per_page': itemsPerPage
+        }
+      }).then(function (response) {
+        //Then injecting the result to datatable parameters.
+        _this.loading = false;
+        _this.deficiencies = response.data.deficiencies;
+        _this.totaldeficiencies = response.data.deficiencies.total;
+        _this.numberOfPages = response.data.deficiencies.last_page;
+      });
+    },
+    searchIt: function searchIt(d) {
+      var _this2 = this;
+
+      if (d.length > 2) {
+        var _this$options2 = this.options,
+            page = _this$options2.page,
+            itemsPerPage = _this$options2.itemsPerPage;
+        axios.get("/api/v1/deficiencies/".concat(d)).then(function (res) {
+          _this2.loading = false;
+          _this2.deficiencies = res.data.deficiencies;
+          _this2.totaldeficiencies = res.data.deficiencies.total;
+          _this2.numberOfPages = res.data.deficiencies.last_page;
+        })["catch"](function (err) {
+          console.error(err);
+        });
+      }
+
+      if (d.length <= 0) {
+        axios.get("/api/v1/deficiencies?page=".concat(d.page), {
+          params: {
+            'per_page': d.itemsPerPage
+          }
+        }).then(function (res) {
+          _this2.loading = false;
+          _this2.deficiencies = res.data.deficiencies;
+          _this2.totaldeficiencies = res.data.deficiencies.total;
+          _this2.numberOfPages = res.data.deficiencies.last_page;
+        })["catch"](function (err) {
+          console.error(err);
+        });
+      }
+    },
+    initialize: function initialize() {
+      var _this3 = this;
+
+      axios.interceptors.request.use(function (config) {
+        _this3.loading = true;
+        return config;
+      }, function (error) {
+        _this3.loading = false;
+        return Promise.reject(error);
+      });
+      axios.interceptors.response.use(function (response) {
+        _this3.loading = false;
+        return response;
+      }, function (error) {
+        _this3.loading = false;
+        return Promise.reject(error);
+      });
+    },
+    editItem: function editItem(item) {
+      this.editedIndex = this.deficiencies.data.indexOf(item);
+      this.editedItem = Object.assign({}, item);
+      this.dialog = true;
+    },
+    deleteItem: function deleteItem(item) {
+      var _this4 = this;
+
+      var index = this.deficiencies.data.indexOf(item);
+      var decide = confirm("Are you sure you want to delete this item?");
+
+      if (decide) {
+        axios["delete"]("/api/v1/deficiencies/" + item.id).then(function (res) {
+          _this4.text = "Record Deleted Successfully!";
+          _this4.snackbarColor = "primary darken-1";
+          _this4.snackbar = true;
+
+          _this4.deficiencies.data.splice(index, 1);
+        })["catch"](function (err) {
+          console.log(err.response);
+          _this4.text = "Error Deleting Record";
+          _this4.snackbarColor = "error darken-1";
+          _this4.snackbar = true;
+        });
+      }
+    },
+    close: function close() {
+      var _this5 = this;
+
+      this.dialog = false;
+      setTimeout(function () {
+        _this5.editedItem = Object.assign({}, _this5.defaultItem);
+        _this5.editedIndex = -1;
+      }, 300);
+    },
+    save: function save() {
+      var _this6 = this;
+
+      console.log(this.editedItem);
+
+      if (this.editedIndex > -1) {
+        var index = this.editedIndex;
+        axios.put("/api/v1/deficiencies/" + this.editedItem.id, this.editedItem).then(function (res) {
+          _this6.text = "Record Updated Successfully!";
+          _this6.snackbarColor = "primary darken-1";
+          _this6.snackbar = true;
+          Object.assign(_this6.deficiencies.data[index], res.data.deficiency);
+        })["catch"](function (err) {
+          console.log(err.response);
+          _this6.text = "Error Updating Record";
+          _this6.snackbarColor = "error darken-1";
+          _this6.snackbar = true;
+        });
+      } else {
+        axios.post("/api/v1/deficiencies", this.editedItem).then(function (res) {
+          _this6.text = "Record Added Successfully!";
+          _this6.snackbarColor = "primary darken-1";
+          _this6.snackbar = true; // this.students.data.push(res.data.student); 
+
+          _this6.deficiencies = res.data.deficiencies;
         })["catch"](function (err) {
           console.dir(err);
           _this6.text = "Error Inserting Record";
@@ -4738,8 +5082,8 @@ __webpack_require__.r(__webpack_exports__);
         text: "Program",
         value: "program"
       }, {
-        text: "Clearance Id",
-        value: "clearance_id"
+        text: "Purpose",
+        value: "purpose"
       }, {
         text: "Date Submitted",
         value: "datesubmitted"
@@ -5656,7 +6000,7 @@ var exhale = function exhale(ms) {
     });
     axios.get("/api/v1/completed", {}).then(function (res) {
       console.dir(res.completed);
-      _this2.completed = res.data.completed;
+      _this2.completed = res.data.clearancerequests.count;
       _this2.totalStudent = res.data.totalStudent;
       _this2.stats = [{
         name: "Total Students",
@@ -28127,6 +28471,11 @@ var render = function() {
                                 color: "success",
                                 depressed: "",
                                 "x-small": ""
+                              },
+                              on: {
+                                click: function($event) {
+                                  return _vm.approve(item)
+                                }
                               }
                             },
                             [
@@ -28453,6 +28802,241 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/DeficiencyListComponent.vue?vue&type=template&id=cee6eaca&":
+/*!**************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/DeficiencyListComponent.vue?vue&type=template&id=cee6eaca& ***!
+  \**************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-sheet",
+    [
+      _c(
+        "v-card",
+        [
+          _c(
+            "v-container",
+            [
+              _c("v-data-table", {
+                staticClass: "elevation-0",
+                attrs: {
+                  "item-key": "id",
+                  loading: _vm.loading,
+                  "loading-text": "Loading... Please wait",
+                  headers: _vm.headers,
+                  page: _vm.page + 1,
+                  pageCount: _vm.numberOfPages,
+                  items: _vm.deficiencies.data,
+                  options: _vm.options,
+                  "server-items-length": _vm.totaldeficiencies,
+                  "items-per-page": 10,
+                  "show-select": "",
+                  "footer-props": {
+                    itemsPerPageOptions: [5, 10, 15],
+                    itemsPerPageText: "Deficiency Per Page",
+                    "show-current-page": true,
+                    "show-first-last-page": true
+                  }
+                },
+                on: {
+                  "update:options": function($event) {
+                    _vm.options = $event
+                  }
+                },
+                scopedSlots: _vm._u([
+                  {
+                    key: "top",
+                    fn: function() {
+                      return [
+                        _c("v-text-field", {
+                          attrs: {
+                            "append-icon": "mdi-magnify",
+                            label: "Search"
+                          },
+                          on: { input: _vm.searchIt }
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "v-toolbar",
+                          { attrs: { flat: "", color: "white" } },
+                          [
+                            _c("div", { staticClass: "overline text-h6" }, [
+                              _vm._v(
+                                "\n            Deficiency List\n            \n          "
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("v-spacer")
+                          ],
+                          1
+                        )
+                      ]
+                    },
+                    proxy: true
+                  },
+                  {
+                    key: "item.id",
+                    fn: function(ref) {
+                      var item = ref.item
+                      return [
+                        _c("td", [
+                          _vm._v(
+                            _vm._s(_vm.deficiencies.data.indexOf(item) + 1)
+                          )
+                        ])
+                      ]
+                    }
+                  },
+                  {
+                    key: "item.completed",
+                    fn: function(ref) {
+                      var item = ref.item
+                      return [
+                        item.completed == 1
+                          ? _c(
+                              "v-chip",
+                              {
+                                attrs: {
+                                  "text-color": "white",
+                                  color: "success",
+                                  small: ""
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  "\n         \n         Completed\n      "
+                                )
+                              ]
+                            )
+                          : _vm._e(),
+                        _vm._v(" "),
+                        item.completed != 1
+                          ? _c(
+                              "v-chip",
+                              {
+                                attrs: {
+                                  "text-color": "white",
+                                  color: "warning",
+                                  small: ""
+                                }
+                              },
+                              [_vm._v("\n         \n         Pending\n      ")]
+                            )
+                          : _vm._e()
+                      ]
+                    }
+                  },
+                  {
+                    key: "item.actions",
+                    fn: function(ref) {
+                      var item = ref.item
+                      return [
+                        [
+                          _c(
+                            "v-btn",
+                            {
+                              staticClass: "ma-2",
+                              attrs: {
+                                color: "primary",
+                                depressed: "",
+                                small: ""
+                              }
+                            },
+                            [_vm._v("View")]
+                          )
+                        ]
+                      ]
+                    }
+                  }
+                ])
+              }),
+              _vm._v(" "),
+              _c(
+                "v-snackbar",
+                {
+                  attrs: {
+                    color: _vm.snackbarColor,
+                    right: "",
+                    timeout: "5000",
+                    outlined: "",
+                    top: "",
+                    width: "50"
+                  },
+                  scopedSlots: _vm._u([
+                    {
+                      key: "action",
+                      fn: function(ref) {
+                        var attrs = ref.attrs
+                        return [
+                          _c(
+                            "v-btn",
+                            _vm._b(
+                              {
+                                attrs: { color: _vm.snackbarColor, text: "" },
+                                on: {
+                                  click: function($event) {
+                                    _vm.snackbar = false
+                                  }
+                                }
+                              },
+                              "v-btn",
+                              attrs,
+                              false
+                            ),
+                            [
+                              _c("v-icon", { attrs: { dark: "", left: "" } }, [
+                                _vm._v("\n        mdi-close\n      ")
+                              ]),
+                              _vm._v("close\n    ")
+                            ],
+                            1
+                          )
+                        ]
+                      }
+                    }
+                  ]),
+                  model: {
+                    value: _vm.snackbar,
+                    callback: function($$v) {
+                      _vm.snackbar = $$v
+                    },
+                    expression: "snackbar"
+                  }
+                },
+                [
+                  _c("v-icon", { attrs: { left: "" } }, [
+                    _vm._v("\n        mdi-error\n      ")
+                  ]),
+                  _vm._v(_vm._s(_vm.text) + "\n\n    ")
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/LoginComponent.vue?vue&type=template&id=4d2414bf&":
 /*!*****************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/LoginComponent.vue?vue&type=template&id=4d2414bf& ***!
@@ -28674,6 +29258,7 @@ var render = function() {
                                                   attrs: {
                                                     rounded: "",
                                                     color: "blue accent-3",
+                                                    type: "submit",
                                                     dark: ""
                                                   },
                                                   on: { click: _vm.login }
@@ -95791,17 +96376,20 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-var render, staticRenderFns
-var script = {}
+/* harmony import */ var _DeficiencyListComponent_vue_vue_type_template_id_cee6eaca___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DeficiencyListComponent.vue?vue&type=template&id=cee6eaca& */ "./resources/js/components/DeficiencyListComponent.vue?vue&type=template&id=cee6eaca&");
+/* harmony import */ var _DeficiencyListComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DeficiencyListComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/DeficiencyListComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
 
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_0__["default"])(
-  script,
-  render,
-  staticRenderFns,
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _DeficiencyListComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _DeficiencyListComponent_vue_vue_type_template_id_cee6eaca___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _DeficiencyListComponent_vue_vue_type_template_id_cee6eaca___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -95809,8 +96397,42 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
   
 )
 
+/* hot reload */
+if (false) { var api; }
 component.options.__file = "resources/js/components/DeficiencyListComponent.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/DeficiencyListComponent.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/components/DeficiencyListComponent.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DeficiencyListComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./DeficiencyListComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/DeficiencyListComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DeficiencyListComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/DeficiencyListComponent.vue?vue&type=template&id=cee6eaca&":
+/*!********************************************************************************************!*\
+  !*** ./resources/js/components/DeficiencyListComponent.vue?vue&type=template&id=cee6eaca& ***!
+  \********************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DeficiencyListComponent_vue_vue_type_template_id_cee6eaca___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./DeficiencyListComponent.vue?vue&type=template&id=cee6eaca& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/DeficiencyListComponent.vue?vue&type=template&id=cee6eaca&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DeficiencyListComponent_vue_vue_type_template_id_cee6eaca___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DeficiencyListComponent_vue_vue_type_template_id_cee6eaca___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
 
 /***/ }),
 

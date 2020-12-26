@@ -16,13 +16,13 @@ class Deficiency extends JsonResource
     {
         return [
             'id' => $this->id,  
-            'clearance_id' => $this->id,  
-            'name' => $this->student->name,
-            'student_number' => $this->student->student_number,
-            'program' => $this->student->program->name,
-            'purpose' => $this->purpose->purpose, 
-            'semester' => $this->semester->semester, 
-            
+            'deficiency' => $this->title,  
+            'note' => $this->note,
+            'completed' => $this->completed,
+            'staff' => $this->staff->user->name,
+            'designee' => $this->designee->name, 
+            'student_name' => $this->student->name, 
+            'student_number' => $this->student->student_number, 
         ];
     }
 }

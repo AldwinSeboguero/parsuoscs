@@ -21,7 +21,8 @@ class ClearanceRequest extends JsonResource
             'student_number' => $this->student->student_number,
             'program' => $this->student->program->short_name,
             'staff' => $this->staff->user->name,
-            'purpose' => $this->purpose->purpose,
+            'purpose' => json_decode(json_decode($this->purpose)->purpose)->name.' '
+            .json_decode(json_decode($this->purpose)->purpose)->description,
         ];
     }
 }

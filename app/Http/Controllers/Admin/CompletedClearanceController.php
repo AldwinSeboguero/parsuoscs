@@ -23,7 +23,7 @@ class CompletedClearanceController extends Controller
     {
         $per_page =$request->per_page ? $request->per_page : 10; 
         return response()->json([
-        'clearancerequests' => new ClearanceRequestCollection(ClearanceRequest::where('status', true)->with('purpose')->with('student')->with('student.program')->with('staff')->with('staff.user')->paginate($per_page)) 
+        'clearancerequests' => new ClearanceRequestCollection(ClearanceRequest::orderByDesc('approved_at')->where('status', true)->with('purpose')->with('student')->with('student.program')->with('staff')->with('staff.user')->paginate($per_page)) 
         ],200);
     }
 

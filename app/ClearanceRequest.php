@@ -29,7 +29,7 @@ class ClearanceRequest extends Model
     }
     public function purpose()
     {
-        return $this->belongsTo('App\Purpose','purpose_id');
+        return $this->belongsTo('App\ClearancePurpose','purpose_id');
     }
     public function semester()
     {

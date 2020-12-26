@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\ClearanceRequest; 
 use App\Role; 
 use App\User; 
+use App\ClearancePurpose;
 use Illuminate\Support\Facades\Hash; 
 use App\Http\Resources\ClearanceRequest as ClearanceRequestResource;
 use App\Http\Resources\ClearanceRequestCollection;
@@ -23,7 +24,7 @@ class ClearanceRequestController extends Controller
     {
         $per_page =$request->per_page ? $request->per_page : 10; 
         return response()->json([
-        'clearancerequests' => new ClearanceRequestCollection(ClearanceRequest::where('status', false)->with('purpose')->with('student')->with('student.program')->with('staff')->with('staff.user')->paginate($per_page)) 
+        'clearancerequests' => new ClearanceRequestCollection(ClearanceRequest::orderByDesc('request_at')->where('status', false)->with('purpose')->with('student')->with('student.program')->with('staff')->with('staff.user')->paginate($per_page)) 
         ],200);
     }
 
@@ -65,13 +66,14 @@ class ClearanceRequestController extends Controller
      */
     public function show($id)
     {
+       
         return response()->json([
             'clearancerequests' => new ClearanceRequestCollection(
                 ClearanceRequest::where('status', false)
                 ->with('purpose')->with('student')
                 ->with('student.program')
                 ->with('staff')
-                ->with('staff.user') 
+                ->with('staff.user')  
                 ->whereHas('student', function($q) use ($id){
                     $q->where('name', 'ILIKE', '%' . $id . '%');
                 })  
@@ -82,7 +84,7 @@ class ClearanceRequestController extends Controller
                     $q->where('name', 'ILIKE', '%' . $id . '%');
                 })  
                 ->orWhereHas('purpose', function($q) use ($id){
-                    $q->where('purpose', 'ILIKE', '%' . $id . '%');
+                    $q->where( 'purpose->name',$id );
                 })
                 ->paginate(10))  
             ],200);
@@ -116,6 +118,16 @@ class ClearanceRequestController extends Controller
         $user->save();
         
         return response()->json(['user' => $user],200);
+
+    }
+    public function approveRequest(Request $request)
+    {
+        $clearanceRequest = ClearanceRequest::find($request->id);
+        $clearanceRequest->status = true;
+        $clearanceRequest->approved_at = now();
+        $clearanceRequest->save();
+        
+        return response()->json(['clearancerequests' => new ClearanceRequestCollection(ClearanceRequest::orderByDesc('request_at')->where('status', false)->with('purpose')->with('student')->with('student.program')->with('staff')->with('staff.user')->paginate(10))],200);
 
     }
 

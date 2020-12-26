@@ -70,7 +70,7 @@
                         <h3 class="text-center mt-3">Forgot your password?</h3>
                       </v-card-text>
                       <div class="text-center mt-3 pb-3">
-                        <v-btn rounded color="blue accent-3" @click="login" dark
+                        <v-btn rounded color="blue accent-3" type="submit" @click="login" dark
                           >SIGN IN</v-btn
                         >
                       </div>
