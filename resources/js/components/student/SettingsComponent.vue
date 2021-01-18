@@ -1,0 +1,439 @@
+<template>
+  <v-card>
+    <v-toolbar flat>
+     
+
+      <v-toolbar-title><v-icon left>mdi-cog</v-icon>Settings</v-toolbar-title>
+
+      <v-spacer></v-spacer>
+
+      <!-- <v-btn icon>
+        <v-icon>mdi-magnify</v-icon>
+      </v-btn>
+
+      <v-btn icon>
+        <v-icon>mdi-dots-vertical</v-icon>
+      </v-btn> -->
+
+      <template v-slot:extension>
+        <v-tabs
+          v-model="tabs"
+          fixed-tabs
+          VERTICAL
+         
+        >
+          <v-tabs-slider></v-tabs-slider>
+          <v-tab
+            href="#mobile-tabs-5-1"
+            class="primary--text"
+          >
+            <v-icon left>mdi-account-edit</v-icon> Purpose
+          </v-tab>
+
+          <v-tab
+            href="#mobile-tabs-5-2"
+            class="primary--text"
+          >
+            <v-icon left>mdi-email</v-icon> Change Email
+          </v-tab>
+           <v-tab
+            href="#mobile-tabs-5-3"
+            class="primary--text"
+          >
+            <v-icon left>mdi-lock</v-icon> Change Password
+          </v-tab>
+
+     
+        </v-tabs>
+      </template>
+    </v-toolbar>
+
+    <v-tabs-items v-model="tabs">
+      <v-tab-item
+      :value="'mobile-tabs-5-1'"
+      >
+        <v-card flat>
+          <v-form
+                  v-model="valid"
+                  method="post"
+                  v-on:submit.stop.prevent="save"
+                > 
+                    <v-container>
+                      <v-row>
+                       
+                        <v-col cols="12" sm="12" style="margin: 0">
+                          <v-select
+                            v-model="setup.purpose_id"
+                            :items="purposes"
+                            label="Select Purpose"
+                             item-value="id"
+                             :rules="[rules.required]"
+                          item-text="purpose"
+                            color="primary"
+                          ></v-select>
+                        </v-col>
+                        <v-col cols="12" sm="12" style="margin: 0" v-if="setup.purpose_id == 1">
+                          <v-select
+                          v-model="setup.semester_id"
+                            :items="semesters"
+                            label="Select Semester"
+                             item-value="id"
+                          item-text="semester"
+                            color="primary"
+                            :rules="[rules.required]"
+                          ></v-select>
+                        </v-col>
+                        <v-col cols="12" sm="12" style="margin: 0" v-else-if="setup.purpose_id == 2">
+                          <v-select
+                          v-model="setup.graduation_id"
+                            :items="graduations"
+                            label="Select Graduation Period"
+                             item-value="id"
+                          item-text="graduation"
+                            color="primary"
+                            :rules="[rules.required]"
+                          ></v-select>
+                        </v-col>
+                         <v-col cols="12" sm="12" v-else-if="setup.purpose_id == 3">
+                          <v-text-field
+                            v-model="setup.credential" 
+                            label="Specify" 
+                            :rules="[rules.required]"
+                          ></v-text-field>
+                        </v-col>
+                      </v-row>
+                    </v-container> 
+
+                  
+          </v-form>
+           <v-divider></v-divider>
+       <v-card-actions>
+                    <v-spacer></v-spacer>
+                 
+                    <v-btn
+                      color="blue darken-1"
+                      text
+                      type="submit"
+                      :disabled="!valid"
+                      @click.prevent="save"
+                    >
+                      Save
+                    </v-btn>
+     </v-card-actions>
+        </v-card>
+      </v-tab-item>
+      <v-tab-item
+       :value="'mobile-tabs-5-2'"
+      >
+        <v-card flat >
+           <v-form
+                  v-model="valid"
+                  method="post"
+                  v-on:submit.stop.prevent="save"
+                > 
+                    <v-container>
+                      <v-row>
+                       
+                        <v-col cols="12" sm="12">
+                        <v-text-field
+                          v-model="editedItem.email"
+                          type="email"
+                          :success-messages="success"
+                          :error-messages="error"
+                          :blur="checkEmail"
+                          label="Email"
+                          :rules="[rules.required, rules.validEmail]"
+                        ></v-text-field>
+                      </v-col>
+                      
+                      </v-row>
+                    </v-container> 
+
+                  
+          </v-form>
+           <v-divider></v-divider>
+       <v-card-actions>
+                    <v-spacer></v-spacer>
+                    
+                    <v-btn
+                      color="blue darken-1"
+                      text
+                      type="submit"
+                      :disabled="!valid"
+                      @click.prevent="save"
+                    >
+                      Save
+                    </v-btn>
+     </v-card-actions>
+        </v-card>
+      </v-tab-item>
+
+       <v-tab-item
+       :value="'mobile-tabs-5-3'"
+      >
+        <v-card flat>
+           <v-form
+                  v-model="valid"
+                  method="post"
+                  v-on:submit.stop.prevent="save"
+                > 
+                    <v-container>
+                      <v-row>
+                       
+                      <v-col cols="12" sm="12" >
+                        <v-text-field
+                          type="password"
+                          color="primary"
+                          v-model="editedItem.password"
+                          label="Type Password"
+                          :rules="[rules.required, rules.min]"
+                        ></v-text-field>
+                      </v-col>
+                      <v-col cols="12" sm="12" >
+                        <v-text-field
+                          type="password"
+                          color="primary"
+                          v-model="editedItem.rpassword"
+                          label="Retype Password"
+                          :rules="[rules.required, rules.min, passwordmatch]"
+                        ></v-text-field>
+                      </v-col>
+                      </v-row>
+                    </v-container> 
+
+                  
+          </v-form>
+           <v-divider></v-divider>
+       <v-card-actions>
+                    <v-spacer></v-spacer>
+                    
+                    <v-btn
+                      color="blue darken-1"
+                      text
+                      type="submit"
+                      :disabled="!valid"
+                      @click.prevent="save"
+                    >
+                      Save
+                    </v-btn>
+     </v-card-actions>
+        </v-card>
+      </v-tab-item>
+    </v-tabs-items>
+    <v-snackbar
+      v-model="snackbar" 
+      :color="snackbarColor" 
+      right
+      timeout="5000" 
+      outlined
+     top
+     width="50" 
+    >
+       <v-icon 
+          left
+        >
+          mdi-error
+        </v-icon>{{ text }}
+
+      <template v-slot:action="{ attrs }">
+        
+          <v-btn
+        :color="snackbarColor"
+          text
+          v-bind="attrs"
+          @click="snackbar = false"
+      >
+        <v-icon
+          dark
+          left
+        >
+          mdi-close
+        </v-icon>close
+      </v-btn>
+      </template>
+    </v-snackbar>
+  </v-card>
+</template>
+
+<script>
+export default {
+  data: () => ({
+    tabs: null,
+    valid: true,
+    dialog: false,
+    loading: false,
+    snackbar: false,
+    snackbarColor:"",
+    selected: [],
+    text: "",
+    success: "",
+    error: "", 
+    headers: [
+      {
+        text: "No",
+        align: "left",
+        value: "id",
+      },
+      { text: "Name", value: "name" },
+      { text: "Email", value: "email" },
+      { text: "Role", value: "role" },
+      { text: "Date Created", value: "created_at" },
+      { text: "Action", value: "actions" },
+    ],
+    page: 0,
+    totalUsers: 0,
+    numberOfPages: 0,
+    options: {},
+    users: {},
+    roles: [],
+    purposes:[],
+    semesters:[],
+    graduations:[],
+    setup:{
+    graduation_id:"",
+    credential:"",
+    purpose_id:"",
+    semester_id:"",
+    g_id: "",
+    
+    },
+    rules: {
+      required: (v) => !!v || "This Field is Required",
+      min: (v) => v.length >= 5 || "Minimum 5 Characters Required",
+      validEmail: (v) => /.+@.+\..+/.test(v) || "Email must be valid",
+    },
+    editedIndex: -1,
+    editedItem: {
+      id: "",
+      name: "",
+      email: "",
+      role: "",
+      password: "",
+      rpassword: "",
+      created_at: "",
+    },
+    defaultItem: {
+      id: "",
+      name: "",
+      email: "",
+      password: "",
+      rpassword: "",
+      role: "",
+      created_at: "",
+    },
+  }),
+
+  computed: {
+    formTitle() {
+      return this.editedIndex === -1 ? "New User" : "Edit User";
+    },
+    formIcon() {
+      return this.editedIndex === -1 ? "mdi-account-plus" : "mdi-account-edit";
+    },
+    passwordmatch() {
+      return this.editedItem.password != this.editedItem.rpassword
+        ? "Password Does Not Match"
+        : true;
+    },
+    checkEmail() {
+      if (/.+@.+\..+/.test(this.editedItem.email)) {
+        axios
+          .post("/api/v1/email/verify", { email: this.editedItem.email })
+          .then((res) => {
+            this.success = res.data.message;
+            this.error = "";
+          })
+          .catch((err) => {
+            this.success = "";
+            this.error = "Email Already Exist";
+          });
+      }
+    },
+  },
+
+  watch: {
+    dialog(val) {
+      val || this.close();
+    },
+     options: {
+      handler() {
+        this.readDataFromAPI();
+      },
+    },
+    deep: true,
+  },
+
+  created() {
+    this.initialize();
+  },
+
+  methods: {
+   
+    initialize() {
+      axios.interceptors.request.use(
+        (config) => {
+          this.loading = true;
+          return config;
+        },
+        (error) => {
+          this.loading = false;
+          return Promise.reject(error);
+        }
+      );
+
+      axios.interceptors.response.use(
+        (response) => {
+          this.loading = false;
+          return response;
+        },
+        (error) => {
+          this.loading = false;
+          return Promise.reject(error);
+        }
+      );
+      axios.get("/api/v1/purposesetup").then(
+        res => {
+          
+          this.setup.credential = res.data.credential;
+          this.purposes = res.data.purposes;
+          this.graduations = res.data.graduations;
+          this.semesters = res.data.semesters;
+         
+          if (res.data.purpose_id) {
+           this.setup.purpose_id = res.data.purpose_id.id;
+          }
+          if (res.data.semester_id) {
+          this.setup.semester_id = res.data.semester_id.id;
+          }
+          if (res.data.graduation_id) { 
+          this.setup.graduation_id = res.data.graduation_id.id;
+          }
+          
+        }
+      ).catch(
+        err => {console.log(err)}
+      );
+      
+    },
+
+  
+
+
+    save() { 
+        axios
+          .post("/api/v1/purposesetup", this.setup)
+          .then((res) => {
+            this.text = "Purpose Saved Successfully!";
+            this.snackbarColor ="primary darken-1";
+            this.snackbar = true;
+          })
+          .catch((err) => {
+            console.dir(err);
+            this.text = "Error Saving Purpose!"; 
+            this.snackbarColor ="error darken-1";
+            this.snackbar = true;
+          });
+      } 
+  },
+};
+</script>
