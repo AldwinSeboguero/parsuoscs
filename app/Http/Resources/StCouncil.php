@@ -17,8 +17,11 @@ class StCouncil extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->user->name,  
-            'college' => $this->college->name, 
+            'college' => $this->college->short_name, 
             'semester' => $this->semester->semester,
+            'college_id' => $this->college->id, 
+            'semester_id' => $this->semester->id,
+            'user_id' => $this->user->id,
         ];
     }
 }

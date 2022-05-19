@@ -20,6 +20,10 @@ class ProgramDirector extends JsonResource
             'program' => $this->program->short_name,
             'campus' => $this->program->campus->name,
             'semester' => $this->semester->semester,
+            'user_id' => $this->user->id,   
+            'semester_id' => $this->semester->id,
+            'campus_id' => $this->program->campus->id,
+            'program_id' => $this->program->id,
         ];
     }
 }

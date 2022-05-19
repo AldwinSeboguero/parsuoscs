@@ -8,7 +8,7 @@ class Student extends Model
 {
 	protected $guarded = [];
     protected $table='students';
-    protected $fillable=['student_number','slug','name','year','section_id','program_id','initial_password'];
+    protected $fillable=['student_number','slug','name','year','section_id','program_id','user_id','initial_password','semester_id'];
 	protected $searchable = [
 		/**
 		 * Columns and their priority in search results.
@@ -16,7 +16,7 @@ class Student extends Model
 		 * Columns with equal values have equal importance.
 		 *
 		 * @var array
-		 */
+		*/
 		'columns' => [
 			 
 			'students.name' => 10,

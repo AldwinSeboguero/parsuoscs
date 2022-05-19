@@ -10,6 +10,7 @@ class StaffStCouncil extends Model
     protected $fillable = [
         'user_id',
         'college_id',
+        'semester_id',
     ];
     public function user()
     {

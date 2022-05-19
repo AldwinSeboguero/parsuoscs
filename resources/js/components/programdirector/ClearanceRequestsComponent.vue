@@ -1,7 +1,6 @@
 <template>
   <v-sheet>
-   <v-card>
-    <v-container>
+   <v-card> 
      <v-data-table
         item-key="id"
         class="elevation-0"
@@ -14,8 +13,7 @@
         :options.sync="options"
         :server-items-length="totalclearancerequests"
         :items-per-page="10" 
-        :sort-by="actions"
-        show-select 
+        :sort-by="actions" 
         :footer-props="{
           itemsPerPageOptions: [5, 10, 15],
           itemsPerPageText: 'Clearance Request Per Page',
@@ -24,17 +22,19 @@
         }"
       >
       <template v-slot:top>
+          <v-col cols="12" sm="4">
         <v-text-field 
             append-icon="mdi-magnify"
             label="Search"
+            
+            v-model="searchItem"
             @input="searchIt"
           ></v-text-field>
+          </v-col>
         <v-toolbar flat color="white">
           <div class="overline text-h6">
               Clearance Request List
-              <span class="font-italic subtitle-2"
-                >(2nd Semester A/Y 2020-2021 )</span
-              >
+               
             </div>
           <v-spacer></v-spacer> 
 
@@ -112,6 +112,13 @@
       <template v-slot:item.id="{ item }">
       <td>{{clearancerequests.data.indexOf(item)+1}}</td> 
     </template>
+
+     <template v-slot:item.request_at="{ item }" >
+        <v-chip text-color="white" color="success" small >
+           
+            {{ item.request_at }}
+        </v-chip>
+         </template>
        
       <template v-slot:item.actions="{ item }">
           <template>
@@ -167,8 +174,7 @@
         </v-icon>close
       </v-btn>
       </template>
-    </v-snackbar>
-    </v-container>
+    </v-snackbar> 
     </v-card>
   </v-sheet>
 </template>
@@ -184,6 +190,8 @@ export default {
     text: "",
     success: "",
     error: "", 
+    
+    searchItem: '',
     snackbarColor:"",
       headers: [
       {
@@ -196,7 +204,8 @@ export default {
       { text: "Name", value: "name" },
       { text: "Program", value: "program" },
        { text: "Purpose", value: "purpose" },
-       { text: "Signatory", value: "staff" },
+      //  { text: "Signatory", value: "staff" },
+       { text: "Date Requested", value: "request_at" },
       { text: "Action", value: "actions" },
     ], 
     page: 0,
@@ -250,7 +259,7 @@ export default {
     },
      options: {
       handler() {
-        this.readDataFromAPI();
+        this.searchIt(this.searchItem);
       },
     },
     deep: true,
@@ -279,10 +288,14 @@ export default {
     },
 
     searchIt(d) {
+       const { page, itemsPerPage } = this.options;
+           let pageNumber = page;
       if (d.length > 2) {
-        const { page, itemsPerPage } = this.options;
+       
         axios
-          .get(`/api/v1/clearancerequests/${d}`)
+          .get(`/api/v1/clearancerequests/${d}?page=` + pageNumber, {
+          params: { 'per_page': itemsPerPage },
+        })
           .then((res) => {
             this.loading = false;  
             this.clearancerequests = res.data.clearancerequests; 
@@ -295,7 +308,7 @@ export default {
       }
       if (d.length <= 0) {
         axios
-          .get(`/api/v1/clearancerequests?page=${d.page}`, {
+          .get(`/api/v1/clearancerequests?page=` + pageNumber, {
             params: { 'per_page': d.itemsPerPage },
           })
           .then((res) => {

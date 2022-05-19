@@ -60,7 +60,7 @@
                           :rules="[rules.required, rules.min]"
                         ></v-text-field>
                       </v-col>
-                          <v-col cols="12" sm="12" >
+                          <v-col cols="12" sm="12" v-if="editedIndex == -1">
                         <v-text-field
                           type="password"
                           color="primary"
@@ -68,12 +68,12 @@
                           label="Type Password" 
                         ></v-text-field>
                       </v-col>
-                      <v-col cols="12" sm="12" v-if="editedIndex == -1">
+                      <v-col cols="12" sm="12" v-if="editedIndex > -1">
                         <v-text-field
                           type="password"
                           color="primary"
                           v-model="editedItem.password"
-                          label="Type Password"
+                          label="Type Password" 
                           :rules="[rules.required, rules.min]"
                         ></v-text-field>
                       </v-col>
@@ -207,6 +207,7 @@ export default {
       { text: "Email", value: "email" },
       { text: "Role", value: "role" },
       { text: "Date Created", value: "created_at" },
+      { text: "Updated Created", value: "updated_at" },
       { text: "Action", value: "actions" },
     ],
     page: 0,
@@ -395,6 +396,7 @@ export default {
     editItem(item) {
       this.editedIndex = this.users.data.indexOf(item);
       this.editedItem = Object.assign({}, item);
+      this.editedItem.password ="parsu2021";
       this.dialog = true;
     },
 

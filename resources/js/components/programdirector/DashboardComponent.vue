@@ -5,7 +5,7 @@
         <v-list-item two-line>
           <v-list-item-content>
             <v-list-item-title class="headline">
-              Total Completed Clearace
+              Total Completed Clearance
             </v-list-item-title>
             <v-list-item-subtitle>As of {{ new Date() }}</v-list-item-subtitle>
           </v-list-item-content>

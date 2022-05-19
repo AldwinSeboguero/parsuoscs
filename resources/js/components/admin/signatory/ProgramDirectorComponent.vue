@@ -1,261 +1,297 @@
 <template>
   <v-sheet>
-   <v-card>
-    <v-container>
-     <v-data-table
-        item-key="id"
-        class="elevation-0"
-        :loading="loading"
-        loading-text="Loading... Please wait"
-        :headers="headers"
-        :page="page + 1"
-        :pageCount="numberOfPages"
-        :items="programdirectors.data"
-        :options.sync="options"
-        :server-items-length="totalProgramDirectors"
-        :items-per-page="10" 
-        show-select 
-        :footer-props="{
-          itemsPerPageOptions: [5, 10, 15],
-          itemsPerPageText: 'Program Director Per Page',
-          'show-current-page': true,
-          'show-first-last-page': true,
-        }"
-      >
-      <template v-slot:top>
-        <v-text-field 
-            append-icon="mdi-magnify"
-            label="Search"
-            v-model="searchItem"
-            @input="searchIt"
-          ></v-text-field>
-        <v-toolbar flat color="white">
-          <div class="overline text-h6">
-              Program Director List
-              <span class="font-italic subtitle-2"
-                >(2nd Semester A/Y 2020-2021 )</span
-              >
-            </div>
-          <v-spacer></v-spacer>
-
-          <v-dialog v-model="dialog" scrollable max-width="500px">
-           <template v-slot:activator="{ on, attrs }">
-              <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
-                New ProgramDirector
-              </v-btn>
-            </template>
-            
-      <v-card>
-         <v-card-title class="primary white--text">
-                <v-icon class="white--text" style="padding-right: 8px">{{
-                  formIcon
-                }}</v-icon>
-                <span class="headline">{{ formTitle }}</span>
-              </v-card-title>
-        <v-divider></v-divider>
-        <v-card-text style="height: 500px;">
-          <v-form
-                  v-model="valid"
-                  method="post"
-                  v-on:submit.stop.prevent="save"
-                > 
-                    <v-container v-if="editedIndex!=-1">
-                      <v-row>
-                        <v-col cols="12" sm="12">
-                          <v-text-field
-                            v-model="editedItem.programdirector_number"
-                            label="ProgramDirector Number"
-                            :rules="[rules.required, rules.min]"
-                          ></v-text-field>
-                        </v-col>
-                        <v-col cols="12" sm="12">
-                          <v-text-field
-                            v-model="editedItem.name"
-                            label="Full Name"
-                            :rules="[rules.required, rules.min]"
-                          ></v-text-field>
-                        </v-col>
-                        <v-col cols="12" sm="12" style="margin: 0">
-                          <v-select
-                            v-model="editedItem.campus_id"
-                            :items="campuses"
-                            item-text="name"
-                            label="Select Campus"
-                            item-value="id" 
-                            color="primary"
-                            @change="campusListener"
-                            :rules="[rules.required]"
-                          ></v-select>
-                        </v-col>
-                        <v-col cols="12" sm="12" style="margin: 0">
-                          <v-select
-                            v-model="editedItem.program_id"
-                            :items="programs"
-                            label="Select Program"
-                             item-value="id"
-                          item-text="name"
-                           @change="programListener"
-                            color="primary"
-                            :rules="[rules.required]"
-                          ></v-select>
-                        </v-col>
-                        <v-col cols="12" sm="12" style="margin: 0">
-                          <v-select
-                            v-model="editedItem.section_id"
-                            :items="sections"
-                            label="Select Section"
-                            item-value="id"
-                            item-text="name"
-                            color="primary"
-                            :rules="[rules.required]"
-                          ></v-select>
-                        </v-col>
-                        <v-col cols="12" sm="12" style="margin: 0">
-                          <v-select
-                            v-model="editedItem.year"
-                            :items="years"
-                            label="Select Year Level"
-                             item-value="id"
-                          item-text="name"
-                            color="primary"
-                            :rules="[rules.required]"
-                          ></v-select>
-                        </v-col>
-                      </v-row>
-                    </v-container> 
- 
-                    <v-container v-if="editedIndex==-1">
-                      <v-row>
-                        <v-col cols="12" sm="12">
-                          <v-text-field
-                            v-model="editedItem.programdirector_number"
-                            label="ProgramDirector Number"
-                            :rules="[rules.required, rules.min]"
-                          ></v-text-field>
-                        </v-col>
-                        <v-col cols="12" sm="12">
-                          <v-text-field
-                            v-model="editedItem.name"
-                            label="Full Name"
-                            :rules="[rules.required, rules.min]"
-                          ></v-text-field>
-                        </v-col>
-                        <v-col cols="12" sm="12" style="margin: 0">
-                          <v-select
-                            v-model="editedItem.campus"
-                            :items="campuses"
-                            label="Select Campus"
-                             item-value="id"
-                              item-text="name"
-                              @change="campusListenerNew"
-                            color="primary"
-                            :rules="[rules.required]"
-                          ></v-select>
-                        </v-col>
-                        <v-col cols="12" sm="12" style="margin: 0">
-                          <v-select
-                            v-model="editedItem.program"
-                            :items="programs"
-                            label="Select Program"
-                             item-value="id"
-                          item-text="name"
-                          @change="programListenerNew"
-                            color="primary"
-                            :rules="[rules.required]"
-                          ></v-select>
-                        </v-col>
-                        <v-col cols="12" sm="12" style="margin: 0">
-                          <v-select
-                            v-model="editedItem.section"
-                            :items="sections"
-                            label="Select Section"
-                             item-value="id"
-                          item-text="name"
-                            color="primary"
-                            :rules="[rules.required]"
-                          ></v-select>
-                        </v-col>
-                        <v-col cols="12" sm="12" style="margin: 0">
-                          <v-select
-                            v-model="editedItem.year"
-                            :items="years"
-                            label="Select Year Level"
-                             item-value="id"
-                          item-text="name"
-                            color="primary"
-                            :rules="[rules.required]"
-                          ></v-select>
-                        </v-col>
-                      </v-row>
-                    </v-container> 
-
-                  
-                </v-form>
-        </v-card-text>
-        <v-divider></v-divider>
-       <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn color="blue darken-1" text @click="close">
-                      Cancel
-                    </v-btn>
-                    <v-btn
-                      color="blue darken-1"
-                      text
-                      type="submit"
-                      :disabled="!valid"
-                      @click.prevent="save"
+    <v-card elevation="0">
+      <v-container class="grey lighten-5" fluid>
+        <v-row wrap>
+          <v-col cols="12" lg="4">
+            <v-card>
+              <v-card-text style="padding-bottom: 0">
+                <h1 class="title desplay-2 black--text text--accent3">
+                  <v-icon class="ma-1 pb-2">{{ formIcon }}</v-icon>
+                  {{ formTitle }} Program Director
+                </h1>
+              </v-card-text>
+              <v-list-item three-line>
+                <v-list-item-content>
+                  <div class="text-center pb-3">
+                    <v-form
+                      method="post"
+                      lazy-validation
+                      v-on:submit.stop.prevent="save"
+                      ref="entryForm"
                     >
-                      Save
-                    </v-btn>
-     </v-card-actions>
-      </v-card>
-          </v-dialog>
-        </v-toolbar>
-      </template>
-      <template v-slot:item.id="{ item }">
-      <td>{{programdirectors.data.indexOf(item)+1}}</td> 
-    </template>
-       
-      <template v-slot:item.actions="{ item }">
-        <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil </v-icon>
-        <v-icon small class="mr-2" @click="deleteItem(item)">
-          mdi-delete-forever
-        </v-icon>
-      </template> 
-    </v-data-table>
-  <v-snackbar
-      v-model="snackbar" 
-      :color="snackbarColor" 
-      right
-      timeout="5000" 
-      outlined
-     top
-     width="50" 
-    >
-       <v-icon 
-          left
-        >
-          mdi-error
-        </v-icon>{{ text }}
+                      <v-autocomplete
+                        v-model="editedItem.user_id"
+                        :items="user_staff"
+                        :loading="isLoading"
+                        :search-input.sync="search"
+                        chips
+                        clearable
+                        item-text="user.name"
+                        item-value="user.id"
+                        item-key="user.id"
+                        label="Search User..."
+                      >
+                        <template v-slot:no-data>
+                          <v-list-item>
+                            <v-list-item-title>
+                              Search user
+                              <strong>Staff</strong>
+                            </v-list-item-title>
+                          </v-list-item>
+                        </template>
+                        <template
+                          v-slot:selection="{ attr, on, item, selected }"
+                        >
+                          <v-chip
+                            v-bind="attr"
+                            :input-value="selected"
+                            color="purple"
+                            class="white--text"
+                            v-on="on"
+                          >
+                            <v-icon left> mdi-badge-account </v-icon>
+                            <span v-text="item.user.name"></span>
+                          </v-chip>
+                        </template>
+                        <template v-slot:item="{ item }">
+                          <v-list-item-avatar
+                            color="indigo"
+                            class="caption font-weight-light white--text"
+                          >
+                            {{ item.user.name[0] }}
+                          </v-list-item-avatar>
+                          <v-list-item-content>
+                            <v-list-item-title
+                              v-text="item.user.name"
+                            ></v-list-item-title>
+                          </v-list-item-content>
+                        </template>
+                      </v-autocomplete>
+                      <v-select
+                        v-model="editedItem.campus_id"
+                        :items="campuses"
+                        item-text="name"
+                        label="Select Campus"
+                        item-value="id"
+                        item-key="id"
+                        color="primary"
+                        chips
+                        @change="campusListener"
+                      >
+                        <template
+                          v-slot:selection="{ attr, on, item, selected }"
+                        >
+                          <v-chip
+                            v-bind="attr"
+                            :input-value="selected"
+                            color="purple"
+                            class="white--text"
+                            v-on="on"
+                          >
+                            <span v-text="item.name"></span>
+                          </v-chip>
+                        </template>
+                      </v-select>
 
-      <template v-slot:action="{ attrs }">
-        
-          <v-btn
-        :color="snackbarColor"
-          text
-          v-bind="attrs"
-          @click="snackbar = false"
-      >
-        <v-icon
-          dark
-          left
+                      <v-autocomplete
+                        v-model="editedItem.program_id"
+                        :items="programs"
+                        :loading="isLoading"
+                        :search-input.sync="search"
+                        chips
+                        clearable
+                        item-text="name"
+                        item-value="id"
+                        item-key="id"
+                        label="Search Program..."
+                        @change="campusListenerNew"
+                      >
+                        <template v-slot:no-data>
+                          <v-list-item>
+                            <v-list-item-title>
+                              Search Program
+                            </v-list-item-title>
+                          </v-list-item>
+                        </template>
+                        <template
+                          v-slot:selection="{ attr, on, item, selected }"
+                        >
+                          <v-chip
+                            v-bind="attr"
+                            :input-value="selected"
+                            color="purple"
+                            class="white--text"
+                            v-on="on"
+                          >
+                            <span v-text="item.name"></span>
+                          </v-chip>
+                        </template>
+                        <template v-slot:item="{ item }">
+                          <v-list-item-content>
+                            <v-list-item-title
+                              v-text="item.name"
+                            ></v-list-item-title>
+                          </v-list-item-content>
+                        </template>
+                      </v-autocomplete>
+                      <v-autocomplete
+                        v-model="editedItem.semester_id"
+                        :items="semesters"
+                        :loading="isLoading"
+                        :search-input.sync="search"
+                        chips
+                        clearable
+                        item-text="semester"
+                        item-value="id"
+                        item-key="id"
+                        label="Search Semester..."
+                      >
+                        <template v-slot:no-data>
+                          <v-list-item>
+                            <v-list-item-title>
+                              Search Semester
+                            </v-list-item-title>
+                          </v-list-item>
+                        </template>
+                        <template
+                          v-slot:selection="{ attr, on, item, selected }"
+                        >
+                          <v-chip
+                            v-bind="attr"
+                            :input-value="selected"
+                            color="purple"
+                            class="white--text"
+                            v-on="on"
+                          >
+                            <span v-text="item.semester"></span>
+                          </v-chip>
+                        </template>
+                        <template v-slot:item="{ item }">
+                          <v-list-item-content>
+                            <v-list-item-title
+                              v-text="item.semester"
+                            ></v-list-item-title>
+                          </v-list-item-content>
+                        </template>
+                      </v-autocomplete>
+
+                      <v-divider />
+
+                      <v-row class="ma-2 float-right">
+                        <!-- <v-btn color="blue darken-1" text @click="close">
+                      Cancel
+                    </v-btn> -->
+                        <v-btn
+                          color="blue darken-1"
+                          text
+                          type="submit"
+                          @click.prevent="save"
+                        >
+                          Save
+                        </v-btn>
+                      </v-row>
+                    </v-form>
+                  </div>
+                </v-list-item-content>
+              </v-list-item>
+            </v-card>
+          </v-col>
+          <v-col cols="12" lg="8">
+            <v-data-table
+              item-key="id"
+              class="elevation-1 pa-6"
+              :loading="loading"
+              loading-text="Loading... Please wait"
+              :headers="headers"
+              :page="page + 1"
+              :pageCount="numberOfPages"
+              :items="programdirectors.data"
+              :options.sync="options"
+              :server-items-length="totalProgramDirectors"
+              :items-per-page="5"
+              :footer-props="{
+                itemsPerPageOptions: [5, 10, 15],
+                itemsPerPageText: 'Stcouncil Per Page',
+                'show-current-page': true,
+                'show-first-last-page': true,
+              }"
+            >
+              <template v-slot:top>
+                <v-text-field
+                  append-icon="mdi-magnify"
+                  label="Search"
+                  v-model="searchItem"
+                  @input="searchIt"
+                ></v-text-field>
+              </template>
+
+              <template v-slot:item.name="{ item }">
+                <v-edit-dialog
+                  large
+                  block
+                  persistent
+                  :return-value.sync="item.name"
+                  @save="updatePD(item)"
+                >
+                  {{ item.name }}
+                  <template v-slot:input>
+                    <h2>Change PD</h2>
+                  </template>
+                  <template v-slot:input>
+                    <v-select
+                      v-model="item.user_id"
+                      :items="user_staff"
+                      label="Select PD"
+                      item-value="user.id"
+                      item-text="user.name"
+                      color="primary"
+                      :rules="[rules.required]"
+                    ></v-select>
+                  </template>
+                </v-edit-dialog>
+              </template>
+              <template v-slot:item.college="{ item }">
+                <span class="text-uppercase">{{ item.college }}</span>
+              </template>
+              <template v-slot:item.actions="{ item }">
+                <v-icon
+                  small
+                  class="mr-2 warning--text"
+                  @click="editItem(item)"
+                >
+                  mdi-pencil
+                </v-icon>
+                <v-icon small class="mr-2 red--text" @click="deleteItem(item)">
+                  mdi-delete-forever
+                </v-icon>
+              </template>
+            </v-data-table>
+          </v-col>
+        </v-row>
+        <v-snackbar
+          v-model="snackbar"
+          :color="snackbarColor"
+          right
+          timeout="5000"
+          outlined
+          top
+          width="50"
         >
-          mdi-close
-        </v-icon>close
-      </v-btn>
-      </template>
-    </v-snackbar>
-    </v-container>
+          <v-icon left> mdi-error </v-icon>{{ text }}
+
+          <template v-slot:action="{ attrs }">
+            <v-btn
+              :color="snackbarColor"
+              text
+              v-bind="attrs"
+              @click="snackbar = false"
+            >
+              <v-icon dark left> mdi-close </v-icon>close
+            </v-btn>
+          </template>
+        </v-snackbar>
+      </v-container>
     </v-card>
   </v-sheet>
 </template>
@@ -266,22 +302,19 @@ export default {
     dialog: false,
     loading: false,
     snackbar: false,
+    addEdit: "Add",
     selected: [],
+    isLoading: false,
     text: "",
     success: "",
-    error: "", 
-    snackbarColor:"",
-    searchItem: '',
+    error: "",
+    snackbarColor: "",
+    searchItem: "",
     headers: [
-      {
-        text: "No",
-        align: "left",
-        value: "id",
-      },
-      { text: "Name", value: "name" }, 
-      { text: "Program", value: "program" }, 
-      { text: "Campus", value: "campus" }, 
-      { text: "Semester", value: "semester" }, 
+      { text: "Name", value: "name" },
+      { text: "Program", value: "program" },
+      { text: "Campus", value: "campus" },
+      { text: "Semester", value: "semester" },
       { text: "Action", value: "actions" },
     ],
     page: 0,
@@ -292,7 +325,8 @@ export default {
     campuses: {},
     sections: {},
     programs: {},
-    years: [1,2,3,4,5], 
+    user_pd: {},
+    years: [1, 2, 3, 4, 5],
     rules: {
       required: (v) => !!v || "This Field is Required",
       min: (v) => v.length >= 5 || "Minimum 5 Characters Required",
@@ -301,7 +335,7 @@ export default {
     editedIndex: -1,
     editedItem: {
       id: "",
-      programdirector_number: "",
+      user_id: "",
       name: "",
       campus: "",
       section: "",
@@ -309,40 +343,32 @@ export default {
       campus_id: "",
       section_id: "",
       program_id: "",
-      code:"",
-      year: "",
-      created_at: "",
     },
     defaultItem: {
       id: "",
-      programdirector_number: "",
-      name: "",
+      user_id: "",
       campus: "",
-      section: "",
       program: "",
       campus_id: "",
       section_id: "",
       program_id: "",
-      code:"",
-      year: "",
-      created_at: "",
     },
   }),
 
   computed: {
     formTitle() {
-      return this.editedIndex === -1 ? "New Item" : "Edit Item";
+      return this.editedIndex === -1 ? "New" : "Edit";
     },
     formIcon() {
       return this.editedIndex === -1 ? "mdi-plus" : "mdi-pen";
-    }, 
+    },
   },
 
   watch: {
     dialog(val) {
       val || this.close();
     },
-     options: {
+    options: {
       handler() {
         this.searchIt(this.searchItem);
       },
@@ -355,21 +381,23 @@ export default {
   },
 
   methods: {
-     readDataFromAPI() {
+    readDataFromAPI() {
       this.loading = true;
       const { page, itemsPerPage } = this.options;
       let pageNumber = page;
       axios
         .get(`/api/v1/programdirectors?page=` + pageNumber, {
-          params: { 'per_page': itemsPerPage },
+          params: { per_page: itemsPerPage },
         })
         .then((response) => {
           //Then injecting the result to datatable parameters.
           this.loading = false;
-         this.programdirectors = response.data.programdirectors;
+          this.programdirectors = response.data.programdirectors;
+          this.user_pd = response.data.user_pd;
           this.campuses = response.data.campuses;
           this.programs = response.data.programs;
-          this.sections = response.data.sections;
+          this.semesters = response.data.semesters;
+          this.user_staff = response.data.user_staff;
           this.totalProgramDirectors = response.data.programdirectors.total;
           this.numberOfPages = response.data.programdirectors.last_page;
         });
@@ -381,11 +409,14 @@ export default {
         let pageNumber = page;
         axios
           .get(`/api/v1/programdirectors/${d}?page=` + pageNumber, {
-          params: { 'per_page': itemsPerPage },
-        })
+            params: { per_page: itemsPerPage },
+          })
           .then((res) => {
-            this.loading = false;  
+            this.loading = false;
             this.programdirectors = res.data.programdirectors;
+            this.user_pd = res.data.user_pd;
+            this.colleges = res.data.colleges;
+
             console.log(this.programdirectors);
             this.totalProgramDirectors = res.data.programdirectors.total;
             this.numberOfPages = res.data.programdirectors.last_page;
@@ -398,12 +429,18 @@ export default {
         const { page, itemsPerPage } = this.options;
         let pageNumber = page;
         axios
-          .get(`/api/v1/programdirectors?page=`+ pageNumber, {
-          params: { 'per_page': itemsPerPage },
+          .get(`/api/v1/programdirectors?page=` + pageNumber, {
+            params: { per_page: itemsPerPage },
           })
           .then((res) => {
-            this.loading = false;  
+            this.loading = false;
             this.programdirectors = res.data.programdirectors;
+            this.user_pd = res.data.user_pd;
+            this.colleges = res.data.colleges;
+            this.semesters = res.data.semesters;
+            this.campuses = res.data.campuses;
+            this.programs = res.data.programs;
+            this.user_staff = res.data.user_staff;
             this.totalProgramDirectors = res.data.programdirectors.total;
             this.numberOfPages = res.data.programdirectors.last_page;
           })
@@ -411,7 +448,7 @@ export default {
             console.error(err);
           });
       }
-    },  
+    },
     initialize() {
       axios.interceptors.request.use(
         (config) => {
@@ -442,50 +479,72 @@ export default {
       console.log(this.editedItem);
       this.dialog = true;
     },
-    campusListener(){
- 
-     axios
-          .post("/api/v1/campusListener",{'campus_id': this.editedItem.campus_id})
-          .then((res) => { 
-            this.programs = res.data.programs;
-            this.sections = ''; 
-          })
-          .catch((err) => {
-            console.error(err);
-          });
+    campusListener() {
+      axios
+        .post("/api/v1/campusListener", {
+          campus_id: this.editedItem.campus_id,
+        })
+        .then((res) => {
+          this.programs = res.data.programs;
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     },
-    programListener(){ 
-     axios
-          .post("/api/v1/programListener",{'program_id': this.editedItem.program_id})
-          .then((res) => { 
-            this.sections = res.data.sections;  
-          })
-          .catch((err) => {
-            console.error(err);
-          });
+    programListener() {
+      axios
+        .post("/api/v1/programListener", {
+          program_id: this.editedItem.program_id,
+        })
+        .then((res) => {
+          this.sections = res.data.sections;
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     },
-    campusListenerNew(){
- 
-     axios
-          .post("/api/v1/campusListener",{'campus_id': this.editedItem.campus})
-          .then((res) => { 
-            this.programs = res.data.programs;
-            this.sections = ''; 
-          })
-          .catch((err) => {
-            console.error(err);
-          });
+    campusListenerNew() {
+      axios
+        .post("/api/v1/campusListener", {
+          campus_id: this.editedItem.campus_id,
+        })
+        .then((res) => {
+          this.programs = res.data.programs;
+          this.sections = "";
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     },
-    programListenerNew(){
- 
-     axios
-          .post("/api/v1/programListener",{'program_id': this.editedItem.program})
-          .then((res) => { 
-            this.sections = res.data.sections;  
-          })
-          .catch((err) => {
-            console.error(err);
-          });
+    programListenerNew() {
+      axios
+        .post("/api/v1/programListener", {
+          program_id: this.editedItem.program,
+        })
+        .then((res) => {
+          this.sections = res.data.sections;
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    },
+    updatePD(item) {
+      const index = this.programdirectors.data.indexOf(item);
+      axios
+        .post("/api/v1/pd/update", { new_pd: item.user_id, pd: item.id })
+        .then((res) => {
+          this.programdirectors = res.data.programdirectors;
+
+          this.user_pd = res.data.user_pd;
+          this.totalProgramDirectors = res.data.programdirectors.total;
+          this.numberOfPages = res.data.programdirectors.last_page;
+          this.text = "successfully update";
+          this.snackbar = true;
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+      console.log(item);
     },
     deleteItem(item) {
       const index = this.programdirectors.data.indexOf(item);
@@ -494,17 +553,16 @@ export default {
         axios
           .delete("/api/v1/programdirectors/" + item.id)
           .then((res) => {
-            this.text = "Record Deleted Successfully!"; 
-            this.snackbarColor ="primary darken-1";
+            this.text = "Record Deleted Successfully!";
+            this.snackbarColor = "primary darken-1";
             this.snackbar = true;
             this.programdirectors.data.splice(index, 1);
           })
           .catch((err) => {
             console.log(err.response);
             this.text = "Error Deleting Record";
-            this.snackbarColor ="error darken-1";
+            this.snackbarColor = "error darken-1";
             this.snackbar = true;
-
           });
       }
     },
@@ -515,24 +573,30 @@ export default {
         this.editedItem = Object.assign({}, this.defaultItem);
         this.editedIndex = -1;
       }, 300);
-    }, 
+    },
     save() {
       console.log(this.editedItem);
       if (this.editedIndex > -1) {
         const index = this.editedIndex;
         axios
-          .put("/api/v1/programdirectors/" + this.editedItem.id, this.editedItem)
+          .put(
+            "/api/v1/programdirectors/" + this.editedItem.id,
+            this.editedItem
+          )
           .then((res) => {
             this.text = "Record Updated Successfully!";
-            this.snackbarColor ="primary darken-1";
+            this.snackbarColor = "primary darken-1";
             this.snackbar = true;
-            Object.assign(this.programdirectors.data[index], res.data.programdirector);
+            Object.assign(
+              this.programdirectors.data[index],
+              res.data.programdirector
+            );
             console.log(this.editedItem);
           })
           .catch((err) => {
             console.log(err.response);
             this.text = "Error Updating Record";
-            this.snackbarColor ="error darken-1";
+            this.snackbarColor = "error darken-1";
             this.snackbar = true;
           });
       } else {
@@ -540,21 +604,19 @@ export default {
           .post("/api/v1/programdirectors", this.editedItem)
           .then((res) => {
             this.text = "Record Added Successfully!";
-            this.snackbarColor ="primary darken-1";
+            this.snackbarColor = "primary darken-1";
             this.snackbar = true;
-            // this.programdirectors.data.push(res.data.programdirector); 
-            this.programdirectors = res.data.programdirectors
+            // this.programdirectors.data.push(res.data.programdirector);
+            this.programdirectors = res.data.programdirectors;
           })
           .catch((err) => {
             console.dir(err);
             this.text = "Error Inserting Record";
-            this.snackbarColor ="error darken-1";
+            this.snackbarColor = "error darken-1";
             this.snackbar = true;
           });
-          
-      } 
-        this.close();
-     
+      }
+      this.close();
     },
   },
 };

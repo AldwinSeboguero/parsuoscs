@@ -8,7 +8,7 @@ use App\Clearance;
 use App\Student;
 use App\ClearanceRequest;
 use App\UserRole;
-
+use App\Semester;
 use Illuminate\Support\Facades\Auth;
 class AdminController extends Controller
 {
@@ -25,19 +25,36 @@ class AdminController extends Controller
         }
     public function index()
     {
+        $semester_id = Semester::latest('id')->first();
         return response()->json([
-            'completed' => Clearance::where('cashier',true)
-                            ->whereAnd('library',true)
-                            ->whereAnd('student_council',true)
-                            ->whereAnd('osas',true)
-                            ->whereAnd('program_director',true)
-                            ->whereAnd('college_dean',true)
-                            ->whereAnd('registrar',true)->get()->count(),
+            'semester' => $semester_id->semester,
+            'completed' => Clearance::where('cashier','true')
+                            ->whereAnd('library','true')
+                            ->whereAnd('student_council','true')
+                            ->whereAnd('osas','true')
+                            ->whereAnd('program_director','true')
+                            ->whereAnd('college_dean','true')
+                            ->whereAnd('registrar','true')
+                            ->with('purpose')   
+                            ->whereHas('purpose', function($q) use ($semester_id){
+                                $q->where('semester_id', $semester_id->id);
+                            }) 
+                            ->get()->count(),
             'totalStudent' => Student::orderBy('updated_at')->count(),
             'totalActivatedAccount' => Student::where('is_activated',true)->get()->count(),
             'pendingRequest' => ClearanceRequest::where('status',false)->get()->count(),
-            'approvedRequest' => ClearanceRequest::where('status',true)->get()->count(),
-            'totalClearanceRequest' => ClearanceRequest::orderBy('updated_at')->get()->count(),
+            'approvedRequest' => ClearanceRequest::where('status',true)
+            ->with('purpose')   
+            ->whereHas('purpose', function($q) use ($semester_id){
+                $q->where('semester_id', $semester_id->id);
+            }) 
+            ->get()->count(),
+            'totalClearanceRequest' => ClearanceRequest::orderBy('updated_at')
+            ->with('purpose')   
+            ->whereHas('purpose', function($q) use ($semester_id){
+                $q->where('semester_id', $semester_id->id);
+            }) 
+            ->get()->count(),
                                      
             ],200);
     }

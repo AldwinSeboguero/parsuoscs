@@ -60,3 +60,5 @@ Route::prefix('/user')->group(function(){
         
 });
 
+// Route::post('sociallogin/{provider}', 'Auth\AuthController@SocialSignup');
+// Route::get('/auth/google/callback', 'OutController@index');

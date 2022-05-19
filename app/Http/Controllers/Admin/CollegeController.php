@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\College;
+use App\Campus;
 class CollegeController extends Controller
 {
     /**
@@ -14,7 +15,11 @@ class CollegeController extends Controller
      */
     public function index()
     {
-        return response()->json(['colleges'=> College::with('campus')->get()],200);
+        return response()->json(
+            [
+                'colleges'=> College::with('campus')->get(),
+                'campuses' => Campus::orderBy('name')->get(),
+            ],200);
     }
 
     /**
@@ -34,8 +39,15 @@ class CollegeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        //
+    { 
+            
+            $college = new College([
+            'name' => $request->name,
+            'short_name' => $request->short_name,
+            'campus_id'=> $request->campus_id, 
+            ]);  
+            $college->save(); 
+            return response()->json(['colleges'=> College::orderByDesc('updated_at')->paginate(10),200]);
     }
 
     /**
@@ -44,12 +56,12 @@ class CollegeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id,Request $request)
     {
-        //
+        
     }
 
-    /**
+    /** 
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -69,7 +81,12 @@ class CollegeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $college = College::find($id);
+        $college->name= $request->name;  
+        $college->short_name= $request->short_name;  
+        $college->campus_id= $request->campus_id;  
+        $college->save();  
+        return response()->json(['college' => $college],200);
     }
 
     /**
@@ -80,6 +97,7 @@ class CollegeController extends Controller
      */
     public function destroy($id)
     {
-        //
-    }
+        $college = College::find($id)->delete();
+        return response()->json(['college' => $college],200);
+    } 
 }

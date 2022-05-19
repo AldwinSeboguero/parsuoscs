@@ -65,18 +65,19 @@
                             @click:append="showPassword = !showPassword"
                             :rules="[rules.required]"
                           />
-
-                          <h3 class="text-center mt-3">
+                         <div class="text-center mt-3 pb-3">
+                          <v-btn text center class="text-center mt-3 primary--text" @click="resetPassword">
                             Forgot your password?
-                          </h3>
+                          </v-btn>
+                         </div>
                           <div class="text-center mt-3 pb-3">
                             <v-btn
                               rounded
                               color="blue accent-3"
-                              type="submit"
-                              :disabled="!valid"
+                              type="submit" 
                               @click.prevent="login"
                               dark
+                              :loading="loginloading"
                               >SIGN IN</v-btn
                             >
                           </div>
@@ -130,7 +131,7 @@
                         <h4 class="text-center mt-4">
                           Ensure your activation code for activation
                         </h4>
-                        <v-form v-model="valid" method="post">
+                        <v-form v-model="valid" @click="checkUUID">
                           <v-text-field
                             v-model="activationCode"
                             label="Activation Code"
@@ -334,7 +335,6 @@
     </v-main>
   </v-app>
 </template>
-
 <script>
 export default {
   data: () => ({
@@ -343,6 +343,7 @@ export default {
     dialog: false,
     showPassword: false,
     showPasswordc: false,
+    loginloading: false,
     email: "",
     password: "",
     student: {
@@ -457,6 +458,9 @@ export default {
     },
   },
   methods: {
+    resetPassword(){
+      this.$router.push({name: 'reset-password'})
+    },
     activate() {
       axios
         .post("/api/v1/user/register", {
@@ -467,6 +471,7 @@ export default {
         })
         .then((response) => {
           this.dialog = true;
+          step=1;
         })
         .catch((err) => {
           this.snackbar = true;
@@ -494,7 +499,7 @@ export default {
       //   // this.snackbar = true;
       //   //  this.text = $store.state.error;
       //  });
-
+this.loginloading = true;
       axios
         .post("/api/v1/user/login", {
           email: this.user.email,
@@ -502,10 +507,11 @@ export default {
         })
         .then((response) => {
           localStorage.setItem("token", response.data.access_token);
-
+  this.loginloading = false;
           window.location.replace("/#/");
         })
         .catch((err) => {
+          this.loginloading = false;
           if (err.response.status == 419) {
             this.$router.push("/");
           } else {
@@ -536,49 +542,3 @@ export default {
   name: "App",
 };
 </script>
-
-// <v-main>
-//       <v-container
-//         class="fill-height"
-//         fluid
-//       >
-//         <v-row
-//           align="center"
-//           justify="center"
-//         >
-//           <v-col
-//             cols="12"
-//             sm="8"
-//             md="4"
-//           >
-//            <v-card >
-//               <v-card-title class="pb-6 align-center">
-//                 <h1>Login</h1>
-//               </v-card-title>
-//               <v-card-text>
-//                 <v-divider></v-divider>
-//                 <v-form>
-//                   <v-text-field 
-//                     label="Username" 
-//                     prepend-icon="mdi-account-circle-outline"
-//                   />
-//                   <v-text-field 
-//                     :type="showPassword ? 'text' : 'password'" 
-//                     label="Password"
-//                     prepend-icon="mdi-account-lock-outline"
-//                     :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-//                     @click:append="showPassword = !showPassword"
-//                   />
-//                 </v-form>
-//               </v-card-text>
-//               <v-divider></v-divider>
-//               <v-card-actions>
-//                 <v-btn color="success">Register</v-btn>
-//                 <v-btn color="info">Login</v-btn>
-//               </v-card-actions>
-//             </v-card>
-//           </v-col>
-//         </v-row>
-//       </v-container>
-//     </v-main>
-//   </v-app>

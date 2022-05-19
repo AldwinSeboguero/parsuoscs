@@ -11,6 +11,7 @@ class Staff extends Model
         'user_id',
         'designee_id',
         'campus_id',
+        'semester_id'
     ];
     public function user()
     {

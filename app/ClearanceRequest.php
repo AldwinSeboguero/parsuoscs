@@ -13,6 +13,8 @@ class ClearanceRequest extends Model
         'status',
         'student_id',
         'purpose_id',
+        'designee_id',
+        'signatory_name',
         'created_at',
         'updated_at',
         'request_at',

@@ -18,7 +18,7 @@ class Student extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'campus' => $this->program->campus->name,
-            'program' => $this->program->name,
+            'program' => $this->program->short_name.'|'.$this->program->campus->short_name,
             'section' => $this->section->name,
             'campus_id' => $this->program->campus->id,
             'program_id' => $this->program->id,
@@ -28,6 +28,8 @@ class Student extends JsonResource
             'code' => $this->initial_password,
             'deficiencies' => $this->deficiencies,
             'created_at' => $this->created_at->toDayDateTimeString(), 
+            'stat' => $this->user_id ? '1' : '0',
+            'user_id' => $this->user_id,
         ];
     }
 }

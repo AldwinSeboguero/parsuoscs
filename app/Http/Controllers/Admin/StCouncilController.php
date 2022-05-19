@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 use App\StaffStCouncil;
 use App\User;
 use App\Designee;
+use App\College;
+use App\Semester;
+use App\UserRole;
+use App\Staff;
 use App\Http\Resources\StCouncil as StCouncilResource;
 use App\Http\Resources\StCouncilCollection;
 class StCouncilController extends Controller
@@ -19,10 +23,17 @@ class StCouncilController extends Controller
     public function index(Request $request)
     {
         $per_page =$request->per_page ? $request->per_page : 10; 
-        $deans =  new StCouncilCollection(StaffStCouncil::with('user')->with('college')->with('semester')
+        $deans =  new StCouncilCollection(StaffStCouncil::orderByDesc('updated_at')->with('user')->with('college')->with('semester')
         ->paginate($per_page));
         return response()->json([
-            'stcouncils' => $deans
+            'stcouncils' => $deans,
+            'user_staff' => UserRole::orderBy('user_id')->with('user')->with('role')->whereHas('role',
+            function ($q){
+                $q->where('name','!=','student');
+            }
+            )->get(),
+            'colleges' => College::orderBY('id')->get(),
+            'semesters' => Semester::orderByDesc('created_at')->get(),
             ],200);
     }
 
@@ -42,10 +53,7 @@ class StCouncilController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
-    }
+  
 
     /**
      * Display the specified resource.
@@ -74,7 +82,30 @@ class StCouncilController extends Controller
         //
     }
 
+    public function store(Request $request)
+    { 
+           
+            $stcouncil = new StaffStCouncil([
+            'user_id' => $request->user_id,
+            'college_id'=> $request->college_id, 
+            'semester_id'=> $request->semester_id,
+       
+            ]);  
+            $stcouncil->save(); 
+            $stcouncils =  new StCouncilCollection(StaffStCouncil::orderByDesc('updated_at')->with('user')->with('semester')->with('college')
+            ->paginate(5));
+            return response()->json(['stcouncils'=>$stcouncils,200]);
+    }
+
     /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+   
+
+    /** 
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -94,7 +125,22 @@ class StCouncilController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $stcouncil = StaffStCouncil::find($id); 
+        $stcouncil->user_id = $request->user_id;
+        $stcouncil->college_id= $request->college_id; 
+        $stcouncil->semester_id= $request->semester_id; 
+        $stcouncil->save();  
+        
+        $designee_id = Designee::orderBy('id')->where('name','Student Council')->first()->id;
+        $campus_id = College::find($request->college_id)->id;
+        $staff = Staff::firstOrCreate([
+            'user_id' => $request->user_id,
+            'campus_id'=> $campus_id, 
+            'semester_id'=> $request->semester_id,
+            'designee_id'=> $designee_id,
+            ]);  
+        // return response()->json(['stcouncil' => $stcouncil],200);
+        return response()->json(['stcouncil'=> new StCouncilResource($stcouncil)],200);
     }
 
     /**
@@ -105,6 +151,9 @@ class StCouncilController extends Controller
      */
     public function destroy($id)
     {
-        //
-    }
+        $stcouncil = StaffStCouncil::find($id)->delete();
+        return response()->json(['stcouncil' => $stcouncil],200);
+    } 
+    
+ 
 }

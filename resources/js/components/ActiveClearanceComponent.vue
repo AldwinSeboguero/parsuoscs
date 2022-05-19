@@ -1,21 +1,21 @@
 <template>
-
-  <v-sheet style="margin-bottom: 36px">
+ 
+  <v-sheet style="margin-bottom: 36px" v-if="purposeVal">
        <v-alert
       border="right"
       colored-border
       type="info"
       elevation="0"
       v-if="!submittedClearance
-      && (clearance.student_council==true
+      && ((clearance.student_council==true
                   && clearance.cashier==true
                   && clearance.library==true
                   && clearance.osas==true
                   && clearance.program_director==true
                   && clearance.college_deaan==true
                   && clearance.registrar==true)
-                  || clearance.adviser==true
-                  && clearance.principal==true
+                  || (clearance.class_adviser==true
+                  && clearance.principal==true))
       "
     >
        <b><i>Note:</i></b> To complete the proccess. Please click the submit button to send your clearance to the Office of the Registrar.
@@ -42,11 +42,11 @@
                  Completed
                 </v-chip> 
                  <v-chip   text-color="white" style="margin-left: 4px;"
-                  color="info"
+                  :color="stad ? 'info' : 'red'"
                   x-small
                   v-else
                 >
-                 On-Going
+                 {{stad ? "On-Going" : "Closed"}}
                 </v-chip> 
                  <v-btn @click="generatePDF" class="elevation-0 error lighten-1" small
                    v-if="(clearance.student_council==true
@@ -56,21 +56,21 @@
                   && clearance.program_director==true
                   && clearance.college_deaan==true
                   && clearance.registrar==true)
-                  || clearance.adviser==true
+                  || clearance.class_adviser==true
                   && clearance.principal==true
                   "
                  ><v-icon>mdi-file-pdf</v-icon>Generate Clearance</v-btn>
                 <v-btn @click="submitClearance" class="elevation-0 success lighten-1" small
                   v-if="!submittedClearance
-                  && (clearance.student_council==true
+                  && ((clearance.student_council==true
                   && clearance.cashier==true
                   && clearance.library==true
                   && clearance.osas==true
                   && clearance.program_director==true
                   && clearance.college_deaan==true
                   && clearance.registrar==true)
-                  || clearance.adviser==true
-                  && clearance.principal==true"
+                  || (clearance.class_adviser==true
+                  && clearance.principal==true))"
                 ><v-icon>mdi-forward</v-icon>Submit to the Registrar</v-btn>
       
           </template>
@@ -118,9 +118,9 @@
             Approved on {{ item.data_approved }}
           </v-chip>
         </template>
-        <template v-else-if="item.status == 0 && item.designee">
+        <template v-else-if="item.status == 0 || item.status == 2 && item.designee">
           <template v-if="item.clearanceRequestCount == 1">
-            <v-chip text-color="white" color="cyan" small>
+            <v-chip text-color="white" color="cyan" small v-if="item.status != 2">
               <v-avatar left>
                 <v-icon small>mdi-information</v-icon>
               </v-avatar>
@@ -163,7 +163,7 @@
         </template>
       </template>
 
-      <template v-slot:item.actions="{ item }">
+      <template v-slot:item.actions="{ item }" v-if="stad">
         <template v-if="item.status == 0 && item.designee">
           <template v-if="item.clearanceRequestCount == 0">
             <v-btn
@@ -172,8 +172,10 @@
               depressed
               small
               @click="sendRequest(item)"
+         
               >Click to Request Clearance</v-btn
             >
+             
           </template>
           <template v-else>
             <template v-if="item.deficiencyCount != 0">
@@ -188,6 +190,17 @@
             </template>
           </template>
         </template>
+      
+      </template>
+      <template v-slot:item.actions="{ item }"  v-else>
+          <v-btn
+              class="ma-2"
+              color="red"
+              depressed
+              small 
+              text 
+              >Request for Clearance is Closed</v-btn
+            >
       </template>
 
       <!-- <template v-slot:no-data>
@@ -284,6 +297,29 @@
     </v-dialog>
     
   </v-sheet>
+  <v-container  v-else-if="purposeVal == 0">
+    
+    <v-row align="center "   justify="center" class="pa-12">  
+
+       <v-alert
+      icon="mdi-shield-lock-outline"
+      prominent
+      text
+      type="info"
+    >
+      <v-row align="center" class="pa-3">
+        <v-col class="grow">
+         <strong>No purpose detected!</strong> Go to settings to setup your clearance purpose.
+    
+        </v-col>
+        <v-col class="shrink">
+          <v-btn class="primary" href="/#/student/settings" elevation="0">Redirect to Settings</v-btn>
+        </v-col>
+      </v-row>
+    </v-alert>
+     </v-row>
+  </v-container>
+  <v-container v-else></v-container>
 </template>
 <script>
 import jspdf from 'jspdf';
@@ -291,6 +327,8 @@ import 'jspdf-autotable';
 export default {
   data: () => ({
     valid: true,
+    stad: null,
+    purposeVal: null,
     dialog: false,
     submittedClearance:'',
     staffRegistrar_id:0,
@@ -301,6 +339,7 @@ export default {
     text: "",
     success: "",
     error: "",
+    student_type: "",
     deficiency_designee: "",
     headers: [
       { text: "Office", value: "office" },
@@ -316,6 +355,7 @@ export default {
     clearanceStatus: "0",
     clearances: [],
     clearance:{},
+    student:{},
     deficiencies: [],
     deficiencySignatory: "",
     activeClearancePurpose: "",
@@ -392,47 +432,60 @@ export default {
           console.error(err);
         });
     },
-    generatePDF() {
-      const columns = [
-        { title: "Office", dataKey: "office" },
-      { title: "Designee", dataKey: "designee" },
-      { title: "Date Approved", dataKey: "data_approved" },
-      ];
-      const doc = new jspdf({
-        orientation: "portrait",
-        unit: "in",
-        format: "letter"
-      });
-      // text is placed using x, y coordinates
-      doc.setFontSize(16).text(this.heading, 0.5, 1.0);
-      // create a line under heading 
-      doc.setLineWidth(0.01).line(0.5, 1.1, 8.0, 1.1);
-      // Using autoTable plugin
-      doc.autoTable({
-         headStyles: { fillColor: [0, 0, 0] }, 
-        columns,
-        body: this.clearances,
-        margin: { left: 0.5, top: 1.25 }
-      });
-      // Using array of sentences
-      // doc
-      //   .setFont("helvetica")
-      //   .setFontSize(12)
-      //   .text(this.moreText, 0.5, 3.5, { align: "left", maxWidth: "7.5" });
+    generatePDF() { 
+     axios.get('/api/v1/pdf-create',{responseType: 'blob'
+     ,params: { 'clearance': this.clearance.id }
+
+     }).then((response) => {
+     var fileURL = window.URL.createObjectURL(new Blob([response.data], {type: 'application/pdf'}));
+     var fileLink = document.createElement('a');
+     fileLink.href = fileURL;
+     fileLink.setAttribute('download', this.student.name+this.clearance.id+'.pdf');
+     document.body.appendChild(fileLink);
+     fileLink.click();
+
+});
+    
+      // const columns = [
+      //   { title: "Office", dataKey: "office" },
+      // { title: "Designee", dataKey: "designee" },
+      // { title: "Date Approved", dataKey: "data_approved" },
+      // ];
+      // const doc = new jspdf({
+      //   orientation: "portrait",
+      //   unit: "in",
+      //   format: "letter"
+      // });
+      // // text is placed using x, y coordinates
+      // doc.setFontSize(16).text(this.heading, 0.5, 1.0);
+      // // create a line under heading 
+      // doc.setLineWidth(0.01).line(0.5, 1.1, 8.0, 1.1);
+      // // Using autoTable plugin
+      // doc.autoTable({
+      //    headStyles: { fillColor: [0, 0, 0] }, 
+      //   columns,
+      //   body: this.clearances,
+      //   margin: { left: 0.5, top: 1.25 }
+      // });
+      // // Using array of sentences
+      // // doc
+      // //   .setFont("helvetica")
+      // //   .setFontSize(12)
+      // //   .text(this.moreText, 0.5, 3.5, { align: "left", maxWidth: "7.5" });
       
-      // Creating footer and saving file
+      // // Creating footer and saving file
  
 
 
 
-      doc
-        .setTextColor(0, 0, 255)
-        .text(
-          "This is a simple footer located .5 inches from page bottom",
-          0.5,
-          doc.internal.pageSize.height - 0.5
-        )
-        .save(`${this.activeClearancePurpose}.pdf`);
+      // doc
+      //   .setTextColor(0, 0, 255)
+      //   .text(
+      //     "This is a simple footer located .5 inches from page bottom",
+      //     0.5,
+      //     doc.internal.pageSize.height - 0.5
+      //   )
+      //   .save(`${this.activeClearancePurpose}.pdf`);
     },
     viewDeficiency(item) {
       this.deficiencydialog = true;
@@ -466,12 +519,44 @@ export default {
       axios
         .get("/api/v1/activeClearance")
         .then((res) => {
+           this.purposeVal = 1;
           console.log(res.data.approvedDateclearanceRequestSTCOUNCIL);
+          this.stad = res.data.stad;
+          this.student = res.data.student;
           this.activeClearancePurpose = res.data.activeClearancePurpose;
           this.clearance = res.data.clearance;
           this.submittedClearance = res.data.submittedClearance;
           this.staffRegistrar_id = res.data.staffIdREGISTRARSTAFF;
           console.log(this.clearance.cashier);
+          if (res.data.student_type =="Laboratory High School") {
+            this.clearances = [
+            {
+              office: "Adviser",
+              designee: res.data.signatoryNameclearanceRequestADVISER
+                ? res.data.signatoryNameclearanceRequestADVISER.name
+                : null,
+              status: res.data.clearance.class_adviser,
+              data_approved: res.data.approvedDateclearanceRequestADVISER,
+              deficiencyCount: res.data.countDeficiencyADVISER,
+              deficiency: res.data.deficiencyADVISER,
+              clearanceRequestCount: res.data.countClearanceRequestADVISER ? 1 : 0,
+              staff_id: res.data.staffIdADVISER,
+            },
+           {
+              office: "Principal",
+              designee: res.data.signatoryNameclearanceRequestPRINCIPAL
+                ? res.data.signatoryNameclearanceRequestPRINCIPAL.name
+                : null,
+              status: res.data.clearance.class_adviser == 0 ? 2 :res.data.clearance.principal,
+              data_approved: res.data.approvedDateclearanceRequestPRINCIPAL,
+              deficiencyCount: res.data.countDeficiencyPRINCIPAL,
+              deficiency: res.data.deficiencyPRINCIPAL,
+              clearanceRequestCount: res.data.countClearanceRequestPRINCIPAL ? 1 : 0,
+              staff_id: res.data.staffIdPRINCIPAL,
+            },
+          ];
+          }
+           else{
           this.clearances = [
             {
               office: "Student Council",
@@ -487,12 +572,30 @@ export default {
                 : 0,
               staff_id: res.data.staffIdSTCOUNCIL,
             },
+            
+            {
+              office: "Registrar Staff",
+              designee: res.data.signatoryNameclearanceRequestREGISTRARSTAFF
+                ? res.data.signatoryNameclearanceRequestREGISTRARSTAFF.name
+                : null,
+              status:  res.data.clearance.registrar,
+              data_approved: res.data.approvedDateclearanceRequestREGISTRARSTAFF
+                ? res.data.approvedDateclearanceRequestREGISTRARSTAFF
+                : res.data.approvedDateclearanceRequestREGISTRAR,
+              deficiencyCount: res.data.countDeficiencyREGISTRARSTAFF,
+              deficiency: res.data.deficiencyREGISTRARSTAFF,
+              clearanceRequestCount: res.data
+                .countClearanceRequestREGISTRARSTAFF
+                ? 1
+                : 0,
+              staff_id: res.data.staffIdREGISTRARSTAFF,
+            },
             {
               office: "Cashier",
               designee: res.data.signatoryNameclearanceRequestCASHIER
                 ? res.data.signatoryNameclearanceRequestCASHIER.name
                 : null,
-              status: res.data.clearance.cashier,
+              status: res.data.clearance.registrar == 0 ? 2 :res.data.clearance.cashier,
               data_approved: res.data.approvedDateclearanceRequestCASHIER,
               deficiencyCount: res.data.countDeficiencyCASHIER,
               deficiency: res.data.deficiencyCASHIER,
@@ -504,7 +607,7 @@ export default {
               designee: res.data.signatoryNameclearanceRequestLIBRARY
                 ? res.data.signatoryNameclearanceRequestLIBRARY.name
                 : null,
-              status: res.data.clearance.library,
+              status: res.data.clearance.student_council == 0 ? 2 : res.data.clearance.library,
               data_approved: res.data.approvedDateclearanceRequestLIBRARY,
               deficiencyCount: res.data.countDeficiencyLIBRARY,
               deficiency: res.data.deficiencyLIBRARY,
@@ -516,7 +619,7 @@ export default {
               designee: res.data.signatoryNameclearanceRequestOSAS
                 ? res.data.signatoryNameclearanceRequestOSAS.name
                 : null,
-              status: res.data.clearance.osas,
+              status: res.data.clearance.student_council == 0 ? 2 : res.data.clearance.osas,
               data_approved: res.data.approvedDateclearanceRequestOSAS,
               deficiencyCount: res.data.countDeficiencyOSAS,
               deficiency: res.data.deficiencyOSAS,
@@ -528,7 +631,7 @@ export default {
               designee: res.data.signatoryNameclearanceRequestPROGRAMDIRECTOR
                 ? res.data.signatoryNameclearanceRequestPROGRAMDIRECTOR.name
                 : null,
-              status: res.data.clearance.program_director,
+              status: res.data.clearance.student_council == 0 ? 2 : res.data.clearance.program_director,
               data_approved:
                 res.data.approvedDateclearanceRequestPROGRAMDIRECTOR,
               deficiencyCount: res.data.countDeficiencyPD,
@@ -541,48 +644,66 @@ export default {
               designee: res.data.signatoryNameclearanceRequestDEAN
                 ? res.data.signatoryNameclearanceRequestDEAN.name
                 : null,
-              status: res.data.clearance.college_deaan,
+              status: res.data.clearance.program_director == 0 ? 2 :res.data.clearance.college_deaan,
               data_approved: res.data.approvedDateclearanceRequestDEAN,
               deficiencyCount: res.data.countDeficiencyDEAN,
               deficiency: res.data.deficiencyDEAN,
               clearanceRequestCount: res.data.countClearanceRequestDEAN ? 1 : 0,
               staff_id: res.data.staffIdDEAN,
             },
-            {
-              office: "Registrar Staff",
-              designee: res.data.signatoryNameclearanceRequestREGISTRARSTAFF
-                ? res.data.signatoryNameclearanceRequestREGISTRARSTAFF.name
-                : null,
-              status: res.data.clearance.registrar,
-              data_approved: res.data.approvedDateclearanceRequestREGISTRARSTAFF
-                ? res.data.approvedDateclearanceRequestREGISTRARSTAFF
-                : res.data.approvedDateclearanceRequestREGISTRAR,
-              deficiencyCount: res.data.countDeficiencyREGISTRARSTAFF,
-              deficiency: res.data.deficiencyREGISTRARSTAFF,
-              clearanceRequestCount: res.data
-                .countClearanceRequestREGISTRARSTAFF
-                ? 1
-                : 0,
-              staff_id: res.data.staffIdREGISTRARSTAFF,
-            },
-          ];
+          ];}
         })
         .catch((err) => {
-          console.error(err);
+          console.error(err.response.data.purpose);
+          if (err.response.data.purpose == '0') {
+            this.purposeVal = 0;
+                  
+          }
         });
     },
     sendRequest(item) {
       this.submitRequestItem = Object.assign({}, item);
       console.log(this.submitRequestItem);
-      this.submittedClearance = res.data.submittedClearance;
-      this.staffRegistrar_id =  res.data.staffIdREGISTRARSTAFF;
+    
       axios
         .post("/api/v1/sendRequest", this.submitRequestItem)
         .then((res) => {
           console.log(res.data.approvedDateclearanceRequestSTCOUNCIL);
+           this.stad = res.data.stad;
+            this.submittedClearance = res.data.submittedClearance;
+      this.staffRegistrar_id =  res.data.staffIdREGISTRARSTAFF;
           // this.activeClearancePurpose = res.data.activeClearancePurpose;
            this.clearance = res.data.clearance;
-         this.clearances = [
+          if (res.data.student_type =="Laboratory High School") {
+            this.clearances = [
+             {
+              office: "Adviser",
+              designee: res.data.signatoryNameclearanceRequestADVISER
+                ? res.data.signatoryNameclearanceRequestADVISER.name
+                : null,
+              status: res.data.clearance.class_adviser,
+              data_approved: res.data.approvedDateclearanceRequestADVISER,
+              deficiencyCount: res.data.countDeficiencyADVISER,
+              deficiency: res.data.deficiencyADVISER,
+              clearanceRequestCount: res.data.countClearanceRequestADVISER ? 1 : 0,
+              staff_id: res.data.staffIdADVISER,
+            },
+           {
+              office: "Principal",
+              designee: res.data.signatoryNameclearanceRequestPRINCIPAL
+                ? res.data.signatoryNameclearanceRequestPRINCIPAL.name
+                : null,
+              status: res.data.clearance.class_adviser == 0 ? 2 : res.data.clearance.principal,
+              data_approved: res.data.approvedDateclearanceRequestPRINCIPAL,
+              deficiencyCount: res.data.countDeficiencyPRINCIPAL,
+              deficiency: res.data.deficiencyPRINCIPAL,
+              clearanceRequestCount: res.data.countClearanceRequestPRINCIPAL ? 1 : 0,
+              staff_id: res.data.staffIdPRINCIPAL,
+            },
+          ];
+          }
+           else{
+          this.clearances = [
             {
               office: "Student Council",
               designee: res.data.signatoryNameclearanceRequestSTCOUNCIL
@@ -597,12 +718,30 @@ export default {
                 : 0,
               staff_id: res.data.staffIdSTCOUNCIL,
             },
+            
+            {
+              office: "Registrar Staff",
+              designee: res.data.signatoryNameclearanceRequestREGISTRARSTAFF
+                ? res.data.signatoryNameclearanceRequestREGISTRARSTAFF.name
+                : null,
+              status:  res.data.clearance.registrar,
+              data_approved: res.data.approvedDateclearanceRequestREGISTRARSTAFF
+                ? res.data.approvedDateclearanceRequestREGISTRARSTAFF
+                : res.data.approvedDateclearanceRequestREGISTRAR,
+              deficiencyCount: res.data.countDeficiencyREGISTRARSTAFF,
+              deficiency: res.data.deficiencyREGISTRARSTAFF,
+              clearanceRequestCount: res.data
+                .countClearanceRequestREGISTRARSTAFF
+                ? 1
+                : 0,
+              staff_id: res.data.staffIdREGISTRARSTAFF,
+            },
             {
               office: "Cashier",
               designee: res.data.signatoryNameclearanceRequestCASHIER
                 ? res.data.signatoryNameclearanceRequestCASHIER.name
                 : null,
-              status: res.data.clearance.cashier,
+              status: res.data.clearance.registrar == 0 ? 2 :res.data.clearance.cashier,
               data_approved: res.data.approvedDateclearanceRequestCASHIER,
               deficiencyCount: res.data.countDeficiencyCASHIER,
               deficiency: res.data.deficiencyCASHIER,
@@ -614,7 +753,7 @@ export default {
               designee: res.data.signatoryNameclearanceRequestLIBRARY
                 ? res.data.signatoryNameclearanceRequestLIBRARY.name
                 : null,
-              status: res.data.clearance.library,
+              status: res.data.clearance.student_council == 0 ? 2 : res.data.clearance.library,
               data_approved: res.data.approvedDateclearanceRequestLIBRARY,
               deficiencyCount: res.data.countDeficiencyLIBRARY,
               deficiency: res.data.deficiencyLIBRARY,
@@ -626,7 +765,7 @@ export default {
               designee: res.data.signatoryNameclearanceRequestOSAS
                 ? res.data.signatoryNameclearanceRequestOSAS.name
                 : null,
-              status: res.data.clearance.osas,
+              status: res.data.clearance.student_council == 0 ? 2 : res.data.clearance.osas,
               data_approved: res.data.approvedDateclearanceRequestOSAS,
               deficiencyCount: res.data.countDeficiencyOSAS,
               deficiency: res.data.deficiencyOSAS,
@@ -638,7 +777,7 @@ export default {
               designee: res.data.signatoryNameclearanceRequestPROGRAMDIRECTOR
                 ? res.data.signatoryNameclearanceRequestPROGRAMDIRECTOR.name
                 : null,
-              status: res.data.clearance.program_director,
+              status: res.data.clearance.student_council == 0 ? 2 : res.data.clearance.program_director,
               data_approved:
                 res.data.approvedDateclearanceRequestPROGRAMDIRECTOR,
               deficiencyCount: res.data.countDeficiencyPD,
@@ -651,31 +790,14 @@ export default {
               designee: res.data.signatoryNameclearanceRequestDEAN
                 ? res.data.signatoryNameclearanceRequestDEAN.name
                 : null,
-              status: res.data.clearance.college_deaan,
+              status: res.data.clearance.program_director == 0 ? 2 :res.data.clearance.college_deaan,
               data_approved: res.data.approvedDateclearanceRequestDEAN,
               deficiencyCount: res.data.countDeficiencyDEAN,
               deficiency: res.data.deficiencyDEAN,
               clearanceRequestCount: res.data.countClearanceRequestDEAN ? 1 : 0,
               staff_id: res.data.staffIdDEAN,
             },
-            {
-              office: "Registrar Staff",
-              designee: res.data.signatoryNameclearanceRequestREGISTRARSTAFF
-                ? res.data.signatoryNameclearanceRequestREGISTRARSTAFF.name
-                : null,
-              status: res.data.clearance.registrar,
-              data_approved: res.data.approvedDateclearanceRequestREGISTRARSTAFF
-                ? res.data.approvedDateclearanceRequestREGISTRARSTAFF
-                : res.data.approvedDateclearanceRequestREGISTRAR,
-              deficiencyCount: res.data.countDeficiencyREGISTRARSTAFF,
-              deficiency: res.data.deficiencyREGISTRARSTAFF,
-              clearanceRequestCount: res.data
-                .countClearanceRequestREGISTRARSTAFF
-                ? 1
-                : 0,
-              staff_id: res.data.staffIdREGISTRARSTAFF,
-            },
-          ];
+          ];}
         })
         .catch((err) => {
           console.error(err);

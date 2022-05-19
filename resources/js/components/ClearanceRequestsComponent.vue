@@ -134,8 +134,22 @@
           mdi-close-circle-outline
         </v-icon></v-btn
         > 
+        <v-btn class="ma-2" color="error" depressed x-small @click="deleteItem(item)"
+          ><v-icon
+          dark
+          x-small
+        >
+          mdi-delete
+        </v-icon></v-btn
+        > 
          </template> 
       </template> 
+	       <template v-slot:item.request_at="{ item }" >
+        <v-chip text-color="white" color="success" small >
+           
+            {{ item.request_at }}
+        </v-chip>
+         </template>
     </v-data-table>
   <v-snackbar
       v-model="snackbar" 
@@ -198,6 +212,8 @@ export default {
       { text: "Program", value: "program" },
        { text: "Purpose", value: "purpose" },
        { text: "Signatory", value: "staff" },
+	   
+       { text: "Date Requested", value: "request_at" },
       { text: "Action", value: "actions" },
     ], 
     page: 0,
@@ -282,8 +298,11 @@ export default {
     searchIt(d) {
       if (d.length > 2) {
         const { page, itemsPerPage } = this.options;
+           let pageNumber = page;
         axios
-          .get(`/api/v1/clearancerequests/${d}`)
+          .get(`/api/v1/clearancerequests/${d}?page=` + pageNumber, {
+          params: { 'per_page': itemsPerPage },
+        })
           .then((res) => {
             this.loading = false;  
             this.clearancerequests = res.data.clearancerequests; 
