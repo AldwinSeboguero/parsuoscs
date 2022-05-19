@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import LoginComponent from './components/LoginComponent';
+import LoginComponent from './components/login/LoginComponent';
 import AdminComponent from './components/AdminComponent';
 import StudentComponent from './components/student/StudentComponent';
 import CASHIERComponent from './components/cashier/CASHIERComponent'; 
@@ -9,7 +9,12 @@ import DEANComponent from './components/dean/DEANComponent';
 import REGISTRARSTAFFComponent from './components/registrarstaff/REGISTRARSTAFFComponent';
 import REGISTRARComponent from './components/registrar/REGISTRARComponent';
 import OSASComponent from './components/osas/OSASComponent';
+import OSASOtherCampusComponent from './components/osas/OSASOtherCampusComponent';
 import STCOUNCILComponent from './components/stcouncil/STCOUNCILComponent';
+import SGSStudentComponent from './components/student/SGSStudentComponent';
+import LHSStudentComponent from './components/student/LHSStudentComponent';
+import PRINCIPALComponent from './components/principal/PRINCIPALComponent';
+import ADVISERComponent from './components/adviser/ADVISERComponent';
 //Admin Import Component
 import AdminDashboardComponent from './components/admin/DashboardComponent';
 import AdminDashboardComponentt from './components/admin/DashboardComponentt';
@@ -21,19 +26,27 @@ import ProgramsComponent from './components/admin/ProgramsComponent';
 import PurposesComponent from './components/admin/PurposesComponent';
 import SectionsComponent from './components/admin/SectionsComponent';
 import SemestersComponent from './components/admin/SemestersComponent';
+
+import AdminSiasAccountComponent from './components/SIASAccountComponent';
 //Signatories Import Component
 import AdminClearanceRequestsComponent from './components/ClearanceRequestsComponent';
 import AdminClearedClearancesComponent from './components/ClearedClearancesComponent';
 import AdminSubmittedClearancesComponent from './components/SubmittedClearancesComponent';
 //Students Import Component
 import AdminActiveClearanceComponent from './components/ActiveClearanceComponent';
+import LHSAdminActiveClearanceComponent from './components/ActiveClearanceComponentLHS';
+import SGSAdminActiveClearanceComponent from './components/ActiveClearanceComponentSGS';
 import AdminClearanceListComponent from './components/ClearanceListComponent';
 import AdminDeficiencyListComponent from './components/DeficiencyListComponent';
+import RegistrarDeficiencyListComponent from './components/RegistrarDeficiencyListComponent';
+
 //Settings Import Component
 import SettingsComponent from './components/SettingsComponent';
 import StudentSettingsComponent from './components/student/SettingsComponent';
+import StudentSIASComponent from './components/student/StudentSIASComponent';
 //Users Import Component
 import AdminUsersComponent from './components/admin/UsersComponent';
+import SignatoryUsersComponent from './components/admin/SignatoryUsersComponent';
 //Signatories Admin Component
 import AdminCashierComponent from './components/admin/signatory/CashierComponent';
 import AdminDeanComponent from './components/admin/signatory/DeanComponent';
@@ -42,12 +55,18 @@ import AdminOSASComponent from './components/admin/signatory/OSASComponent';
 import AdminProgramDirectorComponent from './components/admin/signatory/ProgramDirectorComponent';
 import AdminStudentCouncilComponent from './components/admin/signatory/StudentCouncilComponent';
 import AdminRegistrarComponent from './components/admin/signatory/RegistrarComponent';
+import AdminStaffComponent from './components/admin/signatory/StaffComponent';
 
 //Program Director Import
 import PDComponent from './components/programdirector/PDComponent'; 
 import PDDashboardComponent from './components/programdirector/DashboardComponent'; 
 import PDStudentListComponent from './components/programdirector/StudentListComponent'; 
 import PDClearanceRequestsComponent from './components/programdirector/ClearanceRequestsComponent';
+import PDCASClearanceRequestsComponent from './components/programdirector/ClearanceCASRequestsComponent';
+import PDCBMClearanceRequestsComponent from './components/programdirector/ClearanceCBMRequestsComponent';
+import PDCETClearanceRequestsComponent from './components/programdirector/ClearanceCETRequestsComponent';
+import PDCOEDClearanceRequestsComponent from './components/programdirector/ClearanceCOEDRequestsComponent';
+import PDSGSClearanceRequestsComponent from './components/programdirector/ClearanceSGSRequestsComponent';
 import PDClearedClearancesComponent from './components/programdirector/ClearedClearancesComponent';
 import PDSubmittedClearancesComponent from './components/programdirector/SubmittedClearancesComponent';
 import PDClearanceListComponent from './components/programdirector/ClearanceListComponent';
@@ -56,17 +75,46 @@ import PDDeficiencyListComponent from './components/programdirector/DeficiencyLi
 //student
 import STUDENTClearanceListComponent from './components/student/ClearanceListComponent'; 
 
+import ForgotPassword from './components/page/ForgotPassword';
+import ResetPasswordForm from './components/page/ResetPasswordForm';
+import ResetEmailForm from './components/page/ResetEmailForm';
 Vue.use(VueRouter);
 
 const routes =[
+   
+    { 
+        path: '/reset-password', 
+        name: 'reset-password', 
+        component: ForgotPassword, 
+        meta: { 
+          auth:false 
+        } 
+      },
+      { 
+        path: '/reset-password/:token', 
+        name: 'reset-password-form', 
+        component: ResetPasswordForm, 
+        meta: { 
+          auth:false 
+        } 
+      },
+      { 
+        path: '/reset-email/:token', 
+        name: 'reset-email-form', 
+        component: ResetEmailForm, 
+        meta: { 
+          auth:false 
+        } 
+      },
     {
         path: '/',
         beforeEnter: checkRoleRoute,
+        name: 'login'
             
     },
     {
         path: '/login',
-        component: LoginComponent
+        component: LoginComponent, 
     },
     
     {
@@ -181,6 +229,12 @@ const routes =[
                     name: 'Registrar'
                 }, 
                 {
+                    path: 'staff',
+                    beforeEnter: isADMIN,
+                    component: AdminStaffComponent,
+                    name: 'Staff'
+                }, 
+                {
                     path: 'programdirector',
                     beforeEnter: isADMIN,
                     component: AdminProgramDirectorComponent,
@@ -204,6 +258,12 @@ const routes =[
                     beforeEnter: isADMIN,
                     component: AdminSubmittedClearancesComponent,
                     name: 'Submitted Clearances'
+                },
+                {
+                    path: 'sias/account',
+                    beforeEnter: isADMIN,
+                    component: AdminSiasAccountComponent,
+                    name: 'Sias Account'
                 },
                 //Student Routes
                 {
@@ -240,16 +300,7 @@ const routes =[
                 },
 
         ],
-        beforeEnter: (to, from, next) =>{
-           axios.get('/api/v1/verify',{'user' : localStorage.getItem('user')})
-           .then(res => {next();})
-           .catch(err => {
-           localStorage.removeItem('token');
-           localStorage.removeItem('token','user','loggedIn');
-           localStorage.removeItem('loggedIn');
-           localStorage.removeItem('user');
-           next('/login');})
-        },
+      
          
         
     },
@@ -266,7 +317,7 @@ const routes =[
                     path: 'dashboard', 
                     beforeEnter: isSTCOUNCIL,
                     component: PDDashboardComponent, 
-                    name: 'PDDashboard'
+                    name: 'Dashboard'
 
                     
                 },
@@ -274,7 +325,7 @@ const routes =[
                     path: 'student/list',
                     beforeEnter: isSTCOUNCIL,
                     component: PDStudentListComponent,
-                    name: 'PDStudent List'
+                    name: 'Student List'
                 },
                 
                 //Signatories Routes
@@ -282,51 +333,48 @@ const routes =[
                     path: 'clearance/requests',
                     beforeEnter: isSTCOUNCIL,
                     component: PDClearanceRequestsComponent,
-                    name: 'PDClearance Requests'
+                    name: 'Clearance Requests'
                 },
                 {
                     path: 'cleared/clearances',
                     beforeEnter: isSTCOUNCIL,
                     component: PDClearedClearancesComponent,
-                    name: 'PDCleared Clearances'
+                    name: 'Cleared Clearances'
                 },
                 {
                     path: 'submitted/clearances',
                     beforeEnter: isSTCOUNCIL,
                     component: PDSubmittedClearancesComponent,
-                    name: 'PDSubmitted Clearances'
+                    name: 'Submitted Clearances'
                 }, 
                 {
                     path: 'clearance/list',
                     beforeEnter: isSTCOUNCIL,
                     component: PDClearanceListComponent,
-                    name: 'PDClearance List'
+                    name: 'Clearance List'
                 },
                 {
                     path: 'deficiency/list',
                     beforeEnter: isSTCOUNCIL,
                     component: PDDeficiencyListComponent,
-                    name: 'PDDeficiency List'
+                    name: 'Deficiency List'
                 },
                 //Settings Route
                 {
                     path: 'settings',
                     beforeEnter: isSTCOUNCIL,
                     component: SettingsComponent,
-                    name: 'PDSettings'
+                    name: 'Settings'
+                },
+                {
+                    path: 'users',
+                    beforeEnter: isSTCOUNCIL,
+                    component: SignatoryUsersComponent,
+                    name: 'Users'
                 },
 
         ],
-        beforeEnter: (to, from, next) =>{
-           axios.get('/api/v1/verify',{'user' : localStorage.getItem('user')})
-           .then(res => {next();})
-           .catch(err => {
-           localStorage.removeItem('token');
-           localStorage.removeItem('token','user','loggedIn');
-           localStorage.removeItem('loggedIn');
-           localStorage.removeItem('user');
-           next('/login');})
-        },
+      
     },
     //Cashier Links
     {
@@ -341,7 +389,7 @@ const routes =[
                     path: 'dashboard', 
                     beforeEnter: isCASHIER,
                     component: PDDashboardComponent, 
-                    name: 'PDDashboard'
+                    name: 'Dashboard'
 
                     
                 },
@@ -349,7 +397,7 @@ const routes =[
                     path: 'student/list',
                     beforeEnter: isCASHIER,
                     component: PDStudentListComponent,
-                    name: 'PDStudent List'
+                    name: 'Student List'
                 },
                 
                 //Signatories Routes
@@ -357,57 +405,48 @@ const routes =[
                     path: 'clearance/requests',
                     beforeEnter: isCASHIER,
                     component: PDClearanceRequestsComponent,
-                    name: 'PDClearance Requests'
+                    name: 'Clearance Requests'
                 },
                 {
                     path: 'cleared/clearances',
                     beforeEnter: isCASHIER,
                     component: PDClearedClearancesComponent,
-                    name: 'PDCleared Clearances'
+                    name: 'Cleared Clearances'
                 },
                 {
                     path: 'submitted/clearances',
                     beforeEnter: isCASHIER,
                     component: PDSubmittedClearancesComponent,
-                    name: 'PDSubmitted Clearances'
+                    name: 'Submitted Clearances'
                 }, 
                 {
                     path: 'clearance/list',
                     beforeEnter: isCASHIER,
                     component: PDClearanceListComponent,
-                    name: 'PDClearance List'
+                    name: 'Clearance List'
                 },
                 {
                     path: 'deficiency/list',
                     beforeEnter: isCASHIER,
                     component: PDDeficiencyListComponent,
-                    name: 'PDDeficiency List'
+                    name: 'Deficiency List'
                 },
                 //Settings Route
                 {
                     path: 'settings',
                     beforeEnter: isCASHIER,
                     component: SettingsComponent,
-                    name: 'PDSettings'
+                    name: 'Settings'
                 },
 
         ],
-        beforeEnter: (to, from, next) =>{
-           axios.get('/api/v1/verify',{'user' : localStorage.getItem('user')})
-           .then(res => {next();})
-           .catch(err => {
-           localStorage.removeItem('token');
-           localStorage.removeItem('token','user','loggedIn');
-           localStorage.removeItem('loggedIn');
-           localStorage.removeItem('user');
-           next('/login');})
-        },
+      
     },
-    //REGISTRARSTAFF Links
+    //OSAS Links
     {
         path: '/osas',
-        component: OSASComponent,
-        name: 'OSAS', 
+        component: OSASOtherCampusComponent,
+        name: 'OSAS Other Campus', 
         redirect: '/osas/dashboard',
         children: [
             //PD Routes
@@ -416,7 +455,7 @@ const routes =[
                     path: 'dashboard', 
                     beforeEnter: isOSAS,
                     component: PDDashboardComponent, 
-                    name: 'PDDashboard'
+                    name: 'Dashboard'
 
                     
                 },
@@ -424,7 +463,7 @@ const routes =[
                     path: 'student/list',
                     beforeEnter: isOSAS,
                     component: PDStudentListComponent,
-                    name: 'PDStudent List'
+                    name: 'Student List'
                 },
                 
                 //Signatories Routes
@@ -432,51 +471,144 @@ const routes =[
                     path: 'clearance/requests',
                     beforeEnter: isOSAS,
                     component: PDClearanceRequestsComponent,
-                    name: 'PDClearance Requests'
+                    name: 'Clearance Requests'
                 },
                 {
                     path: 'cleared/clearances',
                     beforeEnter: isOSAS,
                     component: PDClearedClearancesComponent,
-                    name: 'PDCleared Clearances'
+                    name: 'Cleared Clearances'
                 },
                 {
                     path: 'submitted/clearances',
                     beforeEnter: isOSAS,
                     component: PDSubmittedClearancesComponent,
-                    name: 'PDSubmitted Clearances'
+                    name: 'Submitted Clearances'
                 }, 
                 {
                     path: 'clearance/list',
                     beforeEnter: isOSAS,
                     component: PDClearanceListComponent,
-                    name: 'PDClearance List'
+                    name: 'Clearance List'
                 },
                 {
                     path: 'deficiency/list',
                     beforeEnter: isOSAS,
                     component: PDDeficiencyListComponent,
-                    name: 'PDDeficiency List'
+                    name: 'Deficiency List'
                 },
                 //Settings Route
                 {
                     path: 'settings',
                     beforeEnter: isOSAS,
                     component: SettingsComponent,
-                    name: 'PDSettings'
+                    name: 'Settings'
+                },
+                {
+                    path: 'users',
+                    beforeEnter: isOSAS,
+                    component: SignatoryUsersComponent,
+                    name: 'Users'
                 },
 
         ],
-        beforeEnter: (to, from, next) =>{
-           axios.get('/api/v1/verify',{'user' : localStorage.getItem('user')})
-           .then(res => {next();})
-           .catch(err => {
-           localStorage.removeItem('token');
-           localStorage.removeItem('token','user','loggedIn');
-           localStorage.removeItem('loggedIn');
-           localStorage.removeItem('user');
-           next('/login');})
-        },
+     
+    },
+    //OSAS Links
+    {
+        path: '/osas/goa',
+        component: OSASComponent,
+        name: 'OSAS', 
+        redirect: '/osas/goa/dashboard',
+        children: [
+            //PD Routes
+            
+                {
+                    path: 'dashboard', 
+                    beforeEnter: isOSAS,
+                    component: PDDashboardComponent, 
+                    name: 'Dashboard'
+
+                    
+                },
+                {
+                    path: 'student/list',
+                    beforeEnter: isOSAS,
+                    component: PDStudentListComponent,
+                    name: 'Student List'
+                },
+                
+                //Signatories Routes
+                {
+                    path: 'clearance/requests/cas',
+                    beforeEnter: isOSAS,
+                    component: PDCASClearanceRequestsComponent,
+                    name: 'Clearance Requests'
+                },
+                {
+                    path: 'clearance/requests/cbm',
+                    beforeEnter: isOSAS,
+                    component: PDCBMClearanceRequestsComponent,
+                    name: 'Clearance Requests'
+                },
+                {
+                    path: 'clearance/requests/cet',
+                    beforeEnter: isOSAS,
+                    component: PDCETClearanceRequestsComponent,
+                    name: 'Clearance Requests'
+                },
+                {
+                    path: 'clearance/requests/coed',
+                    beforeEnter: isOSAS,
+                    component: PDCOEDClearanceRequestsComponent,
+                    name: 'Clearance Requests'
+                },
+                {
+                    path: 'clearance/requests/sgs',
+                    beforeEnter: isOSAS,
+                    component: PDSGSClearanceRequestsComponent,
+                    name: 'Clearance Requests'
+                },
+                {
+                    path: 'cleared/clearances',
+                    beforeEnter: isOSAS,
+                    component: PDClearedClearancesComponent,
+                    name: 'Cleared Clearances'
+                },
+                {
+                    path: 'submitted/clearances',
+                    beforeEnter: isOSAS,
+                    component: PDSubmittedClearancesComponent,
+                    name: 'Submitted Clearances'
+                }, 
+                {
+                    path: 'clearance/list',
+                    beforeEnter: isOSAS,
+                    component: PDClearanceListComponent,
+                    name: 'Clearance List'
+                },
+                {
+                    path: 'deficiency/list',
+                    beforeEnter: isOSAS,
+                    component: PDDeficiencyListComponent,
+                    name: 'Deficiency List'
+                },
+                //Settings Route
+                {
+                    path: 'settings',
+                    beforeEnter: isOSAS,
+                    component: SettingsComponent,
+                    name: 'Settings'
+                },
+                {
+                    path: 'users',
+                    beforeEnter: isOSAS,
+                    component: SignatoryUsersComponent,
+                    name: 'Users'
+                },
+
+        ],
+    
     },
     //REGISTRARSTAFF Links
     {
@@ -491,7 +623,7 @@ const routes =[
                     path: 'dashboard', 
                     beforeEnter: isREGISTRARSTAFF,
                     component: PDDashboardComponent, 
-                    name: 'PDDashboard'
+                    name: 'Dashboard'
 
                     
                 },
@@ -499,7 +631,7 @@ const routes =[
                     path: 'student/list',
                     beforeEnter: isREGISTRARSTAFF,
                     component: PDStudentListComponent,
-                    name: 'PDStudent List'
+                    name: 'Student List'
                 },
                 
                 //Signatories Routes
@@ -507,51 +639,54 @@ const routes =[
                     path: 'clearance/requests',
                     beforeEnter: isREGISTRARSTAFF,
                     component: PDClearanceRequestsComponent,
-                    name: 'PDClearance Requests'
+                    name: 'Clearance Requests'
                 },
                 {
                     path: 'cleared/clearances',
                     beforeEnter: isREGISTRARSTAFF,
                     component: PDClearedClearancesComponent,
-                    name: 'PDCleared Clearances'
+                    name: 'Cleared Clearances'
                 },
                 {
                     path: 'submitted/clearances',
                     beforeEnter: isREGISTRARSTAFF,
                     component: PDSubmittedClearancesComponent,
-                    name: 'PDSubmitted Clearances'
+                    name: 'Submitted Clearances'
                 }, 
                 {
                     path: 'clearance/list',
                     beforeEnter: isREGISTRARSTAFF,
                     component: PDClearanceListComponent,
-                    name: 'PDClearance List'
+                    name: 'Clearance List'
                 },
                 {
                     path: 'deficiency/list',
                     beforeEnter: isREGISTRARSTAFF,
                     component: PDDeficiencyListComponent,
-                    name: 'PDDeficiency List'
+                    name: 'Deficiency List'
+                },
+                {
+                    path: 'deficiency/all/list',
+                    beforeEnter: isREGISTRARSTAFF,
+                    component: RegistrarDeficiencyListComponent,
+                    name: 'Registrar Deficiency List'
                 },
                 //Settings Route
                 {
                     path: 'settings',
                     beforeEnter: isREGISTRARSTAFF,
                     component: SettingsComponent,
-                    name: 'PDSettings'
+                    name: 'Settings'
+                },
+                {
+                    path: 'users',
+                    beforeEnter: isREGISTRARSTAFF,
+                    component: SignatoryUsersComponent,
+                    name: 'Users'
                 },
 
         ],
-        beforeEnter: (to, from, next) =>{
-           axios.get('/api/v1/verify',{'user' : localStorage.getItem('user')})
-           .then(res => {next();})
-           .catch(err => {
-           localStorage.removeItem('token');
-           localStorage.removeItem('token','user','loggedIn');
-           localStorage.removeItem('loggedIn');
-           localStorage.removeItem('user');
-           next('/login');})
-        },
+     
     },
      //REGISTRAR Links
      {
@@ -566,7 +701,7 @@ const routes =[
                     path: 'dashboard', 
                     beforeEnter: isREGISTRAR,
                     component: PDDashboardComponent, 
-                    name: 'PDDashboard'
+                    name: 'Dashboard'
 
                     
                 },
@@ -574,7 +709,7 @@ const routes =[
                     path: 'student/list',
                     beforeEnter: isREGISTRAR,
                     component: PDStudentListComponent,
-                    name: 'PDStudent List'
+                    name: 'Student List'
                 },
                 
                 //Signatories Routes
@@ -582,51 +717,54 @@ const routes =[
                     path: 'clearance/requests',
                     beforeEnter: isREGISTRAR,
                     component: PDClearanceRequestsComponent,
-                    name: 'PDClearance Requests'
+                    name: 'Clearance Requests'
                 },
                 {
                     path: 'cleared/clearances',
                     beforeEnter: isREGISTRAR,
                     component: PDClearedClearancesComponent,
-                    name: 'PDCleared Clearances'
+                    name: 'Cleared Clearances'
                 },
                 {
                     path: 'submitted/clearances',
                     beforeEnter: isREGISTRAR,
                     component: PDSubmittedClearancesComponent,
-                    name: 'PDSubmitted Clearances'
+                    name: 'Submitted Clearances'
                 }, 
                 {
                     path: 'clearance/list',
                     beforeEnter: isREGISTRAR,
                     component: PDClearanceListComponent,
-                    name: 'PDClearance List'
+                    name: 'Clearance List'
                 },
                 {
                     path: 'deficiency/list',
                     beforeEnter: isREGISTRAR,
                     component: PDDeficiencyListComponent,
-                    name: 'PDDeficiency List'
+                    name: 'Deficiency List'
+                },
+                {
+                    path: 'deficiency/all/list',
+                    beforeEnter: isREGISTRAR,
+                    component: RegistrarDeficiencyListComponent,
+                    name: 'Registrar Deficiency List'
                 },
                 //Settings Route
                 {
                     path: 'settings',
                     beforeEnter: isREGISTRAR,
                     component: SettingsComponent,
-                    name: 'PDSettings'
+                    name: 'Settings'
+                },
+                {
+                    path: 'users',
+                    beforeEnter: isREGISTRAR,
+                    component: SignatoryUsersComponent,
+                    name: 'Users'
                 },
 
         ],
-        beforeEnter: (to, from, next) =>{
-           axios.get('/api/v1/verify',{'user' : localStorage.getItem('user')})
-           .then(res => {next();})
-           .catch(err => {
-           localStorage.removeItem('token');
-           localStorage.removeItem('token','user','loggedIn');
-           localStorage.removeItem('loggedIn');
-           localStorage.removeItem('user');
-           next('/login');})
-        },
+     
     },
      //DEAN Links
      {
@@ -641,7 +779,7 @@ const routes =[
                     path: 'dashboard', 
                     beforeEnter: isDEAN,
                     component: PDDashboardComponent, 
-                    name: 'PDDashboard'
+                    name: 'Dashboard'
 
                     
                 },
@@ -649,7 +787,7 @@ const routes =[
                     path: 'student/list',
                     beforeEnter: isDEAN,
                     component: PDStudentListComponent,
-                    name: 'PDStudent List'
+                    name: 'Student List'
                 },
                 
                 //Signatories Routes
@@ -657,51 +795,42 @@ const routes =[
                     path: 'clearance/requests',
                     beforeEnter: isDEAN,
                     component: PDClearanceRequestsComponent,
-                    name: 'PDClearance Requests'
+                    name: 'Clearance Requests'
                 },
                 {
                     path: 'cleared/clearances',
                     beforeEnter: isDEAN,
                     component: PDClearedClearancesComponent,
-                    name: 'PDCleared Clearances'
+                    name: 'Cleared Clearances'
                 },
                 {
                     path: 'submitted/clearances',
                     beforeEnter: isDEAN,
                     component: PDSubmittedClearancesComponent,
-                    name: 'PDSubmitted Clearances'
+                    name: 'Submitted Clearances'
                 }, 
                 {
                     path: 'clearance/list',
                     beforeEnter: isDEAN,
                     component: PDClearanceListComponent,
-                    name: 'PDClearance List'
+                    name: 'Clearance List'
                 },
                 {
                     path: 'deficiency/list',
                     beforeEnter: isDEAN,
                     component: PDDeficiencyListComponent,
-                    name: 'PDDeficiency List'
+                    name: 'Deficiency List'
                 },
                 //Settings Route
                 {
                     path: 'settings',
                     beforeEnter: isDEAN,
                     component: SettingsComponent,
-                    name: 'PDSettings'
+                    name: 'Settings'
                 },
 
         ],
-        beforeEnter: (to, from, next) =>{
-           axios.get('/api/v1/verify',{'user' : localStorage.getItem('user')})
-           .then(res => {next();})
-           .catch(err => {
-           localStorage.removeItem('token');
-           localStorage.removeItem('token','user','loggedIn');
-           localStorage.removeItem('loggedIn');
-           localStorage.removeItem('user');
-           next('/login');})
-        },
+        
     },
     //LIBRARY Links
     {
@@ -716,7 +845,7 @@ const routes =[
                     path: 'dashboard', 
                     beforeEnter: isLIBRARY,
                     component: PDDashboardComponent, 
-                    name: 'PDDashboard'
+                    name: 'Dashboard'
 
                     
                 },
@@ -724,7 +853,7 @@ const routes =[
                     path: 'student/list',
                     beforeEnter: isLIBRARY,
                     component: PDStudentListComponent,
-                    name: 'PDStudent List'
+                    name: 'Student List'
                 },
                 
                 //Signatories Routes
@@ -732,51 +861,42 @@ const routes =[
                     path: 'clearance/requests',
                     beforeEnter: isLIBRARY,
                     component: PDClearanceRequestsComponent,
-                    name: 'PDClearance Requests'
+                    name: 'Clearance Requests'
                 },
                 {
                     path: 'cleared/clearances',
                     beforeEnter: isLIBRARY,
                     component: PDClearedClearancesComponent,
-                    name: 'PDCleared Clearances'
+                    name: 'Cleared Clearances'
                 },
                 {
                     path: 'submitted/clearances',
                     beforeEnter: isLIBRARY,
                     component: PDSubmittedClearancesComponent,
-                    name: 'PDSubmitted Clearances'
+                    name: 'Submitted Clearances'
                 }, 
                 {
                     path: 'clearance/list',
                     beforeEnter: isLIBRARY,
                     component: PDClearanceListComponent,
-                    name: 'PDClearance List'
+                    name: 'Clearance List'
                 },
                 {
                     path: 'deficiency/list',
                     beforeEnter: isLIBRARY,
                     component: PDDeficiencyListComponent,
-                    name: 'PDDeficiency List'
+                    name: 'Deficiency List'
                 },
                 //Settings Route
                 {
                     path: 'settings',
                     beforeEnter: isLIBRARY,
                     component: SettingsComponent,
-                    name: 'PDSettings'
+                    name: 'Settings'
                 },
 
         ],
-        beforeEnter: (to, from, next) =>{
-           axios.get('/api/v1/verify',{'user' : localStorage.getItem('user')})
-           .then(res => {next();})
-           .catch(err => {
-           localStorage.removeItem('token');
-           localStorage.removeItem('token','user','loggedIn');
-           localStorage.removeItem('loggedIn');
-           localStorage.removeItem('user');
-           next('/login');})
-        },
+     
     },
     //pd links
     {
@@ -791,7 +911,7 @@ const routes =[
                     path: 'dashboard', 
                     beforeEnter: isPD,
                     component: PDDashboardComponent, 
-                    name: 'PDDashboard'
+                    name: 'Dashboard'
 
                     
                 },
@@ -799,7 +919,7 @@ const routes =[
                     path: 'student/list',
                     beforeEnter: isPD,
                     component: PDStudentListComponent,
-                    name: 'PDStudent List'
+                    name: 'Student List'
                 },
                 
                 //Signatories Routes
@@ -807,51 +927,180 @@ const routes =[
                     path: 'clearance/requests',
                     beforeEnter: isPD,
                     component: PDClearanceRequestsComponent,
-                    name: 'PDClearance Requests'
+                    name: 'Clearance Requests'
                 },
                 {
                     path: 'cleared/clearances',
                     beforeEnter: isPD,
                     component: PDClearedClearancesComponent,
-                    name: 'PDCleared Clearances'
+                    name: 'Cleared Clearances'
                 },
                 {
                     path: 'submitted/clearances',
                     beforeEnter: isPD,
                     component: PDSubmittedClearancesComponent,
-                    name: 'PDSubmitted Clearances'
+                    name: 'Submitted Clearances'
                 }, 
                 {
                     path: 'clearance/list',
                     beforeEnter: isPD,
                     component: PDClearanceListComponent,
-                    name: 'PDClearance List'
+                    name: 'Clearance List'
                 },
                 {
                     path: 'deficiency/list',
                     beforeEnter: isPD,
                     component: PDDeficiencyListComponent,
-                    name: 'PDDeficiency List'
+                    name: 'Deficiency List'
                 },
                 //Settings Route
                 {
                     path: 'settings',
                     beforeEnter: isPD,
                     component: SettingsComponent,
-                    name: 'PDSettings'
+                    name: 'Settings'
+                },
+                {
+                    path: 'users',
+                    beforeEnter: isPD,
+                    component: SignatoryUsersComponent,
+                    name: 'Users'
                 },
 
         ],
-        beforeEnter: (to, from, next) =>{
-           axios.get('/api/v1/verify',{'user' : localStorage.getItem('user')})
-           .then(res => {next();})
-           .catch(err => {
-           localStorage.removeItem('token');
-           localStorage.removeItem('token','user','loggedIn');
-           localStorage.removeItem('loggedIn');
-           localStorage.removeItem('user');
-           next('/login');})
-        },
+       
+    },
+    //adviser links
+    {
+        path: '/adviser',
+        component: ADVISERComponent,
+        name: 'adviser', 
+        redirect: '/adviser/dashboard',
+        children: [
+            //PD Routes
+            
+                {
+                    path: 'dashboard', 
+                    beforeEnter: isADVISER,
+                    component: PDDashboardComponent, 
+                    name: 'Dashboard'
+
+                    
+                },
+                {
+                    path: 'student/list',
+                    beforeEnter: isADVISER,
+                    component: PDStudentListComponent,
+                    name: 'Student List'
+                },
+                
+                //Signatories Routes
+                {
+                    path: 'clearance/requests',
+                    beforeEnter: isADVISER,
+                    component: PDClearanceRequestsComponent,
+                    name: 'Clearance Requests'
+                },
+                {
+                    path: 'cleared/clearances',
+                    beforeEnter: isADVISER,
+                    component: PDClearedClearancesComponent,
+                    name: 'Cleared Clearances'
+                },
+                {
+                    path: 'submitted/clearances',
+                    beforeEnter: isADVISER,
+                    component: PDSubmittedClearancesComponent,
+                    name: 'Submitted Clearances'
+                }, 
+                {
+                    path: 'clearance/list',
+                    beforeEnter: isADVISER,
+                    component: PDClearanceListComponent,
+                    name: 'Clearance List'
+                },
+                {
+                    path: 'deficiency/list',
+                    beforeEnter: isADVISER,
+                    component: PDDeficiencyListComponent,
+                    name: 'Deficiency List'
+                },
+                //Settings Route
+                {
+                    path: 'settings',
+                    beforeEnter: isADVISER,
+                    component: SettingsComponent,
+                    name: 'Settings'
+                },
+
+        ],
+        
+    },
+     //principal links
+     {
+        path: '/principal',
+        component: PRINCIPALComponent,
+        name: 'principal', 
+        redirect: '/principal/dashboard',
+        children: [
+            //PD Routes
+            
+                {
+                    path: 'dashboard', 
+                    beforeEnter: isPRINCIPAL,
+                    component: PDDashboardComponent, 
+                    name: 'Dashboard'
+
+                    
+                },
+                {
+                    path: 'student/list',
+                    beforeEnter: isPRINCIPAL,
+                    component: PDStudentListComponent,
+                    name: 'Student List'
+                },
+                
+                //Signatories Routes
+                {
+                    path: 'clearance/requests',
+                    beforeEnter: isPRINCIPAL,
+                    component: PDClearanceRequestsComponent,
+                    name: 'Clearance Requests'
+                },
+                {
+                    path: 'cleared/clearances',
+                    beforeEnter: isPRINCIPAL,
+                    component: PDClearedClearancesComponent,
+                    name: 'Cleared Clearances'
+                },
+                {
+                    path: 'submitted/clearances',
+                    beforeEnter: isPRINCIPAL,
+                    component: PDSubmittedClearancesComponent,
+                    name: 'Submitted Clearances'
+                }, 
+                {
+                    path: 'clearance/list',
+                    beforeEnter: isPRINCIPAL,
+                    component: PDClearanceListComponent,
+                    name: 'Clearance List'
+                },
+                {
+                    path: 'deficiency/list',
+                    beforeEnter: isPRINCIPAL,
+                    component: PDDeficiencyListComponent,
+                    name: 'Deficiency List'
+                },
+                //Settings Route
+                {
+                    path: 'settings',
+                    beforeEnter: isPRINCIPAL,
+                    component: SettingsComponent,
+                    name: 'Settings'
+                },
+
+        ],
+      
     },
         //student links
         {
@@ -900,6 +1149,12 @@ const routes =[
                         component: AdminDeficiencyListComponent,
                         name: 'Deficiency List'
                     },
+                    {
+                        path: 'sias/account',
+                        beforeEnter: isSTUDENT,
+                        component: StudentSIASComponent,
+                        name: 'SIAS Account'
+                    },
                     //Settings Route
                     {
                         path: 'settings',
@@ -909,16 +1164,74 @@ const routes =[
                     }, 
     
             ],
-            beforeEnter: (to, from, next) =>{
-               axios.get('/api/v1/verify',{'user' : localStorage.getItem('user')})
-               .then(res => {next();})
-               .catch(err => {
-               localStorage.removeItem('token');
-               localStorage.removeItem('token','user','loggedIn');
-               localStorage.removeItem('loggedIn');
-               localStorage.removeItem('user');
-               next('/login');})
+       
+             
+            
+        }, 
+       
+        //SGS student links
+        {
+            path: '/sgs/student',
+            component: SGSStudentComponent,
+            name: 'SGSStudent', 
+            beforeEnter: (to, from, next) => {
+                if (localStorage.getItem('token')) {
+                    next();
+                } else {
+        localStorage.removeItem('token');
+        localStorage.removeItem('token','user','loggedIn');
+        localStorage.removeItem('loggedIn');
+        localStorage.removeItem('user');
+        next('/login');
+                }
             },
+            redirect: '/sgs/student/active/clearance',
+            children: [
+                //Admin Routes
+                
+                    {
+                        path: 'dashboard', 
+                        beforeEnter: isSTUDENTSGS,
+                        component: AdminDashboardComponent, 
+                        name: 'Dashboard'
+    
+                        
+                    },
+                    //Student Routes
+                    {
+                        path: 'active/clearance',
+                        beforeEnter: isSTUDENTSGS,
+                        component: SGSAdminActiveClearanceComponent,
+                        name: 'Active Clearance'
+                    },
+                    {
+                        path: 'clearance/list',
+                        beforeEnter: isSTUDENTSGS,
+                        component: STUDENTClearanceListComponent,
+                        name: 'Clearance List'
+                    },
+                    {
+                        path: 'deficiency/list',
+                        beforeEnter: isSTUDENTSGS,
+                        component: AdminDeficiencyListComponent,
+                        name: 'Deficiency List'
+                    },
+					{
+                        path: 'sias/account',
+                        beforeEnter: isSTUDENTSGS,
+                        component: StudentSIASComponent,
+                        name: 'SIAS Account'
+                    },
+                    //Settings Route
+                    {
+                        path: 'settings',
+                        beforeEnter: isSTUDENTSGS,
+                        component: StudentSettingsComponent,
+                        name: 'Settings'
+                    }, 
+    
+            ],
+           
              
             
         }, 
@@ -1061,7 +1374,7 @@ function isADVISER(to, from, next) {
 function isPRINCIPAL(to, from, next) {
  axios.get('/api/v1/verify')
     .then(res => {
-            if(res.data.user_role.role.name=="pricipal") {next();} 
+            if(res.data.user_role.role.name=="principal") {next();} 
             else{next('/');}
         }).catch(err => {
     localStorage.removeItem('token');
@@ -1073,7 +1386,11 @@ function isPRINCIPAL(to, from, next) {
 function isSTUDENT(to, from, next) {
  axios.get('/api/v1/verify')
     .then(res => {
-            if(res.data.user_role.role.name=="student") {next();} 
+        console.log(to)
+        console.log(from)
+        console.log(next)
+        console.log(res.data.user_role.role.name)
+            if(res.data.user_role.role.name=="student"  && res.data.student != "Laboratory High School"  && res.data.student != "School of Graduate Studies and Research") {next();} 
             else{next('/');}
         }).catch(err => {
     localStorage.removeItem('token');
@@ -1082,6 +1399,30 @@ function isSTUDENT(to, from, next) {
     localStorage.removeItem('user');
     next('/login');})
 }
+function isSTUDENTLHS(to, from, next) {
+    axios.get('/api/v1/verify')
+       .then(res => {
+               if(res.data.user_role.role.name=="student" && res.data.student == "Laboratory High School") {next();} 
+               else{next('/');}
+           }).catch(err => {
+       localStorage.removeItem('token');
+       localStorage.removeItem('token','user','loggedIn');
+       localStorage.removeItem('loggedIn');
+       localStorage.removeItem('user');
+       next('/login');})
+   }
+   function isSTUDENTSGS(to, from, next) {
+    axios.get('/api/v1/verify')
+       .then(res => {
+            if(res.data.user_role.role.name=="student" && res.data.student == "School of Graduate Studies and Research") {next();} 
+               else{next('/');}
+           }).catch(err => {
+       localStorage.removeItem('token');
+       localStorage.removeItem('token','user','loggedIn');
+       localStorage.removeItem('loggedIn');
+       localStorage.removeItem('user');
+       next('/login');})
+   }
 function checkRoleRoute(to, from, next) {
     axios.get('/api/v1/verify')
         .then(res => {
@@ -1104,7 +1445,12 @@ function checkRoleRoute(to, from, next) {
                     next('/library');
                 } 
                 else if(res.data.user_role.role.name=="osas") {
+                    if (res.data.staff_campus == "Goa Campus") {
+                        next('/osas/goa');
+                    }
+                    else{
                     next('/osas');
+                    }
                 } 
                 else if(res.data.user_role.role.name=="registrar") {
                     next('/registrar');
@@ -1119,7 +1465,12 @@ function checkRoleRoute(to, from, next) {
                     next('/principal');
                 } 
                 else if(res.data.user_role.role.name=="student") {
+                    if (res.data.student == "School of Graduate Studies and Research") {
+                        next('/sgs/student');
+                    } 
+                    else{
                     next('/student');
+                    }
                 } 
                 else{
                     localStorage.removeItem('token');

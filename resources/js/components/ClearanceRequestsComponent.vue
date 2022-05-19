@@ -32,10 +32,80 @@
           ></v-text-field>
         <v-toolbar flat color="white">
           <div class="overline text-h6">
-              Clearance Request List
-              <span class="font-italic subtitle-2"
-                >(2nd Semester A/Y 2020-2021 )</span
-              >
+             
+               <h1
+                        class="title desplay-2 black--text text--accent3"
+                       
+                      >
+                      <!-- <v-icon class="ma-1 ">mdi-account-plus-outline</v-icon> -->
+                         Clearance Request List
+                        <v-dialog
+                         v-model="copyDialog"
+                         
+                          width="390"
+                      
+                        >
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-btn
+                          dark
+                          v-bind="attrs"
+                          small
+                          v-on="on"
+                          icon class="float-right success white--text ml-2">
+                                        <v-icon small>mdi-file-swap</v-icon>
+
+                                      </v-btn>
+                      </template>
+                     <v-card >
+                      <v-card-title class="overline pa-4">
+                        Transfer Requests
+                           
+                 <v-autocomplete
+                  v-model="editedItem.new_semester_id"
+                  :items="semesters"
+                  :loading="isLoading"
+                  :search-input.sync="search"
+                  chips
+                  clearable
+                  item-text="semester"
+                  item-value="id"
+                  item-key="id" 
+                  label="Search New Semester..."
+ 
+                  
+                >
+                  <template v-slot:no-data>
+                    <v-list-item>
+                      <v-list-item-title>
+                        Search Semester
+                      </v-list-item-title>
+                    </v-list-item>
+                  </template>
+                  <template v-slot:selection="{ attr, on, item, selected }">
+                    <v-chip
+                      v-bind="attr"
+                      :input-value="selected"
+                      color="purple"
+                      class="white--text"
+                      v-on="on"
+                    >
+                       
+                      <span v-text="item.semester"></span>
+                    </v-chip>
+                  </template>
+                  <template v-slot:item="{ item }">
+                    
+                    <v-list-item-content>
+                      <v-list-item-title v-text="item.semester"></v-list-item-title> 
+                    </v-list-item-content> 
+                  </template>
+                </v-autocomplete>
+                        <v-btn :disabled="editedItem.new_semester_id == null" block class="success" rounded @click="copyPrevStaff">Copy</v-btn>
+                      </v-card-title>
+                     </v-card>
+           
+                    </v-dialog>
+                      </h1> 
             </div>
           <v-spacer></v-spacer> 
 
@@ -134,8 +204,22 @@
           mdi-close-circle-outline
         </v-icon></v-btn
         > 
+        <v-btn class="ma-2" color="error" depressed x-small @click="deleteItem(item)"
+          ><v-icon
+          dark
+          x-small
+        >
+          mdi-delete
+        </v-icon></v-btn
+        > 
          </template> 
       </template> 
+	       <template v-slot:item.request_at="{ item }" >
+        <v-chip text-color="white" color="success" small >
+           
+            {{ item.request_at }}
+        </v-chip>
+         </template>
     </v-data-table>
   <v-snackbar
       v-model="snackbar" 
@@ -198,6 +282,8 @@ export default {
       { text: "Program", value: "program" },
        { text: "Purpose", value: "purpose" },
        { text: "Signatory", value: "staff" },
+	   
+       { text: "Date Requested", value: "request_at" },
       { text: "Action", value: "actions" },
     ], 
     page: 0,
@@ -282,8 +368,11 @@ export default {
     searchIt(d) {
       if (d.length > 2) {
         const { page, itemsPerPage } = this.options;
+           let pageNumber = page;
         axios
-          .get(`/api/v1/clearancerequests/${d}`)
+          .get(`/api/v1/clearancerequests/${d}?page=` + pageNumber, {
+          params: { 'per_page': itemsPerPage },
+        })
           .then((res) => {
             this.loading = false;  
             this.clearancerequests = res.data.clearancerequests; 

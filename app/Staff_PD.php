@@ -10,6 +10,7 @@ class Staff_PD extends Model
     protected $fillable = [
         'user_id',
         'program_id',
+        'semester_id',
     ];
     public function user()
     {

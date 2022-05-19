@@ -33,6 +33,18 @@ class DeficiencyController extends Controller
             ->where('student_id' ,Student::where('user_id', Auth::user()->id)->first()->id)->paginate($per_page)) 
             ],200);
             }
+            else if(Auth::user()->hasRole("admin")){
+                return response()->json([
+                    'deficiencies' => new DeficiencyCollection(Deficiency::orderBy('completed')
+                    ->with('designee')
+                    ->with('semester')
+                    ->with('student')
+                    ->with('purpose')    
+                    ->with('staff')
+                    ->with('staff.user')  
+                    ->paginate($per_page)) 
+                    ],200);
+            }
            else{
                 return response()->json([
                 'deficiencies' => new DeficiencyCollection(Deficiency::orderBy('completed')
@@ -112,7 +124,45 @@ class DeficiencyController extends Controller
      */
     public function show($id)
     {
-        //
+        if(Auth::user()->hasRole("admin")){
+            return response()->json([
+                'deficiencies' => new DeficiencyCollection(Deficiency::orderBy('completed')
+                ->with('designee')
+                ->with('semester')
+                ->with('student')
+                ->with('purpose')    
+                ->with('staff')
+                ->with('staff.user')  
+                ->whereHas('student', function($q) use ($id){
+                    $q->where('name', 'ILIKE', '%' . $id . '%');
+                }) 
+                 
+                ->orWhereHas('student', function($q) use ($id){
+                    $q->where('student_number', 'ILIKE', '%' . $id . '%');
+                })  
+                ->paginate(10)) 
+                ],200);
+            }
+            else{
+                return response()->json([
+                    'deficiencies' => new DeficiencyCollection(Deficiency::orderBy('completed')
+                    ->with('designee')
+                    ->with('semester')
+                    ->with('student')
+                    ->with('purpose')   
+                    ->whereIn('staff_id',Staff::where('user_id',Auth::user()->id)->get('id'))
+                    ->whereHas('student', function($q) use ($id){
+                        $q->where('name', 'ILIKE', '%' . $id . '%');
+                    }) 
+                     
+                    ->orWhereHas('student', function($q) use ($id){
+                        $q->where('student_number', 'ILIKE', '%' . $id . '%');
+                    })  
+                     ->with('purpose')  
+                    ->whereIn('staff_id',Staff::where('user_id',Auth::user()->id)->get('id'))  
+                    ->paginate(10)),
+                    ],200); 
+            }
     }
 
     /**

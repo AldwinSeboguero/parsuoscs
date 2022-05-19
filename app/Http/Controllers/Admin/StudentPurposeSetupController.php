@@ -22,7 +22,7 @@ class StudentPurposeSetupController extends Controller
     public function index()
     {
         $purposes = Purpose::orderBy('id')->get();
-        $semesters = Semester::orderBy('id')->get();
+        $semesters = Semester::orderByDesc('id')->get();
         $graduations = Graduation::orderBy('id')->get();
         $activeStudentPurposeSetup = StudentPurposeSetup::where('user_id',Auth::user()->id)->first();
         $purpose_id ="";
@@ -103,7 +103,7 @@ class StudentPurposeSetupController extends Controller
                         $clearancePurpose = new ClearancePurpose([ 
                             'student_id'     => $student->id, 
                             'purpose' => json_encode($data),
-                            'semester_id' => 2,
+                            'semester_id' => Semester::latest('id')->first()->id,
                         ]);  
                         $clearancePurpose->save();
                         $activeStudentPurposeSetup->purpose_id = $clearancePurpose->id;
@@ -141,7 +141,7 @@ class StudentPurposeSetupController extends Controller
                 $clearancePurpose = new ClearancePurpose([ 
                     'student_id'     => $student->id, 
                     'purpose' => json_encode($data),
-                    'semester_id' => 2,
+                    'semester_id' => Semester::latest('id')->first()->id,
                 ]);  
                 $clearancePurpose->save();
                 $newClearance = new Clearance([

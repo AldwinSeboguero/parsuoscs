@@ -12,7 +12,10 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use App\Http\Resources\User as UserResource;
 use App\Http\Resources\UserCollection;
-
+use App\Staff;
+use App\Notifications\PasswordResetRequest;
+use Notification;
+use App\Student;
 class UserController extends Controller
 {
     /**
@@ -22,12 +25,24 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
+        if(Auth::user()->hasRole("admin")){
         $per_page =$request->per_page ? $request->per_page : 10; 
         return response()->json([
-        'users' => new UserCollection(UserRole::orderBy('user_id')->with('user')->with('role')->paginate($per_page)),
+        'users' => new UserCollection(UserRole::orderByDesc('created_at')->with('user')->with('role')->paginate($per_page)),
         'isAdmin' => Auth::User(),
-        'roles' => Role::pluck('description')->all()
+        'roles' => Role::pluck('description')->all(),
+        
         ],200);
+        }
+        else{
+            $per_page =$request->per_page ? $request->per_page : 10; 
+        return response()->json([
+        'users' => new UserCollection(UserRole::orderByDesc('created_at')->where('role_id',2)->with('user')->with('role')->paginate($per_page)),
+        'isAdmin' => Auth::User(),
+        'roles' => Role::pluck('description')->all(),
+        
+        ],200);
+        }
     }
 
     /**
@@ -53,6 +68,7 @@ class UserController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => Hash::make($request->password), 
+                'username' => $request->email,
             ]);  
             $user->save();
             $user->roles()->attach($role);
@@ -69,15 +85,29 @@ class UserController extends Controller
      */
     public function show($id)
     { 
-        return response()->json([
-        'users' => new UserCollection(UserRole::orderBy('user_id')->with('user')->with('role')
-        ->whereHas('user', function($q) use ($id)
-        {
-            $q->where('name','ILIKE','%'.$id.'%');
-
-        })->paginate(10)),
-        'roles' => Role::pluck('description')->all()
-        ],200);
+        if(Auth::user()->hasRole("admin")){
+            return response()->json([
+                'users' => new UserCollection(UserRole::orderByDesc('created_at')->with('user')->with('role')
+                ->whereHas('user', function($q) use ($id)
+                {
+                    $q->where('name','ILIKE','%'.$id.'%');
+        
+                })->paginate(10)),
+                'roles' => Role::pluck('description')->all()
+                ],200);
+            }
+            else{
+                return response()->json([
+                    'users' => new UserCollection(UserRole::orderByDesc('created_at')->where('role_id',2)->with('user')->with('role')
+                    ->whereHas('user', function($q) use ($id)
+                    {
+                        $q->where('name','ILIKE','%'.$id.'%');
+            
+                    })->paginate(10)),
+                    'roles' => Role::pluck('description')->all()
+                    ],200);
+            }
+       
        
     }
 
@@ -165,9 +195,21 @@ class UserController extends Controller
     }
     public function verify(Request $request){
         if (Auth::check()) {
+            $student = null;
+            if(Auth::user()->hasRole("student")){
+           $student = Student::where('user_id',Auth::user()->id)->first();
+            }
             return response()->json([
             'status' => true,
-            'user_role'=> UserRole::with('role')->where('user_id',Auth::user()->id)->first(),],200);  # code...
+            'user_role'=> UserRole::with('role')->where('user_id',Auth::user()->id)->first(),
+            'staff_campus' => Auth::user()->hasRole("osas") ?
+            UserRole::with('role')->where('user_id',Auth::user()->id)->first()->role->name == "student" ? 0 : Staff::where('user_id',Auth::user()->id)->first()->campus->name
+            : null,
+            'student' => $student ? $student->program->college->name : $student,
+
+            
+        ],200);
+              # code...
         }
         else{
             return response()->json(['status' => false],403);
@@ -194,6 +236,17 @@ class UserController extends Controller
     //get the authenticate user info
     public function userInfo(Request $request){
         $user = $request->user();
+        return response()->json(['user'=> $user],200);
+    }
+    public function changePassword(Request $request){
+        $user = User::find(Auth::user()->id);
+        $user->password = Hash::make($request->password);
+        $user->save(); 
+        return response()->json(['user'=> $user],200);
+    }
+    public function updateEmail(Request $request){
+        Notification::route('mail', 'aldwin.seboguero@parsu.edu.ph') 
+            ->notify(new PasswordResetRequest("sasasas"));
         return response()->json(['user'=> $user],200);
     }
 }

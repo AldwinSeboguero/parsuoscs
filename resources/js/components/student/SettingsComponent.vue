@@ -113,8 +113,7 @@
                     <v-btn
                       color="blue darken-1"
                       text
-                      type="submit"
-                      :disabled="!valid"
+                      type="submit" 
                       @click.prevent="save"
                     >
                       Save
@@ -129,12 +128,12 @@
            <v-form
                   v-model="valid"
                   method="post"
-                  v-on:submit.stop.prevent="save"
+                  v-on:submit.stop.prevent="updateEmail"
                 > 
                     <v-container>
                       <v-row>
                        
-                        <v-col cols="12" sm="12">
+                        <v-col cols="12" sm="12" >
                         <v-text-field
                           v-model="editedItem.email"
                           type="email"
@@ -142,6 +141,7 @@
                           :error-messages="error"
                           :blur="checkEmail"
                           label="Email"
+                          :disabled="!email_disabled"
                           :rules="[rules.required, rules.validEmail]"
                         ></v-text-field>
                       </v-col>
@@ -153,14 +153,20 @@
           </v-form>
            <v-divider></v-divider>
        <v-card-actions>
+        
+         <v-checkbox
+                      v-model="email_disabled"
+                      label="Change Email"
+                    ></v-checkbox>
                     <v-spacer></v-spacer>
                     
                     <v-btn
                       color="blue darken-1"
                       text
-                      type="submit"
                       :disabled="!valid"
-                      @click.prevent="save"
+                      type="submit"
+                      :loading="loading"
+                      @click.prevent="updateEmail"
                     >
                       Save
                     </v-btn>
@@ -175,7 +181,7 @@
            <v-form
                   v-model="valid"
                   method="post"
-                  v-on:submit.stop.prevent="save"
+                  v-on:submit.stop.prevent="updatePassword"
                 > 
                     <v-container>
                       <v-row>
@@ -186,6 +192,7 @@
                           color="primary"
                           v-model="editedItem.password"
                           label="Type Password"
+                          :disabled = "!password_disabled"
                           :rules="[rules.required, rules.min]"
                         ></v-text-field>
                       </v-col>
@@ -194,6 +201,7 @@
                           type="password"
                           color="primary"
                           v-model="editedItem.rpassword"
+                          :disabled = "!password_disabled"
                           label="Retype Password"
                           :rules="[rules.required, rules.min, passwordmatch]"
                         ></v-text-field>
@@ -205,6 +213,10 @@
           </v-form>
            <v-divider></v-divider>
        <v-card-actions>
+                     <v-checkbox
+                      v-model="password_disabled"
+                      label="Change Password"
+                    ></v-checkbox>
                     <v-spacer></v-spacer>
                     
                     <v-btn
@@ -212,7 +224,7 @@
                       text
                       type="submit"
                       :disabled="!valid"
-                      @click.prevent="save"
+                      @click.prevent="updatePassword"
                     >
                       Save
                     </v-btn>
@@ -261,8 +273,11 @@ export default {
     tabs: null,
     valid: true,
     dialog: false,
-    loading: false,
+    loading: true,
     snackbar: false,
+    password_disabled :false,
+    email_disabled :false,
+    passwordCheckbox: false,
     snackbarColor:"",
     selected: [],
     text: "",
@@ -294,6 +309,7 @@ export default {
     credential:"",
     purpose_id:"",
     semester_id:"",
+    
     g_id: "",
     
     },
@@ -426,6 +442,7 @@ export default {
             this.text = "Purpose Saved Successfully!";
             this.snackbarColor ="primary darken-1";
             this.snackbar = true;
+            this.$router.push({ path: "/student/active/clearance" });
           })
           .catch((err) => {
             console.dir(err);
@@ -433,7 +450,53 @@ export default {
             this.snackbarColor ="error darken-1";
             this.snackbar = true;
           });
-      } 
+          
+      
   },
+  updateEmail(){
+       this.loading = true;
+            axios.post("/api/v1/emailChangeCreate", {email: this.editedItem.email}).then(result => {
+              this.email =null;
+              this.email_disabled = false;
+                this.response = result.data; 
+                this.snackbar = true;
+                this.text = result.data.message;
+                this.snackbarColor ="success darken-1";
+                this.loading = false;
+                this.email_disabled = false;
+                this.valid = false;
+            }, error => {
+              this.loading = false;
+                console.error(error);
+                this.success = "";
+                this.snackbar = true;
+                this.text = error.response.data.message;
+            });
+  },
+  updatePassword(){
+      axios
+          .post("/api/v1/changePassword", { password : this.editedItem.password})
+          .then((res) => {
+            this.editedItem.password = "";
+              this.editedItem.rpassword = "";
+              this.password_disabled = false;
+            this.text = "Password Updated Successfully!";
+            this.snackbarColor ="primary darken-1";
+            this.snackbar = true;
+            
+          })
+          .catch((err) => {
+            console.dir(err);
+            this.text = "Error Updating Password!"; 
+            this.snackbarColor ="error darken-1";
+            this.snackbar = true;
+          });
+
+  },
+  },
+   props: {
+    source: String,
+  },
+  name: "App",
 };
 </script>

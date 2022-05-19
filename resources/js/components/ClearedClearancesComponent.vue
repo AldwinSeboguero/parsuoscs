@@ -1,7 +1,6 @@
 <template>
   <v-sheet>
-   <v-card>
-    <v-container>
+   <v-card> 
      <v-data-table
         item-key="id"
         class="elevation-0"
@@ -13,8 +12,7 @@
         :items="clearancerequests.data"
         :options.sync="options"
         :server-items-length="totalclearancerequests"
-        :items-per-page="10" 
-        show-select 
+        :items-per-page="10"  
         :footer-props="{
           itemsPerPageOptions: [5, 10, 15],
           itemsPerPageText: 'Clearance Request Per Page',
@@ -22,18 +20,25 @@
           'show-first-last-page': true,
         }"
       >
+       <template v-slot:item.approved_at="{ item }" >
+        <v-chip text-color="white" color="success" small >
+           
+            {{ item.approved_at }}
+        </v-chip>
+         </template>
       <template v-slot:top>
+          <v-col cols="12" sm="4">
         <v-text-field 
             append-icon="mdi-magnify"
             label="Search"
             @input="searchIt"
+            v-model="searchItem"
           ></v-text-field>
+          </v-col>
         <v-toolbar flat color="white">
           <div class="overline text-h6">
               Approved Clearance Request List
-              <span class="font-italic subtitle-2"
-                >(2nd Semester A/Y 2020-2021 )</span
-              >
+              
             </div>
           <v-spacer></v-spacer> 
         </v-toolbar>
@@ -81,8 +86,7 @@
         </v-icon>close
       </v-btn>
       </template>
-    </v-snackbar>
-    </v-container>
+    </v-snackbar> 
     </v-card>
   </v-sheet>
 </template>
@@ -98,6 +102,7 @@ export default {
     success: "",
     error: "", 
     snackbarColor:"",
+    searchItem: "",
       headers: [
       {
         text: "No",
@@ -109,8 +114,8 @@ export default {
       { text: "Name", value: "name" },
       { text: "Program", value: "program" },
        { text: "Purpose", value: "purpose" },
-       { text: "Signatory", value: "staff" },
-      { text: "Action", value: "actions" },
+       { text: "Signatory", value: "staff" }, 
+        { text: "Date Approved", value: "approved_at" }, 
     ], 
     page: 0,
     totalclearancerequests: 0,
@@ -148,7 +153,7 @@ export default {
     },
      options: {
       handler() {
-        this.readDataFromAPI();
+        this.searchIt(this.searchItem);
       },
     },
     deep: true,
@@ -179,8 +184,14 @@ export default {
     searchIt(d) {
       if (d.length > 2) {
         const { page, itemsPerPage } = this.options;
-        axios
-          .get(`/api/v1/clearedclearancerequests/${d}`)
+          let pageNumber = page; 
+          axios
+          .get(`/api/v1/clearedclearancerequests/${d}?page=` + pageNumber, {
+          params: { 'per_page': itemsPerPage,
+          'id' : d,
+          'semester_id' : this.semester_id,
+          },
+        })
           .then((res) => {
             this.loading = false;  
             this.clearancerequests = res.data.clearancerequests; 
@@ -192,9 +203,12 @@ export default {
           });
       }
       if (d.length <= 0) {
+        const { page, itemsPerPage } = this.options;
+         let pageNumber = page;
         axios
-          .get(`/api/v1/clearedclearancerequests?page=${d.page}`, {
-            params: { 'per_page': d.itemsPerPage },
+          .get(`/api/v1/clearedclearancerequests?page=${pageNumber}`, {
+            params: { 'per_page': itemsPerPage,
+          'semester_id' : this.semester_id, },
           })
           .then((res) => {
             this.loading = false;  

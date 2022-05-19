@@ -1,20 +1,18 @@
 <template>
   <v-sheet>
    <v-card>
-    <v-container>
      <v-data-table
         item-key="id"
         class="elevation-0"
         :loading="loading"
         loading-text="Loading... Please wait"
         :headers="headers"
-        :page="page + 1"
+        :page="page" 
         :pageCount="numberOfPages"
         :items="submittedclearances.data"
         :options.sync="options"
         :server-items-length="totalsubmittedclearances"
-        :items-per-page="10" 
-        show-select 
+        :items-per-page="10"  
         :footer-props="{
           itemsPerPageOptions: [5, 10, 15],
           itemsPerPageText: 'Clearance Request Per Page',
@@ -23,17 +21,37 @@
         }"
       >
       <template v-slot:top>
+        <v-row>
+           <v-col cols="12" sm="2" style="margin: 0">
+                          <v-select 
+                            label="Select Semester"
+                             item-value="id"
+                              item-text="semester" 
+                            color="primary" 
+                            :items="semesters"
+                            v-model="semester_id"
+                            style="margin-left:15px"
+                            @change="semesterChange(searchItem)"
+          outlined
+                          ></v-select>
+                        </v-col>
+         <v-col cols="12" sm="4">
         <v-text-field 
             append-icon="mdi-magnify"
             label="Search"
+            
+            v-model="searchItem"
             @input="searchIt"
           ></v-text-field>
+          </v-col>
+         
+     </v-row>
         <v-toolbar flat color="white">
           <div class="overline text-h6">
               Submitted Clearance Request List
-              <span class="font-italic subtitle-2"
+              <!-- <span class="font-italic subtitle-2"
                 >(2nd Semester A/Y 2020-2021 )</span
-              >
+              > -->
             </div>
           <v-spacer></v-spacer> 
         </v-toolbar>
@@ -49,8 +67,8 @@
          </template>
       <template v-slot:item.actions="{ item }">
           <template>
-        <v-btn class="ma-2" color="primary" depressed small 
-          >View</v-btn
+        <v-btn class="ma-2" color="error" text depressed small @click="generatePDF(item)"
+          ><v-icon>mdi-file-pdf</v-icon></v-btn
         >  
           </template>
       </template>
@@ -86,8 +104,7 @@
         </v-icon>close
       </v-btn>
       </template>
-    </v-snackbar>
-    </v-container>
+    </v-snackbar> 
     </v-card>
   </v-sheet>
 </template>
@@ -100,6 +117,8 @@ export default {
     snackbar: false,
     selected: [],
     text: "",
+    
+    searchItem: '',
     success: "",
     error: "", 
     snackbarColor:"",
@@ -120,7 +139,12 @@ export default {
     totalsubmittedclearances: 0,
     numberOfPages: 0,
     options: {},
-     submittedclearances: [], 
+     submittedclearances: [],
+     semesters:{
+         id: "", 
+      semester: "",
+     },
+     semester_id:0, 
     editedIndex: -1,
     editedItem: {
       id: "",
@@ -152,7 +176,7 @@ export default {
     },
      options: {
       handler() {
-        this.readDataFromAPI();
+        this.searchIt(this.searchItem);
       },
     },
     deep: true,
@@ -163,6 +187,38 @@ export default {
   },
 
   methods: {
+    generatePDF(item) { 
+     this.editedIndex = this.submittedclearances.data.indexOf(item);
+      this.editedItem = Object.assign({}, item); 
+    if(item.college == "School of Graduate Studies and Research")
+    {
+       axios.get('/api/v1/pdf-createSGS',{responseType: 'blob'
+     ,params: { 'clearance': this.editedItem.clearance_id }
+
+     }).then((response) => {
+     var fileURL = window.URL.createObjectURL(new Blob([response.data], {type: 'application/pdf'}));
+     var fileLink = document.createElement('a');
+     fileLink.href = fileURL;
+     fileLink.setAttribute('download', this.editedItem.name+this.editedItem.clearance_id+'.pdf');
+     document.body.appendChild(fileLink);
+     fileLink.click();
+    
+
+    });}
+    
+    else{
+       axios.get('/api/v1/pdf-create',{responseType: 'blob'
+     ,params: { 'clearance': this.editedItem.clearance_id }
+
+     }).then((response) => {
+     var fileURL = window.URL.createObjectURL(new Blob([response.data], {type: 'application/pdf'}));
+     var fileLink = document.createElement('a');
+     fileLink.href = fileURL;
+     fileLink.setAttribute('download', this.editedItem.name+this.editedItem.clearance_id+'.pdf');
+     document.body.appendChild(fileLink);
+     fileLink.click();
+    });}
+    },
      readDataFromAPI() {
       this.loading = true;
       const { page, itemsPerPage } = this.options;
@@ -180,31 +236,85 @@ export default {
         });
     },
 
-    searchIt(d) {
+
+    semesterChange(d) {
+      
       if (d.length > 2) {
-        const { page, itemsPerPage } = this.options;
+     
         axios
-          .get(`/api/v1/submittedclearances/${d}`)
+          .get(`/api/v1/submittedclearances/${d}?page=` + 1, {
+          params: { 'per_page': 10,
+          'id' : d,
+          'semester_id' : this.semester_id,
+          },
+        })
           .then((res) => {
-            this.loading = false;  
+            this.loading = false;   
+            this.page = res.data.submittedclearances.current_page;
             this.submittedclearances = res.data.submittedclearances; 
             this.totalsubmittedclearances = res.data.submittedclearances.total;
-            this.numberOfPages = res.data.submittedclearances.last_page;
+            this.numberOfPages = res.data.submittedclearances.total_pages;
           })
           .catch((err) => {
             console.error(err);
           });
       }
       if (d.length <= 0) {
+     
         axios
-          .get(`/api/v1/submittedclearances?page=${d.page}`, {
-            params: { 'per_page': d.itemsPerPage },
+          .get(`/api/v1/submittedclearances?page=0`, {
+            params: { 'per_page': 10,
+          'semester_id' : this.semester_id, },
           })
           .then((res) => {
             this.loading = false;  
+          this.page = res.data.submittedclearances.current_page;
             this.submittedclearances = res.data.submittedclearances;
             this.totalsubmittedclearances = res.data.submittedclearances.total;
-            this.numberOfPages = res.data.submittedclearances.last_page;
+            this.numberOfPages = res.data.submittedclearances.total_pages;
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      }
+    }, 
+    searchIt(d) {
+      
+      if (d.length > 2) {
+        const { page, itemsPerPage } = this.options;
+         let pageNumber = page;
+        axios
+          .get(`/api/v1/submittedclearances/${d}?page=` + pageNumber, {
+          params: { 'per_page': itemsPerPage,
+          'id' : d,
+          'semester_id' : this.semester_id,
+          },
+        })
+          .then((res) => {
+            this.loading = false;   
+            this.page = res.data.submittedclearances.current_page;
+            this.submittedclearances = res.data.submittedclearances; 
+            this.totalsubmittedclearances = res.data.submittedclearances.total;
+            this.numberOfPages = res.data.submittedclearances.total_pages;
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      }
+      if (d.length <= 0) {
+         const { page, itemsPerPage } = this.options;
+         let pageNumber = page;
+        axios
+          .get(`/api/v1/submittedclearances?page=` + pageNumber, {
+            params: { 'per_page': itemsPerPage,
+          'semester_id' : this.semester_id, },
+          })
+          .then((res) => {
+            this.loading = false;  
+            this.page = res.data.submittedclearances.current_page;
+            this.submittedclearances = res.data.submittedclearances;
+            this.totalsubmittedclearances = res.data.submittedclearances.total;
+            this.numberOfPages = res.data.submittedclearances.total_pages;
           })
           .catch((err) => {
             console.error(err);
@@ -233,6 +343,13 @@ export default {
           return Promise.reject(error);
         }
       );
+       axios.get('/api/v1/semesters',{})
+      .then(res => {
+        this.semesters = res.data.semesters
+      })
+      .catch(err => {
+        console.error(err); 
+      });
     },
 
     editItem(item) {

@@ -14,7 +14,7 @@ class PurposeController extends Controller
      */
     public function index()
     {
-        return response()->json(['purposes'=> Purpose::all()],200);
+        return response()->json(['purposes'=> Purpose::orderByDesc('updated_at')->get()],200);
     }
 
     /**
@@ -27,6 +27,8 @@ class PurposeController extends Controller
         //
     }
 
+   
+   
     /**
      * Store a newly created resource in storage.
      *
@@ -34,8 +36,14 @@ class PurposeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        //
+    { 
+            
+            $purpose = new Purpose([
+            'code' => $request->code,
+            'purpose' => $request->purpose, 
+            ]);  
+            $purpose->save(); 
+            return response()->json(['purposes'=> Purpose::orderByDesc('updated_at')->paginate(10),200]);
     }
 
     /**
@@ -44,12 +52,13 @@ class PurposeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id,Request $request)
     {
-        //
+      
+ 
     }
 
-    /**
+    /** 
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -69,7 +78,11 @@ class PurposeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $purpose = Purpose::find($id);
+        $purpose->code= $request->code;  
+        $purpose->purpose= $request->purpose;   
+        $purpose->save();  
+        return response()->json(['purpose' => $purpose],200);
     }
 
     /**
@@ -80,6 +93,7 @@ class PurposeController extends Controller
      */
     public function destroy($id)
     {
-        //
-    }
+        $purpose = Purpose::find($id)->delete();
+        return response()->json(['purpose' => $purpose],200);
+    } 
 }

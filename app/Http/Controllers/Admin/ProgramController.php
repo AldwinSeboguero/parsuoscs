@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Program;
+use App\Campus;
+use App\College;
 class ProgramController extends Controller
 {
     /**
@@ -14,7 +16,12 @@ class ProgramController extends Controller
      */
     public function index()
     {
-        return response()->json(['programs'=> Program::with('campus')->with('college')->get()],200);
+        return response()->json(
+            [
+                'programs'=> Program::with('campus')->with('college')->get(),
+                'campuses' => Campus::orderBy('name')->get(),
+                'colleges' => College::orderBy('name')->get(),
+              ],200);
     }
 
     /**
@@ -26,16 +33,17 @@ class ProgramController extends Controller
     {
         //
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
-    {
-        //
+    { 
+            
+            $program = new Program([
+            'name' => $request->name,
+            'short_name' => $request->short_name,
+            'campus_id'=> $request->campus_id, 
+            'college_id'=> $request->college_id, 
+            ]);  
+            $program->save(); 
+            return response()->json(['programs'=> Program::orderByDesc('updated_at')->paginate(10),200]);
     }
 
     /**
@@ -44,12 +52,12 @@ class ProgramController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id,Request $request)
     {
-        //
+        
     }
 
-    /**
+    /** 
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -69,7 +77,12 @@ class ProgramController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $program = Program::find($id);
+        $program->name= $request->name;  
+        $program->short_name= $request->short_name;  
+        $program->college_id= $request->college_id;  
+        $program->save();  
+        return response()->json(['program' => $program],200);
     }
 
     /**
@@ -80,6 +93,7 @@ class ProgramController extends Controller
      */
     public function destroy($id)
     {
-        //
-    }
+        $program = Program::find($id)->delete();
+        return response()->json(['program' => $program],200);
+    } 
 }

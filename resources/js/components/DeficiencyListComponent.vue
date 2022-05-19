@@ -108,6 +108,7 @@ export default {
       { text: "Name", value: "student_name" },
       { text: "Completed", value: "completed" }, 
        { text: "Deficiency", value: "deficiency" }, 
+       { text: "Note", value: "note" },
       { text: "Staff", value: "staff" },   
     ], 
     page: 0,

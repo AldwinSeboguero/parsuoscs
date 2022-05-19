@@ -7,6 +7,8 @@ use App\Staff_PD;
 use App\StaffRegistrar;
 use App\StaffStCouncil;
 use App\Staff_Adviser;
+use App\Semester;
+use App\Graduation;
 class StaffSeeder extends Seeder
 {
     /**
@@ -16,18 +18,31 @@ class StaffSeeder extends Seeder
      */
     public function run()
     {
-        $staffs = Staff::orderBy('id')->get();
-        $staff_deans = Staff_DEAN::orderBy('id')->get();
-        $staff_pds = Staff_PD::orderBy('id')->get();
-        $staff_registrars = StaffRegistrar::orderBy('id')->get();
-        $staff_stcouncils = StaffStCouncil::orderBy('id')->get();
-        $staff_advisers = Staff_Adviser::orderBy('id')->get();
+        // $semester = new Semester([
+        //     'id' => '4',
+        //     'code' => '21-1',
+        //     'semester' => 'AY 2021-2020 1st Semester',
+        //     'from' => '2021-07-5',
+        //     'to' => '2021-08-01',
+        // ]);
+        // $semester->save();
+
+       // $graduation = new Graduation([
+        //    'graduation' => 'June 2021',
+       // ]);
+       // $graduation->save();
+        $staffs = Staff::orderBy('id')->where('semester_id',3)->get();
+        $staff_deans = Staff_DEAN::orderBy('id')->where('semester_id',3)->get();
+        $staff_pds = Staff_PD::orderBy('id')->where('semester_id',3)->get();
+        $staff_registrars = StaffRegistrar::orderBy('id')->where('semester_id',3)->get();
+        $staff_stcouncils = StaffStCouncil::orderBy('id')->where('semester_id',3)->get();
+        $staff_advisers = Staff_Adviser::orderBy('id')->where('semester_id',3)->get();
         foreach ($staffs as $key => $staff) {
             $st = new Staff([
                 'user_id' => $staff->user_id,
                 'designee_id' => $staff->designee_id,
                 'campus_id' => $staff->campus_id,
-                'semester_id' => 2,
+                'semester_id' => 4,
             ]); 
             $st->save();
         }
@@ -35,7 +50,7 @@ class StaffSeeder extends Seeder
             $st = new Staff_DEAN([
                 'user_id' => $staff->user_id, 
                 'college_id' => $staff->college_id,
-                'semester_id' => 2,
+                'semester_id' => 4,
             ]); 
             $st->save();
         }
@@ -43,7 +58,7 @@ class StaffSeeder extends Seeder
             $st = new Staff_PD([
                 'user_id' => $staff->user_id,
                 'program_id' => $staff->program_id,
-                'semester_id' => 2,
+                'semester_id' => 4,
             ]); 
             $st->save();
         }
@@ -51,7 +66,7 @@ class StaffSeeder extends Seeder
             $st = new StaffRegistrar([
                 'user_id' => $staff->user_id,
                 'program_id' => $staff->program_id,
-                'semester_id' => 2,
+                'semester_id' => 4,
             ]); 
             $st->save();
         }
@@ -59,7 +74,7 @@ class StaffSeeder extends Seeder
             $st = new StaffStCouncil([
                 'user_id' => $staff->user_id, 
                 'college_id' => $staff->college_id,
-                'semester_id' => 2,
+                'semester_id' => 4,
             ]); 
             $st->save();
         }
@@ -67,7 +82,7 @@ class StaffSeeder extends Seeder
             $st = new Staff_Adviser([
                 'user_id' => $staff->user_id, 
                 'section_id' => $staff->section_id,
-                'semester_id' => 2,
+                'semester_id' => 4,
             ]); 
             $st->save();
         }

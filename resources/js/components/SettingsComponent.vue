@@ -7,13 +7,13 @@
 
       <v-spacer></v-spacer>
 
-      <v-btn icon>
+      <!-- <v-btn icon>
         <v-icon>mdi-magnify</v-icon>
       </v-btn>
 
       <v-btn icon>
         <v-icon>mdi-dots-vertical</v-icon>
-      </v-btn>
+      </v-btn> -->
 
       <template v-slot:extension>
         <v-tabs
@@ -44,7 +44,7 @@
     </v-toolbar>
 
     <v-tabs-items v-model="tabs">
-     
+      
       <v-tab-item
        :value="'mobile-tabs-5-2'"
       >
@@ -57,7 +57,7 @@
                     <v-container>
                       <v-row>
                        
-                        <v-col cols="12" sm="12">
+                        <v-col cols="12" sm="12" >
                         <v-text-field
                           v-model="editedItem.email"
                           type="email"
@@ -65,6 +65,7 @@
                           :error-messages="error"
                           :blur="checkEmail"
                           label="Email"
+                          :disabled="!email_disabled"
                           :rules="[rules.required, rules.validEmail]"
                         ></v-text-field>
                       </v-col>
@@ -76,13 +77,19 @@
           </v-form>
            <v-divider></v-divider>
        <v-card-actions>
+        
+         <v-checkbox
+                      v-model="email_disabled"
+                      label="Change Email"
+                    ></v-checkbox>
                     <v-spacer></v-spacer>
                     
                     <v-btn
                       color="blue darken-1"
                       text
-                      type="submit"
                       :disabled="!valid"
+                      type="submit"
+                      :loading="loading"
                       @click.prevent="updateEmail"
                     >
                       Save
@@ -98,7 +105,7 @@
            <v-form
                   v-model="valid"
                   method="post"
-                  v-on:submit.stop.prevent="changePassword"
+                  v-on:submit.stop.prevent="updatePassword"
                 > 
                     <v-container>
                       <v-row>
@@ -109,6 +116,7 @@
                           color="primary"
                           v-model="editedItem.password"
                           label="Type Password"
+                          :disabled = "!password_disabled"
                           :rules="[rules.required, rules.min]"
                         ></v-text-field>
                       </v-col>
@@ -117,6 +125,7 @@
                           type="password"
                           color="primary"
                           v-model="editedItem.rpassword"
+                          :disabled = "!password_disabled"
                           label="Retype Password"
                           :rules="[rules.required, rules.min, passwordmatch]"
                         ></v-text-field>
@@ -128,6 +137,10 @@
           </v-form>
            <v-divider></v-divider>
        <v-card-actions>
+                     <v-checkbox
+                      v-model="password_disabled"
+                      label="Change Password"
+                    ></v-checkbox>
                     <v-spacer></v-spacer>
                     
                     <v-btn
@@ -135,7 +148,7 @@
                       text
                       type="submit"
                       :disabled="!valid"
-                      @click.prevent="changePassword"
+                      @click.prevent="updatePassword"
                     >
                       Save
                     </v-btn>
@@ -143,6 +156,38 @@
         </v-card>
       </v-tab-item>
     </v-tabs-items>
+    <v-snackbar
+      v-model="snackbar" 
+      :color="snackbarColor" 
+      right
+      timeout="5000" 
+      outlined
+     top
+     width="50" 
+    >
+       <v-icon 
+          left
+        >
+          mdi-error
+        </v-icon>{{ text }}
+
+      <template v-slot:action="{ attrs }">
+        
+          <v-btn
+        :color="snackbarColor"
+          text
+          v-bind="attrs"
+          @click="snackbar = false"
+      >
+        <v-icon
+          dark
+          left
+        >
+          mdi-close
+        </v-icon>close
+      </v-btn>
+      </template>
+    </v-snackbar>
   </v-card>
 </template>
 
@@ -152,8 +197,12 @@ export default {
     tabs: null,
     valid: true,
     dialog: false,
-    loading: false,
+    loading: true,
     snackbar: false,
+    password_disabled :false,
+    email_disabled :false,
+    passwordCheckbox: false,
+    snackbarColor:"",
     selected: [],
     text: "",
     success: "",
@@ -176,6 +225,18 @@ export default {
     options: {},
     users: {},
     roles: [],
+    purposes:[],
+    semesters:[],
+    graduations:[],
+    setup:{
+    graduation_id:"",
+    credential:"",
+    purpose_id:"",
+    semester_id:"",
+    
+    g_id: "",
+    
+    },
     rules: {
       required: (v) => !!v || "This Field is Required",
       min: (v) => v.length >= 5 || "Minimum 5 Characters Required",
@@ -247,94 +308,7 @@ export default {
   },
 
   methods: {
-    updateEmail(){
-      console.log(this.editedItem.email)
-    },
-    changePassword(){
-
-    },
-    readDataFromAPI() {
-      this.loading = true;
-      const { page, itemsPerPage } = this.options;
-      let pageNumber = page;
-      axios
-        .get(`/api/v1/users?page=` + pageNumber, {
-          params: { 'per_page': itemsPerPage },
-        })
-        .then((response) => {
-          //Then injecting the result to datatable parameters.
-          this.loading = false;
-          //  this.page = response.data.students;
-          this.users = response.data.users;
-          this.roles = response.data.roles;
-          this.totalUsers = response.data.users.total;
-          this.numberOfPages = response.data.users.last_page;
-        });
-    },
-
-    searchIt(d) {
-      if (d.length > 3) {
-        const { page, itemsPerPage } = this.options;
-        axios
-          .get(`/api/v1/users/${d}`)
-          .then((res) => {
-            this.loading = false;
-            this.roles = res.data.roles;
-            // this.page = response.data.students;
-            this.users = res.data.users;
-            this.totalUsers = res.data.users.total;
-            this.numberOfPages = res.data.users.last_page;
-          })
-          .catch((err) => {
-            console.error(err);
-          });
-      }
-      if (d.length <= 0) {
-        axios
-          .get(`/api/v1/users?page=${d.page}`, {
-            params: { 'per_page': d.itemsPerPage },
-          })
-          .then((res) => {
-            this.loading = false;
-            this.roles = res.data.roles;
-            // this.page = response.data.students;
-            this.users = res.data.users;
-            this.totalUsers = res.data.users.total;
-            this.numberOfPages = res.data.users.last_page;
-          })
-          .catch((err) => {
-            console.error(err);
-          });
-      }
-    },
-    updateRole(item){
-      const index = this.users.data.indexOf(item);
-      axios.post('/api/v1/user/role',{'role': item.role, 'user' : item.id})
-      .then(res =>{
-        this.text = res.data.user.name+"'s Role Updated to "+ res.data.user.role
-        this.snackbar = true
-      })
-      .catch(err => {
-        console.error(err); 
-      })
-    },
-
-    // paginate(e) { 
-    //   axios
-    //     .get(`/api/v1/users?page=${e.page}`, {
-    //       params: { 'per_page': e.itemsPerPage},
-    //     })
-    //     .then(res => {
-    //       this.users = res.data.users;
-    //       this.roles = res.data.roles;
-    //     })
-    //     .catch(err => {
-    //       if (err.response.status == 401) {
-    //         localStorage.removeItem("token");
-    //         this.$router.push("/login");
-    //       }
-    //     });
-    // },
+   
     initialize() {
       axios.interceptors.request.use(
         (config) => {
@@ -357,73 +331,94 @@ export default {
           return Promise.reject(error);
         }
       );
+      axios.get("/api/v1/purposesetup").then(
+        res => {
+          
+          this.setup.credential = res.data.credential;
+          this.purposes = res.data.purposes;
+          this.graduations = res.data.graduations;
+          this.semesters = res.data.semesters;
+         
+          if (res.data.purpose_id) {
+           this.setup.purpose_id = res.data.purpose_id.id;
+          }
+          if (res.data.semester_id) {
+          this.setup.semester_id = res.data.semester_id.id;
+          }
+          if (res.data.graduation_id) { 
+          this.setup.graduation_id = res.data.graduation_id.id;
+          }
+          
+        }
+      ).catch(
+        err => {console.log(err)}
+      );
+      
     },
 
-    editItem(item) {
-      this.editedIndex = this.users.data.indexOf(item);
-      this.editedItem = Object.assign({}, item);
-      this.dialog = true;
-    },
+  
 
-    deleteItem(item) {
-      const index = this.users.data.indexOf(item);
-      let decide = confirm("Are you sure you want to delete this item?");
-      if (decide) {
+
+    save() { 
         axios
-          .delete("/api/v1/users/" + item.id)
+          .post("/api/v1/purposesetup", this.setup)
           .then((res) => {
-            this.text = "Record Deleted Successfully!";
+            this.text = "Purpose Saved Successfully!";
+            this.snackbarColor ="primary darken-1";
             this.snackbar = true;
-            this.users.data.splice(index, 1);
-          })
-          .catch((err) => {
-            console.log(err.response);
-            this.text = "Error Deleting Record";
-            this.snackbar = true;
-          });
-      }
-    },
-
-    close() {
-      this.dialog = false;
-      setTimeout(() => {
-        this.editedItem = Object.assign({}, this.defaultItem);
-        this.editedIndex = -1;
-      }, 300);
-    },
-
-    save() {
-      if (this.editedIndex > -1) {
-        const index = this.editedIndex;
-        axios
-          .put("/api/v1/users/" + this.editedItem.id, this.editedItem)
-          .then((res) => {
-            this.text = "Record Updated Successfully!";
-            this.snackbar = true;
-            Object.assign(this.users.data[index], res.data.user);
-          })
-          .catch((err) => {
-            console.log(err.response);
-            this.text = "Error Updating Record";
-            this.snackbar = true;
-          });
-      } else {
-        axios
-          .post("/api/v1/users", this.editedItem)
-          .then((res) => {
-            this.text = "Record Added Successfully!";
-            this.snackbar = true;
-            this.users.data.push(res.data.user);
-            console.log(res);
           })
           .catch((err) => {
             console.dir(err);
-            this.text = "Error Inserting Record";
+            this.text = "Error Saving Purpose!"; 
+            this.snackbarColor ="error darken-1";
             this.snackbar = true;
           });
-      }
-      this.close();
-    },
+      
   },
+  updateEmail(){
+       this.loading = true;
+            axios.post("/api/v1/emailChangeCreate", {email: this.editedItem.email}).then(result => {
+              this.email =null;
+              this.email_disabled = false;
+                this.response = result.data; 
+                this.snackbar = true;
+                this.text = result.data.message;
+                this.snackbarColor ="success darken-1";
+                this.loading = false;
+                this.email_disabled = false;
+                this.valid = false;
+            }, error => {
+              this.loading = false;
+                console.error(error);
+                this.success = "";
+                this.snackbar = true;
+                this.text = error.response.data.message;
+            });
+  },
+  updatePassword(){
+      axios
+          .post("/api/v1/changePassword", { password : this.editedItem.password})
+          .then((res) => {
+            this.editedItem.password = "";
+              this.editedItem.rpassword = "";
+              this.password_disabled = false;
+            this.text = "Password Updated Successfully!";
+            this.snackbarColor ="primary darken-1";
+            this.snackbar = true;
+            
+          })
+          .catch((err) => {
+            console.dir(err);
+            this.text = "Error Updating Password!"; 
+            this.snackbarColor ="error darken-1";
+            this.snackbar = true;
+          });
+
+  },
+  },
+   props: {
+    source: String,
+  },
+  name: "App",
 };
 </script>

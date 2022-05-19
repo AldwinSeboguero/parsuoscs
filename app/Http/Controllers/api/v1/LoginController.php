@@ -46,7 +46,7 @@ class LoginController extends Controller
                 $student->is_activated = true;
                 $student->user_id = $user->id;
                 $student->update();
-                return response(['message' => 'Please try your newly registered account!'],200);
+                return response(['message' => 'Account Successfully Activated! Please try to login with your registered account.'],200);
         }
         else{
             return response(['message' => 'Mismatch Password!']);

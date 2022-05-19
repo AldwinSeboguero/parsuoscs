@@ -25,8 +25,12 @@
       <template v-slot:top>
         <v-text-field 
             append-icon="mdi-magnify"
+            
             label="Search"
             @input="searchIt"
+            solo-inverted
+            flat
+            light
           ></v-text-field>
         <v-toolbar flat color="white">
           <div class="overline text-h6">
@@ -45,15 +49,15 @@
                 <v-chip   text-color="white"
                   color="success"
                   x-small
-                  v-if="(item.stcouncil==true
-                  && item.cashier==true
+                  v-if="(
+                  item.cashier==true
                   && item.library==true
                   && item.osas==true
                   && item.pd==true
                   && item.dean==true
                   && item.registrar==true)
-                  || item.adviser==true
-                  && item.principal==true
+                  || (item.adviser==true
+                  && item.principal==true)
                   "
                 >
                   Completed

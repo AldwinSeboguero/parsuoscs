@@ -13,6 +13,7 @@ use App\ClearancePurpose;
 use App\Deficiency; 
 use App\Staff;
 use App\Clearance;
+use App\Staff_PD;
 use Illuminate\Support\Facades\Hash; 
 use Illuminate\Pagination\Paginator;
 use App\Http\Resources\ClearanceRequest as ClearanceRequestResource;
@@ -41,6 +42,22 @@ class ClearanceRequestController extends Controller
             ->where('status', 0)->with('purpose')  
             ->with('staff')
             ->with('staff.user') 
+            ->paginate($per_page)),
+            'user' => Auth::user(), 
+            ],200);
+        }
+        else if(Auth::user()->hasRole("pd")){
+            $per_page =$request->per_page ? $request->per_page : 10; 
+            $pd_programs = Staff_PD::where('user_id',Auth::user()->id)->get('program_id');
+            return response()->json([
+            'clearancerequests' => new ClearanceRequestCollection(ClearanceRequest::orderBy('request_at')
+            ->where('status', 0)->with('purpose')  
+            ->with('staff')
+            ->with('staff.user')
+            ->where('designee_id', 1)
+            ->whereHas('student', function($query) use($pd_programs){
+                $query->whereIn('program_id', $pd_programs);
+            })
             ->paginate($per_page)),
             'user' => Auth::user(), 
             ],200);
@@ -101,50 +118,37 @@ class ClearanceRequestController extends Controller
     {
         if(Auth::user()->hasRole("admin")){
         return response()->json([
-            'clearancerequests' => new ClearanceRequestCollection(
+              'clearancerequests' => new ClearanceRequestCollection(
                 ClearanceRequest::where('status', false) 
-                ->with('purpose')->with('student')->with('student.deficiencies')
-                ->with('student.program')
-                ->with('staff')
-                ->with('staff.user')   
+                ->where('status', false)->with('purpose')    
                 ->whereHas('student', function($q) use ($id){
                     $q->where('name', 'ILIKE', '%' . $id . '%');
-                })  
+                }) 
+                 
                 ->orWhereHas('student', function($q) use ($id){
                     $q->where('student_number', 'ILIKE', '%' . $id . '%');
-                })  
-                ->orWhereHas('staff.user', function($q) use ($id){
-                    $q->where('name', 'ILIKE', '%' . $id . '%');
-                })  
-                ->orWhereHas('purpose', function($q) use ($id){
-                    $q->where( 'purpose->name',$id );
-                })
-                ->paginate(10))  
+                })   
+                ->where('status', false)->with('purpose')  
+                ->paginate(10)), 
             ],200);
         }
         else{
             return response()->json([
-                'clearancerequests' => new ClearanceRequestCollection(
-                    ClearanceRequest::where('status', false)
-                    ->where('staff_id',Staff::where('user_id',Auth::user()->id)->first()->id)
-                    ->with('purpose')->with('student')->with('student.deficiencies')
-                    ->with('student.program')
-                    ->with('staff')
-                    ->with('staff.user')   
-                    ->whereHas('student', function($q) use ($id){
-                        $q->where('name', 'ILIKE', '%' . $id . '%');
-                    })  
-                    ->orWhereHas('student', function($q) use ($id){
-                        $q->where('student_number', 'ILIKE', '%' . $id . '%');
-                    })  
-                    ->orWhereHas('staff.user', function($q) use ($id){
-                        $q->where('name', 'ILIKE', '%' . $id . '%');
-                    })  
-                    ->orWhereHas('purpose', function($q) use ($id){
-                        $q->where( 'purpose->name',$id );
-                    })
-                    ->paginate(10))  
-                ],200);
+                'clearancerequests' => new ClearanceRequestCollection(ClearanceRequest::orderBy('request_at')
+                ->where('status', false)->with('purpose')   
+                ->whereIn('staff_id',Staff::where('user_id',Auth::user()->id)->get('id'))
+                ->whereHas('student', function($q) use ($id){
+                    $q->where('name', 'ILIKE', '%' . $id . '%');
+                }) 
+                 
+                ->orWhereHas('student', function($q) use ($id){
+                    $q->where('student_number', 'ILIKE', '%' . $id . '%');
+                })  
+                ->where('status', false)->with('purpose')  
+                ->whereIn('staff_id',Staff::where('user_id',Auth::user()->id)->get('id')) 
+                ->paginate(10)),
+                'user' => Auth::user(), 
+                ],200); 
         }
     }
 
@@ -191,6 +195,7 @@ class ClearanceRequestController extends Controller
         ->whereIn('staff_id',Staff::where('user_id',Auth::user()->id)->get('id')) 
         ->with('staff')
         ->with('staff.user') 
+        
         ->paginate(10)),
         'user' => Auth::user(), 
         
@@ -200,42 +205,51 @@ class ClearanceRequestController extends Controller
     public function approveRequest(Request $request)
     {
        
-        $clearanceRequest = ClearanceRequest::find($request->id);
+        $clearanceRequest = ClearanceRequest::with('staff')->find($request->id);
+        // dd($clearanceRequest->staff->designee->short_name);
         $clearanceRequest->status = true;
         $clearanceRequest->approved_at = now();
         $clearanceRequest->save();
-
+        
         $clearance = Clearance::where('student_id',$clearanceRequest->student_id)->where('purpose_id',$clearanceRequest->purpose_id)->first();
-        if(Auth::user()->hasRole("pd")){
+        if($clearanceRequest->staff->designee->short_name == "pd"){
         $clearance->program_director = true;
         $clearance->save();
         }
-        else if(Auth::user()->hasRole("dean")){
+        else if($clearanceRequest->staff->designee->short_name == "dean"){
             $clearance->college_deaan = true;
             $clearance->save();
         }
-        else if(Auth::user()->hasRole("stcouncil")){
+        else if($clearanceRequest->staff->designee->short_name == "stcouncil"){
             $clearance->student_council = true;
             $clearance->save();
         }
-        else if(Auth::user()->hasRole("cashier")){
+        else if($clearanceRequest->staff->designee->short_name == "cashier"){
             $clearance->cashier = true;
             $clearance->save();
         }
-        else if(Auth::user()->hasRole("osas")){
+        else if($clearanceRequest->staff->designee->short_name == "OSAS"){
             $clearance->osas = true;
             $clearance->save();
         }
-        else if(Auth::user()->hasRole("library")){
+        else if($clearanceRequest->staff->designee->short_name == "library"){
             $clearance->library = true;
             $clearance->save();
         }
-        else if(Auth::user()->hasRole("registrar")){
+        else if($clearanceRequest->staff->designee->short_name == "registrar"){
             $clearance->registrar = true;
             $clearance->save();
         }
-        else if(Auth::user()->hasRole("registrarstaff")){
+        else if($clearanceRequest->staff->designee->short_name == "registrarstaff"){
             $clearance->registrar = true;
+            $clearance->save();
+        }
+        else if($clearanceRequest->staff->designee->short_name == "adviser"){
+            $clearance->class_adviser = true;
+            $clearance->save();
+        }
+        else if($clearanceRequest->staff->designee->short_name == "principal"){
+            $clearance->principal = true;
             $clearance->save();
         }
 
@@ -251,6 +265,25 @@ class ClearanceRequestController extends Controller
                 
                 ],200);
         }
+       else if(Auth::user()->hasRole("pd")){
+            $per_page =$request->per_page ? $request->per_page : 10; 
+            $pd_programs = Staff_PD::where('user_id',Auth::user()->id)->get('program_id');
+
+            return response()->json([
+                'clearancerequests' => new ClearanceRequestCollection(ClearanceRequest::orderBy('request_at')
+                ->where('status', 0)->with('purpose')  
+                ->with('staff')
+                ->with('staff.user') 
+                ->where('designee_id', 1)
+                ->whereHas('student', function($query) use($pd_programs){
+                    $query->whereIn('program_id', $pd_programs);
+                })
+                ->paginate($per_page)),
+                'user' => Auth::user(), 
+                
+                ],200);
+        }
+        
         else{
         $per_page =$request->per_page ? $request->per_page : 10; 
        
@@ -275,8 +308,8 @@ class ClearanceRequestController extends Controller
      */
     public function destroy($id)
     {
-        $user = User::find($id)->delete();
-        return response()->json(['user' => $user],200);
+        $clearanceRequest = ClearanceRequest::find($id)->delete();
+        return response()->json(['clearanceRequest' => $clearanceRequest],200);
     }
     public function deleteAll(Request $request)
     {

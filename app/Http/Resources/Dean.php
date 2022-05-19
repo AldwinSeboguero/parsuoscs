@@ -18,6 +18,10 @@ class Dean extends JsonResource
             'id' => $this->id,
             'name' => $this->user->name,  
             'college' => $this->college->name, 
+            
+            'user_id' => $this->user->id,  
+            'college_id' => $this->college->id, 
+            'semester_id' => $this->semester->id,
             'semester' => $this->semester->semester,
         ];
     }

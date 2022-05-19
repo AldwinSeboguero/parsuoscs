@@ -20,6 +20,10 @@ class OSAS extends JsonResource
             'designee' => $this->designee->name, 
             'campus' => $this->campus->name,
             'semester' => $this->semester->semester,
+            'campus_id' => $this->campus->id,
+            'semester_id' => $this->semester->id,
+            'user_id' => $this->user->id, 
+            'designee_id' => $this->designee->id,
         ];
     }
 }

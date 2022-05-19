@@ -14,7 +14,7 @@ class SemesterController extends Controller
      */
     public function index()
     {
-        return response()->json(['semesters'=> Semester::all()],200);
+        return response()->json(['semesters'=> Semester::orderbyDesc('code')->get()],200);
     }
 
     /**
@@ -27,6 +27,7 @@ class SemesterController extends Controller
         //
     }
 
+   
     /**
      * Store a newly created resource in storage.
      *
@@ -34,8 +35,16 @@ class SemesterController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        //
+    { 
+            
+            $semester = new Semester([
+            'code' => $request->code,
+            'semester' => $request->semester,
+            'from' => $request->from,
+            'to' => $request->to,
+            ]);  
+            $semester->save(); 
+            return response()->json(['semesters'=> Semester::orderByDesc('updated_at')->paginate(10),200]);
     }
 
     /**
@@ -44,12 +53,13 @@ class SemesterController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id,Request $request)
     {
-        //
+      
+ 
     }
 
-    /**
+    /** 
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -69,7 +79,13 @@ class SemesterController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $semester = Semester::find($id);
+        $semester->code= $request->code;  
+        $semester->semester= $request->semester;  
+        $semester->from= $request->from;  
+        $semester->to= $request->to;  
+        $semester->save();  
+        return response()->json(['semester' => $semester],200);
     }
 
     /**
@@ -80,6 +96,7 @@ class SemesterController extends Controller
      */
     public function destroy($id)
     {
-        //
-    }
+        $semester = Semester::find($id)->delete();
+        return response()->json(['semester' => $semester],200);
+    } 
 }

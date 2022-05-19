@@ -1,270 +1,327 @@
 <template>
   <v-sheet>
-   <v-card>
-    <v-container>
-     <v-data-table
-        item-key="id"
-        class="elevation-0"
-        :loading="loading"
-        loading-text="Loading... Please wait"
-        :headers="headers"
-        :page="page + 1"
-        :pageCount="numberOfPages"
-        :items="cashiers.data"
-        :options.sync="options"
-        :server-items-length="totalCashiers"
-        :items-per-page="10" 
-        show-select 
-        :footer-props="{
-          itemsPerPageOptions: [5, 10, 15],
-          itemsPerPageText: 'Cashier Per Page',
-          'show-current-page': true,
-          'show-first-last-page': true,
-        }"
-      >
-      <template v-slot:top>
-        <v-text-field 
-            append-icon="mdi-magnify"
-            label="Search"
-            v-model="searchItem"
-            @input="searchIt"
-          ></v-text-field>
-        <v-toolbar flat color="white">
-          <div class="overline text-h6">
-              Cashier List
-              <span class="font-italic subtitle-2"
-                >(2nd Semester A/Y 2020-2021 )</span
+    <v-card elevation="0">
+      <v-container class="grey lighten-5" fluid>
+        <v-row wrap>
+          <v-col cols="12" lg="4">
+            <v-card>
+              <v-card-text style="padding-bottom: 0">
+                <h1 class="title desplay-2 black--text text--accent3">
+                  <v-icon class="ma-1 pb-2">{{ formIcon }}</v-icon>
+                  {{ formTitle }} Cashier
+                </h1>
+              </v-card-text>
+              <v-list-item three-line>
+                <v-list-item-content>
+                  <div class="text-center pb-3">
+                    <v-form 
+                method="post"
+                lazy-validation
+                v-on:submit.stop.prevent="save"
+                ref="entryForm"
               >
-            </div>
-          <v-spacer></v-spacer>
-
-          <v-dialog v-model="dialog" scrollable max-width="500px">
-           <template v-slot:activator="{ on, attrs }">
-              <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
-                New Cashier
-              </v-btn>
-            </template>
-            
-      <v-card>
-         <v-card-title class="primary white--text">
-                <v-icon class="white--text" style="padding-right: 8px">{{
-                  formIcon
-                }}</v-icon>
-                <span class="headline">{{ formTitle }}</span>
-              </v-card-title>
-        <v-divider></v-divider>
-        <v-card-text style="height: 500px;">
-          <v-form
-                  v-model="valid"
-                  method="post"
-                  v-on:submit.stop.prevent="save"
-                > 
-                    <v-container v-if="editedIndex!=-1">
-                      <v-row>
-                        <v-col cols="12" sm="12">
-                          <v-text-field
-                            v-model="editedItem.cashier_number"
-                            label="Cashier Number"
-                            :rules="[rules.required, rules.min]"
-                          ></v-text-field>
-                        </v-col>
-                        <v-col cols="12" sm="12">
-                          <v-text-field
-                            v-model="editedItem.name"
-                            label="Full Name"
-                            :rules="[rules.required, rules.min]"
-                          ></v-text-field>
-                        </v-col>
-                        <v-col cols="12" sm="12" style="margin: 0">
-                          <v-select
-                            v-model="editedItem.campus_id"
-                            :items="campuses"
-                            item-text="name"
-                            label="Select Campus"
-                            item-value="id" 
-                            color="primary"
-                            @change="campusListener"
-                            :rules="[rules.required]"
-                          ></v-select>
-                        </v-col>
-                        <v-col cols="12" sm="12" style="margin: 0">
-                          <v-select
-                            v-model="editedItem.program_id"
-                            :items="programs"
-                            label="Select Program"
-                             item-value="id"
-                          item-text="name"
-                           @change="programListener"
-                            color="primary"
-                            :rules="[rules.required]"
-                          ></v-select>
-                        </v-col>
-                        <v-col cols="12" sm="12" style="margin: 0">
-                          <v-select
-                            v-model="editedItem.section_id"
-                            :items="sections"
-                            label="Select Section"
-                            item-value="id"
-                            item-text="name"
-                            color="primary"
-                            :rules="[rules.required]"
-                          ></v-select>
-                        </v-col>
-                        <v-col cols="12" sm="12" style="margin: 0">
-                          <v-select
-                            v-model="editedItem.year"
-                            :items="years"
-                            label="Select Year Level"
-                             item-value="id"
-                          item-text="name"
-                            color="primary"
-                            :rules="[rules.required]"
-                          ></v-select>
-                        </v-col>
-                      </v-row>
-                    </v-container> 
+              <v-autocomplete
+                  v-model="editedItem.user_id"
+                  :items="user_staff"
+                  :loading="isLoading"
+                  :search-input.sync="search"
+                  chips
+                  clearable
+                  item-text="user.name"
+                  item-value="user.id"
+                  item-key="user.id" 
+                  label="Search User..."
  
-                    <v-container v-if="editedIndex==-1">
-                      <v-row>
-                        <v-col cols="12" sm="12">
-                          <v-text-field
-                            v-model="editedItem.cashier_number"
-                            label="Cashier Number"
-                            :rules="[rules.required, rules.min]"
-                          ></v-text-field>
-                        </v-col>
-                        <v-col cols="12" sm="12">
-                          <v-text-field
-                            v-model="editedItem.name"
-                            label="Full Name"
-                            :rules="[rules.required, rules.min]"
-                          ></v-text-field>
-                        </v-col>
-                        <v-col cols="12" sm="12" style="margin: 0">
-                          <v-select
-                            v-model="editedItem.campus"
-                            :items="campuses"
-                            label="Select Campus"
-                             item-value="id"
-                              item-text="name"
-                              @change="campusListenerNew"
-                            color="primary"
-                            :rules="[rules.required]"
-                          ></v-select>
-                        </v-col>
-                        <v-col cols="12" sm="12" style="margin: 0">
-                          <v-select
-                            v-model="editedItem.program"
-                            :items="programs"
-                            label="Select Program"
-                             item-value="id"
-                          item-text="name"
-                          @change="programListenerNew"
-                            color="primary"
-                            :rules="[rules.required]"
-                          ></v-select>
-                        </v-col>
-                        <v-col cols="12" sm="12" style="margin: 0">
-                          <v-select
-                            v-model="editedItem.section"
-                            :items="sections"
-                            label="Select Section"
-                             item-value="id"
-                          item-text="name"
-                            color="primary"
-                            :rules="[rules.required]"
-                          ></v-select>
-                        </v-col>
-                        <v-col cols="12" sm="12" style="margin: 0">
-                          <v-select
-                            v-model="editedItem.year"
-                            :items="years"
-                            label="Select Year Level"
-                             item-value="id"
-                          item-text="name"
-                            color="primary"
-                            :rules="[rules.required]"
-                          ></v-select>
-                        </v-col>
-                      </v-row>
-                    </v-container> 
-
                   
-                </v-form>
-        </v-card-text>
-        <v-divider></v-divider>
-       <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn color="blue darken-1" text @click="close">
+                >
+                  <template v-slot:no-data>
+                    <v-list-item>
+                      <v-list-item-title>
+                        Search user
+                        <strong>Staff</strong>
+                      </v-list-item-title>
+                    </v-list-item>
+                  </template>
+                  <template v-slot:selection="{ attr, on, item, selected }">
+                    <v-chip
+                      v-bind="attr"
+                      :input-value="selected"
+                      color="purple"
+                      class="white--text"
+                      v-on="on"
+                    >
+                      <v-icon left>
+                        mdi-badge-account
+                      </v-icon>
+                      <span v-text="item.user.name"></span>
+                    </v-chip>
+                  </template>
+                  <template v-slot:item="{ item }">
+                    <v-list-item-avatar
+                      color="indigo"
+                      class="caption font-weight-light white--text"
+                    >
+                      {{ item.user.name[0]}}
+                    </v-list-item-avatar>
+                    <v-list-item-content>
+                      <v-list-item-title v-text="item.user.name"></v-list-item-title> 
+                    </v-list-item-content> 
+                  </template>
+                </v-autocomplete>
+
+                <v-autocomplete
+                  v-model="editedItem.designee_id"
+                  :items="designations"
+                  :loading="isLoading"
+                  :search-input.sync="searchDesignation"
+                  chips
+                  clearable
+                  item-text="name"
+                  item-value="id"
+                  item-key="id" 
+                  label="Search Designation..."
+ 
+                  
+                >
+                  <template v-slot:no-data>
+                    <v-list-item>
+                      <v-list-item-title>
+                        Search Designation 
+                      </v-list-item-title>
+                    </v-list-item>
+                  </template>
+                  <template v-slot:selection="{ attr, on, item, selected }">
+                    <v-chip
+                      v-bind="attr"
+                      :input-value="selected"
+                      color="purple"
+                      class="white--text"
+                      v-on="on"
+                    > 
+                      <span v-text="item.name"></span>
+                    </v-chip>
+                  </template>
+                  <template v-slot:item="{ item }">
+                    
+                    <v-list-item-content>
+                      <v-list-item-title v-text="item.name"></v-list-item-title> 
+                    </v-list-item-content> 
+                  </template>
+                </v-autocomplete>
+                <v-autocomplete
+                  v-model="editedItem.campus_id"
+                  :items="campuses"
+                  :loading="isLoading"
+                  :search-input.sync="search"
+                  chips
+                  clearable
+                  item-text="name"
+                  item-value="id"
+                  item-key="id" 
+                  label="Search Campus..."
+ 
+                  
+                >
+                  <template v-slot:no-data>
+                    <v-list-item>
+                      <v-list-item-title>
+                        Search Campus 
+                      </v-list-item-title>
+                    </v-list-item>
+                  </template>
+                  <template v-slot:selection="{ attr, on, item, selected }">
+                    <v-chip
+                      v-bind="attr"
+                      :input-value="selected"
+                      color="purple"
+                      class="white--text"
+                      v-on="on"
+                    >
+                       
+                      <span v-text="item.name"></span>
+                    </v-chip>
+                  </template>
+                  <template v-slot:item="{ item }">
+                    
+                    <v-list-item-content>
+                      <v-list-item-title v-text="item.name"></v-list-item-title> 
+                    </v-list-item-content> 
+                  </template>
+                </v-autocomplete>
+               
+                 <v-autocomplete
+                  v-model="editedItem.semester_id"
+                  :items="semesters"
+                  :loading="isLoading"
+                  :search-input.sync="search"
+                  chips
+                  clearable
+                  item-text="semester"
+                  item-value="id"
+                  item-key="id" 
+                  label="Search Semester..."
+ 
+                  
+                >
+                  <template v-slot:no-data>
+                    <v-list-item>
+                      <v-list-item-title>
+                        Search Semester
+                      </v-list-item-title>
+                    </v-list-item>
+                  </template>
+                  <template v-slot:selection="{ attr, on, item, selected }">
+                    <v-chip
+                      v-bind="attr"
+                      :input-value="selected"
+                      color="purple"
+                      class="white--text"
+                      v-on="on"
+                    >
+                       
+                      <span v-text="item.semester"></span>
+                    </v-chip>
+                  </template>
+                  <template v-slot:item="{ item }">
+                    
+                    <v-list-item-content>
+                      <v-list-item-title v-text="item.semester"></v-list-item-title> 
+                    </v-list-item-content> 
+                  </template>
+                </v-autocomplete>
+
+                    <v-divider />
+                  
+                    <v-row class="ma-2 float-right">
+                    <!-- <v-btn color="blue darken-1" text @click="close">
                       Cancel
-                    </v-btn>
+                    </v-btn> -->
                     <v-btn
                       color="blue darken-1"
                       text
-                      type="submit"
-                      :disabled="!valid"
+                      type="submit" 
+                      :disabled="editedItem.name == '' || editedItem.short_name == ''  ? true : false"
                       @click.prevent="save"
                     >
                       Save
                     </v-btn>
-     </v-card-actions>
-      </v-card>
-          </v-dialog>
-        </v-toolbar>
-      </template>
-      <template v-slot:item.id="{ item }">
-      <td>{{cashiers.data.indexOf(item)+1}}</td> 
-    </template>
-       
-      <template v-slot:item.actions="{ item }">
-        <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil </v-icon>
-        <v-icon small class="mr-2" @click="deleteItem(item)">
-          mdi-delete-forever
-        </v-icon>
-      </template> 
-    </v-data-table>
-  <v-snackbar
-      v-model="snackbar" 
-      :color="snackbarColor" 
-      right
-      timeout="5000" 
-      outlined
-     top
-     width="50" 
-    >
-       <v-icon 
-          left
-        >
-          mdi-error
-        </v-icon>{{ text }}
+                  </v-row>
+              </v-form>
+                  </div>
+                </v-list-item-content>
+              </v-list-item>
+            </v-card>
+          </v-col>
+          <v-col cols="12" lg="8">
+            <v-data-table
+              item-key="id"
+              class="elevation-1 pa-6"
+              :loading="loading"
+              loading-text="Loading... Please wait"
+              :headers="headers"
+              :page="page + 1"
+              :pageCount="numberOfPages"
+              :items="cashiers.data"
+              :options.sync="options"
+              :server-items-length="totalCashiers"
+              :items-per-page="5"
+              :footer-props="{
+                itemsPerPageOptions: [5, 10, 15],
+                itemsPerPageText: 'Cashier Per Page',
+                'show-current-page': true,
+                'show-first-last-page': true,
+              }"
+            >
+              <template v-slot:top>
+                <v-text-field
+                  append-icon="mdi-magnify"
+                  label="Search"
+                  v-model="searchItem"
+                  @input="searchIt"
+                ></v-text-field>
+              </template>
 
-      <template v-slot:action="{ attrs }">
-        
-          <v-btn
-        :color="snackbarColor"
-          text
-          v-bind="attrs"
-          @click="snackbar = false"
-      >
-        <v-icon
-          dark
-          left
+              <template v-slot:item.name="{ item }">
+                <v-edit-dialog
+                  large
+                  block
+                  persistent
+                  :return-value.sync="item.name"
+                  @save="updatePD(item)"
+                >
+                  {{ item.name }}
+                  <template v-slot:input>
+                    <h2>Change PD</h2>
+                  </template>
+                  <template v-slot:input>
+                    <v-select
+                      v-model="item.user_id"
+                      :items="user_staff"
+                      label="Select PD"
+                      item-value="user.id"
+                      item-text="user.name"
+                      color="primary"
+                      :rules="[rules.required]"
+                    ></v-select>
+                  </template>
+                </v-edit-dialog>
+              </template>
+              <template v-slot:item.college="{ item }">
+                <span class="text-uppercase">{{ item.college }}</span>
+              </template>
+              <template v-slot:item.actions="{ item }">
+                <v-icon
+                  small
+                  class="mr-2 warning--text"
+                  @click="editItem(item)"
+                >
+                  mdi-pencil
+                </v-icon>
+                <v-icon small class="mr-2 red--text" @click="deleteItem(item)">
+                  mdi-delete-forever
+                </v-icon>
+              </template>
+            </v-data-table>
+          </v-col>
+        </v-row>
+        <v-snackbar
+          v-model="snackbar"
+          :color="snackbarColor"
+          right
+          timeout="5000"
+          outlined
+          top
+          width="50"
         >
-          mdi-close
-        </v-icon>close
-      </v-btn>
-      </template>
-    </v-snackbar>
-    </v-container>
+          <v-icon left> mdi-error </v-icon>{{ text }}
+
+          <template v-slot:action="{ attrs }">
+            <v-btn
+              :color="snackbarColor"
+              text
+              v-bind="attrs"
+              @click="snackbar = false"
+            >
+              <v-icon dark left> mdi-close </v-icon>close
+            </v-btn>
+          </template>
+        </v-snackbar>
+      </v-container>
     </v-card>
   </v-sheet>
 </template>
 <script>
 export default {
   data: () => ({
+      items: [],
+      model: null,
+      search: null,
+      copyDialog: false,
+      tab: null,
     valid: true,
     dialog: false,
     loading: false,
+    isLoading: false,
     snackbar: false,
     selected: [],
     text: "",
@@ -272,12 +329,7 @@ export default {
     error: "", 
     snackbarColor:"",
     searchItem: '',
-    headers: [
-      {
-        text: "No",
-        align: "left",
-        value: "id",
-      },
+    headers: [ 
       { text: "Name", value: "name" }, 
       { text: "Campus", value: "campus" }, 
       { text: "Semester", value: "semester" }, 
@@ -288,9 +340,11 @@ export default {
     numberOfPages: 0,
     options: {},
     cashiers: {},
+    staffs: {},
     campuses: {},
-    sections: {},
-    programs: {},
+    designations: {},
+    semesters: {},
+    user_staff:{},
     years: [1,2,3,4,5], 
     rules: {
       required: (v) => !!v || "This Field is Required",
@@ -299,38 +353,24 @@ export default {
     },
     editedIndex: -1,
     editedItem: {
-      id: "",
-      cashier_number: "",
-      name: "",
-      campus: "",
-      section: "",
-      program: "",
-      campus_id: "",
-      section_id: "",
-      program_id: "",
-      code:"",
-      year: "",
-      created_at: "",
+      id: "", 
+      campus_id: "", 
+      user_id: '',
+      semester_id:'',
+      designee_id:'',
     },
     defaultItem: {
-      id: "",
-      cashier_number: "",
-      name: "",
-      campus: "",
-      section: "",
-      program: "",
-      campus_id: "",
-      section_id: "",
-      program_id: "",
-      code:"",
-      year: "",
-      created_at: "",
+       id: "", 
+      campus_id: "", 
+      user_id: '',
+      semester_id:'',
+      designee_id:'',
     },
   }),
 
   computed: {
     formTitle() {
-      return this.editedIndex === -1 ? "New Item" : "Edit Item";
+      return this.editedIndex === -1 ? "New " : "Edit ";
     },
     formIcon() {
       return this.editedIndex === -1 ? "mdi-plus" : "mdi-pen";
@@ -366,9 +406,10 @@ export default {
           //Then injecting the result to datatable parameters.
           this.loading = false;
          this.cashiers = response.data.cashiers;
+                  this.user_staff = response.data.user_staff;
+         this.designations = response.data.designations;
           this.campuses = response.data.campuses;
-          this.programs = response.data.programs;
-          this.sections = response.data.sections;
+          this.semesters = response.data.semesters;
           this.totalCashiers = response.data.cashiers.total;
           this.numberOfPages = response.data.cashiers.last_page;
         });
@@ -403,6 +444,10 @@ export default {
           .then((res) => {
             this.loading = false;  
             this.cashiers = res.data.cashiers;
+                                     this.user_staff = res.data.user_staff;
+         this.designations = res.data.designations;
+          this.campuses = res.data.campuses;
+          this.semesters = res.data.semesters; 
             this.totalCashiers = res.data.cashiers.total;
             this.numberOfPages = res.data.cashiers.last_page;
           })
