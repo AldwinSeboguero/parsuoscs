@@ -20,7 +20,12 @@ import VueAxios from 'vue-axios'
 import VueSocialauth from 'vue-social-auth'
 import Clipboard from 'v-clipboard'
 import VueParticlesBg from "particles-bg-vue";
+import VueCompositionAPI from '@vue/composition-api'
+import VueApexCharts from 'vue-apexcharts'
+Vue.use(VueApexCharts)
 
+Vue.component('apexchart', VueApexCharts)
+Vue.use(VueCompositionAPI)
 Vue.use(Clipboard)
 Vue.use(VueAxios, axios)
 Vue.use(VueParticlesBg);

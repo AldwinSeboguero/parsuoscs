@@ -1,5 +1,124 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([["/js/app"],{
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/charts/ApexBarChart.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/charts/ApexBarChart.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _vue_composition_api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @vue/composition-api */ "./node_modules/@vue/composition-api/dist/vue-composition-api.mjs");
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(_vue_composition_api__WEBPACK_IMPORTED_MODULE_0__["defineComponent"])({
+  props: {
+    datas: Array,
+    pendingR: Array
+  },
+  data: function data() {
+    var _value, _chartOptions;
+
+    console.log(this.pendingR);
+    return {
+      series: this.datas,
+      chartOptions: (_chartOptions = {
+        stroke: {
+          // show: false,
+          curve: 'smooth',
+          lineCap: 'butt',
+          width: 8
+        },
+        states: {
+          hover: {
+            filter: {
+              type: 'none'
+            }
+          }
+        },
+        colors: ['#2E7D32', 'rgba(255,180,0,1)'],
+        legend: {
+          fontSize: '14px',
+          fontFamily: 'Helvetica, Arial',
+          fontWeight: 400,
+          itemMargin: {// vertical: 10
+          },
+          formatter: function formatter(seriesName, opts) {
+            return '<div class="legend-info">' + '<span>1' + opts.w.globals.series[opts.seriesIndex] + '</span>' + '<span>' + seriesName + '</span>' + '</div>';
+          }
+        },
+        tooltip: {
+          enabled: true,
+          style: {
+            fontSize: '20px',
+            fontFamily: undefined
+          },
+          y: {
+            formatter: function formatter(value) {
+              return Number(value).toLocaleString();
+            }
+          }
+        },
+        dataLabels: {
+          enabled: false
+        },
+        labels: ['Approved', 'Pending']
+      }, _defineProperty(_chartOptions, "legend", {
+        show: false
+      }), _defineProperty(_chartOptions, "plotOptions", {
+        pie: {
+          donut: {
+            labels: {
+              show: true,
+              name: {
+                show: true,
+                fontSize: '32px',
+                fontFamily: 'Roboto,sans-serif',
+                color: '#dfsda',
+                offsetY: 24
+              },
+              total: {
+                show: true,
+                fontFamily: 'Roboto,sans-serif',
+                label: 'Total',
+                color: '#424242',
+                fontSize: '18px',
+                fontWeight: 50,
+                offsetY: 16,
+                formatter: function formatter(w) {
+                  return Number(w.globals.seriesTotals.reduce(function (a, b) {
+                    return a + b;
+                  }, 0)).toLocaleString();
+                }
+              },
+              value: (_value = {
+                show: true,
+                fontSize: '32px',
+                fontWeight: 600,
+                fontFamily: 'Helvetica, Arial, sans-serif',
+                color: "#424242"
+              }, _defineProperty(_value, "fontFamily", 'Roboto,sans-serif'), _defineProperty(_value, "offsetY", -20), _defineProperty(_value, "formatter", function formatter(val) {
+                return Number(val).toLocaleString();
+              }), _value)
+            }
+          }
+        }
+      }), _chartOptions)
+    };
+  },
+  setup: function setup() {}
+}));
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ActiveClearanceComponent.vue?vue&type=script&lang=js&":
 /*!***********************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ActiveClearanceComponent.vue?vue&type=script&lang=js& ***!
@@ -9,782 +128,16 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var jspdf__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jspdf */ "./node_modules/jspdf/dist/jspdf.es.min.js");
-/* harmony import */ var jspdf_autotable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! jspdf-autotable */ "./node_modules/jspdf-autotable/dist/jspdf.plugin.autotable.js");
-/* harmony import */ var jspdf_autotable__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(jspdf_autotable__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _shared_table_OSCSActiveClearanceEnrollmentTable_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./../shared/table/OSCSActiveClearanceEnrollmentTable.vue */ "./resources/js/shared/table/OSCSActiveClearanceEnrollmentTable.vue");
 //
 //
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
-      valid: true,
-      stad: null,
-      purposeVal: null,
-      dialog: false,
-      submittedClearance: '',
-      staffRegistrar_id: 0,
-      deficiencydialog: false,
-      loading: false,
-      snackbar: false,
-      selected: [],
-      text: "",
-      success: "",
-      error: "",
-      student_type: "",
-      deficiency_designee: "",
-      headers: [{
-        text: "Office",
-        value: "office"
-      }, {
-        text: "Designee",
-        value: "designee"
-      }, {
-        text: "Status",
-        value: "status"
-      }, {
-        text: "Action",
-        value: "actions"
-      }],
-      deficiencyheaders: [{
-        text: "Deficiency",
-        value: "title"
-      }, {
-        text: "Note",
-        value: "note"
-      }, {
-        text: "Status",
-        value: "completed"
-      }],
-      clearanceStatus: "0",
-      clearances: [],
-      clearance: {},
-      student: {},
-      deficiencies: [],
-      deficiencySignatory: "",
-      activeClearancePurpose: "",
-      editedIndex: -1,
-      editedItem: {
-        id: "",
-        token: "",
-        name: "",
-        student_number: "",
-        program: "",
-        purpose: ""
-      },
-      submitRequestItem: {
-        office: "",
-        designee: "",
-        status: "",
-        data_approved: "",
-        deficiencyCount: "",
-        clearanceRequestCount: "",
-        staff_id: ""
-      },
-      defaultItem: {
-        id: "",
-        token: "",
-        name: "",
-        student_number: "",
-        program: "",
-        purpose: ""
-      },
-      heading: "Sample PDF Generator",
-      moreText: ["This is another few sentences of text to look at it.", "Just testing the paragraphs to see how they format.", "jsPDF likes arrays for sentences.", "Do paragraphs wrap properly?", "Yes, they do!", "What does it look like?", "Not bad at all."],
-      items: [{
-        title: "Item 1",
-        body: "I am item 1 body text"
-      }, {
-        title: "Item 2",
-        body: "I am item 2 body text"
-      }, {
-        title: "Item 3",
-        body: "I am item 3 body text"
-      }, {
-        title: "Item 4",
-        body: "I am item 4 body text"
-      }]
-    };
-  },
-  computed: {},
-  watch: {
-    dialog: function dialog(val) {
-      val || this.close();
-    }
-  },
-  created: function created() {
-    this.initialize();
-  },
-  methods: {
-    submitClearance: function submitClearance() {
-      var _this = this;
-
-      axios.post("/api/v1/submitClearance", {
-        clearance_id: this.clearance.id,
-        staff_id: this.staffRegistrar_id
-      }).then(function (res) {
-        _this.submittedClearance = res.data.submittedClearance;
-      })["catch"](function (err) {
-        console.error(err);
-      });
-    },
-    generatePDF: function generatePDF() {
-      var _this2 = this;
-
-      axios.get('/api/v1/pdf-create', {
-        responseType: 'blob',
-        params: {
-          'clearance': this.clearance.id
-        }
-      }).then(function (response) {
-        var fileURL = window.URL.createObjectURL(new Blob([response.data], {
-          type: 'application/pdf'
-        }));
-        var fileLink = document.createElement('a');
-        fileLink.href = fileURL;
-        fileLink.setAttribute('download', _this2.student.name + _this2.clearance.id + '.pdf');
-        document.body.appendChild(fileLink);
-        fileLink.click();
-      }); // const columns = [
-      //   { title: "Office", dataKey: "office" },
-      // { title: "Designee", dataKey: "designee" },
-      // { title: "Date Approved", dataKey: "data_approved" },
-      // ];
-      // const doc = new jspdf({
-      //   orientation: "portrait",
-      //   unit: "in",
-      //   format: "letter"
-      // });
-      // // text is placed using x, y coordinates
-      // doc.setFontSize(16).text(this.heading, 0.5, 1.0);
-      // // create a line under heading 
-      // doc.setLineWidth(0.01).line(0.5, 1.1, 8.0, 1.1);
-      // // Using autoTable plugin
-      // doc.autoTable({
-      //    headStyles: { fillColor: [0, 0, 0] }, 
-      //   columns,
-      //   body: this.clearances,
-      //   margin: { left: 0.5, top: 1.25 }
-      // });
-      // // Using array of sentences
-      // // doc
-      // //   .setFont("helvetica")
-      // //   .setFontSize(12)
-      // //   .text(this.moreText, 0.5, 3.5, { align: "left", maxWidth: "7.5" });
-      // // Creating footer and saving file
-      // doc
-      //   .setTextColor(0, 0, 255)
-      //   .text(
-      //     "This is a simple footer located .5 inches from page bottom",
-      //     0.5,
-      //     doc.internal.pageSize.height - 0.5
-      //   )
-      //   .save(`${this.activeClearancePurpose}.pdf`);
-    },
-    viewDeficiency: function viewDeficiency(item) {
-      this.deficiencydialog = true;
-      this.deficiency_designee = item.designee;
-      this.deficiencies = Object.assign({}, item.deficiency);
-      console.log(item);
-    },
-    initialize: function initialize() {
-      var _this3 = this;
-
-      axios.interceptors.request.use(function (config) {
-        _this3.loading = true;
-        return config;
-      }, function (error) {
-        _this3.loading = false;
-        return Promise.reject(error);
-      });
-      axios.interceptors.response.use(function (response) {
-        _this3.loading = false;
-        return response;
-      }, function (error) {
-        _this3.loading = false;
-        return Promise.reject(error);
-      });
-      axios.get("/api/v1/activeClearance").then(function (res) {
-        _this3.purposeVal = 1;
-        console.log(res.data.approvedDateclearanceRequestSTCOUNCIL);
-        _this3.stad = res.data.stad;
-        _this3.student = res.data.student;
-        _this3.activeClearancePurpose = res.data.activeClearancePurpose;
-        _this3.clearance = res.data.clearance;
-        _this3.submittedClearance = res.data.submittedClearance;
-        _this3.staffRegistrar_id = res.data.staffIdREGISTRARSTAFF;
-        console.log(_this3.clearance.cashier);
-
-        if (res.data.student_type == "Laboratory High School") {
-          _this3.clearances = [{
-            office: "Adviser",
-            designee: res.data.signatoryNameclearanceRequestADVISER ? res.data.signatoryNameclearanceRequestADVISER.name : null,
-            status: res.data.clearance.class_adviser,
-            data_approved: res.data.approvedDateclearanceRequestADVISER,
-            deficiencyCount: res.data.countDeficiencyADVISER,
-            deficiency: res.data.deficiencyADVISER,
-            clearanceRequestCount: res.data.countClearanceRequestADVISER ? 1 : 0,
-            staff_id: res.data.staffIdADVISER
-          }, {
-            office: "Principal",
-            designee: res.data.signatoryNameclearanceRequestPRINCIPAL ? res.data.signatoryNameclearanceRequestPRINCIPAL.name : null,
-            status: res.data.clearance.class_adviser == 0 ? 2 : res.data.clearance.principal,
-            data_approved: res.data.approvedDateclearanceRequestPRINCIPAL,
-            deficiencyCount: res.data.countDeficiencyPRINCIPAL,
-            deficiency: res.data.deficiencyPRINCIPAL,
-            clearanceRequestCount: res.data.countClearanceRequestPRINCIPAL ? 1 : 0,
-            staff_id: res.data.staffIdPRINCIPAL
-          }];
-        } else {
-          _this3.clearances = [{
-            office: "Student Council",
-            designee: res.data.signatoryNameclearanceRequestSTCOUNCIL ? res.data.signatoryNameclearanceRequestSTCOUNCIL.name : null,
-            status: res.data.clearance.student_council,
-            data_approved: res.data.approvedDateclearanceRequestSTCOUNCIL,
-            deficiencyCount: res.data.countDeficiencySTCOUNCIL,
-            deficiency: res.data.deficiencySTCOUNCIL,
-            clearanceRequestCount: res.data.countClearanceRequestSTCOUNCIL ? 1 : 0,
-            staff_id: res.data.staffIdSTCOUNCIL
-          }, {
-            office: "Registrar Staff",
-            designee: res.data.signatoryNameclearanceRequestREGISTRARSTAFF ? res.data.signatoryNameclearanceRequestREGISTRARSTAFF.name : null,
-            status: res.data.clearance.registrar,
-            data_approved: res.data.approvedDateclearanceRequestREGISTRARSTAFF ? res.data.approvedDateclearanceRequestREGISTRARSTAFF : res.data.approvedDateclearanceRequestREGISTRAR,
-            deficiencyCount: res.data.countDeficiencyREGISTRARSTAFF,
-            deficiency: res.data.deficiencyREGISTRARSTAFF,
-            clearanceRequestCount: res.data.countClearanceRequestREGISTRARSTAFF ? 1 : 0,
-            staff_id: res.data.staffIdREGISTRARSTAFF
-          }, {
-            office: "Cashier",
-            designee: res.data.signatoryNameclearanceRequestCASHIER ? res.data.signatoryNameclearanceRequestCASHIER.name : null,
-            status: res.data.clearance.registrar == 0 ? 2 : res.data.clearance.cashier,
-            data_approved: res.data.approvedDateclearanceRequestCASHIER,
-            deficiencyCount: res.data.countDeficiencyCASHIER,
-            deficiency: res.data.deficiencyCASHIER,
-            clearanceRequestCount: res.data.countClearanceRequestCASHIER,
-            staff_id: res.data.staffIdCASHIER
-          }, {
-            office: "Library",
-            designee: res.data.signatoryNameclearanceRequestLIBRARY ? res.data.signatoryNameclearanceRequestLIBRARY.name : null,
-            status: res.data.clearance.student_council == 0 ? 2 : res.data.clearance.library,
-            data_approved: res.data.approvedDateclearanceRequestLIBRARY,
-            deficiencyCount: res.data.countDeficiencyLIBRARY,
-            deficiency: res.data.deficiencyLIBRARY,
-            clearanceRequestCount: res.data.countClearanceRequestLIBRARY,
-            staff_id: res.data.staffIdLIBRARY
-          }, {
-            office: "OSAS",
-            designee: res.data.signatoryNameclearanceRequestOSAS ? res.data.signatoryNameclearanceRequestOSAS.name : null,
-            status: res.data.clearance.student_council == 0 ? 2 : res.data.clearance.osas,
-            data_approved: res.data.approvedDateclearanceRequestOSAS,
-            deficiencyCount: res.data.countDeficiencyOSAS,
-            deficiency: res.data.deficiencyOSAS,
-            clearanceRequestCount: res.data.countClearanceRequestOSAS,
-            staff_id: res.data.staffIdOSAS
-          }, {
-            office: "Program Director",
-            designee: res.data.signatoryNameclearanceRequestPROGRAMDIRECTOR ? res.data.signatoryNameclearanceRequestPROGRAMDIRECTOR.name : null,
-            status: res.data.clearance.student_council == 0 ? 2 : res.data.clearance.program_director,
-            data_approved: res.data.approvedDateclearanceRequestPROGRAMDIRECTOR,
-            deficiencyCount: res.data.countDeficiencyPD,
-            deficiency: res.data.deficiencyPD,
-            clearanceRequestCount: res.data.countClearanceRequestPD ? 1 : 0,
-            staff_id: res.data.staffIdPD
-          }, {
-            office: "Dean",
-            designee: res.data.signatoryNameclearanceRequestDEAN ? res.data.signatoryNameclearanceRequestDEAN.name : null,
-            status: res.data.clearance.program_director == 0 ? 2 : res.data.clearance.college_deaan,
-            data_approved: res.data.approvedDateclearanceRequestDEAN,
-            deficiencyCount: res.data.countDeficiencyDEAN,
-            deficiency: res.data.deficiencyDEAN,
-            clearanceRequestCount: res.data.countClearanceRequestDEAN ? 1 : 0,
-            staff_id: res.data.staffIdDEAN
-          }];
-        }
-      })["catch"](function (err) {
-        console.error(err.response.data.purpose);
-
-        if (err.response.data.purpose == '0') {
-          _this3.purposeVal = 0;
-        }
-      });
-    },
-    sendRequest: function sendRequest(item) {
-      var _this4 = this;
-
-      this.submitRequestItem = Object.assign({}, item);
-      console.log(this.submitRequestItem);
-      axios.post("/api/v1/sendRequest", this.submitRequestItem).then(function (res) {
-        console.log(res.data.approvedDateclearanceRequestSTCOUNCIL);
-        _this4.stad = res.data.stad;
-        _this4.submittedClearance = res.data.submittedClearance;
-        _this4.staffRegistrar_id = res.data.staffIdREGISTRARSTAFF; // this.activeClearancePurpose = res.data.activeClearancePurpose;
-
-        _this4.clearance = res.data.clearance;
-
-        if (res.data.student_type == "Laboratory High School") {
-          _this4.clearances = [{
-            office: "Adviser",
-            designee: res.data.signatoryNameclearanceRequestADVISER ? res.data.signatoryNameclearanceRequestADVISER.name : null,
-            status: res.data.clearance.class_adviser,
-            data_approved: res.data.approvedDateclearanceRequestADVISER,
-            deficiencyCount: res.data.countDeficiencyADVISER,
-            deficiency: res.data.deficiencyADVISER,
-            clearanceRequestCount: res.data.countClearanceRequestADVISER ? 1 : 0,
-            staff_id: res.data.staffIdADVISER
-          }, {
-            office: "Principal",
-            designee: res.data.signatoryNameclearanceRequestPRINCIPAL ? res.data.signatoryNameclearanceRequestPRINCIPAL.name : null,
-            status: res.data.clearance.class_adviser == 0 ? 2 : res.data.clearance.principal,
-            data_approved: res.data.approvedDateclearanceRequestPRINCIPAL,
-            deficiencyCount: res.data.countDeficiencyPRINCIPAL,
-            deficiency: res.data.deficiencyPRINCIPAL,
-            clearanceRequestCount: res.data.countClearanceRequestPRINCIPAL ? 1 : 0,
-            staff_id: res.data.staffIdPRINCIPAL
-          }];
-        } else {
-          _this4.clearances = [{
-            office: "Student Council",
-            designee: res.data.signatoryNameclearanceRequestSTCOUNCIL ? res.data.signatoryNameclearanceRequestSTCOUNCIL.name : null,
-            status: res.data.clearance.student_council,
-            data_approved: res.data.approvedDateclearanceRequestSTCOUNCIL,
-            deficiencyCount: res.data.countDeficiencySTCOUNCIL,
-            deficiency: res.data.deficiencySTCOUNCIL,
-            clearanceRequestCount: res.data.countClearanceRequestSTCOUNCIL ? 1 : 0,
-            staff_id: res.data.staffIdSTCOUNCIL
-          }, {
-            office: "Registrar Staff",
-            designee: res.data.signatoryNameclearanceRequestREGISTRARSTAFF ? res.data.signatoryNameclearanceRequestREGISTRARSTAFF.name : null,
-            status: res.data.clearance.registrar,
-            data_approved: res.data.approvedDateclearanceRequestREGISTRARSTAFF ? res.data.approvedDateclearanceRequestREGISTRARSTAFF : res.data.approvedDateclearanceRequestREGISTRAR,
-            deficiencyCount: res.data.countDeficiencyREGISTRARSTAFF,
-            deficiency: res.data.deficiencyREGISTRARSTAFF,
-            clearanceRequestCount: res.data.countClearanceRequestREGISTRARSTAFF ? 1 : 0,
-            staff_id: res.data.staffIdREGISTRARSTAFF
-          }, {
-            office: "Cashier",
-            designee: res.data.signatoryNameclearanceRequestCASHIER ? res.data.signatoryNameclearanceRequestCASHIER.name : null,
-            status: res.data.clearance.registrar == 0 ? 2 : res.data.clearance.cashier,
-            data_approved: res.data.approvedDateclearanceRequestCASHIER,
-            deficiencyCount: res.data.countDeficiencyCASHIER,
-            deficiency: res.data.deficiencyCASHIER,
-            clearanceRequestCount: res.data.countClearanceRequestCASHIER,
-            staff_id: res.data.staffIdCASHIER
-          }, {
-            office: "Library",
-            designee: res.data.signatoryNameclearanceRequestLIBRARY ? res.data.signatoryNameclearanceRequestLIBRARY.name : null,
-            status: res.data.clearance.student_council == 0 ? 2 : res.data.clearance.library,
-            data_approved: res.data.approvedDateclearanceRequestLIBRARY,
-            deficiencyCount: res.data.countDeficiencyLIBRARY,
-            deficiency: res.data.deficiencyLIBRARY,
-            clearanceRequestCount: res.data.countClearanceRequestLIBRARY,
-            staff_id: res.data.staffIdLIBRARY
-          }, {
-            office: "OSAS",
-            designee: res.data.signatoryNameclearanceRequestOSAS ? res.data.signatoryNameclearanceRequestOSAS.name : null,
-            status: res.data.clearance.student_council == 0 ? 2 : res.data.clearance.osas,
-            data_approved: res.data.approvedDateclearanceRequestOSAS,
-            deficiencyCount: res.data.countDeficiencyOSAS,
-            deficiency: res.data.deficiencyOSAS,
-            clearanceRequestCount: res.data.countClearanceRequestOSAS,
-            staff_id: res.data.staffIdOSAS
-          }, {
-            office: "Program Director",
-            designee: res.data.signatoryNameclearanceRequestPROGRAMDIRECTOR ? res.data.signatoryNameclearanceRequestPROGRAMDIRECTOR.name : null,
-            status: res.data.clearance.student_council == 0 ? 2 : res.data.clearance.program_director,
-            data_approved: res.data.approvedDateclearanceRequestPROGRAMDIRECTOR,
-            deficiencyCount: res.data.countDeficiencyPD,
-            deficiency: res.data.deficiencyPD,
-            clearanceRequestCount: res.data.countClearanceRequestPD ? 1 : 0,
-            staff_id: res.data.staffIdPD
-          }, {
-            office: "Dean",
-            designee: res.data.signatoryNameclearanceRequestDEAN ? res.data.signatoryNameclearanceRequestDEAN.name : null,
-            status: res.data.clearance.program_director == 0 ? 2 : res.data.clearance.college_deaan,
-            data_approved: res.data.approvedDateclearanceRequestDEAN,
-            deficiencyCount: res.data.countDeficiencyDEAN,
-            deficiency: res.data.deficiencyDEAN,
-            clearanceRequestCount: res.data.countClearanceRequestDEAN ? 1 : 0,
-            staff_id: res.data.staffIdDEAN
-          }];
-        }
-      })["catch"](function (err) {
-        console.error(err);
-      });
-    },
-    editItem: function editItem(item) {
-      this.editedIndex = this.clearances.data.indexOf(item);
-      this.editedItem = Object.assign({}, item);
-      this.dialog = true;
-    },
-    deleteItem: function deleteItem(item) {
-      var _this5 = this;
-
-      var index = this.clearances.data.indexOf(item);
-      var decide = confirm("Are you sure you want to delete this item?");
-
-      if (decide) {
-        axios["delete"]("/api/clearancerequests/" + item.id).then(function (res) {
-          _this5.text = "Record Deleted Successfully!";
-          _this5.snackbar = true;
-
-          _this5.clearancerequests.data.splice(index, 1);
-        })["catch"](function (err) {
-          console.log(err.response);
-          _this5.text = "Error Deleting Record";
-          _this5.snackbar = true;
-        });
-      }
-    },
-    close: function close() {
-      var _this6 = this;
-
-      this.dialog = false;
-      setTimeout(function () {
-        _this6.editedItem = Object.assign({}, _this6.defaultItem);
-        _this6.editedIndex = -1;
-      }, 300);
-    },
-    save: function save() {
-      var _this7 = this;
-
-      if (this.editedIndex > -1) {
-        var index = this.editedIndex;
-        axios.put("/api/clearancerequests/" + this.editedItem.id, this.editedItem).then(function (res) {
-          _this7.text = "Record Updated Successfully!";
-          _this7.snackbar = true;
-          Object.assign(_this7.clearances.data[index], res.data.clearancerequests);
-        })["catch"](function (err) {
-          console.log(err.response);
-          _this7.text = "Error Updating Record";
-          _this7.snackbar = true;
-        });
-      }
-
-      this.close();
-    }
+  components: {
+    OSCSACctiveClearaneTable: _shared_table_OSCSActiveClearanceEnrollmentTable_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   }
 });
 
@@ -2387,6 +1740,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -2730,6 +2088,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2959,6 +2336,25 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3947,6 +3343,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -3964,15 +3366,6 @@ __webpack_require__.r(__webpack_exports__);
         align: "left",
         value: "id"
       }, {
-        text: "Student Number",
-        value: "student_number"
-      }, {
-        text: "Name",
-        value: "student_name"
-      }, {
-        text: "Completed",
-        value: "completed"
-      }, {
         text: "Deficiency",
         value: "deficiency"
       }, {
@@ -3981,6 +3374,9 @@ __webpack_require__.r(__webpack_exports__);
       }, {
         text: "Staff",
         value: "staff"
+      }, {
+        text: "Completed",
+        value: "completed"
       }],
       page: 0,
       totaldeficiencies: 0,
@@ -7214,7 +6610,8 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-var _data$created$methods;
+/* harmony import */ var _charts_ApexBarChart_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../charts/ApexBarChart.vue */ "./resources/js/charts/ApexBarChart.vue");
+var _components$props$dat;
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
@@ -7411,6 +6808,54 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var gradients = [["#222"], ["#42b3f4"], ["red", "orange", "yellow"], ["purple", "violet"], ["#42b3f4", "#42b3f4", "#42b3f4"], ["#42b3f4", "#42b3f4", "#42b3f4"]];
 
 var exhale = function exhale(ms) {
@@ -7419,7 +6864,15 @@ var exhale = function exhale(ms) {
   });
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (_data$created$methods = {
+
+/* harmony default export */ __webpack_exports__["default"] = (_components$props$dat = {
+  components: {
+    Apex: _charts_ApexBarChart_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  props: {
+    approved: 0,
+    pending: 0
+  },
   data: function data() {
     return {
       apexBar1: {
@@ -7622,24 +7075,43 @@ var exhale = function exhale(ms) {
       val || this.close();
     }
   }
-}, _defineProperty(_data$created$methods, "created", function created() {
-  this.initialize();
-}), _defineProperty(_data$created$methods, "methods", {
+}, _defineProperty(_components$props$dat, "created", function created() {
+  var _this2 = this;
+
+  return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            _context2.next = 2;
+            return _this2.initialize();
+
+          case 2:
+            _this2.pendingRequest = 100;
+
+          case 3:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, _callee2);
+  }))();
+}), _defineProperty(_components$props$dat, "methods", {
   initialize: function initialize() {
-    var _this2 = this;
+    var _this3 = this;
 
     this.colleges = [], axios.interceptors.request.use(function (config) {
-      _this2.loading = true;
+      _this3.loading = true;
       return config;
     }, function (error) {
-      _this2.loading = false;
+      _this3.loading = false;
       return Promise.reject(error);
     });
     axios.interceptors.response.use(function (response) {
-      _this2.loading = false;
+      _this3.loading = false;
       return response;
     }, function (error) {
-      _this2.loading = false;
+      _this3.loading = false;
       return Promise.reject(error);
     });
     axios.get("/api/v1/colleges", {}).then(function (res) {// this.colleges = res.data.colleges
@@ -7648,17 +7120,17 @@ var exhale = function exhale(ms) {
     });
     axios.get("/api/v1/admindashboard", {}).then(function (res) {
       console.dir(res.completed);
-      _this2.completed = res.data.completed;
-      _this2.totalStudent = res.data.totalStudent;
-      _this2.approvedRequest = res.data.approvedRequest;
-      _this2.pendingRequest = res.data.pendingRequest;
-      _this2.totalClearanceRequest = res.data.totalClearanceRequest;
-      _this2.semester = res.data.semester;
-      _this2.totalActivatedAccount = res.data.totalActivatedAccount;
-      _this2.totalStudent = res.data.totalStudent;
-      _this2.stats = [{
+      _this3.completed = res.data.completed;
+      _this3.totalStudent = res.data.totalStudent;
+      _this3.approvedRequest = res.data.approvedRequest;
+      _this3.pendingRequest = res.data.pendingRequest;
+      _this3.totalClearanceRequest = res.data.totalClearanceRequest;
+      _this3.semester = res.data.semester;
+      _this3.totalActivatedAccount = res.data.totalActivatedAccount;
+      _this3.totalStudent = res.data.totalStudent;
+      _this3.stats = [{
         name: "Total Students",
-        total: _this2.totalStudent
+        total: _this3.totalStudent
       }, {
         name: "Active Account(s)",
         total: res.data.totalActivatedAccount
@@ -7676,7 +7148,7 @@ var exhale = function exhale(ms) {
       console.error(err);
     });
   }
-}), _data$created$methods);
+}), _components$props$dat);
 
 /***/ }),
 
@@ -18010,15 +17482,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     var _ref;
@@ -22222,6 +21685,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -22454,6 +21936,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var lodash_debounce__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash/debounce */ "./node_modules/lodash/debounce.js");
+/* harmony import */ var lodash_debounce__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash_debounce__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -22634,6 +22118,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -22649,7 +22135,7 @@ __webpack_require__.r(__webpack_exports__);
       searchItem: '',
       snackbarColor: "",
       headers: [{
-        text: "No",
+        text: "#",
         align: "left",
         value: "id"
       }, {
@@ -22715,6 +22201,27 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {},
   watch: {
+    searchItem: lodash_debounce__WEBPACK_IMPORTED_MODULE_0___default()(function (val) {
+      var _this = this;
+
+      this.loading = true;
+      var _this$options = this.options,
+          page = _this$options.page,
+          itemsPerPage = _this$options.itemsPerPage;
+      var pageNumber = page;
+      axios.get("/api/v1/clearance-requests?page=" + pageNumber, {
+        params: {
+          'per_page': itemsPerPage,
+          'search': val
+        }
+      }).then(function (response) {
+        //Then injecting the result to datatable parameters.
+        _this.clearancerequests = response.data.clearance_requests;
+        _this.totalclearancerequests = response.data.clearance_requests.total;
+        _this.numberOfPages = response.data.clearance_requests.last_page;
+        _this.loading = false;
+      });
+    }, 300),
     dialog: function dialog(val) {
       val || this.close();
     },
@@ -22729,79 +22236,89 @@ __webpack_require__.r(__webpack_exports__);
     this.initialize();
   },
   methods: {
+    clean: function clean($val) {
+      if ($val) {
+        $val = $val.replace(/ +(?= )/g, "");
+        $val = $val.replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, " "); // Replaces all spaces with hyphens.
+
+        $val = $val.replace(/ +(?= )/g, "");
+        return $val;
+      } // Removes special chars.
+
+    },
     readDataFromAPI: function readDataFromAPI() {
-      var _this = this;
+      var _this2 = this;
 
       this.loading = true;
-      var _this$options = this.options,
-          page = _this$options.page,
-          itemsPerPage = _this$options.itemsPerPage;
+      var _this$options2 = this.options,
+          page = _this$options2.page,
+          itemsPerPage = _this$options2.itemsPerPage;
       var pageNumber = page;
-      axios.get("/api/v1/clearancerequests?page=" + pageNumber, {
+      axios.get("/api/v1/clearance-requests?page=" + pageNumber, {
         params: {
           'per_page': itemsPerPage
         }
       }).then(function (response) {
         //Then injecting the result to datatable parameters.
-        _this.loading = false;
-        _this.clearancerequests = response.data.clearancerequests;
-        _this.totalclearancerequests = response.data.clearancerequests.total;
-        _this.numberOfPages = response.data.clearancerequests.last_page;
+        _this2.loading = false;
+        _this2.clearancerequests = response.data.clearance_requests;
+        _this2.totalclearancerequests = response.data.clearance_requests.total;
+        _this2.numberOfPages = response.data.clearance_requests.last_page;
       });
     },
     searchIt: function searchIt(d) {
-      var _this2 = this;
+      var _this3 = this;
 
-      var _this$options2 = this.options,
-          page = _this$options2.page,
-          itemsPerPage = _this$options2.itemsPerPage;
+      var _this$options3 = this.options,
+          page = _this$options3.page,
+          itemsPerPage = _this$options3.itemsPerPage;
       var pageNumber = page;
 
       if (d.length > 2) {
-        axios.get("/api/v1/clearancerequests/".concat(d, "?page=") + pageNumber, {
+        axios.get("/api/v1/clearance-requests/".concat(d, "?page=") + pageNumber, {
           params: {
             'per_page': itemsPerPage
           }
         }).then(function (res) {
-          _this2.loading = false;
-          _this2.clearancerequests = res.data.clearancerequests;
-          _this2.totalclearancerequests = res.data.clearancerequests.total;
-          _this2.numberOfPages = res.data.clearancerequests.last_page;
+          _this3.loading = false;
+          _this3.clearancerequests = res.data.clearance_requests;
+          _this3.totalclearancerequests = res.data.clearance_requests.total;
+          _this3.numberOfPages = res.data.clearance_requests.last_page;
         })["catch"](function (err) {
           console.error(err);
         });
       }
 
       if (d.length <= 0) {
-        axios.get("/api/v1/clearancerequests?page=" + pageNumber, {
+        axios.get("/api/v1/clearance-requests?page=" + pageNumber, {
           params: {
             'per_page': d.itemsPerPage
           }
         }).then(function (res) {
-          _this2.loading = false;
-          _this2.clearancerequests = res.data.clearancerequests;
-          _this2.totalclearancerequests = res.data.clearancerequests.total;
-          _this2.numberOfPages = res.data.clearancerequests.last_page;
+          _this3.loading = false;
+          _this3.clearancerequests = res.data.clearance_requests;
+          _this3.totalclearancerequests = res.data.clearance_requests.total;
+          _this3.numberOfPages = res.data.clearance_requests.last_page;
         })["catch"](function (err) {
           console.error(err);
         });
       }
     },
     initialize: function initialize() {
-      var _this3 = this;
+      var _this4 = this;
 
       axios.interceptors.request.use(function (config) {
-        _this3.loading = true;
+        _this4.loading = true;
         return config;
       }, function (error) {
-        _this3.loading = false;
+        _this4.loading = false;
         return Promise.reject(error);
       });
       axios.interceptors.response.use(function (response) {
-        _this3.loading = false;
+        _this4.loading = false;
         return response;
       }, function (error) {
-        _this3.loading = false;
+        _this4.loading = false;
         return Promise.reject(error);
       });
     },
@@ -22813,48 +22330,45 @@ __webpack_require__.r(__webpack_exports__);
       this.dialog = true;
     },
     deleteItem: function deleteItem(item) {
-      var _this4 = this;
+      var _this5 = this;
 
       var index = this.clearancerequests.data.indexOf(item);
       var decide = confirm("Are you sure you want to delete this item?");
 
       if (decide) {
         axios["delete"]("/api/v1/clearancerequests/" + item.id).then(function (res) {
-          _this4.text = "Record Deleted Successfully!";
-          _this4.snackbarColor = "primary darken-1";
-          _this4.snackbar = true;
+          _this5.text = "Record Deleted Successfully!";
+          _this5.snackbarColor = "primary darken-1";
+          _this5.snackbar = true;
 
-          _this4.clearancerequests.data.splice(index, 1);
+          _this5.clearancerequests.data.splice(index, 1);
         })["catch"](function (err) {
           console.log(err.response);
-          _this4.text = "Error Deleting Record";
-          _this4.snackbarColor = "error darken-1";
-          _this4.snackbar = true;
+          _this5.text = "Error Deleting Record";
+          _this5.snackbarColor = "error darken-1";
+          _this5.snackbar = true;
         });
       }
     },
     approve: function approve() {
-      var _this5 = this;
+      var _this6 = this;
 
-      // const index = this.clearancerequests.data.indexOf(item);
-      // let decide = confirm("Are you sure you want to approve this request?");
-      // if (decide) {
-      axios.post("/api/v1/approveclearancerequest", this.clearanceRequest).then(function (res) {
-        _this5.text = "Request Approved Successfully!";
-        _this5.snackbarColor = "primary darken-1";
-        _this5.snackbar = true;
-        _this5.clearancerequests = res.data.clearancerequests;
-        _this5.totalclearancerequests = res.data.clearancerequests.total;
-        _this5.numberOfPages = res.data.clearancerequests.last_page;
-        _this5.dialog = false;
+      // console.log(this.clearanceRequest.id);
+      axios.post("/api/v1/clearance-requests/approve", this.clearanceRequest).then(function (res) {
+        _this6.text = "Successfully Approved!";
+        _this6.snackbarColor = "primary darken-1";
+        _this6.snackbar = true;
+        _this6.clearancerequests = res.data.clearance_requests;
+        _this6.totalclearancerequests = res.data.clearance_requests.total;
+        _this6.numberOfPages = res.data.clearance_requests.last_page;
+        _this6.dialog = false;
       })["catch"](function (err) {
         console.log(err.response);
-        _this5.text = "Error Approving Request";
-        _this5.snackbarColor = "error darken-1";
-        _this5.snackbar = true;
-      }); // }
-
-      close();
+        _this6.text = "Error Approving Request";
+        _this6.snackbarColor = "error darken-1";
+        _this6.snackbar = true;
+      });
+      this.close();
     },
     defer: function defer(item) {
       this.editedIndex = this.clearancerequests.data.indexOf(item);
@@ -22863,32 +22377,35 @@ __webpack_require__.r(__webpack_exports__);
       this.deferDialog = true;
     },
     deferItem: function deferItem() {
-      var _this6 = this;
+      var _this7 = this;
 
       var index = this.editedIndex;
-      axios.put("/api/v1/clearancerequests/" + this.clearanceRequest.id, this.deficiency).then(function (res) {
-        _this6.text = "Record Updated Successfully!";
-        _this6.snackbarColor = "primary darken-1";
-        _this6.snackbar = true;
-        _this6.clearancerequests = res.data.clearancerequests;
-        _this6.totalclearancerequests = res.data.clearancerequests.total;
-        _this6.numberOfPages = res.data.clearancerequests.last_page;
+      axios.get("/api/v1/clearance-requests/disapprove", {
+        params: {
+          'requestId': this.clearanceRequest.id,
+          'title': this.deficiency.title,
+          'note': this.deficiency.note
+        }
+      }).then(function (res) {
+        _this7.text = "Record Updated Successfully!";
+        _this7.snackbarColor = "primary darken-1";
+        _this7.snackbar = true;
+        _this7.loading = false;
+        _this7.clearancerequests = res.data.clearance_requests;
+        _this7.totalclearancerequests = res.data.clearance_requests.total;
+        _this7.numberOfPages = res.data.clearance_requests.last_page;
       })["catch"](function (err) {
         console.log(err.response);
-        _this6.text = "Error Updating Record";
-        _this6.snackbarColor = "error darken-1";
-        _this6.snackbar = true;
+        _this7.text = "Error Updating Record";
+        _this7.snackbarColor = "error darken-1";
+        _this7.snackbar = true;
       });
       this.deferDialog = false;
     },
     close: function close() {
-      var _this7 = this;
-
       this.dialog = false;
-      setTimeout(function () {
-        _this7.editedItem = Object.assign({}, _this7.defaultItem);
-        _this7.editedIndex = -1;
-      }, 300);
+      this.editedItem = Object.assign({}, this.defaultItem);
+      this.editedIndex = -1;
     },
     save: function save() {
       var _this8 = this;
@@ -23502,6 +23019,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -23516,7 +23035,7 @@ __webpack_require__.r(__webpack_exports__);
       snackbarColor: "",
       searchItem: "",
       headers: [{
-        text: "No",
+        text: "#",
         align: "left",
         value: "id"
       }, {
@@ -24274,6 +23793,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -24291,7 +23816,7 @@ __webpack_require__.r(__webpack_exports__);
       error: "",
       snackbarColor: "",
       headers: [{
-        text: "No",
+        text: "#",
         align: "left",
         value: "id"
       }, {
@@ -24495,17 +24020,24 @@ __webpack_require__.r(__webpack_exports__);
 
       if (this.editedIndex > -1) {
         var index = this.editedIndex;
-        axios.put("/api/v1/deficiencies/" + this.editedItem.id, this.editedItem).then(function (res) {
+        axios.post("/api/v1/deficeincy/edit", this.editedItem).then(function (res) {
           _this7.text = "Record Updated Successfully!";
           _this7.snackbarColor = "primary darken-1";
-          _this7.snackbar = true;
-          Object.assign(_this7.deficiencies.data[index], res.data.deficiency);
+          _this7.snackbar = true; // Object.assign(this.deficiencies.data[index], res.data.deficiency); 
+
+          _this7.loading = false;
+          _this7.deficiencies = res.data.deficiencies;
+          _this7.totaldeficiencies = res.data.deficiencies.total;
+          _this7.numberOfPages = res.data.deficiencies.last_page;
+          _this7.editdialog = false;
         })["catch"](function (err) {
           console.log(err.response);
           _this7.text = "Error Updating Record";
           _this7.snackbarColor = "error darken-1";
           _this7.snackbar = true;
+          _this7.editdialog = false;
         });
+        this.editdialog = false;
       } else {
         axios.post("/api/v1/deficiencies", this.editedItem).then(function (res) {
           _this7.text = "Record Added Successfully!";
@@ -24948,6 +24480,30 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -25937,6 +25493,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -25951,7 +25525,7 @@ __webpack_require__.r(__webpack_exports__);
       error: "",
       snackbarColor: "",
       headers: [{
-        text: "No",
+        text: "#",
         align: "left",
         value: "id"
       }, {
@@ -26021,47 +25595,52 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     generatePDF: function generatePDF(item) {
-      var _this = this;
+      axios.get('/api/v1/active-clearance/pdf', {
+        responseType: 'blob',
+        params: {
+          'clearance_id': item.clearance_id
+        }
+      }).then(function (response) {
+        item.name = item.name.replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, "_"); // Replaces all spaces with hyphens.
 
-      this.editedIndex = this.submittedclearances.data.indexOf(item);
-      this.editedItem = Object.assign({}, item);
-
-      if (item.college == "School of Graduate Studies and Research") {
-        axios.get('/api/v1/pdf-createSGS', {
-          responseType: 'blob',
-          params: {
-            'clearance': this.editedItem.clearance_id
-          }
-        }).then(function (response) {
-          var fileURL = window.URL.createObjectURL(new Blob([response.data], {
-            type: 'application/pdf'
-          }));
-          var fileLink = document.createElement('a');
-          fileLink.href = fileURL;
-          fileLink.setAttribute('download', _this.editedItem.name + _this.editedItem.clearance_id + '.pdf');
-          document.body.appendChild(fileLink);
-          fileLink.click();
-        });
-      } else {
-        axios.get('/api/v1/pdf-create', {
-          responseType: 'blob',
-          params: {
-            'clearance': this.editedItem.clearance_id
-          }
-        }).then(function (response) {
-          var fileURL = window.URL.createObjectURL(new Blob([response.data], {
-            type: 'application/pdf'
-          }));
-          var fileLink = document.createElement('a');
-          fileLink.href = fileURL;
-          fileLink.setAttribute('download', _this.editedItem.name + _this.editedItem.clearance_id + '.pdf');
-          document.body.appendChild(fileLink);
-          fileLink.click();
-        });
-      }
+        item.name = item.name.replace(/ +(?= )/g, "");
+        var fileURL = window.URL.createObjectURL(new Blob([response.data], {
+          type: 'application/pdf'
+        }));
+        var fileLink = document.createElement('a');
+        fileLink.href = fileURL;
+        fileLink.setAttribute('download', item.name + '-' + item.clearance_id + '.pdf');
+        document.body.appendChild(fileLink);
+        fileLink.click(); // this.downloadLoading = false;
+      }); //  this.editedIndex = this.submittedclearances.data.indexOf(item);
+      //   this.editedItem = Object.assign({}, item); 
+      // if(item.college == "School of Graduate Studies and Research")
+      // {
+      //    axios.get('/api/v1/pdf-createSGS',{responseType: 'blob'
+      //  ,params: { 'clearance': this.editedItem.clearance_id }
+      //  }).then((response) => {
+      //  var fileURL = window.URL.createObjectURL(new Blob([response.data], {type: 'application/pdf'}));
+      //  var fileLink = document.createElement('a');
+      //  fileLink.href = fileURL;
+      //  fileLink.setAttribute('download', this.editedItem.name+this.editedItem.clearance_id+'.pdf');
+      //  document.body.appendChild(fileLink);
+      //  fileLink.click();
+      //  });
+      // }
+      // else{
+      //    axios.get('/api/v1/pdf-create',{responseType: 'blob'
+      //  ,params: { 'clearance': this.editedItem.clearance_id }
+      //  }).then((response) => {
+      //  var fileURL = window.URL.createObjectURL(new Blob([response.data], {type: 'application/pdf'}));
+      //  var fileLink = document.createElement('a');
+      //  fileLink.href = fileURL;
+      //  fileLink.setAttribute('download', this.editedItem.name+this.editedItem.clearance_id+'.pdf');
+      //  document.body.appendChild(fileLink);
+      //  fileLink.click();
+      // });}
     },
     readDataFromAPI: function readDataFromAPI() {
-      var _this2 = this;
+      var _this = this;
 
       this.loading = true;
       var _this$options = this.options,
@@ -26074,14 +25653,14 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (response) {
         //Then injecting the result to datatable parameters.
-        _this2.loading = false;
-        _this2.submittedclearances = response.data.submittedclearances;
-        _this2.totalsubmittedclearances = response.data.submittedclearances.total;
-        _this2.numberOfPages = response.data.submittedclearances.last_page;
+        _this.loading = false;
+        _this.submittedclearances = response.data.submittedclearances;
+        _this.totalsubmittedclearances = response.data.submittedclearances.total;
+        _this.numberOfPages = response.data.submittedclearances.last_page;
       });
     },
     semesterChange: function semesterChange(d) {
-      var _this3 = this;
+      var _this2 = this;
 
       if (d.length > 2) {
         axios.get("/api/v1/submittedclearances/".concat(d, "?page=") + 1, {
@@ -26091,11 +25670,11 @@ __webpack_require__.r(__webpack_exports__);
             'semester_id': this.semester_id
           }
         }).then(function (res) {
-          _this3.loading = false;
-          _this3.page = res.data.submittedclearances.current_page;
-          _this3.submittedclearances = res.data.submittedclearances;
-          _this3.totalsubmittedclearances = res.data.submittedclearances.total;
-          _this3.numberOfPages = res.data.submittedclearances.total_pages;
+          _this2.loading = false;
+          _this2.page = res.data.submittedclearances.current_page;
+          _this2.submittedclearances = res.data.submittedclearances;
+          _this2.totalsubmittedclearances = res.data.submittedclearances.total;
+          _this2.numberOfPages = res.data.submittedclearances.total_pages;
         })["catch"](function (err) {
           console.error(err);
         });
@@ -26108,18 +25687,18 @@ __webpack_require__.r(__webpack_exports__);
             'semester_id': this.semester_id
           }
         }).then(function (res) {
-          _this3.loading = false;
-          _this3.page = res.data.submittedclearances.current_page;
-          _this3.submittedclearances = res.data.submittedclearances;
-          _this3.totalsubmittedclearances = res.data.submittedclearances.total;
-          _this3.numberOfPages = res.data.submittedclearances.total_pages;
+          _this2.loading = false;
+          _this2.page = res.data.submittedclearances.current_page;
+          _this2.submittedclearances = res.data.submittedclearances;
+          _this2.totalsubmittedclearances = res.data.submittedclearances.total;
+          _this2.numberOfPages = res.data.submittedclearances.total_pages;
         })["catch"](function (err) {
           console.error(err);
         });
       }
     },
     searchIt: function searchIt(d) {
-      var _this4 = this;
+      var _this3 = this;
 
       if (d.length > 2) {
         var _this$options2 = this.options,
@@ -26133,11 +25712,11 @@ __webpack_require__.r(__webpack_exports__);
             'semester_id': this.semester_id
           }
         }).then(function (res) {
-          _this4.loading = false;
-          _this4.page = res.data.submittedclearances.current_page;
-          _this4.submittedclearances = res.data.submittedclearances;
-          _this4.totalsubmittedclearances = res.data.submittedclearances.total;
-          _this4.numberOfPages = res.data.submittedclearances.total_pages;
+          _this3.loading = false;
+          _this3.page = res.data.submittedclearances.current_page;
+          _this3.submittedclearances = res.data.submittedclearances;
+          _this3.totalsubmittedclearances = res.data.submittedclearances.total;
+          _this3.numberOfPages = res.data.submittedclearances.total_pages;
         })["catch"](function (err) {
           console.error(err);
         });
@@ -26154,35 +25733,35 @@ __webpack_require__.r(__webpack_exports__);
             'semester_id': this.semester_id
           }
         }).then(function (res) {
-          _this4.loading = false;
-          _this4.page = res.data.submittedclearances.current_page;
-          _this4.submittedclearances = res.data.submittedclearances;
-          _this4.totalsubmittedclearances = res.data.submittedclearances.total;
-          _this4.numberOfPages = res.data.submittedclearances.total_pages;
+          _this3.loading = false;
+          _this3.page = res.data.submittedclearances.current_page;
+          _this3.submittedclearances = res.data.submittedclearances;
+          _this3.totalsubmittedclearances = res.data.submittedclearances.total;
+          _this3.numberOfPages = res.data.submittedclearances.total_pages;
         })["catch"](function (err) {
           console.error(err);
         });
       }
     },
     initialize: function initialize() {
-      var _this5 = this;
+      var _this4 = this;
 
       axios.interceptors.request.use(function (config) {
-        _this5.loading = true;
+        _this4.loading = true;
         return config;
       }, function (error) {
-        _this5.loading = false;
+        _this4.loading = false;
         return Promise.reject(error);
       });
       axios.interceptors.response.use(function (response) {
-        _this5.loading = false;
+        _this4.loading = false;
         return response;
       }, function (error) {
-        _this5.loading = false;
+        _this4.loading = false;
         return Promise.reject(error);
       });
       axios.get('/api/v1/semesters', {}).then(function (res) {
-        _this5.semesters = res.data.semesters;
+        _this4.semesters = res.data.semesters;
       })["catch"](function (err) {
         console.error(err);
       });
@@ -26193,65 +25772,65 @@ __webpack_require__.r(__webpack_exports__);
       this.dialog = true;
     },
     deleteItem: function deleteItem(item) {
-      var _this6 = this;
+      var _this5 = this;
 
       var index = this.submittedclearances.data.indexOf(item);
       var decide = confirm("Are you sure you want to delete this item?");
 
       if (decide) {
         axios["delete"]("/api/v1/submittedclearances/" + item.id).then(function (res) {
-          _this6.text = "Record Deleted Successfully!";
-          _this6.snackbarColor = "primary darken-1";
-          _this6.snackbar = true;
+          _this5.text = "Record Deleted Successfully!";
+          _this5.snackbarColor = "primary darken-1";
+          _this5.snackbar = true;
 
-          _this6.submittedclearances.data.splice(index, 1);
+          _this5.submittedclearances.data.splice(index, 1);
         })["catch"](function (err) {
           console.log(err.response);
-          _this6.text = "Error Deleting Record";
-          _this6.snackbarColor = "error darken-1";
-          _this6.snackbar = true;
+          _this5.text = "Error Deleting Record";
+          _this5.snackbarColor = "error darken-1";
+          _this5.snackbar = true;
         });
       }
     },
     close: function close() {
-      var _this7 = this;
+      var _this6 = this;
 
       this.dialog = false;
       setTimeout(function () {
-        _this7.editedItem = Object.assign({}, _this7.defaultItem);
-        _this7.editedIndex = -1;
+        _this6.editedItem = Object.assign({}, _this6.defaultItem);
+        _this6.editedIndex = -1;
       }, 300);
     },
     save: function save() {
-      var _this8 = this;
+      var _this7 = this;
 
       console.log(this.editedItem);
 
       if (this.editedIndex > -1) {
         var index = this.editedIndex;
         axios.put("/api/v1/submittedclearances/" + this.editedItem.id, this.editedItem).then(function (res) {
-          _this8.text = "Record Updated Successfully!";
-          _this8.snackbarColor = "primary darken-1";
-          _this8.snackbar = true;
-          Object.assign(_this8.submittedclearances.data[index], res.data.submittedclearance);
+          _this7.text = "Record Updated Successfully!";
+          _this7.snackbarColor = "primary darken-1";
+          _this7.snackbar = true;
+          Object.assign(_this7.submittedclearances.data[index], res.data.submittedclearance);
         })["catch"](function (err) {
           console.log(err.response);
-          _this8.text = "Error Updating Record";
-          _this8.snackbarColor = "error darken-1";
-          _this8.snackbar = true;
+          _this7.text = "Error Updating Record";
+          _this7.snackbarColor = "error darken-1";
+          _this7.snackbar = true;
         });
       } else {
         axios.post("/api/v1/submittedclearances", this.editedItem).then(function (res) {
-          _this8.text = "Record Added Successfully!";
-          _this8.snackbarColor = "primary darken-1";
-          _this8.snackbar = true; // this.students.data.push(res.data.student); 
+          _this7.text = "Record Added Successfully!";
+          _this7.snackbarColor = "primary darken-1";
+          _this7.snackbar = true; // this.students.data.push(res.data.student); 
 
-          _this8.submittedclearances = res.data.submittedclearances;
+          _this7.submittedclearances = res.data.submittedclearances;
         })["catch"](function (err) {
           console.dir(err);
-          _this8.text = "Error Inserting Record";
-          _this8.snackbarColor = "error darken-1";
-          _this8.snackbar = true;
+          _this7.text = "Error Inserting Record";
+          _this7.snackbarColor = "error darken-1";
+          _this7.snackbar = true;
         });
       }
 
@@ -27503,6 +27082,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var lodash_debounce__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash/debounce */ "./node_modules/lodash/debounce.js");
+/* harmony import */ var lodash_debounce__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash_debounce__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -27604,11 +27185,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -27620,20 +27197,19 @@ __webpack_require__.r(__webpack_exports__);
       text: "",
       success: "",
       error: "",
+      search: '',
       snackbarColor: "",
-      headers: [{
-        text: "No",
-        align: "left",
-        value: "id"
-      }, {
-        text: "Student Number",
-        value: "student_number"
-      }, {
-        text: "Name",
-        value: "name"
-      }, {
+      headers: [// {
+      //   text: "No",
+      //   align: "left",
+      //   value: "key",
+      // },    
+      {
         text: "Program",
         value: "program"
+      }, {
+        text: "Campus",
+        value: "campus"
       }, {
         text: "Purpose",
         value: "purpose"
@@ -27667,6 +27243,22 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {},
   watch: {
+    search: lodash_debounce__WEBPACK_IMPORTED_MODULE_0___default()(function (val) {
+      var _this = this;
+
+      axios.get("/api/v1/active-clearance/clearances", {
+        params: {
+          search: this.clean(val)
+        }
+      }).then(function (response) {
+        //Then injecting the result to datatable parameters.
+        console.log(response.data.clearances.data);
+        _this.loading = false;
+        _this.clearances = response.data.clearances;
+        _this.totalclearances = response.data.clearances.total;
+        _this.numberOfPages = response.data.clearances.last_page;
+      });
+    }, 100),
     dialog: function dialog(val) {
       val || this.close();
     },
@@ -27681,38 +27273,49 @@ __webpack_require__.r(__webpack_exports__);
     this.initialize();
   },
   methods: {
+    clean: function clean($val) {
+      if ($val) {
+        $val = $val.replace(/ +(?= )/g, "");
+        $val = $val.replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, " "); // Replaces all spaces with hyphens.
+
+        $val = $val.replace(/ +(?= )/g, "");
+        return $val;
+      } // Removes special chars.
+
+    },
     readDataFromAPI: function readDataFromAPI() {
-      var _this = this;
+      var _this2 = this;
 
       this.loading = true;
       var _this$options = this.options,
           page = _this$options.page,
           itemsPerPage = _this$options.itemsPerPage;
       var pageNumber = page;
-      axios.get("/api/v1/clearances?page=" + pageNumber, {
+      axios.get("/api/v1/active-clearance/clearances?page=" + pageNumber, {
         params: {
           'per_page': itemsPerPage
         }
       }).then(function (response) {
         //Then injecting the result to datatable parameters.
-        _this.loading = false;
-        _this.clearances = response.data.clearances;
-        _this.totalclearances = response.data.clearances.total;
-        _this.numberOfPages = response.data.clearances.last_page;
+        console.log(response.data.clearances.data);
+        _this2.loading = false;
+        _this2.clearances = response.data.clearances;
+        _this2.totalclearances = response.data.clearances.total;
+        _this2.numberOfPages = response.data.clearances.last_page;
       });
     },
     searchIt: function searchIt(d) {
-      var _this2 = this;
+      var _this3 = this;
 
       if (d.length > 2) {
         var _this$options2 = this.options,
             page = _this$options2.page,
             itemsPerPage = _this$options2.itemsPerPage;
         axios.get("/api/v1/clearances/".concat(d)).then(function (res) {
-          _this2.loading = false;
-          _this2.clearances = res.data.clearances;
-          _this2.totalclearances = res.data.clearances.total;
-          _this2.numberOfPages = res.data.clearances.last_page;
+          _this3.loading = false;
+          _this3.clearances = res.data.clearances;
+          _this3.totalclearances = res.data.clearances.total;
+          _this3.numberOfPages = res.data.clearances.last_page;
         })["catch"](function (err) {
           console.error(err);
         });
@@ -27724,98 +27327,98 @@ __webpack_require__.r(__webpack_exports__);
             'per_page': d.itemsPerPage
           }
         }).then(function (res) {
-          _this2.loading = false;
-          _this2.clearances = res.data.clearances;
-          _this2.totalclearances = res.data.clearances.total;
-          _this2.numberOfPages = res.data.clearances.last_page;
+          _this3.loading = false;
+          _this3.clearances = res.data.clearances;
+          _this3.totalclearances = res.data.clearances.total;
+          _this3.numberOfPages = res.data.clearances.last_page;
         })["catch"](function (err) {
           console.error(err);
         });
       }
     },
     initialize: function initialize() {
-      var _this3 = this;
+      var _this4 = this;
 
       axios.interceptors.request.use(function (config) {
-        _this3.loading = true;
+        _this4.loading = true;
         return config;
       }, function (error) {
-        _this3.loading = false;
+        _this4.loading = false;
         return Promise.reject(error);
       });
       axios.interceptors.response.use(function (response) {
-        _this3.loading = false;
+        _this4.loading = false;
         return response;
       }, function (error) {
-        _this3.loading = false;
+        _this4.loading = false;
         return Promise.reject(error);
       });
     },
     editItem: function editItem(item) {
-      this.editedIndex = this.clearances.data.indexOf(item);
+      this.editedIndex = this.clearances.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
     },
     deleteItem: function deleteItem(item) {
-      var _this4 = this;
+      var _this5 = this;
 
-      var index = this.clearances.data.indexOf(item);
+      var index = this.clearances.indexOf(item);
       var decide = confirm("Are you sure you want to delete this item?");
 
       if (decide) {
         axios["delete"]("/api/v1/clearances/" + item.id).then(function (res) {
-          _this4.text = "Record Deleted Successfully!";
-          _this4.snackbarColor = "primary darken-1";
-          _this4.snackbar = true;
+          _this5.text = "Record Deleted Successfully!";
+          _this5.snackbarColor = "primary darken-1";
+          _this5.snackbar = true;
 
-          _this4.clearances.data.splice(index, 1);
+          _this5.clearances.splice(index, 1);
         })["catch"](function (err) {
           console.log(err.response);
-          _this4.text = "Error Deleting Record";
-          _this4.snackbarColor = "error darken-1";
-          _this4.snackbar = true;
+          _this5.text = "Error Deleting Record";
+          _this5.snackbarColor = "error darken-1";
+          _this5.snackbar = true;
         });
       }
     },
     close: function close() {
-      var _this5 = this;
+      var _this6 = this;
 
       this.dialog = false;
       setTimeout(function () {
-        _this5.editedItem = Object.assign({}, _this5.defaultItem);
-        _this5.editedIndex = -1;
+        _this6.editedItem = Object.assign({}, _this6.defaultItem);
+        _this6.editedIndex = -1;
       }, 300);
     },
     save: function save() {
-      var _this6 = this;
+      var _this7 = this;
 
       console.log(this.editedItem);
 
       if (this.editedIndex > -1) {
         var index = this.editedIndex;
         axios.put("/api/v1/clearances/" + this.editedItem.id, this.editedItem).then(function (res) {
-          _this6.text = "Record Updated Successfully!";
-          _this6.snackbarColor = "primary darken-1";
-          _this6.snackbar = true;
-          Object.assign(_this6.clearances.data[index], res.data.clearance);
+          _this7.text = "Record Updated Successfully!";
+          _this7.snackbarColor = "primary darken-1";
+          _this7.snackbar = true;
+          Object.assign(_this7.clearances[index], res.data.clearance);
         })["catch"](function (err) {
           console.log(err.response);
-          _this6.text = "Error Updating Record";
-          _this6.snackbarColor = "error darken-1";
-          _this6.snackbar = true;
+          _this7.text = "Error Updating Record";
+          _this7.snackbarColor = "error darken-1";
+          _this7.snackbar = true;
         });
       } else {
         axios.post("/api/v1/clearances", this.editedItem).then(function (res) {
-          _this6.text = "Record Added Successfully!";
-          _this6.snackbarColor = "primary darken-1";
-          _this6.snackbar = true; // this.students.data.push(res.data.student); 
+          _this7.text = "Record Added Successfully!";
+          _this7.snackbarColor = "primary darken-1";
+          _this7.snackbar = true; // this.students.data.push(res.data.student); 
 
-          _this6.clearances = res.data.clearances;
+          _this7.clearances = res.data.clearances;
         })["catch"](function (err) {
           console.dir(err);
-          _this6.text = "Error Inserting Record";
-          _this6.snackbarColor = "error darken-1";
-          _this6.snackbar = true;
+          _this7.text = "Error Inserting Record";
+          _this7.snackbarColor = "error darken-1";
+          _this7.snackbar = true;
         });
       }
 
@@ -28869,17 +28472,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -29109,392 +28701,6 @@ __webpack_require__.r(__webpack_exports__);
     source: String
   },
   name: "App"
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/student/StudentComponent.vue?vue&type=script&lang=js&":
-/*!***********************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/student/StudentComponent.vue?vue&type=script&lang=js& ***!
-  \***********************************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-/* harmony default export */ __webpack_exports__["default"] = ({
-  name: "main-app",
-  props: {
-    source: String
-  },
-  data: function data() {
-    return {
-      dialog: false,
-      menu: false,
-      drawer: null,
-      user: '',
-      role: '',
-      scrollOptions: {
-        height: '100%'
-      },
-      items: [// {
-      //   icon: "mdi-view-dashboard",
-      //   text: "Dashboard",
-      //   link: "/student/dashboard",
-      // },
-      {
-        icon: "mdi-clipboard-check",
-        text: "Active Clearance",
-        link: "/student/active/clearance"
-      }, {
-        icon: "mdi-clipboard-text",
-        text: "Clearance List",
-        link: "/student/clearance/list"
-      }, {
-        icon: "mdi-history",
-        text: "List of Deficiency",
-        link: "/student/deficiency/list"
-      }, {
-        icon: "mdi-cog",
-        text: "Settings",
-        link: "/student/settings"
-      }]
-    };
-  },
-  watch: {
-    dialog: function dialog(val) {
-      val || this.close();
-    }
-  },
-  // created() {
-  //   this.initialize();
-  // },
-  computed: {
-    currentRouteName: function currentRouteName() {
-      return this.$route.name;
-    } // loggedIn:{
-    //   get(){
-    //     return this.$store.state.currentUser.loggedIn;
-    //   }
-    // },
-    // currentUser:{
-    //   get(){
-    //     return this.$store.state.currentUser.user;
-    //   }
-    // }
-
-  },
-  methods: {
-    logout: function logout() {
-      var _this = this;
-
-      this.menu = false;
-      axios.post('logout').then(function (resposnse) {
-        localStorage.removeItem('token');
-
-        _this.$router.push("/login");
-      });
-    }
-  },
-  created: function created() {
-    axios.interceptors.response.use(function (response) {
-      return response;
-    }, function (error) {
-      if (error.response.status !== 419) return Promise.reject(error);
-      window.location.reload();
-    });
-    axios.defaults.headers['Authorization'] = "Bearer " + localStorage.getItem("token"); // this.$store.dispatch('currentUser/getUser');
-    //       axios.get('/api/v1/getUser')
-    //   .then(res => {
-    //     this.user = res.data.user
-    //     this.role = res.data.role.role
-    //     ////console.dir(res)
-    //   })
-  }
 });
 
 /***/ }),
@@ -30103,6 +29309,1143 @@ var exhale = function exhale(ms) {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/shared/layout/OSCSAppBar.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/shared/layout/OSCSAppBar.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    openDrawer: null
+  },
+  data: function data() {
+    return {
+      dialog: false,
+      menu: false,
+      drawer: null,
+      user: "",
+      role: ""
+    };
+  },
+  computed: {
+    currentRouteName: function currentRouteName() {
+      return this.$route.name;
+    }
+  },
+  methods: {
+    logout: function logout() {
+      var _this = this;
+
+      axios.post('logout').then(function (resposnse) {
+        localStorage.removeItem('token');
+
+        _this.$router.push("/login");
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/shared/layout/OSCSNavigationDrawer.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/shared/layout/OSCSNavigationDrawer.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    source: String,
+    drawer: null,
+    navigationList: ''
+  },
+  data: function data() {
+    return {
+      dialog: false,
+      menu: false,
+      user: '',
+      role: '',
+      scrollOptions: {
+        height: '100%'
+      }
+    };
+  },
+  created: function created() {
+    var _this = this;
+
+    axios.interceptors.response.use(function (response) {
+      return response;
+    }, function (error) {
+      if (error.response.status !== 419) return Promise.reject(error);
+      window.location.reload();
+    });
+    axios.defaults.headers['Authorization'] = "Bearer " + localStorage.getItem("token"); // this.$store.dispatch('currentUser/getUser');
+
+    axios.get('/api/v1/getUser').then(function (res) {
+      _this.user = res.data.user;
+      _this.role = res.data.role.role;
+    });
+  },
+  methods: {
+    logout: function logout() {
+      var _this2 = this;
+
+      axios.post('logout').then(function (resposnse) {
+        localStorage.removeItem('token');
+
+        _this2.$router.push("/login");
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/shared/layout/SignatoryLayout.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/shared/layout/SignatoryLayout.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _OSCSNavigationDrawer_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./OSCSNavigationDrawer.vue */ "./resources/js/shared/layout/OSCSNavigationDrawer.vue");
+/* harmony import */ var _OSCSAppBar_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./OSCSAppBar.vue */ "./resources/js/shared/layout/OSCSAppBar.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "main-app",
+  props: {
+    source: String
+  },
+  components: {
+    OSCSNavigationDrawer: _OSCSNavigationDrawer_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+    OSCSAppBar: _OSCSAppBar_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  data: function data() {
+    return {
+      dialog: false,
+      menu: false,
+      drawer: null,
+      user: '',
+      role: '',
+      scrollOptions: {
+        height: '100%'
+      },
+      navigationList: []
+    };
+  },
+  watch: {
+    dialog: function dialog(val) {
+      val || this.close();
+    }
+  },
+  methods: {
+    openDrawer: function openDrawer() {
+      this.drawer = !this.drawer;
+    }
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    axios.get('/api/v1/verify').then(function (res) {
+      if (res.data.user_role.role.name == "cashier") {
+        _this.navigationList = [{
+          icon: "mdi-clipboard-list",
+          text: "Clearance Requests",
+          link: "/cashier/clearance/requests"
+        }, {
+          icon: "mdi-history",
+          text: "Student Deficiencies",
+          link: "/cashier/deficiency/list"
+        }, {
+          icon: "mdi-account-check",
+          text: "Approved Requests",
+          link: "/cashier/cleared/clearances"
+        }, {
+          icon: "mdi-send-circle",
+          text: "Submitted Clearances",
+          link: "/cashier/submitted/clearances"
+        }, {
+          icon: "mdi-account-multiple",
+          text: "Student List",
+          link: "/cashier/student/list"
+        }, {
+          icon: "mdi-cog",
+          text: "Settings",
+          link: "/cashier/settings"
+        }];
+      } else if (res.data.user_role.role.name == "pd") {
+        _this.navigationList = [{
+          icon: "mdi-clipboard-list",
+          text: "Clearance Requests",
+          link: "/pd/clearance/requests"
+        }, {
+          icon: "mdi-history",
+          text: "Student Deficiencies",
+          link: "/pd/deficiency/list"
+        }, {
+          icon: "mdi-account-check",
+          text: "Approved Requests",
+          link: "/pd/cleared/clearances"
+        }, {
+          icon: "mdi-send-circle",
+          text: "Submitted Clearances",
+          link: "/pd/submitted/clearances"
+        }, {
+          icon: "mdi-account-multiple",
+          text: "Student List",
+          link: "/pd/student/list"
+        }, {
+          icon: "mdi-cog",
+          text: "Settings",
+          link: "/pd/settings"
+        }];
+      } else if (res.data.user_role.role.name == "stcouncil") {
+        _this.navigationList = [{
+          icon: "mdi-clipboard-list",
+          text: "Clearance Requests",
+          link: "/stcouncil/clearance/requests"
+        }, {
+          icon: "mdi-history",
+          text: "Student Deficiencies",
+          link: "/stcouncil/deficiency/list"
+        }, {
+          icon: "mdi-account-check",
+          text: "Approved Requests",
+          link: "/stcouncil/cleared/clearances"
+        }, {
+          icon: "mdi-send-circle",
+          text: "Submitted Clearances",
+          link: "/stcouncil/submitted/clearances"
+        }, {
+          icon: "mdi-account-multiple",
+          text: "Student List",
+          link: "/stcouncil/student/list"
+        }, {
+          icon: "mdi-cog",
+          text: "Settings",
+          link: "/stcouncil/settings"
+        }];
+      } else if (res.data.user_role.role.name == "registrarstaff") {
+        _this.navigationList = [{
+          icon: "mdi-clipboard-list",
+          text: "Clearance Requests",
+          link: "/registrarstaff/clearance/requests"
+        }, {
+          icon: "mdi-history",
+          text: "Student Deficiencies",
+          link: "/registrarstaff/deficiency/list"
+        }, {
+          icon: "mdi-account-check",
+          text: "Approved Requests",
+          link: "/registrarstaff/cleared/clearances"
+        }, {
+          icon: "mdi-send-circle",
+          text: "Submitted Clearances",
+          link: "/registrarstaff/submitted/clearances"
+        }, {
+          icon: "mdi-account-multiple",
+          text: "Student List",
+          link: "/registrarstaff/student/list"
+        }, {
+          icon: "mdi-cog",
+          text: "Settings",
+          link: "/registrarstaff/settings"
+        }];
+      } else if (res.data.user_role.role.name == "registrar") {
+        _this.navigationList = [{
+          icon: "mdi-clipboard-list",
+          text: "Clearance Requests",
+          link: "/registrar/clearance/requests"
+        }, {
+          icon: "mdi-history",
+          text: "Student Deficiencies",
+          link: "/registrar/deficiency/list"
+        }, {
+          icon: "mdi-account-check",
+          text: "Approved Requests",
+          link: "/registrar/cleared/clearances"
+        }, {
+          icon: "mdi-send-circle",
+          text: "Submitted Clearances",
+          link: "/registrar/submitted/clearances"
+        }, {
+          icon: "mdi-account-multiple",
+          text: "Student List",
+          link: "/registrar/student/list"
+        }, {
+          icon: "mdi-cog",
+          text: "Settings",
+          link: "/registrar/settings"
+        }];
+      } else if (res.data.user_role.role.name == "cashier") {
+        _this.navigationList = [{
+          icon: "mdi-clipboard-list",
+          text: "Clearance Requests",
+          link: "/cashier/clearance/requests"
+        }, {
+          icon: "mdi-history",
+          text: "Student Deficiencies",
+          link: "/cashier/deficiency/list"
+        }, {
+          icon: "mdi-account-check",
+          text: "Approved Requests",
+          link: "/cashier/cleared/clearances"
+        }, {
+          icon: "mdi-send-circle",
+          text: "Submitted Clearances",
+          link: "/cashier/submitted/clearances"
+        }, {
+          icon: "mdi-account-multiple",
+          text: "Student List",
+          link: "/cashier/student/list"
+        }, {
+          icon: "mdi-cog",
+          text: "Settings",
+          link: "/cashier/settings"
+        }];
+      } else if (res.data.user_role.role.name == "library") {
+        _this.navigationList = [{
+          icon: "mdi-clipboard-list",
+          text: "Clearance Requests",
+          link: "/library/clearance/requests"
+        }, {
+          icon: "mdi-history",
+          text: "Student Deficiencies",
+          link: "/library/deficiency/list"
+        }, {
+          icon: "mdi-account-check",
+          text: "Approved Requests",
+          link: "/library/cleared/clearances"
+        }, {
+          icon: "mdi-send-circle",
+          text: "Submitted Clearances",
+          link: "/library/submitted/clearances"
+        }, {
+          icon: "mdi-account-multiple",
+          text: "Student List",
+          link: "/library/student/list"
+        }, {
+          icon: "mdi-cog",
+          text: "Settings",
+          link: "/library/settings"
+        }];
+      } else if (res.data.user_role.role.name == "osas") {
+        _this.navigationList = [{
+          icon: "mdi-clipboard-list",
+          text: "Clearance Requests",
+          link: "/osas/clearance/requests"
+        }, {
+          icon: "mdi-history",
+          text: "Student Deficiencies",
+          link: "/osas/deficiency/list"
+        }, {
+          icon: "mdi-account-check",
+          text: "Approved Requests",
+          link: "/osas/cleared/clearances"
+        }, {
+          icon: "mdi-send-circle",
+          text: "Submitted Clearances",
+          link: "/osas/submitted/clearances"
+        }, {
+          icon: "mdi-account-multiple",
+          text: "Student List",
+          link: "/osas/student/list"
+        }, {
+          icon: "mdi-cog",
+          text: "Settings",
+          link: "/osas/settings"
+        }];
+      } else if (res.data.user_role.role.name == "dean") {
+        _this.navigationList = [{
+          icon: "mdi-clipboard-list",
+          text: "Clearance Requests",
+          link: "/dean/clearance/requests"
+        }, {
+          icon: "mdi-history",
+          text: "Student Deficiencies",
+          link: "/dean/deficiency/list"
+        }, {
+          icon: "mdi-account-check",
+          text: "Approved Requests",
+          link: "/dean/cleared/clearances"
+        }, {
+          icon: "mdi-send-circle",
+          text: "Submitted Clearances",
+          link: "/dean/submitted/clearances"
+        }, {
+          icon: "mdi-account-multiple",
+          text: "Student List",
+          link: "/dean/student/list"
+        }, {
+          icon: "mdi-cog",
+          text: "Settings",
+          link: "/dean/settings"
+        }];
+      }
+    })["catch"](function (err) {});
+  },
+  computed: {
+    currentRouteName: function currentRouteName() {
+      return this.$route.name;
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/shared/layout/StudentLayout.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/shared/layout/StudentLayout.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _OSCSNavigationDrawer_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./OSCSNavigationDrawer.vue */ "./resources/js/shared/layout/OSCSNavigationDrawer.vue");
+/* harmony import */ var _OSCSAppBar_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./OSCSAppBar.vue */ "./resources/js/shared/layout/OSCSAppBar.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "main-app",
+  props: {
+    source: String
+  },
+  components: {
+    OSCSNavigationDrawer: _OSCSNavigationDrawer_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+    OSCSAppBar: _OSCSAppBar_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  data: function data() {
+    return {
+      dialog: false,
+      menu: false,
+      drawer: null,
+      user: '',
+      role: '',
+      scrollOptions: {
+        height: '100%'
+      },
+      navigationList: [{
+        icon: "mdi-home-assistant",
+        text: "Active Clearance",
+        link: "/student/active/clearance"
+      }, {
+        icon: "mdi-text-box-outline",
+        text: "Clearance List",
+        link: "/student/clearance/list"
+      }, {
+        icon: "mdi-text-box-remove-outline",
+        text: "List of Deficiency",
+        link: "/student/deficiency/list"
+      }, {
+        icon: "mdi-cog",
+        text: "Settings",
+        link: "/student/settings"
+      }]
+    };
+  },
+  watch: {
+    dialog: function dialog(val) {
+      val || this.close();
+    }
+  },
+  methods: {
+    openDrawer: function openDrawer() {
+      this.drawer = !this.drawer;
+    }
+  },
+  computed: {
+    currentRouteName: function currentRouteName() {
+      return this.$route.name;
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/shared/table/OSCSActiveClearanceEnrollmentTable.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/shared/table/OSCSActiveClearanceEnrollmentTable.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      downloadLoading: false,
+      submitLoading: false,
+      student_name: '',
+      clearance_id: '',
+      deficiency_designee: "",
+      deficiencyheaders: [{
+        text: "Deficiency",
+        value: "title"
+      }, {
+        text: "Note",
+        value: "note"
+      }, {
+        text: "Status",
+        value: "completed"
+      }],
+      deficiencies: [],
+      deficiencySignatory: "",
+      deficiencydialog: false,
+      signatoriesList: [],
+      countApproved: 0,
+      countSignatory: 0,
+      purpose: '',
+      isOpen: false,
+      isSubmitted: false,
+      dateSubmitted: '',
+      isPurposeSetup: null,
+      expanded: [],
+      singleExpand: false,
+      tableHeaders: [{
+        text: 'Designee',
+        value: 'designee'
+      }, {
+        text: 'Office',
+        value: 'office'
+      }, {
+        text: 'Status',
+        value: 'clearance_request_status'
+      }, {
+        text: 'Action',
+        value: 'actions'
+      } // { text: '', value: 'data-table-expand' },
+      ]
+    };
+  },
+  computed: {},
+  methods: {
+    submitClearance: function submitClearance() {
+      var _this = this;
+
+      this.submitLoading = true;
+      axios.post("/api/v1/active-clearance/submit", {
+        clearance_id: this.clearance_id
+      }).then(function (res) {
+        _this.isSubmitted = res.data.isSubmitted;
+        _this.dateSubmitted = res.data.dateSubmitted;
+        _this.submitLoading = false;
+      })["catch"](function (err) {
+        console.error(err);
+        _this.submitLoading = false;
+      });
+    },
+    generatePDF: function generatePDF() {
+      var _this2 = this;
+
+      if (this.countApproved == this.countSignatory && this.countApproved != 0 && this.countSignatory != 0) {
+        this.downloadLoading = true;
+        axios.get('/api/v1/active-clearance/pdf', {
+          responseType: 'blob',
+          params: {
+            'clearance_id': this.clearance_id
+          }
+        }).then(function (response) {
+          _this2.student_name = _this2.student_name.replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, "_"); // Replaces all spaces with hyphens.
+
+          _this2.student_name = _this2.student_name.replace(/ +(?= )/g, "");
+          var fileURL = window.URL.createObjectURL(new Blob([response.data], {
+            type: 'application/pdf'
+          }));
+          var fileLink = document.createElement('a');
+          fileLink.href = fileURL;
+          fileLink.setAttribute('download', _this2.student_name + '-' + _this2.clearance_id + '.pdf');
+          document.body.appendChild(fileLink);
+          fileLink.click();
+          _this2.downloadLoading = false;
+        });
+      }
+    },
+    viewDeficiency: function viewDeficiency(item) {
+      this.deficiencydialog = true;
+      this.deficiency_designee = item.designee;
+      this.deficiencies = Object.assign({}, item.defieciencyList);
+    },
+    signatories: function signatories() {
+      var _this3 = this;
+
+      axios.get("/api/v1/active-clearance").then(function (response) {
+        _this3.signatoriesList = response.data.signatories;
+        _this3.countApproved = response.data.countApproved;
+        _this3.countSignatory = response.data.countSignatory;
+        _this3.purpose = response.data.purpose;
+        _this3.isOpen = response.data.isOpen;
+        _this3.isSubmitted = response.data.isSubmitted;
+        _this3.dateSubmitted = response.data.dateSubmitted;
+        _this3.isPurposeSetup = response.data.isPurposeSetup;
+        _this3.clearance_id = response.data.clearance_id;
+        _this3.student_name = response.data.student_name;
+      });
+    },
+    sendRequest: function sendRequest(item) {
+      var _this4 = this;
+
+      item.loadingBtn = true;
+      console.log(item.loadingBtn);
+      this.submitRequestItem = Object.assign({}, item);
+      axios.post("/api/v1/active-clearance/send-request", this.submitRequestItem).then(function (res) {
+        item.loadingBtn = false;
+        _this4.signatoriesList = res.data.signatories;
+        _this4.countApproved = response.data.countApproved;
+        _this4.countSignatory = response.data.countSignatory;
+      })["catch"](function (err) {
+        console.error(err);
+        item.loadingBtn = false;
+      });
+    }
+  },
+  created: function created() {
+    this.signatories();
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/login/LoginComponent.vue?vue&type=style&index=0&lang=css&":
 /*!**************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/login/LoginComponent.vue?vue&type=style&index=0&lang=css& ***!
@@ -30152,6 +30495,44 @@ if(false) {}
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/charts/ApexBarChart.vue?vue&type=template&id=123211d9&":
+/*!***********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/charts/ApexBarChart.vue?vue&type=template&id=123211d9& ***!
+  \***********************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "ma-0 pb-0" },
+    [
+      _c("apexchart", {
+        attrs: {
+          width: "300",
+          type: "donut",
+          options: _vm.chartOptions,
+          series: _vm.series,
+        },
+      }),
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ActiveClearanceComponent.vue?vue&type=template&id=50ee3cd2&":
 /*!***************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ActiveClearanceComponent.vue?vue&type=template&id=50ee3cd2& ***!
@@ -30167,831 +30548,7 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm.purposeVal
-    ? _c(
-        "v-sheet",
-        { staticStyle: { "margin-bottom": "36px" } },
-        [
-          !_vm.submittedClearance &&
-          ((_vm.clearance.student_council == true &&
-            _vm.clearance.cashier == true &&
-            _vm.clearance.library == true &&
-            _vm.clearance.osas == true &&
-            _vm.clearance.program_director == true &&
-            _vm.clearance.college_deaan == true &&
-            _vm.clearance.registrar == true) ||
-            (_vm.clearance.class_adviser == true &&
-              _vm.clearance.principal == true))
-            ? _c(
-                "v-alert",
-                {
-                  attrs: {
-                    border: "right",
-                    "colored-border": "",
-                    type: "info",
-                    elevation: "0",
-                  },
-                },
-                [
-                  _c("b", [_c("i", [_vm._v("Note:")])]),
-                  _vm._v(
-                    " To complete the proccess. Please click the submit button to send your clearance to the Office of the Registrar.\n   "
-                  ),
-                ]
-              )
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.submittedClearance
-            ? _c(
-                "v-alert",
-                {
-                  attrs: {
-                    border: "right",
-                    "colored-border": "",
-                    type: "success",
-                    elevation: "0",
-                  },
-                },
-                [
-                  _c("b", [_c("i", [_vm._v("Note:")])]),
-                  _vm._v(
-                    " You have successfully submitted your clearance to the Office of the Registrar ("
-                  ),
-                  _c("i", [
-                    _vm._v(
-                      " " +
-                        _vm._s(
-                          _vm._f("moment")(
-                            _vm.submittedClearance.created_at,
-                            "from",
-                            "now"
-                          )
-                        ) +
-                        " "
-                    ),
-                  ]),
-                  _vm._v(").\n"),
-                ]
-              )
-            : _vm._e(),
-          _vm._v(" "),
-          [
-            _c("span", { staticClass: "font-italic subtitle-2" }, [
-              _vm._v("Status: "),
-            ]),
-            _vm._v(" "),
-            _vm.submittedClearance
-              ? _c(
-                  "v-chip",
-                  {
-                    staticStyle: { "margin-left": "4px" },
-                    attrs: {
-                      "text-color": "white",
-                      color: "success",
-                      "x-small": "",
-                    },
-                  },
-                  [_vm._v("\n                Completed\n               ")]
-                )
-              : _c(
-                  "v-chip",
-                  {
-                    staticStyle: { "margin-left": "4px" },
-                    attrs: {
-                      "text-color": "white",
-                      color: _vm.stad ? "info" : "red",
-                      "x-small": "",
-                    },
-                  },
-                  [
-                    _vm._v(
-                      "\n                " +
-                        _vm._s(_vm.stad ? "On-Going" : "Closed") +
-                        "\n               "
-                    ),
-                  ]
-                ),
-            _vm._v(" "),
-            (_vm.clearance.student_council == true &&
-              _vm.clearance.cashier == true &&
-              _vm.clearance.library == true &&
-              _vm.clearance.osas == true &&
-              _vm.clearance.program_director == true &&
-              _vm.clearance.college_deaan == true &&
-              _vm.clearance.registrar == true) ||
-            (_vm.clearance.class_adviser == true &&
-              _vm.clearance.principal == true)
-              ? _c(
-                  "v-btn",
-                  {
-                    staticClass: "elevation-0 error lighten-1",
-                    attrs: { small: "" },
-                    on: { click: _vm.generatePDF },
-                  },
-                  [
-                    _c("v-icon", [_vm._v("mdi-file-pdf")]),
-                    _vm._v("Generate Clearance"),
-                  ],
-                  1
-                )
-              : _vm._e(),
-            _vm._v(" "),
-            !_vm.submittedClearance &&
-            ((_vm.clearance.student_council == true &&
-              _vm.clearance.cashier == true &&
-              _vm.clearance.library == true &&
-              _vm.clearance.osas == true &&
-              _vm.clearance.program_director == true &&
-              _vm.clearance.college_deaan == true &&
-              _vm.clearance.registrar == true) ||
-              (_vm.clearance.class_adviser == true &&
-                _vm.clearance.principal == true))
-              ? _c(
-                  "v-btn",
-                  {
-                    staticClass: "elevation-0 success lighten-1",
-                    attrs: { small: "" },
-                    on: { click: _vm.submitClearance },
-                  },
-                  [
-                    _c("v-icon", [_vm._v("mdi-forward")]),
-                    _vm._v("Submit to the Registrar"),
-                  ],
-                  1
-                )
-              : _vm._e(),
-          ],
-          _vm._v(" "),
-          _c("v-data-table", {
-            staticClass: "elevation-1",
-            staticStyle: { "padding-bottom": "60px", "margin-top": "20px" },
-            attrs: {
-              "item-key": "name",
-              loading: _vm.loading,
-              "loading-text": "Loading... Please wait",
-              headers: _vm.headers,
-              items: _vm.clearances,
-              "sort-by": "name",
-              color: "error",
-              "hide-default-footer": "",
-              "disable-sort": "",
-            },
-            scopedSlots: _vm._u(
-              [
-                {
-                  key: "top",
-                  fn: function () {
-                    return [
-                      _c(
-                        "v-toolbar",
-                        { attrs: { flat: "", color: "white" } },
-                        [
-                          _c("div", { staticClass: "overline text-h6" }, [
-                            _vm._v(
-                              "\n           Active Clearance\n           "
-                            ),
-                            _c(
-                              "span",
-                              { staticClass: "font-italic subtitle-2" },
-                              [
-                                _vm._v(
-                                  "( " +
-                                    _vm._s(_vm.activeClearancePurpose) +
-                                    " )"
-                                ),
-                              ]
-                            ),
-                          ]),
-                          _vm._v(" "),
-                          _c("v-spacer"),
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c("v-divider"),
-                    ]
-                  },
-                  proxy: true,
-                },
-                {
-                  key: "item.office",
-                  fn: function (ref) {
-                    var item = ref.item
-                    return [
-                      _c("div", { staticClass: "font-weight-bold" }, [
-                        _vm._v(_vm._s(item.office)),
-                      ]),
-                    ]
-                  },
-                },
-                {
-                  key: "item.status",
-                  fn: function (ref) {
-                    var item = ref.item
-                    return [
-                      item.status == 1
-                        ? [
-                            _c(
-                              "v-chip",
-                              {
-                                attrs: {
-                                  "text-color": "white",
-                                  color: "success",
-                                  small: "",
-                                },
-                              },
-                              [
-                                _c(
-                                  "v-avatar",
-                                  { attrs: { left: "" } },
-                                  [
-                                    _c("v-icon", { attrs: { small: "" } }, [
-                                      _vm._v("mdi-check-circle"),
-                                    ]),
-                                  ],
-                                  1
-                                ),
-                                _vm._v(
-                                  "\n           Approved on " +
-                                    _vm._s(item.data_approved) +
-                                    "\n         "
-                                ),
-                              ],
-                              1
-                            ),
-                          ]
-                        : item.status == 0 ||
-                          (item.status == 2 && item.designee)
-                        ? [
-                            item.clearanceRequestCount == 1
-                              ? [
-                                  item.status != 2
-                                    ? _c(
-                                        "v-chip",
-                                        {
-                                          attrs: {
-                                            "text-color": "white",
-                                            color: "cyan",
-                                            small: "",
-                                          },
-                                        },
-                                        [
-                                          _c(
-                                            "v-avatar",
-                                            { attrs: { left: "" } },
-                                            [
-                                              _c(
-                                                "v-icon",
-                                                { attrs: { small: "" } },
-                                                [_vm._v("mdi-information")]
-                                              ),
-                                            ],
-                                            1
-                                          ),
-                                          _vm._v(
-                                            "\n             Pending for Approval\n           "
-                                          ),
-                                        ],
-                                        1
-                                      )
-                                    : _vm._e(),
-                                  _vm._v(" "),
-                                  item.deficiencyCount != 0
-                                    ? [
-                                        _c(
-                                          "v-chip",
-                                          {
-                                            attrs: {
-                                              "text-color": "white",
-                                              color: "error lighten-1",
-                                              small: "",
-                                            },
-                                            on: {
-                                              click: function ($event) {
-                                                return _vm.viewDeficiency(item)
-                                              },
-                                            },
-                                          },
-                                          [
-                                            _c(
-                                              "v-avatar",
-                                              { attrs: { left: "" } },
-                                              [
-                                                _c(
-                                                  "v-icon",
-                                                  { attrs: { small: "" } },
-                                                  [
-                                                    _vm._v(
-                                                      "mdi-clipboard-alert"
-                                                    ),
-                                                  ]
-                                                ),
-                                              ],
-                                              1
-                                            ),
-                                            _vm._v(
-                                              "\n               With Deficiency\n             "
-                                            ),
-                                          ],
-                                          1
-                                        ),
-                                      ]
-                                    : _vm._e(),
-                                ]
-                              : _vm._e(),
-                            _vm._v(" "),
-                            item.clearanceRequestCount == 0
-                              ? [
-                                  item.deficiencyCount == 0
-                                    ? [
-                                        _c(
-                                          "v-chip",
-                                          {
-                                            attrs: {
-                                              "text-color": "white",
-                                              color: "blue-grey lighten-1",
-                                              small: "",
-                                            },
-                                          },
-                                          [
-                                            _vm._v(
-                                              "\n               No deficiency\n             "
-                                            ),
-                                          ]
-                                        ),
-                                      ]
-                                    : [
-                                        _c(
-                                          "v-chip",
-                                          {
-                                            attrs: {
-                                              "text-color": "white",
-                                              color: "error lighten-1",
-                                              small: "",
-                                            },
-                                            on: {
-                                              click: function ($event) {
-                                                _vm.deficiencydialog = true
-                                              },
-                                            },
-                                          },
-                                          [
-                                            _c(
-                                              "v-avatar",
-                                              { attrs: { left: "" } },
-                                              [
-                                                _c(
-                                                  "v-icon",
-                                                  { attrs: { small: "" } },
-                                                  [
-                                                    _vm._v(
-                                                      "mdi-clipboard-alert"
-                                                    ),
-                                                  ]
-                                                ),
-                                              ],
-                                              1
-                                            ),
-                                            _vm._v(
-                                              "\n               With Deficiency\n             "
-                                            ),
-                                          ],
-                                          1
-                                        ),
-                                      ],
-                                ]
-                              : _vm._e(),
-                          ]
-                        : _vm._e(),
-                    ]
-                  },
-                },
-                _vm.stad
-                  ? {
-                      key: "item.actions",
-                      fn: function (ref) {
-                        var item = ref.item
-                        return [
-                          item.status == 0 && item.designee
-                            ? [
-                                item.clearanceRequestCount == 0
-                                  ? [
-                                      _c(
-                                        "v-btn",
-                                        {
-                                          staticClass: "ma-2",
-                                          attrs: {
-                                            color: "primary",
-                                            depressed: "",
-                                            small: "",
-                                          },
-                                          on: {
-                                            click: function ($event) {
-                                              return _vm.sendRequest(item)
-                                            },
-                                          },
-                                        },
-                                        [_vm._v("Click to Request Clearance")]
-                                      ),
-                                    ]
-                                  : [
-                                      item.deficiencyCount != 0
-                                        ? [
-                                            _c(
-                                              "v-btn",
-                                              {
-                                                staticClass: "ma-2",
-                                                attrs: {
-                                                  color: "error",
-                                                  depressed: "",
-                                                  small: "",
-                                                },
-                                                on: {
-                                                  click: function ($event) {
-                                                    return _vm.viewDeficiency(
-                                                      item
-                                                    )
-                                                  },
-                                                },
-                                              },
-                                              [_vm._v("View Deficiency")]
-                                            ),
-                                          ]
-                                        : _vm._e(),
-                                    ],
-                              ]
-                            : _vm._e(),
-                        ]
-                      },
-                    }
-                  : {
-                      key: "item.actions",
-                      fn: function (ref) {
-                        var item = ref.item
-                        return [
-                          _c(
-                            "v-btn",
-                            {
-                              staticClass: "ma-2",
-                              attrs: {
-                                color: "red",
-                                depressed: "",
-                                small: "",
-                                text: "",
-                              },
-                            },
-                            [_vm._v("Request for Clearance is Closed")]
-                          ),
-                        ]
-                      },
-                    },
-              ],
-              null,
-              true
-            ),
-          }),
-          _vm._v(" "),
-          _c("v-divider"),
-          _vm._v(" "),
-          _c(
-            "v-dialog",
-            {
-              attrs: { scrollable: "", "max-width": "500px" },
-              model: {
-                value: _vm.deficiencydialog,
-                callback: function ($$v) {
-                  _vm.deficiencydialog = $$v
-                },
-                expression: "deficiencydialog",
-              },
-            },
-            [
-              _c(
-                "v-card",
-                [
-                  _c("v-card-title", { staticClass: "headline" }, [
-                    _vm._v("Deficiency List\n         "),
-                    _c("span", { staticClass: "font-italic subtitle-2" }, [
-                      _vm._v(
-                        "\n           (From: " +
-                          _vm._s(_vm.deficiency_designee) +
-                          ")"
-                      ),
-                    ]),
-                  ]),
-                  _vm._v(" "),
-                  _c("v-divider"),
-                  _vm._v(" "),
-                  _c(
-                    "v-card-text",
-                    { staticStyle: { height: "300px" } },
-                    [
-                      _c(
-                        "v-list",
-                        { attrs: { subheader: "", "two-line": "" } },
-                        [
-                          _vm._l(_vm.deficiencies, function (deficiency) {
-                            return _c(
-                              "v-list-item",
-                              { key: deficiency.title },
-                              [
-                                _c(
-                                  "v-list-item-avatar",
-                                  [
-                                    deficiency.completed
-                                      ? _c(
-                                          "v-icon",
-                                          {
-                                            staticClass: "success lighten-1",
-                                            attrs: { dark: "" },
-                                          },
-                                          [_vm._v(" mdi-check ")]
-                                        )
-                                      : _c(
-                                          "v-icon",
-                                          {
-                                            staticClass: "error lighten-1",
-                                            attrs: { dark: "" },
-                                          },
-                                          [_vm._v(" mdi-alert ")]
-                                        ),
-                                  ],
-                                  1
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "v-list-item-content",
-                                  [
-                                    _c(
-                                      "v-list-item-title",
-                                      {
-                                        staticClass: "small",
-                                        attrs: { small: "" },
-                                      },
-                                      [_vm._v(_vm._s(deficiency.title))]
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "v-list-item-subtitle",
-                                      {
-                                        staticClass: "subtitle-2",
-                                        attrs: { small: "" },
-                                      },
-                                      [_vm._v("*" + _vm._s(deficiency.note))]
-                                    ),
-                                    _vm._v(" "),
-                                    _c("v-list-item-subtitle"),
-                                  ],
-                                  1
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "v-list-item-action",
-                                  [
-                                    _c("v-list-item-action-text", [
-                                      _vm._v(
-                                        _vm._s(
-                                          _vm._f("moment")(
-                                            deficiency.updated_at,
-                                            "from",
-                                            "now"
-                                          )
-                                        )
-                                      ),
-                                    ]),
-                                    _vm._v(" "),
-                                    deficiency.completed
-                                      ? _c(
-                                          "v-chip",
-                                          {
-                                            attrs: {
-                                              "text-color": "white",
-                                              color: "success",
-                                              "x-small": "",
-                                            },
-                                          },
-                                          [
-                                            _vm._v(
-                                              "\n                 Completed\n               "
-                                            ),
-                                          ]
-                                        )
-                                      : _c(
-                                          "v-chip",
-                                          {
-                                            attrs: {
-                                              "text-color": "white",
-                                              color: "warning",
-                                              "x-small": "",
-                                            },
-                                          },
-                                          [
-                                            _vm._v(
-                                              "\n                 Pending\n               "
-                                            ),
-                                          ]
-                                        ),
-                                  ],
-                                  1
-                                ),
-                              ],
-                              1
-                            )
-                          }),
-                          _vm._v(" "),
-                          _c("v-divider"),
-                        ],
-                        2
-                      ),
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c("v-divider"),
-                  _vm._v(" "),
-                  _c(
-                    "v-card-actions",
-                    [
-                      _c("v-spacer"),
-                      _vm._v(" "),
-                      _c(
-                        "v-btn",
-                        {
-                          attrs: { color: "green darken-1", text: "" },
-                          on: {
-                            click: function ($event) {
-                              _vm.deficiencydialog = false
-                            },
-                          },
-                        },
-                        [_vm._v("Close")]
-                      ),
-                    ],
-                    1
-                  ),
-                ],
-                1
-              ),
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-snackbar",
-            {
-              attrs: { bottom: "" },
-              model: {
-                value: _vm.snackbar,
-                callback: function ($$v) {
-                  _vm.snackbar = $$v
-                },
-                expression: "snackbar",
-              },
-            },
-            [
-              _vm._v("\n     " + _vm._s(_vm.text) + "\n\n     "),
-              _c(
-                "v-btn",
-                {
-                  attrs: { color: "pink", text: "" },
-                  on: {
-                    click: function ($event) {
-                      _vm.snackbar = false
-                    },
-                  },
-                },
-                [_vm._v(" Close ")]
-              ),
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-dialog",
-            {
-              attrs: { persistent: "", "max-width": "300" },
-              model: {
-                value: _vm.dialog,
-                callback: function ($$v) {
-                  _vm.dialog = $$v
-                },
-                expression: "dialog",
-              },
-            },
-            [
-              _c(
-                "v-card",
-                [
-                  _c("v-card-title", { staticClass: "headline" }, [
-                    _vm._v("\n         Send this Clearance Request?\n       "),
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "v-card-actions",
-                    [
-                      _c("v-spacer"),
-                      _vm._v(" "),
-                      _c(
-                        "v-btn",
-                        {
-                          attrs: { color: "green darken-1", text: "" },
-                          on: {
-                            click: function ($event) {
-                              _vm.dialog = false
-                            },
-                          },
-                        },
-                        [_vm._v("\n           Cancel\n         ")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "v-btn",
-                        {
-                          attrs: { color: "green darken-1", text: "" },
-                          on: {
-                            click: function ($event) {
-                              return _vm.approve()
-                            },
-                          },
-                        },
-                        [_vm._v("\n           Approve\n         ")]
-                      ),
-                    ],
-                    1
-                  ),
-                ],
-                1
-              ),
-            ],
-            1
-          ),
-        ],
-        2
-      )
-    : _vm.purposeVal == 0
-    ? _c(
-        "v-container",
-        [
-          _c(
-            "v-row",
-            {
-              staticClass: "pa-12",
-              attrs: { align: "center ", justify: "center" },
-            },
-            [
-              _c(
-                "v-alert",
-                {
-                  attrs: {
-                    icon: "mdi-shield-lock-outline",
-                    prominent: "",
-                    text: "",
-                    type: "info",
-                  },
-                },
-                [
-                  _c(
-                    "v-row",
-                    { staticClass: "pa-3", attrs: { align: "center" } },
-                    [
-                      _c("v-col", { staticClass: "grow" }, [
-                        _c("strong", [_vm._v("No purpose detected!")]),
-                        _vm._v(
-                          " Go to settings to setup your clearance purpose.\n   \n       "
-                        ),
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "v-col",
-                        { staticClass: "shrink" },
-                        [
-                          _c(
-                            "v-btn",
-                            {
-                              staticClass: "primary",
-                              attrs: {
-                                href: "/#/student/settings",
-                                elevation: "0",
-                              },
-                            },
-                            [_vm._v("Redirect to Settings")]
-                          ),
-                        ],
-                        1
-                      ),
-                    ],
-                    1
-                  ),
-                ],
-                1
-              ),
-            ],
-            1
-          ),
-        ],
-        1
-      )
-    : _c("v-container")
+  return _c("OSCSACctiveClearaneTable")
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -32625,42 +32182,18 @@ var render = function () {
       _c(
         "v-navigation-drawer",
         {
-          attrs: {
-            color: "#1d232e",
-            width: "220px",
-            src: "images/sidebar/sidebar-2.jpg",
-            dark: "",
-            app: "",
-          },
+          attrs: { color: "#262f3d", width: "220px", dark: "", app: "" },
           scopedSlots: _vm._u([
-            {
-              key: "img",
-              fn: function (props) {
-                return [
-                  _c(
-                    "v-img",
-                    _vm._b(
-                      {
-                        attrs: {
-                          gradient:
-                            "to bottom left, rgba(00,00,00,.7), rgba(00,00,00,.7)",
-                        },
-                      },
-                      "v-img",
-                      props,
-                      false
-                    )
-                  ),
-                ]
-              },
-            },
             {
               key: "prepend",
               fn: function () {
                 return [
                   _c(
                     "v-list-item",
-                    { staticClass: "margin-bottom:0" },
+                    {
+                      staticClass: "margin-bottom:0",
+                      staticStyle: { "background-color": "#1d232e !important" },
+                    },
                     [
                       _c(
                         "v-list-item-avatar",
@@ -32764,7 +32297,6 @@ var render = function () {
         },
         [
           _vm._v(" "),
-          _vm._v(" "),
           _c(
             "div",
             {
@@ -32831,10 +32363,7 @@ var render = function () {
                             "v-list-group",
                             {
                               key: item.text,
-                              attrs: {
-                                "append-icon": "",
-                                color: "grey lighten-2",
-                              },
+                              attrs: { "append-icon": "" },
                               scopedSlots: _vm._u(
                                 [
                                   {
@@ -33076,6 +32605,15 @@ var render = function () {
             },
           }),
           _vm._v(" "),
+          _c("v-img", {
+            attrs: {
+              src: "/images/OSCS_LOGO.jpg",
+              "max-height": "100",
+              "max-width": "100",
+              alt: "OSCS Logo",
+            },
+          }),
+          _vm._v(" "),
           _c(
             "v-toolbar-title",
             {
@@ -33083,7 +32621,10 @@ var render = function () {
                 "ml-0 pl-4 font-weight-medium blue-grey--text text--darken-4",
               staticStyle: { width: "300px" },
             },
-            [_c("span", [_vm._v(_vm._s(_vm.currentRouteName))])]
+            [
+              _vm._v("\n      | "),
+              _c("span", [_vm._v(_vm._s(_vm.currentRouteName))]),
+            ]
           ),
           _vm._v(" "),
           _c("v-spacer"),
@@ -33210,11 +32751,59 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "v-sheet",
+    "v-container",
     [
       _c(
         "v-card",
         [
+          _c(
+            "v-card-subtitle",
+            {
+              staticClass: "white--text text-uppercase elevation-2 mb-0 pb-1",
+              staticStyle: {
+                background:
+                  "linear-gradient(to left, #1A237E, #1A237E, #0D47A1)",
+              },
+            },
+            [
+              _c("span", { staticClass: "text-h6" }, [
+                _vm._v(" Clearance List "),
+              ]),
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "v-card-title",
+            {
+              staticClass: "white--text elevation-2 mb-0 pb-0 mt-0 pt-0",
+              staticStyle: {
+                background:
+                  "linear-gradient(to left, #1A237E, #1A237E, #0D47A1)",
+              },
+            },
+            [
+              _c("v-text-field", {
+                staticClass: "mb-0 pb-0 mt-0 pt-0",
+                attrs: {
+                  "append-icon": "mdi-magnify",
+                  label: "Search",
+                  "solo-inverted": "",
+                  flat: "",
+                  dark: "",
+                  dense: "",
+                },
+                model: {
+                  value: _vm.search,
+                  callback: function ($$v) {
+                    _vm.search = $$v
+                  },
+                  expression: "search",
+                },
+              }),
+            ],
+            1
+          ),
+          _vm._v(" "),
           _c(
             "v-container",
             [
@@ -33404,11 +32993,59 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "v-sheet",
+    "v-container",
     [
       _c(
         "v-card",
         [
+          _c(
+            "v-card-subtitle",
+            {
+              staticClass: "white--text text-uppercase elevation-2 mb-0 pb-1",
+              staticStyle: {
+                background:
+                  "linear-gradient(to left, #1A237E, #1A237E, #0D47A1)",
+              },
+            },
+            [
+              _c("span", { staticClass: "text-h6" }, [
+                _vm._v(" Clearance List "),
+              ]),
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "v-card-title",
+            {
+              staticClass: "white--text elevation-2 mb-0 pb-0 mt-0 pt-0",
+              staticStyle: {
+                background:
+                  "linear-gradient(to left, #1A237E, #1A237E, #0D47A1)",
+              },
+            },
+            [
+              _c("v-text-field", {
+                staticClass: "mb-0 pb-0 mt-0 pt-0",
+                attrs: {
+                  "append-icon": "mdi-magnify",
+                  label: "Search",
+                  "solo-inverted": "",
+                  flat: "",
+                  dark: "",
+                  dense: "",
+                },
+                model: {
+                  value: _vm.search,
+                  callback: function ($$v) {
+                    _vm.search = $$v
+                  },
+                  expression: "search",
+                },
+              }),
+            ],
+            1
+          ),
+          _vm._v(" "),
           _c(
             "v-container",
             [
@@ -34423,16 +34060,58 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "v-sheet",
+    "v-container",
     [
       _c(
         "v-card",
         [
           _c(
+            "v-card-subtitle",
+            {
+              staticClass: "white--text text-uppercase elevation-2 mb-0 pb-1",
+              staticStyle: {
+                background:
+                  "linear-gradient(to left, #1A237E, #1A237E, #0D47A1)",
+              },
+            },
+            [
+              _c("span", { staticClass: "text-h6" }, [
+                _vm._v(" Deficiency List"),
+              ]),
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "v-card-title",
+            {
+              staticClass: "white--text elevation-2 mb-0 pb-0 mt-0 pt-0",
+              staticStyle: {
+                background:
+                  "linear-gradient(to left, #1A237E, #1A237E, #0D47A1)",
+              },
+            },
+            [
+              _c("v-text-field", {
+                staticClass: "mb-0 pb-0 mt-2 pt-0",
+                attrs: {
+                  "append-icon": "mdi-magnify",
+                  label: "Search",
+                  "solo-inverted": "",
+                  flat: "",
+                  dark: "",
+                  dense: "",
+                },
+                on: { input: _vm.searchIt },
+              }),
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
             "v-container",
             [
               _c("v-data-table", {
-                staticClass: "elevation-0",
+                staticClass: "px-6 pb-6  mt-1",
                 attrs: {
                   "item-key": "id",
                   loading: _vm.loading,
@@ -34457,36 +34136,6 @@ var render = function () {
                   },
                 },
                 scopedSlots: _vm._u([
-                  {
-                    key: "top",
-                    fn: function () {
-                      return [
-                        _c("v-text-field", {
-                          attrs: {
-                            "append-icon": "mdi-magnify",
-                            label: "Search",
-                          },
-                          on: { input: _vm.searchIt },
-                        }),
-                        _vm._v(" "),
-                        _c(
-                          "v-toolbar",
-                          { attrs: { flat: "", color: "white" } },
-                          [
-                            _c("div", { staticClass: "overline text-h6" }, [
-                              _vm._v(
-                                "\n            Deficiency List\n            \n          "
-                              ),
-                            ]),
-                            _vm._v(" "),
-                            _c("v-spacer"),
-                          ],
-                          1
-                        ),
-                      ]
-                    },
-                    proxy: true,
-                  },
                   {
                     key: "item.id",
                     fn: function (ref) {
@@ -36661,7 +36310,7 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "v-sheet",
+    "v-container",
     [
       _c(
         "v-card",
@@ -37629,6 +37278,250 @@ var render = function () {
     [
       _c(
         "v-col",
+        { attrs: { cols: "12", sm: "12", md: "8" } },
+        [
+          _c(
+            "v-card",
+            {
+              staticClass: "transparent rounded-lg pa-0",
+              attrs: { elevation: "2" },
+            },
+            [
+              _c(
+                "v-sheet",
+                {
+                  staticClass:
+                    "transparent\n                grey--text\n                text--darken-2\n                \n                ",
+                },
+                [
+                  _c(
+                    "v-card-title",
+                    { staticClass: " align-self-start" },
+                    [
+                      _c(
+                        "v-list-item",
+                        { attrs: { "two-line": "" } },
+                        [
+                          _c(
+                            "v-list-item-content",
+                            [
+                              _c(
+                                "v-list-item-title",
+                                { staticClass: " font-semibold" },
+                                [
+                                  _c(
+                                    "span",
+                                    { staticClass: " font-semibold" },
+                                    [_vm._v("Clearance Requests Status")]
+                                  ),
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c("v-list-item-subtitle", [
+                                _vm._v(_vm._s(_vm.semester)),
+                              ]),
+                            ],
+                            1
+                          ),
+                        ],
+                        1
+                      ),
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-card-text",
+                    [
+                      _c(
+                        "v-row",
+                        [
+                          _c(
+                            "v-col",
+                            { attrs: { sm: "6", cols: "12" } },
+                            [
+                              _c("Apex", {
+                                attrs: {
+                                  datas: [_vm.pendingRequest],
+                                  pendingR: [_vm.pendingRequest],
+                                },
+                              }),
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-col",
+                            {
+                              staticClass:
+                                " d-flex flex-column justify-center pl-8",
+                              attrs: { sm: "6", cols: "12" },
+                            },
+                            [
+                              _c(
+                                "div",
+                                { staticClass: "d-flex align-center" },
+                                [
+                                  _c(
+                                    "v-avatar",
+                                    {
+                                      staticClass: "rounded font-bold",
+                                      staticStyle: {
+                                        background: "rgba(145, 85, 253, .05)",
+                                      },
+                                    },
+                                    [
+                                      _c(
+                                        "v-icon",
+                                        {
+                                          staticClass:
+                                            "deep-purple--text text--darken-3 text--accent-2 font-bold",
+                                        },
+                                        [_vm._v("mdi-note-text")]
+                                      ),
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    { staticClass: "ms-4 d-flex flex-column" },
+                                    [
+                                      _c(
+                                        "p",
+                                        {
+                                          staticClass:
+                                            "grey--text text--darken-1 mb-0 text-base",
+                                        },
+                                        [_vm._v(" Total Clearance Request ")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "span",
+                                        {
+                                          staticClass:
+                                            "grey--text text--darken-3 font-semibold text-xl",
+                                        },
+                                        [
+                                          _vm._v(
+                                            _vm._s(
+                                              Number(
+                                                _vm.pendingRequest +
+                                                  _vm.approvedRequest
+                                              ).toLocaleString()
+                                            )
+                                          ),
+                                        ]
+                                      ),
+                                    ]
+                                  ),
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c("v-divider", {
+                                staticClass: "ma-4",
+                                attrs: { dark: "" },
+                              }),
+                              _vm._v(" "),
+                              _c("table", [
+                                _c("tr", [
+                                  _c("td", { staticClass: "pb-4" }, [
+                                    _c("div", { staticClass: "mb-0" }, [
+                                      _c("div", {
+                                        staticClass:
+                                          "pa-1 d-inline-block rounded-circle me-2",
+                                        staticStyle: { background: "#2E7D32" },
+                                      }),
+                                      _vm._v(" "),
+                                      _c(
+                                        "span",
+                                        {
+                                          staticClass:
+                                            "grey--text text--darken-1",
+                                        },
+                                        [_vm._v("Approved Requests")]
+                                      ),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c(
+                                      "span",
+                                      {
+                                        staticClass:
+                                          " text-base grey--text text--darken-3 font-semibold ms-4",
+                                      },
+                                      [
+                                        _vm._v(
+                                          _vm._s(
+                                            Number(
+                                              _vm.approvedRequest
+                                            ).toLocaleString()
+                                          )
+                                        ),
+                                      ]
+                                    ),
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("td", { staticClass: "pb-4" }, [
+                                    _c("div", { staticClass: "mb-0" }, [
+                                      _c("div", {
+                                        staticClass:
+                                          "pa-1 d-inline-block rounded-circle me-2",
+                                        staticStyle: {
+                                          background: "rgba(255,180,0,1)",
+                                        },
+                                      }),
+                                      _vm._v(" "),
+                                      _c(
+                                        "span",
+                                        {
+                                          staticClass:
+                                            "grey--text text--darken-1",
+                                        },
+                                        [_vm._v("Pending Requests")]
+                                      ),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c(
+                                      "span",
+                                      {
+                                        staticClass:
+                                          " text-base grey--text text--darken-3 font-semibold ms-4",
+                                      },
+                                      [
+                                        _vm._v(
+                                          _vm._s(
+                                            Number(
+                                              _vm.pendingRequest
+                                            ).toLocaleString()
+                                          )
+                                        ),
+                                      ]
+                                    ),
+                                  ]),
+                                ]),
+                              ]),
+                            ],
+                            1
+                          ),
+                        ],
+                        1
+                      ),
+                    ],
+                    1
+                  ),
+                ],
+                1
+              ),
+            ],
+            1
+          ),
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-col",
         { attrs: { lg: "6", sm: "6", cols: "12" } },
         [
           _c(
@@ -37648,7 +37541,7 @@ var render = function () {
                         [
                           _c("v-list-item-title", { staticClass: "headline" }, [
                             _vm._v(
-                              "\n                   Completed Clearance\n                "
+                              "\n                   Completed Clearances\n                "
                             ),
                           ]),
                           _vm._v(" "),
@@ -52176,29 +52069,32 @@ var render = function () {
                                                             "v-card-title",
                                                             {
                                                               staticClass:
-                                                                "headline font-weight-500 justify-space-between",
+                                                                "white--text text-uppercase elevation-2 mb-0 pb-1 justify-space-between",
+                                                              staticStyle: {
+                                                                background:
+                                                                  "linear-gradient(to left, #1A237E, #1A237E, #0D47A1)",
+                                                              },
                                                             },
                                                             [
-                                                              _c("span", [
-                                                                _c(
-                                                                  "h1",
-                                                                  {
-                                                                    staticClass:
-                                                                      "text-center overline primary--text text--accent4",
-                                                                  },
-                                                                  [
-                                                                    _vm._v(
-                                                                      "\n                                  Activate Account\n                                "
-                                                                    ),
-                                                                  ]
-                                                                ),
-                                                              ]),
+                                                              _c(
+                                                                "span",
+                                                                {
+                                                                  staticClass:
+                                                                    "text-h6",
+                                                                },
+                                                                [
+                                                                  _vm._v(
+                                                                    "  Activate Account "
+                                                                  ),
+                                                                ]
+                                                              ),
                                                               _vm._v(" "),
                                                               _c(
                                                                 "v-btn",
                                                                 {
                                                                   attrs: {
                                                                     icon: "",
+                                                                    dark: "",
                                                                   },
                                                                   on: {
                                                                     click:
@@ -57422,11 +57318,59 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "v-sheet",
+    "v-container",
     [
       _c(
         "v-card",
         [
+          _c(
+            "v-card-subtitle",
+            {
+              staticClass: "white--text text-uppercase elevation-2 mb-0 pb-1",
+              staticStyle: {
+                background:
+                  "linear-gradient(to left, #1A237E, #1A237E, #0D47A1)",
+              },
+            },
+            [
+              _c("span", { staticClass: "text-h6" }, [
+                _vm._v(" Clearance List "),
+              ]),
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "v-card-title",
+            {
+              staticClass: "white--text elevation-2 mb-0 pb-0 mt-0 pt-0",
+              staticStyle: {
+                background:
+                  "linear-gradient(to left, #1A237E, #1A237E, #0D47A1)",
+              },
+            },
+            [
+              _c("v-text-field", {
+                staticClass: "mb-0 pb-0 mt-0 pt-0",
+                attrs: {
+                  "append-icon": "mdi-magnify",
+                  label: "Search",
+                  "solo-inverted": "",
+                  flat: "",
+                  dark: "",
+                  dense: "",
+                },
+                model: {
+                  value: _vm.search,
+                  callback: function ($$v) {
+                    _vm.search = $$v
+                  },
+                  expression: "search",
+                },
+              }),
+            ],
+            1
+          ),
+          _vm._v(" "),
           _c(
             "v-container",
             [
@@ -57616,13 +57560,271 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "v-sheet",
+    "v-container",
     [
+      _vm.editedIndex > -1
+        ? _c(
+            "v-dialog",
+            {
+              attrs: { persistent: "", "max-width": "400" },
+              model: {
+                value: _vm.dialog,
+                callback: function ($$v) {
+                  _vm.dialog = $$v
+                },
+                expression: "dialog",
+              },
+            },
+            [
+              _c(
+                "v-card",
+                [
+                  _c(
+                    "v-card-subtitle",
+                    {
+                      staticClass:
+                        "white--text text-uppercase elevation-2 pt-4",
+                      staticStyle: {
+                        background:
+                          "linear-gradient(to left, #1A237E, #1A237E, #0D47A1)",
+                      },
+                    },
+                    [
+                      _c("span", { staticClass: "text-h6" }, [
+                        _vm._v(" Approving Request "),
+                      ]),
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("v-card-text", { staticClass: "pt-4" }, [
+                    _vm._v(
+                      "This will certifiy that " +
+                        _vm._s(_vm.studentName) +
+                        " is cleared from any property and money responsibility as of this date."
+                    ),
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "v-card-actions",
+                    [
+                      _c("v-spacer"),
+                      _vm._v(" "),
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: { color: "green darken-1", text: "" },
+                          on: {
+                            click: function ($event) {
+                              _vm.dialog = false
+                            },
+                          },
+                        },
+                        [_vm._v("\n          Cancel\n        ")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: { color: "green darken-1", text: "" },
+                          on: {
+                            click: function ($event) {
+                              return _vm.approve()
+                            },
+                          },
+                        },
+                        [_vm._v("\n          Approve\n        ")]
+                      ),
+                    ],
+                    1
+                  ),
+                ],
+                1
+              ),
+            ],
+            1
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _c(
+        "v-dialog",
+        {
+          attrs: { persistent: "", "max-width": "500" },
+          model: {
+            value: _vm.deferDialog,
+            callback: function ($$v) {
+              _vm.deferDialog = $$v
+            },
+            expression: "deferDialog",
+          },
+        },
+        [
+          _c(
+            "v-card",
+            [
+              _c(
+                "v-card-subtitle",
+                {
+                  staticClass: "white--text text-uppercase elevation-2 pt-4",
+                  staticStyle: {
+                    background:
+                      "linear-gradient(to left, #1A237E, #1A237E, #0D47A1)",
+                  },
+                },
+                [
+                  _c("span", { staticClass: "text-h6" }, [
+                    _vm._v("Add Deficiency "),
+                  ]),
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "v-card-text",
+                { staticClass: "pt-4" },
+                [
+                  _c(
+                    "v-col",
+                    { attrs: { cols: "12", sm: "12", md: "12" } },
+                    [
+                      _c("v-text-field", {
+                        staticClass: "elevation-0",
+                        attrs: {
+                          filled: "",
+                          label: "Item of Deficiency*",
+                          required: "",
+                        },
+                        model: {
+                          value: _vm.deficiency.title,
+                          callback: function ($$v) {
+                            _vm.$set(_vm.deficiency, "title", $$v)
+                          },
+                          expression: "deficiency.title",
+                        },
+                      }),
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-col",
+                    { attrs: { cols: "12", sm: "12", md: "12" } },
+                    [
+                      _c("v-textarea", {
+                        attrs: {
+                          filled: "",
+                          label: "Additional Information",
+                          hint: "Notes or Instructions for student",
+                        },
+                        model: {
+                          value: _vm.deficiency.note,
+                          callback: function ($$v) {
+                            _vm.$set(_vm.deficiency, "note", $$v)
+                          },
+                          expression: "deficiency.note",
+                        },
+                      }),
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("small", [_vm._v("*indicates required field")]),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-card-actions",
+                [
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { color: "blue darken-1", text: "" },
+                      on: {
+                        click: function ($event) {
+                          _vm.deferDialog = false
+                        },
+                      },
+                    },
+                    [_vm._v("Close")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { color: "blue darken-1", text: "" },
+                      on: {
+                        click: function ($event) {
+                          return _vm.deferItem()
+                        },
+                      },
+                    },
+                    [_vm._v("Save")]
+                  ),
+                ],
+                1
+              ),
+            ],
+            1
+          ),
+        ],
+        1
+      ),
+      _vm._v(" "),
       _c(
         "v-card",
         [
+          _c(
+            "v-card-subtitle",
+            {
+              staticClass: "white--text text-uppercase elevation-2 mb-0 pb-1",
+              staticStyle: {
+                background:
+                  "linear-gradient(to left, #1A237E, #1A237E, #0D47A1)",
+              },
+            },
+            [
+              _c("span", { staticClass: "text-h6" }, [
+                _vm._v(" Clearance Requests "),
+              ]),
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "v-card-title",
+            {
+              staticClass: "white--text elevation-2 mb-0 pb-0 mt-0 pt-0",
+              staticStyle: {
+                background:
+                  "linear-gradient(to left, #1A237E, #1A237E, #0D47A1)",
+              },
+            },
+            [
+              _c("v-text-field", {
+                staticClass: "mb-0 pb-0 mt-2 pt-0",
+                attrs: {
+                  "append-icon": "mdi-magnify",
+                  label: "Search",
+                  "solo-inverted": "",
+                  flat: "",
+                  dark: "",
+                  dense: "",
+                },
+                on: { input: _vm.searchIt },
+                model: {
+                  value: _vm.searchItem,
+                  callback: function ($$v) {
+                    _vm.searchItem = $$v
+                  },
+                  expression: "searchItem",
+                },
+              }),
+            ],
+            1
+          ),
+          _vm._v(" "),
           _c("v-data-table", {
-            staticClass: "elevation-0",
+            staticClass: "px-6 pb-6  mt-2",
             attrs: {
               "item-key": "id",
               loading: _vm.loading,
@@ -57634,7 +57836,6 @@ var render = function () {
               options: _vm.options,
               "server-items-length": _vm.totalclearancerequests,
               "items-per-page": 10,
-              "sort-by": _vm.actions,
               "footer-props": {
                 itemsPerPageOptions: [5, 10, 15],
                 itemsPerPageText: "Clearance Request Per Page",
@@ -57648,309 +57849,6 @@ var render = function () {
               },
             },
             scopedSlots: _vm._u([
-              {
-                key: "top",
-                fn: function () {
-                  return [
-                    _c(
-                      "v-col",
-                      { attrs: { cols: "12", sm: "4" } },
-                      [
-                        _c("v-text-field", {
-                          attrs: {
-                            "append-icon": "mdi-magnify",
-                            label: "Search",
-                          },
-                          on: { input: _vm.searchIt },
-                          model: {
-                            value: _vm.searchItem,
-                            callback: function ($$v) {
-                              _vm.searchItem = $$v
-                            },
-                            expression: "searchItem",
-                          },
-                        }),
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "v-toolbar",
-                      { attrs: { flat: "", color: "white" } },
-                      [
-                        _c("div", { staticClass: "overline text-h6" }, [
-                          _vm._v(
-                            "\n            Clearance Request List\n             \n          "
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("v-spacer"),
-                        _vm._v(" "),
-                        _vm.editedIndex > -1
-                          ? _c(
-                              "v-dialog",
-                              {
-                                attrs: { persistent: "", "max-width": "300" },
-                                model: {
-                                  value: _vm.dialog,
-                                  callback: function ($$v) {
-                                    _vm.dialog = $$v
-                                  },
-                                  expression: "dialog",
-                                },
-                              },
-                              [
-                                _c(
-                                  "v-card",
-                                  [
-                                    _c(
-                                      "v-card-title",
-                                      { staticClass: "headline" },
-                                      [
-                                        _vm._v(
-                                          "\n        Approve this Clearance Request?\n      "
-                                        ),
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c("v-card-text", [
-                                      _vm._v(
-                                        "This will certifiy that " +
-                                          _vm._s(_vm.studentName) +
-                                          " is cleared from any property and money responsibility as of this date."
-                                      ),
-                                    ]),
-                                    _vm._v(" "),
-                                    _c(
-                                      "v-card-actions",
-                                      [
-                                        _c("v-spacer"),
-                                        _vm._v(" "),
-                                        _c(
-                                          "v-btn",
-                                          {
-                                            attrs: {
-                                              color: "green darken-1",
-                                              text: "",
-                                            },
-                                            on: {
-                                              click: function ($event) {
-                                                _vm.dialog = false
-                                              },
-                                            },
-                                          },
-                                          [
-                                            _vm._v(
-                                              "\n          Cancel\n        "
-                                            ),
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "v-btn",
-                                          {
-                                            attrs: {
-                                              color: "green darken-1",
-                                              text: "",
-                                            },
-                                            on: {
-                                              click: function ($event) {
-                                                return _vm.approve()
-                                              },
-                                            },
-                                          },
-                                          [
-                                            _vm._v(
-                                              "\n          Approve\n        "
-                                            ),
-                                          ]
-                                        ),
-                                      ],
-                                      1
-                                    ),
-                                  ],
-                                  1
-                                ),
-                              ],
-                              1
-                            )
-                          : _vm._e(),
-                        _vm._v(" "),
-                        _c(
-                          "v-dialog",
-                          {
-                            attrs: { persistent: "", "max-width": "600px" },
-                            model: {
-                              value: _vm.deferDialog,
-                              callback: function ($$v) {
-                                _vm.deferDialog = $$v
-                              },
-                              expression: "deferDialog",
-                            },
-                          },
-                          [
-                            _c(
-                              "v-card",
-                              [
-                                _c("v-card-title", [
-                                  _c("span", { staticClass: "headline" }, [
-                                    _vm._v("Add Deficiency"),
-                                  ]),
-                                ]),
-                                _vm._v(" "),
-                                _c(
-                                  "v-card-text",
-                                  [
-                                    _c(
-                                      "v-container",
-                                      [
-                                        _c(
-                                          "v-row",
-                                          [
-                                            _c(
-                                              "v-col",
-                                              {
-                                                attrs: {
-                                                  cols: "12",
-                                                  sm: "12",
-                                                  md: "12",
-                                                },
-                                              },
-                                              [
-                                                _c("v-text-field", {
-                                                  attrs: {
-                                                    label:
-                                                      "Item of Deficiency*",
-                                                    required: "",
-                                                  },
-                                                  model: {
-                                                    value: _vm.deficiency.title,
-                                                    callback: function ($$v) {
-                                                      _vm.$set(
-                                                        _vm.deficiency,
-                                                        "title",
-                                                        $$v
-                                                      )
-                                                    },
-                                                    expression:
-                                                      "deficiency.title",
-                                                  },
-                                                }),
-                                              ],
-                                              1
-                                            ),
-                                            _vm._v(" "),
-                                            _c(
-                                              "v-col",
-                                              {
-                                                attrs: {
-                                                  cols: "12",
-                                                  sm: "12",
-                                                  md: "12",
-                                                },
-                                              },
-                                              [
-                                                _c("v-textarea", {
-                                                  attrs: {
-                                                    label:
-                                                      "Additional Information",
-                                                    hint: "Notes or Instructions for student",
-                                                  },
-                                                  model: {
-                                                    value: _vm.deficiency.note,
-                                                    callback: function ($$v) {
-                                                      _vm.$set(
-                                                        _vm.deficiency,
-                                                        "note",
-                                                        $$v
-                                                      )
-                                                    },
-                                                    expression:
-                                                      "deficiency.note",
-                                                  },
-                                                }),
-                                              ],
-                                              1
-                                            ),
-                                          ],
-                                          1
-                                        ),
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c("small", [
-                                      _vm._v("*indicates required field"),
-                                    ]),
-                                  ],
-                                  1
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "v-card-actions",
-                                  [
-                                    _c("v-spacer"),
-                                    _vm._v(" "),
-                                    _c(
-                                      "v-btn",
-                                      {
-                                        attrs: {
-                                          color: "blue darken-1",
-                                          text: "",
-                                        },
-                                        on: {
-                                          click: function ($event) {
-                                            _vm.deferDialog = false
-                                          },
-                                        },
-                                      },
-                                      [_vm._v("Close")]
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "v-btn",
-                                      {
-                                        attrs: {
-                                          color: "blue darken-1",
-                                          text: "",
-                                        },
-                                        on: {
-                                          click: function ($event) {
-                                            return _vm.deferItem()
-                                          },
-                                        },
-                                      },
-                                      [_vm._v("Save")]
-                                    ),
-                                  ],
-                                  1
-                                ),
-                              ],
-                              1
-                            ),
-                          ],
-                          1
-                        ),
-                      ],
-                      1
-                    ),
-                  ]
-                },
-                proxy: true,
-              },
-              {
-                key: "item.id",
-                fn: function (ref) {
-                  var item = ref.item
-                  return [
-                    _c("td", [
-                      _vm._v(
-                        _vm._s(_vm.clearancerequests.data.indexOf(item) + 1)
-                      ),
-                    ]),
-                  ]
-                },
-              },
               {
                 key: "item.request_at",
                 fn: function (ref) {
@@ -57982,36 +57880,31 @@ var render = function () {
                   var item = ref.item
                   return [
                     [
-                      !item.deficiencies.deficiencies_count
-                        ? _c(
-                            "v-btn",
-                            {
-                              staticClass: "ma-2",
-                              attrs: {
-                                color: "success",
-                                depressed: "",
-                                "x-small": "",
-                              },
-                              on: {
-                                click: function ($event) {
-                                  return _vm.editItem(item)
-                                },
-                              },
+                      _c(
+                        "v-btn",
+                        {
+                          staticClass: "ma-2 pr-5 pl-4 text-center",
+                          attrs: {
+                            color: "success",
+                            depressed: "",
+                            "x-small": "",
+                          },
+                          on: {
+                            click: function ($event) {
+                              return _vm.editItem(item)
                             },
-                            [
-                              _c(
-                                "v-icon",
-                                { attrs: { dark: "", "x-small": "" } },
-                                [
-                                  _vm._v(
-                                    "\n        mdi-check-circle-outline\n      "
-                                  ),
-                                ]
-                              ),
-                            ],
-                            1
-                          )
-                        : _vm._e(),
+                          },
+                        },
+                        [
+                          _c("v-icon", { attrs: { dark: "", "x-small": "" } }, [
+                            _vm._v(
+                              "\n        mdi-check-circle-outline\n      "
+                            ),
+                          ]),
+                          _vm._v("APPROVE"),
+                        ],
+                        1
+                      ),
                     ],
                     _vm._v(" "),
                     [
@@ -58036,6 +57929,7 @@ var render = function () {
                               "\n        mdi-close-circle-outline\n      "
                             ),
                           ]),
+                          _vm._v("DISAPPROVE"),
                         ],
                         1
                       ),
@@ -58642,13 +58536,62 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "v-sheet",
+    "v-container",
     [
       _c(
         "v-card",
         [
+          _c(
+            "v-card-subtitle",
+            {
+              staticClass: "white--text text-uppercase elevation-2 mb-0 pb-1",
+              staticStyle: {
+                background:
+                  "linear-gradient(to left, #1A237E, #1A237E, #0D47A1)",
+              },
+            },
+            [
+              _c("span", { staticClass: "text-h6" }, [
+                _vm._v("  Approved Requests "),
+              ]),
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "v-card-title",
+            {
+              staticClass: "white--text elevation-2 mb-0 pb-0 mt-0 pt-0",
+              staticStyle: {
+                background:
+                  "linear-gradient(to left, #1A237E, #1A237E, #0D47A1)",
+              },
+            },
+            [
+              _c("v-text-field", {
+                staticClass: "mb-0 pb-0 mt-2 pt-0",
+                attrs: {
+                  "append-icon": "mdi-magnify",
+                  label: "Search",
+                  "solo-inverted": "",
+                  flat: "",
+                  dark: "",
+                  dense: "",
+                },
+                on: { input: _vm.searchIt },
+                model: {
+                  value: _vm.searchItem,
+                  callback: function ($$v) {
+                    _vm.searchItem = $$v
+                  },
+                  expression: "searchItem",
+                },
+              }),
+            ],
+            1
+          ),
+          _vm._v(" "),
           _c("v-data-table", {
-            staticClass: "elevation-0",
+            staticClass: "px-6 pb-6  mt-4",
             attrs: {
               "item-key": "id",
               loading: _vm.loading,
@@ -58695,63 +58638,6 @@ var render = function () {
                         ),
                       ]
                     ),
-                  ]
-                },
-              },
-              {
-                key: "top",
-                fn: function () {
-                  return [
-                    _c(
-                      "v-col",
-                      { attrs: { cols: "12", sm: "4" } },
-                      [
-                        _c("v-text-field", {
-                          attrs: {
-                            "append-icon": "mdi-magnify",
-                            label: "Search",
-                          },
-                          on: { input: _vm.searchIt },
-                          model: {
-                            value: _vm.searchItem,
-                            callback: function ($$v) {
-                              _vm.searchItem = $$v
-                            },
-                            expression: "searchItem",
-                          },
-                        }),
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "v-toolbar",
-                      { attrs: { flat: "", color: "white" } },
-                      [
-                        _c("div", { staticClass: "overline text-h6" }, [
-                          _vm._v(
-                            "\n            Approved Clearance Request List\n            \n          "
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("v-spacer"),
-                      ],
-                      1
-                    ),
-                  ]
-                },
-                proxy: true,
-              },
-              {
-                key: "item.id",
-                fn: function (ref) {
-                  var item = ref.item
-                  return [
-                    _c("td", [
-                      _vm._v(
-                        _vm._s(_vm.clearancerequests.data.indexOf(item) + 1)
-                      ),
-                    ]),
                   ]
                 },
               },
@@ -59079,16 +58965,65 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "v-sheet",
+    "v-container",
     [
       _c(
         "v-card",
         [
           _c(
+            "v-card-subtitle",
+            {
+              staticClass: "white--text text-uppercase elevation-2 mb-0 pb-1",
+              staticStyle: {
+                background:
+                  "linear-gradient(to left, #1A237E, #1A237E, #0D47A1)",
+              },
+            },
+            [
+              _c("span", { staticClass: "text-h6" }, [
+                _vm._v(" Student Deficiencies "),
+              ]),
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "v-card-title",
+            {
+              staticClass: "white--text elevation-2 mb-0 pb-0 mt-0 pt-0",
+              staticStyle: {
+                background:
+                  "linear-gradient(to left, #1A237E, #1A237E, #0D47A1)",
+              },
+            },
+            [
+              _c("v-text-field", {
+                staticClass: "mb-0 pb-0 mt-2 pt-0",
+                attrs: {
+                  "append-icon": "mdi-magnify",
+                  label: "Search",
+                  "solo-inverted": "",
+                  flat: "",
+                  dark: "",
+                  dense: "",
+                },
+                on: { input: _vm.searchIt },
+                model: {
+                  value: _vm.searchItem,
+                  callback: function ($$v) {
+                    _vm.searchItem = $$v
+                  },
+                  expression: "searchItem",
+                },
+              }),
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
             "v-container",
             [
               _c("v-data-table", {
-                staticClass: "elevation-0",
+                staticClass: "px-6 pb-6  mt-4",
                 attrs: {
                   "item-key": "id",
                   loading: _vm.loading,
@@ -59100,7 +59035,6 @@ var render = function () {
                   options: _vm.options,
                   "server-items-length": _vm.totaldeficiencies,
                   "items-per-page": 10,
-                  "show-select": "",
                   "footer-props": {
                     itemsPerPageOptions: [5, 10, 15],
                     itemsPerPageText: "Deficiency Per Page",
@@ -59121,7 +59055,7 @@ var render = function () {
                         _c(
                           "v-dialog",
                           {
-                            attrs: { persistent: "", "max-width": "600px" },
+                            attrs: { persistent: "", "max-width": "500" },
                             model: {
                               value: _vm.editdialog,
                               callback: function ($$v) {
@@ -59134,11 +59068,22 @@ var render = function () {
                             _c(
                               "v-card",
                               [
-                                _c("v-card-title", [
-                                  _c("span", { staticClass: "headline" }, [
-                                    _vm._v("Edit Deficiency"),
-                                  ]),
-                                ]),
+                                _c(
+                                  "v-card-title",
+                                  {
+                                    staticClass:
+                                      "white--text text-uppercase elevation-2 ",
+                                    staticStyle: {
+                                      background:
+                                        "linear-gradient(to left, #1A237E, #1A237E, #0D47A1)",
+                                    },
+                                  },
+                                  [
+                                    _c("span", { staticClass: "text-h6" }, [
+                                      _vm._v("Edit Deficiency "),
+                                    ]),
+                                  ]
+                                ),
                                 _vm._v(" "),
                                 _c(
                                   "v-card-text",
@@ -59161,6 +59106,7 @@ var render = function () {
                                               [
                                                 _c("v-text-field", {
                                                   attrs: {
+                                                    filled: "",
                                                     label:
                                                       "Item of Deficiency*",
                                                     required: "",
@@ -59195,6 +59141,7 @@ var render = function () {
                                               [
                                                 _c("v-textarea", {
                                                   attrs: {
+                                                    filled: "",
                                                     label:
                                                       "Additional Information",
                                                     hint: "Notes or Instructions for student",
@@ -59454,45 +59401,9 @@ var render = function () {
                           ],
                           1
                         ),
-                        _vm._v(" "),
-                        _c("v-text-field", {
-                          attrs: {
-                            "append-icon": "mdi-magnify",
-                            label: "Search",
-                          },
-                          on: { input: _vm.searchIt },
-                        }),
-                        _vm._v(" "),
-                        _c(
-                          "v-toolbar",
-                          { attrs: { flat: "", color: "white" } },
-                          [
-                            _c("div", { staticClass: "overline text-h6" }, [
-                              _vm._v(
-                                "\n              Deficiency List\n              \n            "
-                              ),
-                            ]),
-                            _vm._v(" "),
-                            _c("v-spacer"),
-                          ],
-                          1
-                        ),
                       ]
                     },
                     proxy: true,
-                  },
-                  {
-                    key: "item.id",
-                    fn: function (ref) {
-                      var item = ref.item
-                      return [
-                        _c("td", [
-                          _vm._v(
-                            _vm._s(_vm.deficiencies.data.indexOf(item) + 1)
-                          ),
-                        ]),
-                      ]
-                    },
                   },
                   {
                     key: "item.completed",
@@ -59542,98 +59453,73 @@ var render = function () {
                     fn: function (ref) {
                       var item = ref.item
                       return [
-                        [
-                          _c(
-                            "v-btn",
-                            {
-                              staticClass: "ma-1",
-                              attrs: {
-                                color: "success",
-                                depressed: "",
-                                "x-small": "",
-                              },
-                              on: {
-                                click: function ($event) {
-                                  return _vm.approveItem(item)
-                                },
-                              },
-                            },
-                            [
+                        item.completed != 1
+                          ? [
                               _c(
-                                "v-icon",
-                                { attrs: { dark: "", "x-small": "" } },
+                                "v-btn",
+                                {
+                                  staticClass: "ma-1",
+                                  attrs: {
+                                    color: "success",
+                                    depressed: "",
+                                    "x-small": "",
+                                  },
+                                  on: {
+                                    click: function ($event) {
+                                      return _vm.approveItem(item)
+                                    },
+                                  },
+                                },
                                 [
-                                  _vm._v(
-                                    "\n          mdi-check-circle\n        "
+                                  _c(
+                                    "v-icon",
+                                    { attrs: { dark: "", "x-small": "" } },
+                                    [
+                                      _vm._v(
+                                        "\n          mdi-check-circle\n        "
+                                      ),
+                                    ]
                                   ),
-                                ]
+                                  _vm._v("APPROVE"),
+                                ],
+                                1
                               ),
-                            ],
-                            1
-                          ),
-                        ],
+                            ]
+                          : _vm._e(),
                         _vm._v(" "),
-                        [
-                          _c(
-                            "v-btn",
-                            {
-                              staticClass: "ma-1",
-                              attrs: {
-                                color: "primary",
-                                depressed: "",
-                                "x-small": "",
-                              },
-                              on: {
-                                click: function ($event) {
-                                  return _vm.editItem(item)
-                                },
-                              },
-                            },
-                            [
+                        item.completed != 1
+                          ? [
                               _c(
-                                "v-icon",
-                                { attrs: { dark: "", "x-small": "" } },
-                                [
-                                  _vm._v(
-                                    "\n          mdi-circle-edit-outline\n        "
-                                  ),
-                                ]
-                              ),
-                            ],
-                            1
-                          ),
-                        ],
-                        _vm._v(" "),
-                        [
-                          _c(
-                            "v-btn",
-                            {
-                              staticClass: "ma-1",
-                              attrs: {
-                                color: "error",
-                                depressed: "",
-                                "x-small": "",
-                              },
-                              on: {
-                                click: function ($event) {
-                                  return _vm.deleteItem(item)
+                                "v-btn",
+                                {
+                                  staticClass: "ma-1 px-6",
+                                  attrs: {
+                                    color: "primary",
+                                    depressed: "",
+                                    "x-small": "",
+                                  },
+                                  on: {
+                                    click: function ($event) {
+                                      return _vm.editItem(item)
+                                    },
+                                  },
                                 },
-                              },
-                            },
-                            [
-                              _c(
-                                "v-icon",
-                                { attrs: { dark: "", "x-small": "" } },
                                 [
-                                  _vm._v(
-                                    "\n          mdi-delete-circle\n        "
+                                  _c(
+                                    "v-icon",
+                                    { attrs: { dark: "", "x-small": "" } },
+                                    [
+                                      _vm._v(
+                                        "\n          mdi-circle-edit-outline\n        "
+                                      ),
+                                    ]
                                   ),
-                                ]
+                                  _vm._v("EDIT"),
+                                ],
+                                1
                               ),
-                            ],
-                            1
-                          ),
-                        ],
+                            ]
+                          : _vm._e(),
                       ]
                     },
                   },
@@ -61123,245 +61009,306 @@ var render = function () {
                   _vm._v(" "),
                   _c(
                     "v-col",
-                    {
-                      staticClass: "elevation-2 white",
-                      attrs: { cols: "12", lg: "8" },
-                    },
+                    { attrs: { cols: "12", lg: "8" } },
                     [
-                      _c("strong", [_vm._v("Note: ")]),
-                      _vm._v(" "),
                       _c(
-                        "span",
-                        { staticClass: "overline" },
+                        "v-card",
                         [
                           _c(
-                            "v-icon",
+                            "v-card-subtitle",
                             {
-                              staticClass: "mr-1 ml-2 warning--text",
-                              attrs: { small: "" },
+                              staticClass:
+                                "white--text text-uppercase elevation-2 mb-0 pb-1",
+                              staticStyle: {
+                                background:
+                                  "linear-gradient(to left, #1A237E, #1A237E, #0D47A1)",
+                              },
                             },
                             [
-                              _vm._v(
-                                "\n                mdi-pencil\n              "
-                              ),
+                              _c("span", { staticClass: "text-h6" }, [
+                                _vm._v(" Clearance Request List "),
+                              ]),
                             ]
                           ),
-                          _vm._v("\n              - Edit\n           "),
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "span",
-                        { staticClass: "overline" },
-                        [
+                          _vm._v(" "),
                           _c(
-                            "v-icon",
+                            "v-card-title",
                             {
-                              staticClass: "mr-1 ml-2 red--text",
-                              attrs: { small: "" },
-                            },
-                            [_vm._v("\n                mdi-delete-forever ")]
-                          ),
-                          _vm._v("\n            - Delete\n             "),
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "span",
-                        { staticClass: "overline" },
-                        [
-                          _c(
-                            "v-icon",
-                            {
-                              staticClass: "mr-1 ml-2 primary--text",
-                              attrs: { small: "" },
+                              staticClass:
+                                "white--text elevation-2 mb-0 pb-0 mt-0 pt-0",
+                              staticStyle: {
+                                background:
+                                  "linear-gradient(to left, #1A237E, #1A237E, #0D47A1)",
+                              },
                             },
                             [
-                              _vm._v(
-                                "\n                mdi-qrcode\n              "
-                              ),
-                            ]
-                          ),
-                          _vm._v(
-                            "\n              - Copy Activation Code\n             "
-                          ),
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c("v-data-table", {
-                        staticClass: "elevation-0 pr-2 pl-2",
-                        attrs: {
-                          "item-key": "id",
-                          dense: "",
-                          loading: _vm.loading,
-                          "loading-text": "Loading... Please wait",
-                          headers: _vm.headers,
-                          page: _vm.page + 1,
-                          pageCount: _vm.numberOfPages,
-                          items: _vm.students.data,
-                          options: _vm.options,
-                          "server-items-length": _vm.totalStudents,
-                          "items-per-page": 10,
-                          "footer-props": {
-                            itemsPerPageOptions: [5, 10, 15],
-                            itemsPerPageText: "Student Per Page",
-                            "show-current-page": true,
-                            "show-first-last-page": true,
-                          },
-                        },
-                        on: {
-                          "update:options": function ($event) {
-                            _vm.options = $event
-                          },
-                        },
-                        scopedSlots: _vm._u([
-                          {
-                            key: "top",
-                            fn: function () {
-                              return [
-                                _c("v-text-field", {
-                                  attrs: {
-                                    "append-icon": "mdi-magnify",
-                                    label: "Search",
+                              _c("v-text-field", {
+                                staticClass: "mb-0 pb-0 mt-2 pt-0",
+                                attrs: {
+                                  "append-icon": "mdi-magnify",
+                                  label: "Search",
+                                  "solo-inverted": "",
+                                  flat: "",
+                                  dark: "",
+                                  dense: "",
+                                },
+                                on: { input: _vm.searchIt },
+                                model: {
+                                  value: _vm.searchItem,
+                                  callback: function ($$v) {
+                                    _vm.searchItem = $$v
                                   },
-                                  on: { input: _vm.searchIt },
-                                  model: {
-                                    value: _vm.searchItem,
-                                    callback: function ($$v) {
-                                      _vm.searchItem = $$v
+                                  expression: "searchItem",
+                                },
+                              }),
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-container",
+                            [
+                              _c(
+                                "v-row",
+                                [
+                                  _c("v-container", [
+                                    _c("strong", [_vm._v("Note: ")]),
+                                    _vm._v(" "),
+                                    _c(
+                                      "span",
+                                      { staticClass: "overline" },
+                                      [
+                                        _c(
+                                          "v-icon",
+                                          {
+                                            staticClass:
+                                              "mr-1 ml-2 warning--text",
+                                            attrs: { small: "" },
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                mdi-pencil\n              "
+                                            ),
+                                          ]
+                                        ),
+                                        _vm._v(
+                                          "\n              - Edit\n           "
+                                        ),
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "span",
+                                      { staticClass: "overline" },
+                                      [
+                                        _c(
+                                          "v-icon",
+                                          {
+                                            staticClass: "mr-1 ml-2 red--text",
+                                            attrs: { small: "" },
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                mdi-delete-forever "
+                                            ),
+                                          ]
+                                        ),
+                                        _vm._v(
+                                          "\n            - Delete\n             "
+                                        ),
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "span",
+                                      { staticClass: "overline" },
+                                      [
+                                        _c(
+                                          "v-icon",
+                                          {
+                                            staticClass:
+                                              "mr-1 ml-2 primary--text",
+                                            attrs: { small: "" },
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                mdi-qrcode\n              "
+                                            ),
+                                          ]
+                                        ),
+                                        _vm._v(
+                                          "\n              - Copy Activation Code\n             "
+                                        ),
+                                      ],
+                                      1
+                                    ),
+                                  ]),
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c("v-data-table", {
+                                staticClass: "px-6 pb-6  mt-4",
+                                attrs: {
+                                  "item-key": "id",
+                                  dense: "",
+                                  loading: _vm.loading,
+                                  "loading-text": "Loading... Please wait",
+                                  headers: _vm.headers,
+                                  page: _vm.page + 1,
+                                  pageCount: _vm.numberOfPages,
+                                  items: _vm.students.data,
+                                  options: _vm.options,
+                                  "server-items-length": _vm.totalStudents,
+                                  "items-per-page": 10,
+                                  "footer-props": {
+                                    itemsPerPageOptions: [5, 10, 15],
+                                    itemsPerPageText: "Student Per Page",
+                                    "show-current-page": true,
+                                    "show-first-last-page": true,
+                                  },
+                                },
+                                on: {
+                                  "update:options": function ($event) {
+                                    _vm.options = $event
+                                  },
+                                },
+                                scopedSlots: _vm._u([
+                                  {
+                                    key: "item.id",
+                                    fn: function (ref) {
+                                      var item = ref.item
+                                      return [
+                                        _c("td", [
+                                          _vm._v(
+                                            _vm._s(
+                                              _vm.students.data.indexOf(item) +
+                                                1
+                                            )
+                                          ),
+                                        ]),
+                                      ]
                                     },
-                                    expression: "searchItem",
                                   },
-                                }),
-                              ]
-                            },
-                            proxy: true,
-                          },
-                          {
-                            key: "item.id",
-                            fn: function (ref) {
-                              var item = ref.item
-                              return [
-                                _c("td", [
-                                  _vm._v(
-                                    _vm._s(_vm.students.data.indexOf(item) + 1)
-                                  ),
+                                  {
+                                    key: "item.student_number",
+                                    fn: function (ref) {
+                                      var item = ref.item
+                                      return [
+                                        _c(
+                                          "td",
+                                          [
+                                            item.stat == "1"
+                                              ? _c("v-badge", {
+                                                  staticClass: "mr-4",
+                                                  attrs: {
+                                                    dot: "",
+                                                    small: "",
+                                                    bordered: "",
+                                                    color: "success",
+                                                  },
+                                                })
+                                              : _c("v-badge", {
+                                                  staticClass: "mr-4",
+                                                  attrs: {
+                                                    dot: "",
+                                                    small: "",
+                                                    bordered: "",
+                                                    color: "red",
+                                                  },
+                                                }),
+                                            _vm._v(
+                                              "\n                " +
+                                                _vm._s(item.student_number) +
+                                                "\n              "
+                                            ),
+                                          ],
+                                          1
+                                        ),
+                                      ]
+                                    },
+                                  },
+                                  {
+                                    key: "item.actions",
+                                    fn: function (ref) {
+                                      var item = ref.item
+                                      return [
+                                        _c(
+                                          "v-icon",
+                                          {
+                                            staticClass: "mr-2 warning--text",
+                                            attrs: { small: "" },
+                                            on: {
+                                              click: function ($event) {
+                                                return _vm.editItem(item)
+                                              },
+                                            },
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                mdi-pencil\n              "
+                                            ),
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "v-icon",
+                                          {
+                                            staticClass: "mr-2 red--text",
+                                            attrs: { small: "" },
+                                            on: {
+                                              click: function ($event) {
+                                                return _vm.deleteItem(item)
+                                              },
+                                            },
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                mdi-delete-forever "
+                                            ),
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "v-icon",
+                                          {
+                                            directives: [
+                                              {
+                                                name: "clipboard",
+                                                rawName: "v-clipboard",
+                                                value: item.code,
+                                                expression: "item.code",
+                                              },
+                                            ],
+                                            staticClass: "mr-2 primary--text",
+                                            attrs: { small: "" },
+                                            on: {
+                                              click: function ($event) {
+                                                return _vm.copyToClipBoard(
+                                                  item.code
+                                                )
+                                              },
+                                            },
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                mdi-qrcode\n              "
+                                            ),
+                                          ]
+                                        ),
+                                      ]
+                                    },
+                                  },
                                 ]),
-                              ]
-                            },
-                          },
-                          {
-                            key: "item.student_number",
-                            fn: function (ref) {
-                              var item = ref.item
-                              return [
-                                _c(
-                                  "td",
-                                  [
-                                    item.stat == "1"
-                                      ? _c("v-badge", {
-                                          staticClass: "mr-4",
-                                          attrs: {
-                                            dot: "",
-                                            small: "",
-                                            bordered: "",
-                                            color: "success",
-                                          },
-                                        })
-                                      : _c("v-badge", {
-                                          staticClass: "mr-4",
-                                          attrs: {
-                                            dot: "",
-                                            small: "",
-                                            bordered: "",
-                                            color: "red",
-                                          },
-                                        }),
-                                    _vm._v(
-                                      "\n                " +
-                                        _vm._s(item.student_number) +
-                                        "\n              "
-                                    ),
-                                  ],
-                                  1
-                                ),
-                              ]
-                            },
-                          },
-                          {
-                            key: "item.actions",
-                            fn: function (ref) {
-                              var item = ref.item
-                              return [
-                                _c(
-                                  "v-icon",
-                                  {
-                                    staticClass: "mr-2 warning--text",
-                                    attrs: { small: "" },
-                                    on: {
-                                      click: function ($event) {
-                                        return _vm.editItem(item)
-                                      },
-                                    },
-                                  },
-                                  [
-                                    _vm._v(
-                                      "\n                mdi-pencil\n              "
-                                    ),
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "v-icon",
-                                  {
-                                    staticClass: "mr-2 red--text",
-                                    attrs: { small: "" },
-                                    on: {
-                                      click: function ($event) {
-                                        return _vm.deleteItem(item)
-                                      },
-                                    },
-                                  },
-                                  [
-                                    _vm._v(
-                                      "\n                mdi-delete-forever "
-                                    ),
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "v-icon",
-                                  {
-                                    directives: [
-                                      {
-                                        name: "clipboard",
-                                        rawName: "v-clipboard",
-                                        value: item.code,
-                                        expression: "item.code",
-                                      },
-                                    ],
-                                    staticClass: "mr-2 primary--text",
-                                    attrs: { small: "" },
-                                    on: {
-                                      click: function ($event) {
-                                        return _vm.copyToClipBoard(item.code)
-                                      },
-                                    },
-                                  },
-                                  [
-                                    _vm._v(
-                                      "\n                mdi-qrcode\n              "
-                                    ),
-                                  ]
-                                ),
-                              ]
-                            },
-                          },
-                        ]),
-                      }),
+                              }),
+                            ],
+                            1
+                          ),
+                        ],
+                        1
+                      ),
                     ],
                     1
                   ),
@@ -61464,13 +61411,116 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "v-sheet",
+    "v-container",
     [
       _c(
         "v-card",
         [
+          _c(
+            "v-card-subtitle",
+            {
+              staticClass: "white--text text-uppercase elevation-2 mb-0 pb-1",
+              staticStyle: {
+                background:
+                  "linear-gradient(to left, #1A237E, #1A237E, #0D47A1)",
+              },
+            },
+            [
+              _c("span", { staticClass: "text-h6" }, [
+                _vm._v(" Submitted Clearances "),
+              ]),
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "v-card-title",
+            {
+              staticClass: "white--text elevation-2 mb-0 pb-6 mt-0 pt-2",
+              staticStyle: {
+                background:
+                  "linear-gradient(to left, #1A237E, #1A237E, #0D47A1)",
+              },
+            },
+            [
+              _c(
+                "v-row",
+                [
+                  _c(
+                    "v-col",
+                    {
+                      staticClass: "mb-0 pb-0 mt-0 pt-0",
+                      attrs: { cols: "12", md: "4" },
+                    },
+                    [
+                      _c("v-select", {
+                        staticClass: "mb-0 pb-0 mt-2 pt-0",
+                        attrs: {
+                          label: "Select Semester",
+                          "item-value": "id",
+                          "item-text": "semester",
+                          items: _vm.semesters,
+                          "solo-inverted": "",
+                          flat: "",
+                          dark: "",
+                          dense: "",
+                          "hide-details": "",
+                        },
+                        on: {
+                          change: function ($event) {
+                            return _vm.semesterChange(_vm.searchItem)
+                          },
+                        },
+                        model: {
+                          value: _vm.semester_id,
+                          callback: function ($$v) {
+                            _vm.semester_id = $$v
+                          },
+                          expression: "semester_id",
+                        },
+                      }),
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-col",
+                    {
+                      staticClass: "mb-0 pb-0 mt-0 pt-0",
+                      attrs: { cols: "12", md: "4" },
+                    },
+                    [
+                      _c("v-text-field", {
+                        staticClass: "mb-0 pb-0 mt-2 pt-0",
+                        attrs: {
+                          "append-icon": "mdi-magnify",
+                          label: "Search",
+                          "solo-inverted": "",
+                          flat: "",
+                          dark: "",
+                          dense: "",
+                          "hide-details": "",
+                        },
+                        on: { input: _vm.searchIt },
+                        model: {
+                          value: _vm.searchItem,
+                          callback: function ($$v) {
+                            _vm.searchItem = $$v
+                          },
+                          expression: "searchItem",
+                        },
+                      }),
+                    ],
+                    1
+                  ),
+                ],
+                1
+              ),
+            ],
+            1
+          ),
+          _vm._v(" "),
           _c("v-data-table", {
-            staticClass: "elevation-0",
+            staticClass: "px-6 pb-6  mt-4",
             attrs: {
               "item-key": "id",
               loading: _vm.loading,
@@ -61496,103 +61546,6 @@ var render = function () {
             },
             scopedSlots: _vm._u([
               {
-                key: "top",
-                fn: function () {
-                  return [
-                    _c(
-                      "v-row",
-                      [
-                        _c(
-                          "v-col",
-                          {
-                            staticStyle: { margin: "0" },
-                            attrs: { cols: "12", sm: "2" },
-                          },
-                          [
-                            _c("v-select", {
-                              staticStyle: { "margin-left": "15px" },
-                              attrs: {
-                                label: "Select Semester",
-                                "item-value": "id",
-                                "item-text": "semester",
-                                color: "primary",
-                                items: _vm.semesters,
-                                outlined: "",
-                              },
-                              on: {
-                                change: function ($event) {
-                                  return _vm.semesterChange(_vm.searchItem)
-                                },
-                              },
-                              model: {
-                                value: _vm.semester_id,
-                                callback: function ($$v) {
-                                  _vm.semester_id = $$v
-                                },
-                                expression: "semester_id",
-                              },
-                            }),
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "v-col",
-                          { attrs: { cols: "12", sm: "4" } },
-                          [
-                            _c("v-text-field", {
-                              attrs: {
-                                "append-icon": "mdi-magnify",
-                                label: "Search",
-                              },
-                              on: { input: _vm.searchIt },
-                              model: {
-                                value: _vm.searchItem,
-                                callback: function ($$v) {
-                                  _vm.searchItem = $$v
-                                },
-                                expression: "searchItem",
-                              },
-                            }),
-                          ],
-                          1
-                        ),
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "v-toolbar",
-                      { attrs: { flat: "", color: "white" } },
-                      [
-                        _c("div", { staticClass: "overline text-h6" }, [
-                          _vm._v(
-                            "\n            Submitted Clearance Request List\n            "
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("v-spacer"),
-                      ],
-                      1
-                    ),
-                  ]
-                },
-                proxy: true,
-              },
-              {
-                key: "item.id",
-                fn: function (ref) {
-                  var item = ref.item
-                  return [
-                    _c("td", [
-                      _vm._v(
-                        _vm._s(_vm.submittedclearances.data.indexOf(item) + 1)
-                      ),
-                    ]),
-                  ]
-                },
-              },
-              {
                 key: "item.datesubmitted",
                 fn: function (ref) {
                   var item = ref.item
@@ -61608,9 +61561,9 @@ var render = function () {
                       },
                       [
                         _vm._v(
-                          "\n         \n          " +
+                          "\n           \n            " +
                             _vm._s(item.datesubmitted) +
-                            "\n      "
+                            "\n        "
                         ),
                       ]
                     ),
@@ -61626,12 +61579,11 @@ var render = function () {
                       _c(
                         "v-btn",
                         {
-                          staticClass: "ma-2",
+                          staticClass: "elevation-0 error lighten-1 ml-2",
                           attrs: {
-                            color: "error",
-                            text: "",
-                            depressed: "",
+                            loading: _vm.downloadLoading,
                             small: "",
+                            dark: "",
                           },
                           on: {
                             click: function ($event) {
@@ -61639,7 +61591,12 @@ var render = function () {
                             },
                           },
                         },
-                        [_c("v-icon", [_vm._v("mdi-file-pdf")])],
+                        [
+                          _c("v-icon", { attrs: { "x-small": "" } }, [
+                            _vm._v("mdi-file-pdf"),
+                          ]),
+                          _vm._v("\n                  Download"),
+                        ],
                         1
                       ),
                     ],
@@ -61683,9 +61640,9 @@ var render = function () {
                         ),
                         [
                           _c("v-icon", { attrs: { dark: "", left: "" } }, [
-                            _vm._v("\n        mdi-close\n      "),
+                            _vm._v("\n          mdi-close\n        "),
                           ]),
-                          _vm._v("close\n    "),
+                          _vm._v("close\n      "),
                         ],
                         1
                       ),
@@ -61703,9 +61660,9 @@ var render = function () {
             },
             [
               _c("v-icon", { attrs: { left: "" } }, [
-                _vm._v("\n        mdi-error\n      "),
+                _vm._v("\n          mdi-error\n        "),
               ]),
-              _vm._v(_vm._s(_vm.text) + "\n\n    "),
+              _vm._v(_vm._s(_vm.text) + "\n\n      "),
             ],
             1
           ),
@@ -63440,194 +63397,204 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "v-sheet",
+    "v-container",
     [
       _c(
         "v-card",
         [
           _c(
-            "v-container",
+            "v-card-subtitle",
+            {
+              staticClass: "white--text text-uppercase elevation-2 mb-0 pb-1",
+              staticStyle: {
+                background:
+                  "linear-gradient(to left, #1A237E, #1A237E, #0D47A1)",
+              },
+            },
             [
-              _c("v-data-table", {
-                staticClass: "elevation-0",
+              _c("span", { staticClass: "text-h6" }, [
+                _vm._v(" Clearance List "),
+              ]),
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "v-card-title",
+            {
+              staticClass: "white--text elevation-2 mb-0 pb-0 mt-0 pt-0",
+              staticStyle: {
+                background:
+                  "linear-gradient(to left, #1A237E, #1A237E, #0D47A1)",
+              },
+            },
+            [
+              _c("v-text-field", {
+                staticClass: "mb-0 pb-0 mt-2 pt-0",
                 attrs: {
-                  "item-key": "id",
-                  loading: _vm.loading,
-                  "loading-text": "Loading... Please wait",
-                  headers: _vm.headers,
-                  page: _vm.page + 1,
-                  pageCount: _vm.numberOfPages,
-                  items: _vm.clearances.data,
-                  options: _vm.options,
-                  "server-items-length": _vm.totalclearances,
-                  "items-per-page": 10,
-                  "footer-props": {
-                    itemsPerPageOptions: [5, 10, 15],
-                    itemsPerPageText: "Clearance Request Per Page",
-                    "show-current-page": true,
-                    "show-first-last-page": true,
-                  },
+                  "append-icon": "mdi-magnify",
+                  label: "Search",
+                  "solo-inverted": "",
+                  flat: "",
+                  dark: "",
+                  dense: "",
                 },
-                on: {
-                  "update:options": function ($event) {
-                    _vm.options = $event
+                model: {
+                  value: _vm.search,
+                  callback: function ($$v) {
+                    _vm.search = $$v
                   },
+                  expression: "search",
                 },
-                scopedSlots: _vm._u([
-                  {
-                    key: "top",
-                    fn: function () {
-                      return [
-                        _c("v-text-field", {
-                          attrs: {
-                            "append-icon": "mdi-magnify",
-                            label: "Search",
-                            "solo-inverted": "",
-                            flat: "",
-                            light: "",
-                          },
-                          on: { input: _vm.searchIt },
-                        }),
-                        _vm._v(" "),
-                        _c(
-                          "v-toolbar",
-                          { attrs: { flat: "", color: "white" } },
-                          [
-                            _c("div", { staticClass: "overline text-h6" }, [
-                              _vm._v(
-                                "\n            Clearance List\n            \n          "
-                              ),
-                            ]),
-                            _vm._v(" "),
-                            _c("v-spacer"),
-                          ],
-                          1
-                        ),
-                      ]
-                    },
-                    proxy: true,
-                  },
-                  {
-                    key: "item.id",
-                    fn: function (ref) {
-                      var item = ref.item
-                      return [
-                        _c("td", [
-                          _vm._v(_vm._s(_vm.clearances.data.indexOf(item) + 1)),
-                        ]),
-                      ]
-                    },
-                  },
-                  {
-                    key: "item.status",
-                    fn: function (ref) {
-                      var item = ref.item
-                      return [
-                        [
-                          (item.cashier == true &&
-                            item.library == true &&
-                            item.osas == true &&
-                            item.pd == true &&
-                            item.dean == true &&
-                            item.registrar == true) ||
-                          (item.adviser == true && item.principal == true)
-                            ? _c(
-                                "v-chip",
-                                {
-                                  attrs: {
-                                    "text-color": "white",
-                                    color: "success",
-                                    "x-small": "",
-                                  },
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                Completed\n              "
-                                  ),
-                                ]
-                              )
-                            : _c(
-                                "v-chip",
-                                {
-                                  attrs: {
-                                    "text-color": "white",
-                                    color: "warning",
-                                    "x-small": "",
-                                  },
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                Pending\n              "
-                                  ),
-                                ]
-                              ),
-                        ],
-                      ]
-                    },
-                  },
-                ]),
               }),
-              _vm._v(" "),
-              _c(
-                "v-snackbar",
-                {
-                  attrs: {
-                    color: _vm.snackbarColor,
-                    right: "",
-                    timeout: "5000",
-                    outlined: "",
-                    top: "",
-                    width: "50",
-                  },
-                  scopedSlots: _vm._u([
-                    {
-                      key: "action",
-                      fn: function (ref) {
-                        var attrs = ref.attrs
-                        return [
-                          _c(
-                            "v-btn",
-                            _vm._b(
-                              {
-                                attrs: { color: _vm.snackbarColor, text: "" },
-                                on: {
-                                  click: function ($event) {
-                                    _vm.snackbar = false
-                                  },
-                                },
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("v-data-table", {
+            staticClass: "px-6 pb-6  mt-1",
+            attrs: {
+              "item-key": "id",
+              loading: _vm.loading,
+              "loading-text": "Loading... Please wait",
+              headers: _vm.headers,
+              page: _vm.page + 1,
+              pageCount: _vm.numberOfPages,
+              items: _vm.clearances.data,
+              options: _vm.options,
+              "server-items-length": _vm.totalclearances,
+              "items-per-page": 10,
+              "footer-props": {
+                itemsPerPageOptions: [5, 10, 15],
+                itemsPerPageText: "Clearance Request Per Page",
+                "show-current-page": true,
+                "show-first-last-page": true,
+              },
+            },
+            on: {
+              "update:options": function ($event) {
+                _vm.options = $event
+              },
+            },
+            scopedSlots: _vm._u([
+              {
+                key: "top",
+                fn: function () {
+                  return undefined
+                },
+                proxy: true,
+              },
+              {
+                key: "item.id",
+                fn: function (ref) {
+                  var item = ref.item
+                  return [
+                    _c("td", [
+                      _vm._v(_vm._s(_vm.clearances.data.indexOf(item) + 1)),
+                    ]),
+                  ]
+                },
+              },
+              {
+                key: "item.status",
+                fn: function (ref) {
+                  var item = ref.item
+                  return [
+                    [
+                      item.status
+                        ? _c(
+                            "v-chip",
+                            {
+                              attrs: {
+                                "text-color": "white",
+                                color: "success",
+                                "x-small": "",
                               },
-                              "v-btn",
-                              attrs,
-                              false
-                            ),
+                            },
                             [
-                              _c("v-icon", { attrs: { dark: "", left: "" } }, [
-                                _vm._v("\n        mdi-close\n      "),
-                              ]),
-                              _vm._v("close\n    "),
-                            ],
-                            1
+                              _vm._v(
+                                "\r\n                  Completed\r\n                "
+                              ),
+                            ]
+                          )
+                        : _c(
+                            "v-chip",
+                            {
+                              attrs: {
+                                "text-color": "white",
+                                color: "warning",
+                                "x-small": "",
+                              },
+                            },
+                            [
+                              _vm._v(
+                                "\r\n                  Pending\r\n                "
+                              ),
+                            ]
                           ),
-                        ]
-                      },
-                    },
-                  ]),
-                  model: {
-                    value: _vm.snackbar,
-                    callback: function ($$v) {
-                      _vm.snackbar = $$v
-                    },
-                    expression: "snackbar",
+                    ],
+                  ]
+                },
+              },
+            ]),
+          }),
+          _vm._v(" "),
+          _c(
+            "v-snackbar",
+            {
+              attrs: {
+                color: _vm.snackbarColor,
+                right: "",
+                timeout: "5000",
+                outlined: "",
+                top: "",
+                width: "50",
+              },
+              scopedSlots: _vm._u([
+                {
+                  key: "action",
+                  fn: function (ref) {
+                    var attrs = ref.attrs
+                    return [
+                      _c(
+                        "v-btn",
+                        _vm._b(
+                          {
+                            attrs: { color: _vm.snackbarColor, text: "" },
+                            on: {
+                              click: function ($event) {
+                                _vm.snackbar = false
+                              },
+                            },
+                          },
+                          "v-btn",
+                          attrs,
+                          false
+                        ),
+                        [
+                          _c("v-icon", { attrs: { dark: "", left: "" } }, [
+                            _vm._v("\r\n          mdi-close\r\n        "),
+                          ]),
+                          _vm._v("close\r\n      "),
+                        ],
+                        1
+                      ),
+                    ]
                   },
                 },
-                [
-                  _c("v-icon", { attrs: { left: "" } }, [
-                    _vm._v("\n        mdi-error\n      "),
-                  ]),
-                  _vm._v(_vm._s(_vm.text) + "\n\n    "),
-                ],
-                1
-              ),
+              ]),
+              model: {
+                value: _vm.snackbar,
+                callback: function ($$v) {
+                  _vm.snackbar = $$v
+                },
+                expression: "snackbar",
+              },
+            },
+            [
+              _c("v-icon", { attrs: { left: "" } }, [
+                _vm._v("\r\n          mdi-error\r\n        "),
+              ]),
+              _vm._v(_vm._s(_vm.text) + "\r\n\r\n      "),
             ],
             1
           ),
@@ -65047,1248 +65014,267 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "v-card",
+    "v-container",
     [
       _c(
-        "v-toolbar",
-        {
-          attrs: { flat: "" },
-          scopedSlots: _vm._u([
-            {
-              key: "extension",
-              fn: function () {
-                return [
-                  _c(
-                    "v-tabs",
-                    {
-                      attrs: { "fixed-tabs": "", VERTICAL: "" },
-                      model: {
-                        value: _vm.tabs,
-                        callback: function ($$v) {
-                          _vm.tabs = $$v
-                        },
-                        expression: "tabs",
-                      },
-                    },
-                    [
-                      _c("v-tabs-slider"),
-                      _vm._v(" "),
-                      _c(
-                        "v-tab",
-                        {
-                          staticClass: "primary--text",
-                          attrs: { href: "#mobile-tabs-5-1" },
-                        },
-                        [
-                          _c("v-icon", { attrs: { left: "" } }, [
-                            _vm._v("mdi-account-edit"),
-                          ]),
-                          _vm._v(" Purpose\n        "),
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "v-tab",
-                        {
-                          staticClass: "primary--text",
-                          attrs: { href: "#mobile-tabs-5-2" },
-                        },
-                        [
-                          _c("v-icon", { attrs: { left: "" } }, [
-                            _vm._v("mdi-email"),
-                          ]),
-                          _vm._v(" Change Email\n        "),
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "v-tab",
-                        {
-                          staticClass: "primary--text",
-                          attrs: { href: "#mobile-tabs-5-3" },
-                        },
-                        [
-                          _c("v-icon", { attrs: { left: "" } }, [
-                            _vm._v("mdi-lock"),
-                          ]),
-                          _vm._v(" Change Password\n        "),
-                        ],
-                        1
-                      ),
-                    ],
-                    1
-                  ),
-                ]
-              },
-              proxy: true,
-            },
-          ]),
-        },
+        "v-card",
         [
           _c(
-            "v-toolbar-title",
+            "v-card-title",
+            {
+              staticClass: "white--text elevation-2",
+              staticStyle: {
+                background:
+                  "linear-gradient(to left, #1A237E, #1A237E, #0D47A1)",
+              },
+            },
             [
-              _c("v-icon", { attrs: { left: "" } }, [_vm._v("mdi-cog")]),
-              _vm._v("Settings"),
+              _c(
+                "span",
+                { staticClass: "text-h6 white--text" },
+                [
+                  _c(
+                    "v-icon",
+                    { staticClass: "white--text", attrs: { left: "" } },
+                    [_vm._v("mdi-cog")]
+                  ),
+                  _vm._v("Settings"),
+                ],
+                1
+              ),
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "v-tabs",
+            {
+              model: {
+                value: _vm.tabs,
+                callback: function ($$v) {
+                  _vm.tabs = $$v
+                },
+                expression: "tabs",
+              },
+            },
+            [
+              _c(
+                "v-tab",
+                {
+                  staticClass: "primary--text",
+                  attrs: { href: "#mobile-tabs-5-1" },
+                },
+                [
+                  _c("v-icon", { attrs: { left: "" } }, [
+                    _vm._v("mdi-account-edit"),
+                  ]),
+                  _vm._v(" Purpose\r\n          "),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-tab",
+                {
+                  staticClass: "primary--text",
+                  attrs: { href: "#mobile-tabs-5-2" },
+                },
+                [
+                  _c("v-icon", { attrs: { left: "" } }, [_vm._v("mdi-email")]),
+                  _vm._v(" Change Email\r\n          "),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-tab",
+                {
+                  staticClass: "primary--text",
+                  attrs: { href: "#mobile-tabs-5-3" },
+                },
+                [
+                  _c("v-icon", { attrs: { left: "" } }, [_vm._v("mdi-lock")]),
+                  _vm._v(" Change Password\r\n          "),
+                ],
+                1
+              ),
             ],
             1
           ),
           _vm._v(" "),
-          _c("v-spacer"),
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "v-tabs-items",
-        {
-          model: {
-            value: _vm.tabs,
-            callback: function ($$v) {
-              _vm.tabs = $$v
-            },
-            expression: "tabs",
-          },
-        },
-        [
           _c(
-            "v-tab-item",
-            { attrs: { value: "mobile-tabs-5-1" } },
+            "v-tabs-items",
+            {
+              model: {
+                value: _vm.tabs,
+                callback: function ($$v) {
+                  _vm.tabs = $$v
+                },
+                expression: "tabs",
+              },
+            },
             [
               _c(
-                "v-card",
-                { attrs: { flat: "" } },
+                "v-tab-item",
+                {
+                  staticClass: "ml-6 mr-6",
+                  attrs: { value: "mobile-tabs-5-1" },
+                },
                 [
                   _c(
-                    "v-form",
-                    {
-                      attrs: { method: "post" },
-                      on: {
-                        submit: function ($event) {
-                          $event.stopPropagation()
-                          $event.preventDefault()
-                          return _vm.save.apply(null, arguments)
-                        },
-                      },
-                      model: {
-                        value: _vm.valid,
-                        callback: function ($$v) {
-                          _vm.valid = $$v
-                        },
-                        expression: "valid",
-                      },
-                    },
+                    "v-card",
+                    { attrs: { flat: "" } },
                     [
                       _c(
-                        "v-container",
-                        [
-                          _c(
-                            "v-row",
-                            [
-                              _c(
-                                "v-col",
-                                {
-                                  staticStyle: { margin: "0" },
-                                  attrs: { cols: "12", sm: "12" },
-                                },
-                                [
-                                  _c("v-select", {
-                                    attrs: {
-                                      items: _vm.purposes,
-                                      label: "Select Purpose",
-                                      "item-value": "id",
-                                      rules: [_vm.rules.required],
-                                      "item-text": "purpose",
-                                      color: "primary",
-                                    },
-                                    model: {
-                                      value: _vm.setup.purpose_id,
-                                      callback: function ($$v) {
-                                        _vm.$set(_vm.setup, "purpose_id", $$v)
-                                      },
-                                      expression: "setup.purpose_id",
-                                    },
-                                  }),
-                                ],
-                                1
-                              ),
-                              _vm._v(" "),
-                              _vm.setup.purpose_id == 1
-                                ? _c(
-                                    "v-col",
-                                    {
-                                      staticStyle: { margin: "0" },
-                                      attrs: { cols: "12", sm: "12" },
-                                    },
-                                    [
-                                      _c("v-select", {
-                                        attrs: {
-                                          items: _vm.semesters,
-                                          label: "Select Semester",
-                                          "item-value": "id",
-                                          "item-text": "semester",
-                                          color: "primary",
-                                          rules: [_vm.rules.required],
-                                        },
-                                        model: {
-                                          value: _vm.setup.semester_id,
-                                          callback: function ($$v) {
-                                            _vm.$set(
-                                              _vm.setup,
-                                              "semester_id",
-                                              $$v
-                                            )
-                                          },
-                                          expression: "setup.semester_id",
-                                        },
-                                      }),
-                                    ],
-                                    1
-                                  )
-                                : _vm.setup.purpose_id == 2
-                                ? _c(
-                                    "v-col",
-                                    {
-                                      staticStyle: { margin: "0" },
-                                      attrs: { cols: "12", sm: "12" },
-                                    },
-                                    [
-                                      _c("v-select", {
-                                        attrs: {
-                                          items: _vm.graduations,
-                                          label: "Select Graduation Period",
-                                          "item-value": "id",
-                                          "item-text": "graduation",
-                                          color: "primary",
-                                          rules: [_vm.rules.required],
-                                        },
-                                        model: {
-                                          value: _vm.setup.graduation_id,
-                                          callback: function ($$v) {
-                                            _vm.$set(
-                                              _vm.setup,
-                                              "graduation_id",
-                                              $$v
-                                            )
-                                          },
-                                          expression: "setup.graduation_id",
-                                        },
-                                      }),
-                                    ],
-                                    1
-                                  )
-                                : _vm.setup.purpose_id == 3
-                                ? _c(
-                                    "v-col",
-                                    { attrs: { cols: "12", sm: "12" } },
-                                    [
-                                      _c("v-text-field", {
-                                        attrs: {
-                                          label: "Specify",
-                                          rules: [_vm.rules.required],
-                                        },
-                                        model: {
-                                          value: _vm.setup.credential,
-                                          callback: function ($$v) {
-                                            _vm.$set(
-                                              _vm.setup,
-                                              "credential",
-                                              $$v
-                                            )
-                                          },
-                                          expression: "setup.credential",
-                                        },
-                                      }),
-                                    ],
-                                    1
-                                  )
-                                : _vm._e(),
-                            ],
-                            1
-                          ),
-                        ],
-                        1
-                      ),
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c("v-divider"),
-                  _vm._v(" "),
-                  _c(
-                    "v-card-actions",
-                    [
-                      _c("v-spacer"),
-                      _vm._v(" "),
-                      _c(
-                        "v-btn",
+                        "v-form",
                         {
-                          attrs: {
-                            color: "blue darken-1",
-                            text: "",
-                            type: "submit",
-                          },
+                          attrs: { method: "post" },
                           on: {
-                            click: function ($event) {
+                            submit: function ($event) {
+                              $event.stopPropagation()
                               $event.preventDefault()
                               return _vm.save.apply(null, arguments)
                             },
                           },
-                        },
-                        [
-                          _vm._v(
-                            "\n                    Save\n                  "
-                          ),
-                        ]
-                      ),
-                    ],
-                    1
-                  ),
-                ],
-                1
-              ),
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-tab-item",
-            { attrs: { value: "mobile-tabs-5-2" } },
-            [
-              _c(
-                "v-card",
-                { attrs: { flat: "" } },
-                [
-                  _c(
-                    "v-form",
-                    {
-                      attrs: { method: "post" },
-                      on: {
-                        submit: function ($event) {
-                          $event.stopPropagation()
-                          $event.preventDefault()
-                          return _vm.updateEmail.apply(null, arguments)
-                        },
-                      },
-                      model: {
-                        value: _vm.valid,
-                        callback: function ($$v) {
-                          _vm.valid = $$v
-                        },
-                        expression: "valid",
-                      },
-                    },
-                    [
-                      _c(
-                        "v-container",
-                        [
-                          _c(
-                            "v-row",
-                            [
-                              _c(
-                                "v-col",
-                                { attrs: { cols: "12", sm: "12" } },
-                                [
-                                  _c("v-text-field", {
-                                    attrs: {
-                                      type: "email",
-                                      "success-messages": _vm.success,
-                                      "error-messages": _vm.error,
-                                      blur: _vm.checkEmail,
-                                      label: "Email",
-                                      disabled: !_vm.email_disabled,
-                                      rules: [
-                                        _vm.rules.required,
-                                        _vm.rules.validEmail,
-                                      ],
-                                    },
-                                    model: {
-                                      value: _vm.editedItem.email,
-                                      callback: function ($$v) {
-                                        _vm.$set(_vm.editedItem, "email", $$v)
-                                      },
-                                      expression: "editedItem.email",
-                                    },
-                                  }),
-                                ],
-                                1
-                              ),
-                            ],
-                            1
-                          ),
-                        ],
-                        1
-                      ),
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c("v-divider"),
-                  _vm._v(" "),
-                  _c(
-                    "v-card-actions",
-                    [
-                      _c("v-checkbox", {
-                        attrs: { label: "Change Email" },
-                        model: {
-                          value: _vm.email_disabled,
-                          callback: function ($$v) {
-                            _vm.email_disabled = $$v
-                          },
-                          expression: "email_disabled",
-                        },
-                      }),
-                      _vm._v(" "),
-                      _c("v-spacer"),
-                      _vm._v(" "),
-                      _c(
-                        "v-btn",
-                        {
-                          attrs: {
-                            color: "blue darken-1",
-                            text: "",
-                            disabled: !_vm.valid,
-                            type: "submit",
-                            loading: _vm.loading,
-                          },
-                          on: {
-                            click: function ($event) {
-                              $event.preventDefault()
-                              return _vm.updateEmail.apply(null, arguments)
+                          model: {
+                            value: _vm.valid,
+                            callback: function ($$v) {
+                              _vm.valid = $$v
                             },
+                            expression: "valid",
                           },
                         },
                         [
-                          _vm._v(
-                            "\n                    Save\n                  "
-                          ),
-                        ]
-                      ),
-                    ],
-                    1
-                  ),
-                ],
-                1
-              ),
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-tab-item",
-            { attrs: { value: "mobile-tabs-5-3" } },
-            [
-              _c(
-                "v-card",
-                { attrs: { flat: "" } },
-                [
-                  _c(
-                    "v-form",
-                    {
-                      attrs: { method: "post" },
-                      on: {
-                        submit: function ($event) {
-                          $event.stopPropagation()
-                          $event.preventDefault()
-                          return _vm.updatePassword.apply(null, arguments)
-                        },
-                      },
-                      model: {
-                        value: _vm.valid,
-                        callback: function ($$v) {
-                          _vm.valid = $$v
-                        },
-                        expression: "valid",
-                      },
-                    },
-                    [
-                      _c(
-                        "v-container",
-                        [
                           _c(
-                            "v-row",
+                            "v-container",
                             [
                               _c(
-                                "v-col",
-                                { attrs: { cols: "12", sm: "12" } },
+                                "v-row",
                                 [
-                                  _c("v-text-field", {
-                                    attrs: {
-                                      type: "password",
-                                      color: "primary",
-                                      label: "Type Password",
-                                      disabled: !_vm.password_disabled,
-                                      rules: [
-                                        _vm.rules.required,
-                                        _vm.rules.min,
-                                      ],
+                                  _c(
+                                    "v-col",
+                                    {
+                                      staticStyle: { margin: "0" },
+                                      attrs: { cols: "12", sm: "12" },
                                     },
-                                    model: {
-                                      value: _vm.editedItem.password,
-                                      callback: function ($$v) {
-                                        _vm.$set(
-                                          _vm.editedItem,
-                                          "password",
-                                          $$v
-                                        )
-                                      },
-                                      expression: "editedItem.password",
-                                    },
-                                  }),
-                                ],
-                                1
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "v-col",
-                                { attrs: { cols: "12", sm: "12" } },
-                                [
-                                  _c("v-text-field", {
-                                    attrs: {
-                                      type: "password",
-                                      color: "primary",
-                                      disabled: !_vm.password_disabled,
-                                      label: "Retype Password",
-                                      rules: [
-                                        _vm.rules.required,
-                                        _vm.rules.min,
-                                        _vm.passwordmatch,
-                                      ],
-                                    },
-                                    model: {
-                                      value: _vm.editedItem.rpassword,
-                                      callback: function ($$v) {
-                                        _vm.$set(
-                                          _vm.editedItem,
-                                          "rpassword",
-                                          $$v
-                                        )
-                                      },
-                                      expression: "editedItem.rpassword",
-                                    },
-                                  }),
-                                ],
-                                1
-                              ),
-                            ],
-                            1
-                          ),
-                        ],
-                        1
-                      ),
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c("v-divider"),
-                  _vm._v(" "),
-                  _c(
-                    "v-card-actions",
-                    [
-                      _c("v-checkbox", {
-                        attrs: { label: "Change Password" },
-                        model: {
-                          value: _vm.password_disabled,
-                          callback: function ($$v) {
-                            _vm.password_disabled = $$v
-                          },
-                          expression: "password_disabled",
-                        },
-                      }),
-                      _vm._v(" "),
-                      _c("v-spacer"),
-                      _vm._v(" "),
-                      _c(
-                        "v-btn",
-                        {
-                          attrs: {
-                            color: "blue darken-1",
-                            text: "",
-                            type: "submit",
-                            disabled: !_vm.valid,
-                          },
-                          on: {
-                            click: function ($event) {
-                              $event.preventDefault()
-                              return _vm.updatePassword.apply(null, arguments)
-                            },
-                          },
-                        },
-                        [
-                          _vm._v(
-                            "\n                    Save\n                  "
-                          ),
-                        ]
-                      ),
-                    ],
-                    1
-                  ),
-                ],
-                1
-              ),
-            ],
-            1
-          ),
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "v-snackbar",
-        {
-          attrs: {
-            color: _vm.snackbarColor,
-            right: "",
-            timeout: "5000",
-            outlined: "",
-            top: "",
-            width: "50",
-          },
-          scopedSlots: _vm._u([
-            {
-              key: "action",
-              fn: function (ref) {
-                var attrs = ref.attrs
-                return [
-                  _c(
-                    "v-btn",
-                    _vm._b(
-                      {
-                        attrs: { color: _vm.snackbarColor, text: "" },
-                        on: {
-                          click: function ($event) {
-                            _vm.snackbar = false
-                          },
-                        },
-                      },
-                      "v-btn",
-                      attrs,
-                      false
-                    ),
-                    [
-                      _c("v-icon", { attrs: { dark: "", left: "" } }, [
-                        _vm._v("\n        mdi-close\n      "),
-                      ]),
-                      _vm._v("close\n    "),
-                    ],
-                    1
-                  ),
-                ]
-              },
-            },
-          ]),
-          model: {
-            value: _vm.snackbar,
-            callback: function ($$v) {
-              _vm.snackbar = $$v
-            },
-            expression: "snackbar",
-          },
-        },
-        [
-          _c("v-icon", { attrs: { left: "" } }, [
-            _vm._v("\n        mdi-error\n      "),
-          ]),
-          _vm._v(_vm._s(_vm.text) + "\n\n    "),
-        ],
-        1
-      ),
-    ],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/student/StudentComponent.vue?vue&type=template&id=cfce827e&":
-/*!***************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/student/StudentComponent.vue?vue&type=template&id=cfce827e& ***!
-  \***************************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function () {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "v-app",
-    { attrs: { id: "inspire" } },
-    [
-      _c(
-        "v-navigation-drawer",
-        {
-          attrs: { color: "#1d232e", width: "220px", dark: "", app: "" },
-          scopedSlots: _vm._u([
-            {
-              key: "img",
-              fn: function (props) {
-                return [
-                  _c(
-                    "v-img",
-                    _vm._b(
-                      {
-                        attrs: {
-                          gradient:
-                            "to bottom left, rgba(00,00,00,.7), rgba(00,00,00,.7)",
-                        },
-                      },
-                      "v-img",
-                      props,
-                      false
-                    )
-                  ),
-                ]
-              },
-            },
-            {
-              key: "prepend",
-              fn: function () {
-                return [
-                  _c(
-                    "v-list-item",
-                    { staticClass: "margin-bottom:0" },
-                    [
-                      _c(
-                        "v-list-item-avatar",
-                        {
-                          staticClass: "text-center",
-                          staticStyle: { margin: "0", "margin-right": "10px" },
-                        },
-                        [
-                          _c(
-                            "v-icon",
-                            {
-                              staticStyle: {
-                                "margin-left": "10px",
-                                "padding-right": "10px",
-                              },
-                              attrs: { dark: "", large: "" },
-                            },
-                            [
-                              _vm._v(
-                                "\n                    mdi-account-circle\n                  "
-                              ),
-                            ]
-                          ),
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "v-list-item-content",
-                        [
-                          _c(
-                            "v-list-item-title",
-                            { staticClass: "caption text-wrap" },
-                            [_vm._v(" " + _vm._s(_vm.user.name))]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-list-item-subtitle",
-                            { staticClass: "caption" },
-                            [_vm._v(_vm._s(_vm.role.description))]
-                          ),
-                        ],
-                        1
-                      ),
-                    ],
-                    1
-                  ),
-                ]
-              },
-              proxy: true,
-            },
-            {
-              key: "append",
-              fn: function () {
-                return [
-                  _c(
-                    "div",
-                    { staticClass: "pa-2" },
-                    [
-                      _c(
-                        "v-card",
-                        {
-                          staticClass: "overline  lighten-1 text-center ",
-                          staticStyle: { background: "transparent" },
-                          attrs: {
-                            flat: "",
-                            tile: "",
-                            dark: "",
-                            width: "100%",
-                          },
-                        },
-                        [
-                          _c("v-card-text", { staticClass: "caption" }, [
-                            _vm._v(
-                              "\n            " +
-                                _vm._s(new Date().getFullYear()) +
-                                " ©\n            "
-                            ),
-                            _c("strong", [
-                              _vm._v("ICTMO, Partido State University"),
-                            ]),
-                          ]),
-                        ],
-                        1
-                      ),
-                    ],
-                    1
-                  ),
-                ]
-              },
-              proxy: true,
-            },
-          ]),
-          model: {
-            value: _vm.drawer,
-            callback: function ($$v) {
-              _vm.drawer = $$v
-            },
-            expression: "drawer",
-          },
-        },
-        [
-          _vm._v(" "),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              directives: [
-                {
-                  name: "slimscroll",
-                  rawName: "v-slimscroll",
-                  value: _vm.scrollOptions,
-                  expression: "scrollOptions",
-                },
-              ],
-            },
-            [
-              _c(
-                "v-list",
-                { attrs: { dense: "", shaped: "" } },
-                [
-                  _vm._l(_vm.items, function (item) {
-                    return [
-                      item.heading
-                        ? _c(
-                            "v-row",
-                            { key: item.heading, attrs: { align: "center" } },
-                            [
-                              _c(
-                                "v-col",
-                                { attrs: { cols: "4" } },
-                                [
-                                  item.heading
-                                    ? _c("v-subheader", [
-                                        _vm._v(
-                                          "\n                " +
-                                            _vm._s(item.heading) +
-                                            "\n              "
-                                        ),
-                                      ])
+                                    [
+                                      _c("v-select", {
+                                        attrs: {
+                                          items: _vm.purposes,
+                                          label: "Select Purpose",
+                                          "item-value": "id",
+                                          rules: [_vm.rules.required],
+                                          "item-text": "purpose",
+                                          color: "primary",
+                                        },
+                                        model: {
+                                          value: _vm.setup.purpose_id,
+                                          callback: function ($$v) {
+                                            _vm.$set(
+                                              _vm.setup,
+                                              "purpose_id",
+                                              $$v
+                                            )
+                                          },
+                                          expression: "setup.purpose_id",
+                                        },
+                                      }),
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _vm.setup.purpose_id == 1
+                                    ? _c(
+                                        "v-col",
+                                        {
+                                          staticStyle: { margin: "0" },
+                                          attrs: { cols: "12", sm: "12" },
+                                        },
+                                        [
+                                          _c("v-select", {
+                                            attrs: {
+                                              items: _vm.semesters,
+                                              label: "Select Semester",
+                                              "item-value": "id",
+                                              "item-text": "semester",
+                                              color: "primary",
+                                              rules: [_vm.rules.required],
+                                            },
+                                            model: {
+                                              value: _vm.setup.semester_id,
+                                              callback: function ($$v) {
+                                                _vm.$set(
+                                                  _vm.setup,
+                                                  "semester_id",
+                                                  $$v
+                                                )
+                                              },
+                                              expression: "setup.semester_id",
+                                            },
+                                          }),
+                                        ],
+                                        1
+                                      )
+                                    : _vm.setup.purpose_id == 2
+                                    ? _c(
+                                        "v-col",
+                                        {
+                                          staticStyle: { margin: "0" },
+                                          attrs: { cols: "12", sm: "12" },
+                                        },
+                                        [
+                                          _c("v-select", {
+                                            attrs: {
+                                              items: _vm.graduations,
+                                              label: "Select Graduation Period",
+                                              "item-value": "id",
+                                              "item-text": "graduation",
+                                              color: "primary",
+                                              rules: [_vm.rules.required],
+                                            },
+                                            model: {
+                                              value: _vm.setup.graduation_id,
+                                              callback: function ($$v) {
+                                                _vm.$set(
+                                                  _vm.setup,
+                                                  "graduation_id",
+                                                  $$v
+                                                )
+                                              },
+                                              expression: "setup.graduation_id",
+                                            },
+                                          }),
+                                        ],
+                                        1
+                                      )
+                                    : _vm.setup.purpose_id == 3
+                                    ? _c(
+                                        "v-col",
+                                        { attrs: { cols: "12", sm: "12" } },
+                                        [
+                                          _c("v-text-field", {
+                                            attrs: {
+                                              label: "Specify",
+                                              rules: [_vm.rules.required],
+                                            },
+                                            model: {
+                                              value: _vm.setup.credential,
+                                              callback: function ($$v) {
+                                                _vm.$set(
+                                                  _vm.setup,
+                                                  "credential",
+                                                  $$v
+                                                )
+                                              },
+                                              expression: "setup.credential",
+                                            },
+                                          }),
+                                        ],
+                                        1
+                                      )
                                     : _vm._e(),
                                 ],
                                 1
                               ),
-                              _vm._v(" "),
-                              _c(
-                                "v-col",
-                                {
-                                  staticClass: "text-center",
-                                  attrs: { cols: "6" },
-                                },
-                                [
-                                  _c(
-                                    "a",
-                                    {
-                                      staticClass: "body-2 black--text",
-                                      attrs: { href: "#!" },
-                                    },
-                                    [_vm._v("EDIT")]
-                                  ),
-                                ]
-                              ),
-                            ],
-                            1
-                          )
-                        : item.children
-                        ? _c(
-                            "v-list-group",
-                            {
-                              key: item.text,
-                              attrs: {
-                                "append-icon": "",
-                                color: "grey lighten-2",
-                              },
-                              scopedSlots: _vm._u(
-                                [
-                                  {
-                                    key: "activator",
-                                    fn: function () {
-                                      return [
-                                        _c(
-                                          "v-list-item-action",
-                                          {
-                                            staticStyle: {
-                                              "margin-right": "10px",
-                                            },
-                                          },
-                                          [
-                                            _c("v-icon", [
-                                              _vm._v(_vm._s(item.icon)),
-                                            ]),
-                                          ],
-                                          1
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "v-list-item-content",
-                                          [
-                                            _c(
-                                              "v-list-item-title",
-                                              {
-                                                staticClass:
-                                                  "caption white--text text--darken-4 font-weight-light",
-                                              },
-                                              [
-                                                _vm._v(
-                                                  "\n                  " +
-                                                    _vm._s(item.text) +
-                                                    "\n                "
-                                                ),
-                                              ]
-                                            ),
-                                          ],
-                                          1
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "v-list-item-action",
-                                          {
-                                            staticStyle: {
-                                              "margin-right": "10px",
-                                            },
-                                          },
-                                          [
-                                            _c("v-icon", [
-                                              _vm._v(
-                                                _vm._s(
-                                                  item.model
-                                                    ? "mdi-chevron-up"
-                                                    : item["icon-alt"]
-                                                )
-                                              ),
-                                            ]),
-                                          ],
-                                          1
-                                        ),
-                                      ]
-                                    },
-                                    proxy: true,
-                                  },
-                                ],
-                                null,
-                                true
-                              ),
-                              model: {
-                                value: item.model,
-                                callback: function ($$v) {
-                                  _vm.$set(item, "model", $$v)
-                                },
-                                expression: "item.model",
-                              },
-                            },
-                            [
-                              _vm._v(" "),
-                              _vm._l(item.children, function (child, i) {
-                                return _c(
-                                  "v-list-item",
-                                  {
-                                    key: i,
-                                    attrs: { to: child.link, link: "" },
-                                  },
-                                  [
-                                    child.icon
-                                      ? _c(
-                                          "v-list-item-action",
-                                          {
-                                            staticStyle: {
-                                              "margin-right": "10px",
-                                            },
-                                          },
-                                          [
-                                            _c("v-icon", [
-                                              _vm._v(_vm._s(child.icon)),
-                                            ]),
-                                          ],
-                                          1
-                                        )
-                                      : _vm._e(),
-                                    _vm._v(" "),
-                                    _c(
-                                      "v-list-item-content",
-                                      {
-                                        staticStyle: { "padding-left": "20px" },
-                                      },
-                                      [
-                                        _c(
-                                          "v-list-item-title",
-                                          {
-                                            staticClass:
-                                              "caption white--text text--darken-2 font-weight-light",
-                                          },
-                                          [
-                                            _vm._v(
-                                              "\n                  " +
-                                                _vm._s(child.text) +
-                                                "\n                "
-                                            ),
-                                          ]
-                                        ),
-                                      ],
-                                      1
-                                    ),
-                                  ],
-                                  1
-                                )
-                              }),
-                            ],
-                            2
-                          )
-                        : _c(
-                            "v-list-item",
-                            {
-                              key: item.text,
-                              attrs: {
-                                to: item.link,
-                                link: "",
-                                color: "grey lighten-2",
-                              },
-                            },
-                            [
-                              _c(
-                                "v-list-item-action",
-                                { staticStyle: { "margin-right": "10px" } },
-                                [
-                                  _c("v-icon", { attrs: { small: "" } }, [
-                                    _vm._v(_vm._s(item.icon)),
-                                  ]),
-                                ],
-                                1
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "v-list-item-content",
-                                [
-                                  _c(
-                                    "v-list-item-title",
-                                    {
-                                      staticClass:
-                                        "caption white--text text--darken-2 font-weight-light",
-                                    },
-                                    [
-                                      _vm._v(
-                                        "\n                " +
-                                          _vm._s(item.text) +
-                                          "\n              "
-                                      ),
-                                    ]
-                                  ),
-                                ],
-                                1
-                              ),
-                            ],
-                            1
-                          ),
-                    ]
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "v-list-item",
-                    { on: { click: _vm.logout } },
-                    [
-                      _c(
-                        "v-list-item-action",
-                        { staticStyle: { "margin-right": "10px" } },
-                        [
-                          _c("v-icon", { attrs: { small: "" } }, [
-                            _vm._v("mdi-logout-variant"),
-                          ]),
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "v-list-item-content",
-                        [
-                          _c(
-                            "v-list-item-title",
-                            {
-                              staticClass:
-                                "caption white--text text--darken-2 font-weight-light",
-                            },
-                            [_vm._v("\n                Logout\n              ")]
-                          ),
-                        ],
-                        1
-                      ),
-                    ],
-                    1
-                  ),
-                ],
-                2
-              ),
-            ],
-            1
-          ),
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "v-app-bar",
-        {
-          staticClass: "white",
-          attrs: { app: "", outlined: "", height: "50", elevation: "1" },
-        },
-        [
-          _c("v-app-bar-nav-icon", {
-            staticClass: "hidden-lg-and-up",
-            on: {
-              click: function ($event) {
-                $event.stopPropagation()
-                _vm.drawer = !_vm.drawer
-              },
-            },
-          }),
-          _vm._v(" "),
-          _c(
-            "v-toolbar-title",
-            {
-              staticClass:
-                "ml-0 pl-4 font-weight-medium blue-grey--text text--darken-4",
-              staticStyle: { width: "300px" },
-            },
-            [_c("span", [_vm._v(_vm._s(_vm.currentRouteName))])]
-          ),
-          _vm._v(" "),
-          _c("v-spacer"),
-          _vm._v(" "),
-          _c(
-            "v-btn",
-            { attrs: { icon: "", small: "" } },
-            [
-              _c(
-                "v-menu",
-                {
-                  attrs: {
-                    "close-on-content-click": false,
-                    "nudge-width": 200,
-                    "offset-x": "",
-                  },
-                  scopedSlots: _vm._u([
-                    {
-                      key: "activator",
-                      fn: function (ref) {
-                        var on = ref.on
-                        var attrs = ref.attrs
-                        return [
-                          _c(
-                            "v-btn",
-                            _vm._g(
-                              _vm._b(
-                                { attrs: { icon: "", large: "" } },
-                                "v-btn",
-                                attrs,
-                                false
-                              ),
-                              on
-                            ),
-                            [
-                              _c(
-                                "v-avatar",
-                                { attrs: { size: "32px", item: "" } },
-                                [
-                                  _c("v-img", {
-                                    attrs: {
-                                      src: "images/psu_logo.png",
-                                      alt: "parsu_logo",
-                                    },
-                                  }),
-                                ],
-                                1
-                              ),
-                            ],
-                            1
-                          ),
-                        ]
-                      },
-                    },
-                  ]),
-                  model: {
-                    value: _vm.menu,
-                    callback: function ($$v) {
-                      _vm.menu = $$v
-                    },
-                    expression: "menu",
-                  },
-                },
-                [
-                  _vm._v(" "),
-                  _c(
-                    "v-card",
-                    [
-                      _c(
-                        "v-list",
-                        [
-                          _c(
-                            "v-list-item",
-                            [
-                              _c(
-                                "v-list-item-avatar",
-                                [
-                                  _c(
-                                    "v-avatar",
-                                    { attrs: { color: "indigo" } },
-                                    [
-                                      _c("v-icon", { attrs: { dark: "" } }, [
-                                        _vm._v(
-                                          "\n                    mdi-account-circle\n                  "
-                                        ),
-                                      ]),
-                                    ],
-                                    1
-                                  ),
-                                ],
-                                1
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "v-list-item-content",
-                                [
-                                  _c("v-list-item-title", [
-                                    _vm._v(_vm._s(_vm.user.name)),
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("v-list-item-subtitle", [
-                                    _vm._v(_vm._s(_vm.role.description)),
-                                  ]),
-                                ],
-                                1
-                              ),
-                              _vm._v(" "),
-                              _c("v-list-item-action"),
                             ],
                             1
                           ),
@@ -66299,58 +65285,110 @@ var render = function () {
                       _c("v-divider"),
                       _vm._v(" "),
                       _c(
-                        "v-list",
+                        "v-card-actions",
                         [
+                          _c("v-spacer"),
+                          _vm._v(" "),
                           _c(
-                            "v-list-item",
+                            "v-btn",
                             {
-                              attrs: { to: "/student/settings", link: "" },
+                              attrs: {
+                                color: "blue darken-1",
+                                text: "",
+                                type: "submit",
+                              },
                               on: {
                                 click: function ($event) {
-                                  _vm.menu = false
+                                  $event.preventDefault()
+                                  return _vm.save.apply(null, arguments)
                                 },
                               },
                             },
                             [
-                              _c(
-                                "v-list-item-action",
-                                [_c("v-icon", [_vm._v("mdi-cog")])],
-                                1
+                              _vm._v(
+                                "\r\n                      Save\r\n                    "
                               ),
-                              _vm._v(" "),
-                              _c(
-                                "v-list-item-content",
-                                [
-                                  _c("v-list-item-title", [
-                                    _vm._v(
-                                      "\n                Settings\n              "
-                                    ),
-                                  ]),
-                                ],
-                                1
-                              ),
-                            ],
-                            1
+                            ]
                           ),
-                          _vm._v(" "),
+                        ],
+                        1
+                      ),
+                    ],
+                    1
+                  ),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-tab-item",
+                {
+                  staticClass: "ml-6 mr-6",
+                  attrs: { value: "mobile-tabs-5-2" },
+                },
+                [
+                  _c(
+                    "v-card",
+                    { attrs: { flat: "" } },
+                    [
+                      _c(
+                        "v-form",
+                        {
+                          attrs: { method: "post" },
+                          on: {
+                            submit: function ($event) {
+                              $event.stopPropagation()
+                              $event.preventDefault()
+                              return _vm.updateEmail.apply(null, arguments)
+                            },
+                          },
+                          model: {
+                            value: _vm.valid,
+                            callback: function ($$v) {
+                              _vm.valid = $$v
+                            },
+                            expression: "valid",
+                          },
+                        },
+                        [
                           _c(
-                            "v-list-item",
-                            { on: { click: _vm.logout } },
+                            "v-container",
                             [
                               _c(
-                                "v-list-item-action",
-                                [_c("v-icon", [_vm._v("mdi-logout-variant")])],
-                                1
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "v-list-item-content",
+                                "v-row",
                                 [
-                                  _c("v-list-item-title", [
-                                    _vm._v(
-                                      "\n                Logout\n              "
-                                    ),
-                                  ]),
+                                  _c(
+                                    "v-col",
+                                    { attrs: { cols: "12", sm: "12" } },
+                                    [
+                                      _c("v-text-field", {
+                                        attrs: {
+                                          type: "email",
+                                          "success-messages": _vm.success,
+                                          "error-messages": _vm.error,
+                                          blur: _vm.checkEmail,
+                                          label: "Email",
+                                          disabled: !_vm.email_disabled,
+                                          rules: [
+                                            _vm.rules.required,
+                                            _vm.rules.validEmail,
+                                          ],
+                                        },
+                                        model: {
+                                          value: _vm.editedItem.email,
+                                          callback: function ($$v) {
+                                            _vm.$set(
+                                              _vm.editedItem,
+                                              "email",
+                                              $$v
+                                            )
+                                          },
+                                          expression: "editedItem.email",
+                                        },
+                                      }),
+                                    ],
+                                    1
+                                  ),
                                 ],
                                 1
                               ),
@@ -66361,7 +65399,212 @@ var render = function () {
                         1
                       ),
                       _vm._v(" "),
-                      _c("v-card-actions", [_c("v-spacer")], 1),
+                      _c("v-divider"),
+                      _vm._v(" "),
+                      _c(
+                        "v-card-actions",
+                        [
+                          _c("v-checkbox", {
+                            attrs: { label: "Change Email" },
+                            model: {
+                              value: _vm.email_disabled,
+                              callback: function ($$v) {
+                                _vm.email_disabled = $$v
+                              },
+                              expression: "email_disabled",
+                            },
+                          }),
+                          _vm._v(" "),
+                          _c("v-spacer"),
+                          _vm._v(" "),
+                          _c(
+                            "v-btn",
+                            {
+                              attrs: {
+                                color: "blue darken-1",
+                                text: "",
+                                disabled: !_vm.valid,
+                                type: "submit",
+                                loading: _vm.loading,
+                              },
+                              on: {
+                                click: function ($event) {
+                                  $event.preventDefault()
+                                  return _vm.updateEmail.apply(null, arguments)
+                                },
+                              },
+                            },
+                            [
+                              _vm._v(
+                                "\r\n                      Save\r\n                    "
+                              ),
+                            ]
+                          ),
+                        ],
+                        1
+                      ),
+                    ],
+                    1
+                  ),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-tab-item",
+                {
+                  staticClass: "ml-6 mr-6",
+                  attrs: { value: "mobile-tabs-5-3" },
+                },
+                [
+                  _c(
+                    "v-card",
+                    { attrs: { flat: "" } },
+                    [
+                      _c(
+                        "v-form",
+                        {
+                          attrs: { method: "post" },
+                          on: {
+                            submit: function ($event) {
+                              $event.stopPropagation()
+                              $event.preventDefault()
+                              return _vm.updatePassword.apply(null, arguments)
+                            },
+                          },
+                          model: {
+                            value: _vm.valid,
+                            callback: function ($$v) {
+                              _vm.valid = $$v
+                            },
+                            expression: "valid",
+                          },
+                        },
+                        [
+                          _c(
+                            "v-container",
+                            [
+                              _c(
+                                "v-row",
+                                [
+                                  _c(
+                                    "v-col",
+                                    { attrs: { cols: "12", sm: "12" } },
+                                    [
+                                      _c("v-text-field", {
+                                        attrs: {
+                                          type: "password",
+                                          color: "primary",
+                                          label: "Type Password",
+                                          disabled: !_vm.password_disabled,
+                                          rules: [
+                                            _vm.rules.required,
+                                            _vm.rules.min,
+                                          ],
+                                        },
+                                        model: {
+                                          value: _vm.editedItem.password,
+                                          callback: function ($$v) {
+                                            _vm.$set(
+                                              _vm.editedItem,
+                                              "password",
+                                              $$v
+                                            )
+                                          },
+                                          expression: "editedItem.password",
+                                        },
+                                      }),
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-col",
+                                    { attrs: { cols: "12", sm: "12" } },
+                                    [
+                                      _c("v-text-field", {
+                                        attrs: {
+                                          type: "password",
+                                          color: "primary",
+                                          disabled: !_vm.password_disabled,
+                                          label: "Retype Password",
+                                          rules: [
+                                            _vm.rules.required,
+                                            _vm.rules.min,
+                                            _vm.passwordmatch,
+                                          ],
+                                        },
+                                        model: {
+                                          value: _vm.editedItem.rpassword,
+                                          callback: function ($$v) {
+                                            _vm.$set(
+                                              _vm.editedItem,
+                                              "rpassword",
+                                              $$v
+                                            )
+                                          },
+                                          expression: "editedItem.rpassword",
+                                        },
+                                      }),
+                                    ],
+                                    1
+                                  ),
+                                ],
+                                1
+                              ),
+                            ],
+                            1
+                          ),
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("v-divider"),
+                      _vm._v(" "),
+                      _c(
+                        "v-card-actions",
+                        [
+                          _c("v-checkbox", {
+                            attrs: { label: "Change Password" },
+                            model: {
+                              value: _vm.password_disabled,
+                              callback: function ($$v) {
+                                _vm.password_disabled = $$v
+                              },
+                              expression: "password_disabled",
+                            },
+                          }),
+                          _vm._v(" "),
+                          _c("v-spacer"),
+                          _vm._v(" "),
+                          _c(
+                            "v-btn",
+                            {
+                              attrs: {
+                                color: "blue darken-1",
+                                text: "",
+                                type: "submit",
+                                disabled: !_vm.valid,
+                              },
+                              on: {
+                                click: function ($event) {
+                                  $event.preventDefault()
+                                  return _vm.updatePassword.apply(
+                                    null,
+                                    arguments
+                                  )
+                                },
+                              },
+                            },
+                            [
+                              _vm._v(
+                                "\r\n                      Save\r\n                    "
+                              ),
+                            ]
+                          ),
+                        ],
+                        1
+                      ),
                     ],
                     1
                   ),
@@ -66371,14 +65614,68 @@ var render = function () {
             ],
             1
           ),
+          _vm._v(" "),
+          _c(
+            "v-snackbar",
+            {
+              attrs: {
+                color: _vm.snackbarColor,
+                right: "",
+                timeout: "5000",
+                outlined: "",
+                top: "",
+                width: "50",
+              },
+              scopedSlots: _vm._u([
+                {
+                  key: "action",
+                  fn: function (ref) {
+                    var attrs = ref.attrs
+                    return [
+                      _c(
+                        "v-btn",
+                        _vm._b(
+                          {
+                            attrs: { color: _vm.snackbarColor, text: "" },
+                            on: {
+                              click: function ($event) {
+                                _vm.snackbar = false
+                              },
+                            },
+                          },
+                          "v-btn",
+                          attrs,
+                          false
+                        ),
+                        [
+                          _c("v-icon", { attrs: { dark: "", left: "" } }, [
+                            _vm._v("\r\n          mdi-close\r\n        "),
+                          ]),
+                          _vm._v("close\r\n      "),
+                        ],
+                        1
+                      ),
+                    ]
+                  },
+                },
+              ]),
+              model: {
+                value: _vm.snackbar,
+                callback: function ($$v) {
+                  _vm.snackbar = $$v
+                },
+                expression: "snackbar",
+              },
+            },
+            [
+              _c("v-icon", { attrs: { left: "" } }, [
+                _vm._v("\r\n          mdi-error\r\n        "),
+              ]),
+              _vm._v(_vm._s(_vm.text) + "\r\n\r\n      "),
+            ],
+            1
+          ),
         ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "v-main",
-        { staticClass: "grey lighten-5" },
-        [_c("v-container", { attrs: { fluid: "" } }, [_c("router-view")], 1)],
         1
       ),
     ],
@@ -67670,6 +66967,1538 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/shared/layout/OSCSAppBar.vue?vue&type=template&id=e60b2102&":
+/*!****************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/shared/layout/OSCSAppBar.vue?vue&type=template&id=e60b2102& ***!
+  \****************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-app-bar",
+    {
+      staticClass: "white",
+      staticStyle: { "border-bottom": "1px solid #d2d2d2 !important" },
+      attrs: { app: "", outlined: "", height: "51", elevation: "0" },
+    },
+    [
+      _c("v-app-bar-nav-icon", {
+        staticClass: "hidden-lg-and-up",
+        on: {
+          click: function ($event) {
+            $event.stopPropagation()
+            return _vm.openDrawer.apply(null, arguments)
+          },
+        },
+      }),
+      _vm._v(" "),
+      _c("v-img", {
+        attrs: {
+          src: "/images/OSCS_LOGO.jpg",
+          "max-height": "100",
+          "max-width": "100",
+          alt: "OSCS Logo",
+        },
+      }),
+      _vm._v(" "),
+      _c("v-divider", {
+        staticClass: "ml-4",
+        attrs: { inset: "", vertical: "" },
+      }),
+      _vm._v(" "),
+      _c(
+        "v-toolbar-title",
+        {
+          staticClass:
+            "ml-0 pl-4 font-weight-medium blue-grey--text text--darken-4",
+          staticStyle: { width: "300px" },
+        },
+        [
+          _c(
+            "h6",
+            {
+              staticClass:
+                "font-weight-medium grey--text text--darken-2 text-overline text-uppercase text-large",
+            },
+            [_vm._v(_vm._s(_vm.currentRouteName))]
+          ),
+        ]
+      ),
+      _vm._v(" "),
+      _c("v-spacer"),
+      _vm._v(" "),
+      _c(
+        "v-btn",
+        { staticClass: "mr-2", attrs: { icon: "", small: "" } },
+        [
+          _c(
+            "v-menu",
+            {
+              attrs: {
+                "close-on-content-click": false,
+                "nudge-width": 200,
+                "offset-x": "",
+              },
+              scopedSlots: _vm._u([
+                {
+                  key: "activator",
+                  fn: function (ref) {
+                    var on = ref.on
+                    var attrs = ref.attrs
+                    return [
+                      _c(
+                        "v-btn",
+                        _vm._g(
+                          _vm._b(
+                            { attrs: { icon: "", large: "" } },
+                            "v-btn",
+                            attrs,
+                            false
+                          ),
+                          on
+                        ),
+                        [
+                          _c(
+                            "v-avatar",
+                            { attrs: { size: "32px", item: "" } },
+                            [
+                              _c("v-img", {
+                                attrs: {
+                                  src: "images/psu_logo.png",
+                                  alt: "parsu_logo",
+                                },
+                              }),
+                            ],
+                            1
+                          ),
+                        ],
+                        1
+                      ),
+                    ]
+                  },
+                },
+              ]),
+              model: {
+                value: _vm.menu,
+                callback: function ($$v) {
+                  _vm.menu = $$v
+                },
+                expression: "menu",
+              },
+            },
+            [
+              _vm._v(" "),
+              _c(
+                "v-card",
+                [
+                  _c(
+                    "v-list",
+                    [
+                      _c(
+                        "v-list-item",
+                        [
+                          _c(
+                            "v-list-item-avatar",
+                            [
+                              _c(
+                                "v-avatar",
+                                { attrs: { color: "indigo" } },
+                                [
+                                  _c("v-icon", { attrs: { dark: "" } }, [
+                                    _vm._v(" mdi-account-circle "),
+                                  ]),
+                                ],
+                                1
+                              ),
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-list-item-content",
+                            [
+                              _c("v-list-item-title", [
+                                _vm._v(_vm._s(_vm.user.name)),
+                              ]),
+                              _vm._v(" "),
+                              _c("v-list-item-subtitle", [
+                                _vm._v(_vm._s(_vm.role.description)),
+                              ]),
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c("v-list-item-action"),
+                        ],
+                        1
+                      ),
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("v-divider"),
+                  _vm._v(" "),
+                  _c(
+                    "v-list",
+                    [
+                      _c(
+                        "v-list-item",
+                        {
+                          attrs: { to: "/student/settings", link: "" },
+                          on: {
+                            click: function ($event) {
+                              _vm.menu = false
+                            },
+                          },
+                        },
+                        [
+                          _c(
+                            "v-list-item-action",
+                            [_c("v-icon", [_vm._v("mdi-cog")])],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-list-item-content",
+                            [_c("v-list-item-title", [_vm._v(" Settings ")])],
+                            1
+                          ),
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-list-item",
+                        { on: { click: _vm.logout } },
+                        [
+                          _c(
+                            "v-list-item-action",
+                            [_c("v-icon", [_vm._v("mdi-logout-variant")])],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-list-item-content",
+                            [_c("v-list-item-title", [_vm._v(" Logout ")])],
+                            1
+                          ),
+                        ],
+                        1
+                      ),
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("v-card-actions", [_c("v-spacer")], 1),
+                ],
+                1
+              ),
+            ],
+            1
+          ),
+        ],
+        1
+      ),
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/shared/layout/OSCSNavigationDrawer.vue?vue&type=template&id=54b9a5b2&":
+/*!**************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/shared/layout/OSCSNavigationDrawer.vue?vue&type=template&id=54b9a5b2& ***!
+  \**************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-navigation-drawer",
+    {
+      attrs: { width: "220px", app: "" },
+      scopedSlots: _vm._u([
+        {
+          key: "prepend",
+          fn: function () {
+            return [
+              _c(
+                "v-list-item",
+                {
+                  staticClass: "elevation-2",
+                  staticStyle: {
+                    "max-height": "50px",
+                    background:
+                      "linear-gradient(to right, #1A237E, #1A237E, #0D47A1)",
+                  },
+                  attrs: { dark: "" },
+                },
+                [
+                  _c(
+                    "v-list-item-avatar",
+                    {
+                      staticClass: "text-center",
+                      staticStyle: { margin: "0", "margin-right": "10px" },
+                    },
+                    [
+                      _c(
+                        "v-icon",
+                        {
+                          staticStyle: {
+                            "margin-left": "10px",
+                            "padding-right": "10px",
+                          },
+                          attrs: { dark: "", large: "" },
+                        },
+                        [
+                          _vm._v(
+                            "\n                    mdi-account-circle\n                  "
+                          ),
+                        ]
+                      ),
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-list-item-content",
+                    [
+                      _c(
+                        "v-list-item-title",
+                        { staticClass: "caption text-wrap" },
+                        [_vm._v(" " + _vm._s(_vm.user.name))]
+                      ),
+                      _vm._v(" "),
+                      _c("v-list-item-subtitle", { staticClass: "caption" }, [
+                        _vm._v(_vm._s(_vm.role.description)),
+                      ]),
+                    ],
+                    1
+                  ),
+                ],
+                1
+              ),
+            ]
+          },
+          proxy: true,
+        },
+        {
+          key: "append",
+          fn: function () {
+            return [
+              _c(
+                "div",
+                { staticClass: "pa-2" },
+                [
+                  _c(
+                    "v-card",
+                    {
+                      staticClass: "overline  lighten-1 text-center ",
+                      staticStyle: { background: "transparent" },
+                      attrs: { flat: "", tile: "", width: "100%" },
+                    },
+                    [
+                      _c("v-card-text", { staticClass: "caption" }, [
+                        _vm._v(
+                          "\n            " +
+                            _vm._s(new Date().getFullYear()) +
+                            " ©\n            "
+                        ),
+                        _c("strong", [
+                          _vm._v("ICTMO, Partido State University"),
+                        ]),
+                      ]),
+                    ],
+                    1
+                  ),
+                ],
+                1
+              ),
+            ]
+          },
+          proxy: true,
+        },
+      ]),
+      model: {
+        value: _vm.drawer,
+        callback: function ($$v) {
+          _vm.drawer = $$v
+        },
+        expression: "drawer",
+      },
+    },
+    [
+      _vm._v(" "),
+      _c("v-divider"),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          directives: [
+            {
+              name: "slimscroll",
+              rawName: "v-slimscroll",
+              value: _vm.scrollOptions,
+              expression: "scrollOptions",
+            },
+          ],
+        },
+        [
+          _c(
+            "v-list",
+            { attrs: { dense: "", shaped: "" } },
+            [
+              _vm._l(_vm.navigationList, function (item) {
+                return [
+                  item.heading
+                    ? _c(
+                        "v-row",
+                        { key: item.heading, attrs: { align: "center" } },
+                        [
+                          _c(
+                            "v-col",
+                            { attrs: { cols: "4" } },
+                            [
+                              item.heading
+                                ? _c("v-subheader", [
+                                    _vm._v(
+                                      "\n                " +
+                                        _vm._s(item.heading) +
+                                        "\n              "
+                                    ),
+                                  ])
+                                : _vm._e(),
+                            ],
+                            1
+                          ),
+                        ],
+                        1
+                      )
+                    : item.children
+                    ? _c(
+                        "v-list-group",
+                        {
+                          key: item.text,
+                          attrs: { "append-icon": "", color: "indigo" },
+                          scopedSlots: _vm._u(
+                            [
+                              {
+                                key: "activator",
+                                fn: function () {
+                                  return [
+                                    _c(
+                                      "v-list-item-action",
+                                      {
+                                        staticStyle: { "margin-right": "10px" },
+                                      },
+                                      [
+                                        _c("v-icon", [
+                                          _vm._v(_vm._s(item.icon)),
+                                        ]),
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "v-list-item-content",
+                                      [
+                                        _c(
+                                          "v-list-item-title",
+                                          {
+                                            staticClass:
+                                              "caption   text--darken-1 font-weight-light",
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                  " +
+                                                _vm._s(item.text) +
+                                                "\n                "
+                                            ),
+                                          ]
+                                        ),
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "v-list-item-action",
+                                      {
+                                        staticStyle: { "margin-right": "10px" },
+                                      },
+                                      [
+                                        _c("v-icon", [
+                                          _vm._v(
+                                            _vm._s(
+                                              item.model
+                                                ? "mdi-chevron-up"
+                                                : item["icon-alt"]
+                                            )
+                                          ),
+                                        ]),
+                                      ],
+                                      1
+                                    ),
+                                  ]
+                                },
+                                proxy: true,
+                              },
+                            ],
+                            null,
+                            true
+                          ),
+                          model: {
+                            value: item.model,
+                            callback: function ($$v) {
+                              _vm.$set(item, "model", $$v)
+                            },
+                            expression: "item.model",
+                          },
+                        },
+                        [
+                          _vm._v(" "),
+                          _vm._l(item.children, function (child, i) {
+                            return _c(
+                              "v-list-item",
+                              { key: i, attrs: { to: child.link, link: "" } },
+                              [
+                                child.icon
+                                  ? _c(
+                                      "v-list-item-action",
+                                      {
+                                        staticStyle: { "margin-right": "10px" },
+                                      },
+                                      [
+                                        _c("v-icon", [
+                                          _vm._v(_vm._s(child.icon)),
+                                        ]),
+                                      ],
+                                      1
+                                    )
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                _c(
+                                  "v-list-item-content",
+                                  { staticStyle: { "padding-left": "20px" } },
+                                  [
+                                    _c(
+                                      "v-list-item-title",
+                                      {
+                                        staticClass:
+                                          "caption   text--darken-1 font-weight-light",
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                  " +
+                                            _vm._s(child.text) +
+                                            "\n                "
+                                        ),
+                                      ]
+                                    ),
+                                  ],
+                                  1
+                                ),
+                              ],
+                              1
+                            )
+                          }),
+                        ],
+                        2
+                      )
+                    : _c(
+                        "v-list-item",
+                        {
+                          key: item.text,
+                          staticClass: "mb-1",
+                          attrs: {
+                            to: item.link,
+                            link: "",
+                            "active-class":
+                              "blue--text text--accent-4 font-weight-bold",
+                          },
+                        },
+                        [
+                          _c(
+                            "v-list-item-action",
+                            { staticStyle: { "margin-right": "10px" } },
+                            [
+                              _c("v-icon", { attrs: { small: "" } }, [
+                                _vm._v(_vm._s(item.icon)),
+                              ]),
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-list-item-content",
+                            [
+                              _c(
+                                "v-list-item-title",
+                                {
+                                  staticClass:
+                                    "caption   text--darken-1 font-weight-medium",
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                " +
+                                      _vm._s(item.text) +
+                                      "\n              "
+                                  ),
+                                ]
+                              ),
+                            ],
+                            1
+                          ),
+                        ],
+                        1
+                      ),
+                ]
+              }),
+              _vm._v(" "),
+              _c(
+                "v-list-item",
+                { on: { click: _vm.logout } },
+                [
+                  _c(
+                    "v-list-item-action",
+                    { staticStyle: { "margin-right": "10px" } },
+                    [
+                      _c("v-icon", { attrs: { small: "" } }, [
+                        _vm._v("mdi-logout-variant"),
+                      ]),
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-list-item-content",
+                    [
+                      _c(
+                        "v-list-item-title",
+                        {
+                          staticClass:
+                            "caption   text--darken-2 font-weight-medium",
+                        },
+                        [_vm._v("\n                Logout\n              ")]
+                      ),
+                    ],
+                    1
+                  ),
+                ],
+                1
+              ),
+            ],
+            2
+          ),
+        ],
+        1
+      ),
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/shared/layout/SignatoryLayout.vue?vue&type=template&id=c576fe32&":
+/*!*********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/shared/layout/SignatoryLayout.vue?vue&type=template&id=c576fe32& ***!
+  \*********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-app",
+    { attrs: { id: "inspire" } },
+    [
+      _c("OSCSNavigationDrawer", {
+        attrs: { drawer: _vm.drawer, navigationList: _vm.navigationList },
+      }),
+      _vm._v(" "),
+      _c("OSCSAppBar", { attrs: { openDrawer: _vm.openDrawer } }),
+      _vm._v(" "),
+      _c(
+        "v-main",
+        { staticClass: "grey lighten-5" },
+        [_c("v-container", { attrs: { fluid: "" } }, [_c("router-view")], 1)],
+        1
+      ),
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/shared/layout/StudentLayout.vue?vue&type=template&id=4bbd165c&":
+/*!*******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/shared/layout/StudentLayout.vue?vue&type=template&id=4bbd165c& ***!
+  \*******************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-app",
+    { attrs: { id: "inspire" } },
+    [
+      _c("OSCSNavigationDrawer", {
+        attrs: { drawer: _vm.drawer, navigationList: _vm.navigationList },
+      }),
+      _vm._v(" "),
+      _c("OSCSAppBar", { attrs: { openDrawer: _vm.openDrawer } }),
+      _vm._v(" "),
+      _c(
+        "v-main",
+        { staticClass: "grey lighten-5" },
+        [_c("v-container", { attrs: { fluid: "" } }, [_c("router-view")], 1)],
+        1
+      ),
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/shared/table/OSCSActiveClearanceEnrollmentTable.vue?vue&type=template&id=0680de76&":
+/*!***************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/shared/table/OSCSActiveClearanceEnrollmentTable.vue?vue&type=template&id=0680de76& ***!
+  \***************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return !_vm.isPurposeSetup && _vm.isPurposeSetup != null
+    ? _c(
+        "v-container",
+        [
+          _c(
+            "v-row",
+            {
+              staticClass: "pa-12",
+              attrs: { align: "center ", justify: "center" },
+            },
+            [
+              _c(
+                "v-alert",
+                {
+                  attrs: {
+                    icon: "mdi-shield-lock-outline",
+                    prominent: "",
+                    text: "",
+                    type: "info",
+                  },
+                },
+                [
+                  _c(
+                    "v-row",
+                    { staticClass: "pa-3", attrs: { align: "center" } },
+                    [
+                      _c("v-col", { staticClass: "grow" }, [
+                        _c("strong", [_vm._v("No purpose detected!")]),
+                        _vm._v(
+                          " Go to settings to setup your clearance purpose.\n    \n        "
+                        ),
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "v-col",
+                        { staticClass: "shrink" },
+                        [
+                          _c(
+                            "v-btn",
+                            {
+                              staticClass: "primary",
+                              attrs: {
+                                href: "/#/student/settings",
+                                elevation: "0",
+                              },
+                            },
+                            [_vm._v("Redirect to Settings")]
+                          ),
+                        ],
+                        1
+                      ),
+                    ],
+                    1
+                  ),
+                ],
+                1
+              ),
+            ],
+            1
+          ),
+        ],
+        1
+      )
+    : _vm.isPurposeSetup && _vm.isPurposeSetup != null
+    ? _c(
+        "v-container",
+        [
+          _vm.countApproved == _vm.countSignatory &&
+          _vm.countApproved != 0 &&
+          _vm.countSignatory != 0 &&
+          !_vm.isSubmitted
+            ? _c(
+                "v-alert",
+                {
+                  staticStyle: {
+                    "border-color":
+                      "linear-gradient(to left, #1A237E, #1A237E, #0D47A1) !important",
+                  },
+                  attrs: {
+                    border: "top",
+                    "colored-border": "",
+                    type: "info",
+                    dismissible: "",
+                    dense: "",
+                    elevation: "0",
+                  },
+                },
+                [
+                  _c("span", { staticClass: "font-weight-bold" }, [
+                    _vm._v("Note:"),
+                  ]),
+                  _vm._v(
+                    " To complete the proccess. Please click the submit button to send your clearance to the Office of the Registrar.\n    "
+                  ),
+                ]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.countApproved == _vm.countSignatory &&
+          _vm.countApproved != 0 &&
+          _vm.countSignatory != 0 &&
+          _vm.isSubmitted
+            ? _c(
+                "v-alert",
+                {
+                  attrs: {
+                    border: "top",
+                    "colored-border": "",
+                    type: "success",
+                    elevation: "0",
+                    dismissible: "",
+                    dense: "",
+                  },
+                },
+                [
+                  _c("span", { staticClass: "font-weight-bold" }, [
+                    _vm._v("Note:"),
+                  ]),
+                  _vm._v(
+                    "You have successfully submitted your clearance to the Office of the Registrar ("
+                  ),
+                  _c("i", [_vm._v(" " + _vm._s(_vm.dateSubmitted) + " ")]),
+                  _vm._v(").\n "),
+                ]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _c(
+            "v-card",
+            { attrs: { elevation: "0", rounded: "md" } },
+            [
+              _c(
+                "v-card-title",
+                {
+                  staticClass:
+                    "white--text text-uppercase elevation-2 mb-0 pb-0",
+                  staticStyle: {
+                    background:
+                      "linear-gradient(to left, #1A237E, #1A237E, #0D47A1)",
+                  },
+                },
+                [
+                  _c("span", { staticClass: "font-italic caption mt-1 pl-2" }),
+                  _vm._v(" "),
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    {
+                      staticClass:
+                        "font-normal font-weight-medium text-caption",
+                    },
+                    [_vm._v("Status: ")]
+                  ),
+                  _vm._v(" "),
+                  _vm.countApproved == _vm.countSignatory &&
+                  _vm.countApproved != 0 &&
+                  _vm.countSignatory != 0 &&
+                  _vm.isOpen
+                    ? _c(
+                        "v-chip",
+                        {
+                          staticStyle: {
+                            "margin-left": "4px",
+                            "border-color": "white 2px !important",
+                          },
+                          attrs: {
+                            "text-color": "white",
+                            color: "success",
+                            "x-small": "",
+                          },
+                        },
+                        [
+                          _vm._v(
+                            "\n                 Completed\n                "
+                          ),
+                        ]
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.countApproved != _vm.countSignatory
+                    ? _c(
+                        "v-chip",
+                        {
+                          staticStyle: { "margin-left": "4px" },
+                          attrs: {
+                            "text-color": "white",
+                            color: _vm.isOpen == true ? "info" : "red",
+                            "x-small": "",
+                          },
+                        },
+                        [
+                          _vm._v(
+                            "\n                 " +
+                              _vm._s(
+                                _vm.isOpen == true ? "On-Going" : "Closed"
+                              ) +
+                              "\n                "
+                          ),
+                        ]
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.countApproved == _vm.countSignatory &&
+                  _vm.countApproved != 0 &&
+                  _vm.countSignatory != 0
+                    ? _c(
+                        "v-btn",
+                        {
+                          staticClass: "elevation-0 error lighten-1 ml-2",
+                          attrs: {
+                            loading: _vm.downloadLoading,
+                            rounded: "",
+                            "x-small": "",
+                            dark: "",
+                          },
+                          on: { click: _vm.generatePDF },
+                        },
+                        [
+                          _c("v-icon", { attrs: { "x-small": "" } }, [
+                            _vm._v("mdi-file-pdf"),
+                          ]),
+                          _vm._v("\n                  Download"),
+                        ],
+                        1
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.countApproved == _vm.countSignatory &&
+                  _vm.countApproved != 0 &&
+                  _vm.countSignatory != 0 &&
+                  !_vm.isSubmitted
+                    ? _c(
+                        "v-btn",
+                        {
+                          staticClass: "elevation-8 blue ml-2",
+                          attrs: {
+                            loading: _vm.submitLoading,
+                            rounded: "",
+                            "x-small": "",
+                            dark: "",
+                          },
+                          on: { click: _vm.submitClearance },
+                        },
+                        [
+                          _c("v-icon", { attrs: { "x-small": "" } }, [
+                            _vm._v("mdi-file-send"),
+                          ]),
+                          _vm._v("\n                  Submit"),
+                        ],
+                        1
+                      )
+                    : _vm._e(),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-card-title",
+                {
+                  staticClass:
+                    "white--text text-uppercase elevation-2 pb-1 mt-0 pt-0",
+                  staticStyle: {
+                    background:
+                      "linear-gradient(to left, #1A237E, #1A237E, #0D47A1)",
+                  },
+                },
+                [
+                  _c("span", [_vm._v(" Active Clearance ")]),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "font-italic caption mt-1" }, [
+                    _vm._v(" ( " + _vm._s(_vm.purpose) + " )"),
+                  ]),
+                ]
+              ),
+              _vm._v(" "),
+              _c("v-data-table", {
+                staticClass: "px-6 pb-6  mt-4",
+                attrs: {
+                  headers: _vm.tableHeaders,
+                  items: _vm.signatoriesList,
+                  "hide-default-footer": "",
+                  "item-key": "user",
+                },
+                scopedSlots: _vm._u([
+                  {
+                    key: "item.designee",
+                    fn: function (ref) {
+                      var item = ref.item
+                      return [
+                        _c("div", { staticClass: "font-weight-bold" }, [
+                          _vm._v(_vm._s(item.designee)),
+                        ]),
+                      ]
+                    },
+                  },
+                  {
+                    key: "item.clearance_request_status",
+                    fn: function (ref) {
+                      var item = ref.item
+                      return [
+                        item.status == 1
+                          ? [
+                              _c(
+                                "v-chip",
+                                {
+                                  staticClass:
+                                    "white--text success elevation-1",
+                                  attrs: { small: "" },
+                                },
+                                [
+                                  _c(
+                                    "v-avatar",
+                                    { attrs: { left: "" } },
+                                    [
+                                      _c(
+                                        "v-icon",
+                                        {
+                                          staticClass: "white--text",
+                                          attrs: { small: "" },
+                                        },
+                                        [_vm._v("mdi-check-circle")]
+                                      ),
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(
+                                    "\n            Approved on " +
+                                      _vm._s(item.approved_at) +
+                                      "\n          "
+                                  ),
+                                ],
+                                1
+                              ),
+                            ]
+                          : item.status == 0 || item.status == 2
+                          ? [
+                              item.requestCount != 0
+                                ? [
+                                    item.status != 2
+                                      ? _c(
+                                          "v-chip",
+                                          {
+                                            attrs: {
+                                              "text-color": "white",
+                                              color: "cyan",
+                                              small: "",
+                                            },
+                                          },
+                                          [
+                                            _c(
+                                              "v-avatar",
+                                              { attrs: { left: "" } },
+                                              [
+                                                _c(
+                                                  "v-icon",
+                                                  { attrs: { small: "" } },
+                                                  [_vm._v("mdi-information")]
+                                                ),
+                                              ],
+                                              1
+                                            ),
+                                            _vm._v(
+                                              "\n              Pending for Approval\n            "
+                                            ),
+                                          ],
+                                          1
+                                        )
+                                      : _vm._e(),
+                                    _vm._v(" "),
+                                    item.deficiencyCount != 0
+                                      ? [
+                                          _c(
+                                            "v-chip",
+                                            {
+                                              attrs: {
+                                                "text-color": "white",
+                                                color: "error lighten-1",
+                                                small: "",
+                                              },
+                                              on: {
+                                                click: function ($event) {
+                                                  return _vm.viewDeficiency(
+                                                    item
+                                                  )
+                                                },
+                                              },
+                                            },
+                                            [
+                                              _c(
+                                                "v-avatar",
+                                                { attrs: { left: "" } },
+                                                [
+                                                  _c(
+                                                    "v-icon",
+                                                    { attrs: { small: "" } },
+                                                    [
+                                                      _vm._v(
+                                                        "mdi-clipboard-alert"
+                                                      ),
+                                                    ]
+                                                  ),
+                                                ],
+                                                1
+                                              ),
+                                              _vm._v(
+                                                "\n                With Deficiency\n              "
+                                              ),
+                                            ],
+                                            1
+                                          ),
+                                        ]
+                                      : _vm._e(),
+                                  ]
+                                : _vm._e(),
+                              _vm._v(" "),
+                              item.requestCount == 0
+                                ? [
+                                    item.deficiencyCount == 0
+                                      ? [
+                                          _c(
+                                            "v-chip",
+                                            {
+                                              attrs: {
+                                                "text-color": "white",
+                                                color: "blue-grey lighten-1",
+                                                small: "",
+                                              },
+                                            },
+                                            [
+                                              _vm._v(
+                                                "\n                No deficiency\n              "
+                                              ),
+                                            ]
+                                          ),
+                                        ]
+                                      : [
+                                          _c(
+                                            "v-chip",
+                                            {
+                                              attrs: {
+                                                "text-color": "white",
+                                                color: "error lighten-1",
+                                                small: "",
+                                              },
+                                              on: {
+                                                click: function ($event) {
+                                                  return _vm.viewDeficiency(
+                                                    item
+                                                  )
+                                                },
+                                              },
+                                            },
+                                            [
+                                              _c(
+                                                "v-avatar",
+                                                { attrs: { left: "" } },
+                                                [
+                                                  _c(
+                                                    "v-icon",
+                                                    { attrs: { small: "" } },
+                                                    [
+                                                      _vm._v(
+                                                        "mdi-clipboard-alert"
+                                                      ),
+                                                    ]
+                                                  ),
+                                                ],
+                                                1
+                                              ),
+                                              _vm._v(
+                                                "\n                With Deficiency\n              "
+                                              ),
+                                            ],
+                                            1
+                                          ),
+                                        ],
+                                  ]
+                                : _vm._e(),
+                            ]
+                          : _vm._e(),
+                      ]
+                    },
+                  },
+                  {
+                    key: "item.actions",
+                    fn: function (ref) {
+                      var item = ref.item
+                      return [
+                        item.status == 0 && item.designee
+                          ? [
+                              item.requestCount == 0 &&
+                              item.deficiencyCount == 0
+                                ? [
+                                    _vm.isOpen == true
+                                      ? _c(
+                                          "v-btn",
+                                          {
+                                            staticClass: "ma-2",
+                                            attrs: {
+                                              dark: "",
+                                              color: "indigo darken-4",
+                                              depressed: "",
+                                              small: "",
+                                              loading: item.loadingBtn,
+                                            },
+                                            on: {
+                                              click: function ($event) {
+                                                return _vm.sendRequest(item)
+                                              },
+                                            },
+                                          },
+                                          [_vm._v("Send Request")]
+                                        )
+                                      : _c(
+                                          "v-btn",
+                                          {
+                                            staticClass: "ma-2",
+                                            attrs: {
+                                              color: "red darken-4",
+                                              depressed: "",
+                                              small: "",
+                                              dark: "",
+                                            },
+                                          },
+                                          [_vm._v("Clearance is Closed!")]
+                                        ),
+                                  ]
+                                : _vm._e(),
+                            ]
+                          : _vm._e(),
+                        _vm._v(" "),
+                        item.deficiencyCount != 0
+                          ? [
+                              _c(
+                                "v-btn",
+                                {
+                                  staticClass: "ma-2",
+                                  attrs: {
+                                    color: "error",
+                                    depressed: "",
+                                    small: "",
+                                  },
+                                  on: {
+                                    click: function ($event) {
+                                      return _vm.viewDeficiency(item)
+                                    },
+                                  },
+                                },
+                                [_vm._v("View Deficiency")]
+                              ),
+                            ]
+                          : _vm._e(),
+                      ]
+                    },
+                  },
+                ]),
+              }),
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-dialog",
+            {
+              attrs: { scrollable: "", "max-width": "500px" },
+              model: {
+                value: _vm.deficiencydialog,
+                callback: function ($$v) {
+                  _vm.deficiencydialog = $$v
+                },
+                expression: "deficiencydialog",
+              },
+            },
+            [
+              _c(
+                "v-card",
+                [
+                  _c(
+                    "v-card-title",
+                    {
+                      staticClass: "headline white--text",
+                      staticStyle: {
+                        background:
+                          "linear-gradient(to left, #1A237E, #1A237E, #0D47A1)",
+                      },
+                    },
+                    [_vm._v("Deficiency List\n          \n        ")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-card-subtitle",
+                    {
+                      staticClass: "mb-0 pb-1",
+                      staticStyle: {
+                        background:
+                          "linear-gradient(to left, #1A237E, #1A237E, #0D47A1)",
+                      },
+                    },
+                    [
+                      _c(
+                        "span",
+                        { staticClass: "font-italic subtitle-2 white--text" },
+                        [
+                          _vm._v(
+                            "\n            (Designee: " +
+                              _vm._s(_vm.deficiency_designee) +
+                              ")"
+                          ),
+                        ]
+                      ),
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("v-divider"),
+                  _vm._v(" "),
+                  _c(
+                    "v-card-text",
+                    { staticStyle: { height: "300px" } },
+                    [
+                      _c(
+                        "v-list",
+                        { attrs: { subheader: "", "two-line": "" } },
+                        _vm._l(_vm.deficiencies, function (deficiency) {
+                          return _c(
+                            "v-list-item",
+                            { key: deficiency.title },
+                            [
+                              _c(
+                                "v-list-item-avatar",
+                                [
+                                  deficiency.completed
+                                    ? _c(
+                                        "v-icon",
+                                        {
+                                          staticClass: "success lighten-1",
+                                          attrs: { dark: "" },
+                                        },
+                                        [_vm._v(" mdi-check ")]
+                                      )
+                                    : _c(
+                                        "v-icon",
+                                        {
+                                          staticClass: "error lighten-1",
+                                          attrs: { dark: "" },
+                                        },
+                                        [_vm._v(" mdi-alert ")]
+                                      ),
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-list-item-content",
+                                [
+                                  _c(
+                                    "v-list-item-title",
+                                    {
+                                      staticClass: "small",
+                                      attrs: { small: "" },
+                                    },
+                                    [_vm._v(_vm._s(deficiency.title))]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-list-item-subtitle",
+                                    {
+                                      staticClass: "subtitle-2",
+                                      attrs: { small: "" },
+                                    },
+                                    [_vm._v("*" + _vm._s(deficiency.note))]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("v-list-item-subtitle"),
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-list-item-action",
+                                [
+                                  _c("v-list-item-action-text", [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm._f("moment")(
+                                          deficiency.updated_at,
+                                          "from",
+                                          "now"
+                                        )
+                                      )
+                                    ),
+                                  ]),
+                                  _vm._v(" "),
+                                  deficiency.completed
+                                    ? _c(
+                                        "v-chip",
+                                        {
+                                          attrs: {
+                                            "text-color": "white",
+                                            color: "success",
+                                            "x-small": "",
+                                          },
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                  Completed\n                "
+                                          ),
+                                        ]
+                                      )
+                                    : _c(
+                                        "v-chip",
+                                        {
+                                          attrs: {
+                                            "text-color": "white",
+                                            color: "warning",
+                                            "x-small": "",
+                                          },
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                  Pending\n                "
+                                          ),
+                                        ]
+                                      ),
+                                ],
+                                1
+                              ),
+                            ],
+                            1
+                          )
+                        }),
+                        1
+                      ),
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("v-divider"),
+                  _vm._v(" "),
+                  _c(
+                    "v-card-actions",
+                    [
+                      _c("v-spacer"),
+                      _vm._v(" "),
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: { color: "green darken-1", text: "" },
+                          on: {
+                            click: function ($event) {
+                              _vm.deficiencydialog = false
+                            },
+                          },
+                        },
+                        [_vm._v("Close")]
+                      ),
+                    ],
+                    1
+                  ),
+                ],
+                1
+              ),
+            ],
+            1
+          ),
+        ],
+        1
+      )
+    : _vm._e()
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./resources/js/app.js":
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
@@ -67696,6 +68525,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var v_clipboard__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! v-clipboard */ "./node_modules/v-clipboard/dist/index.min.js");
 /* harmony import */ var v_clipboard__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(v_clipboard__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var particles_bg_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! particles-bg-vue */ "./node_modules/particles-bg-vue/src/particles-bg/index.js");
+/* harmony import */ var _vue_composition_api__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @vue/composition-api */ "./node_modules/@vue/composition-api/dist/vue-composition-api.mjs");
+/* harmony import */ var vue_apexcharts__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! vue-apexcharts */ "./node_modules/vue-apexcharts/dist/vue-apexcharts.js");
+/* harmony import */ var vue_apexcharts__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(vue_apexcharts__WEBPACK_IMPORTED_MODULE_13__);
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -67716,6 +68548,11 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 
 
 
+
+
+Vue.use(vue_apexcharts__WEBPACK_IMPORTED_MODULE_13___default.a);
+Vue.component('apexchart', vue_apexcharts__WEBPACK_IMPORTED_MODULE_13___default.a);
+Vue.use(_vue_composition_api__WEBPACK_IMPORTED_MODULE_12__["default"]);
 Vue.use(v_clipboard__WEBPACK_IMPORTED_MODULE_10___default.a);
 Vue.use(vue_axios__WEBPACK_IMPORTED_MODULE_8__["default"], axios__WEBPACK_IMPORTED_MODULE_7___default.a);
 Vue.use(particles_bg_vue__WEBPACK_IMPORTED_MODULE_11__["default"]);
@@ -67778,6 +68615,75 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/charts/ApexBarChart.vue":
+/*!**********************************************!*\
+  !*** ./resources/js/charts/ApexBarChart.vue ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ApexBarChart_vue_vue_type_template_id_123211d9___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ApexBarChart.vue?vue&type=template&id=123211d9& */ "./resources/js/charts/ApexBarChart.vue?vue&type=template&id=123211d9&");
+/* harmony import */ var _ApexBarChart_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ApexBarChart.vue?vue&type=script&lang=js& */ "./resources/js/charts/ApexBarChart.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ApexBarChart_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ApexBarChart_vue_vue_type_template_id_123211d9___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ApexBarChart_vue_vue_type_template_id_123211d9___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/charts/ApexBarChart.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/charts/ApexBarChart.vue?vue&type=script&lang=js&":
+/*!***********************************************************************!*\
+  !*** ./resources/js/charts/ApexBarChart.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ApexBarChart_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./ApexBarChart.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/charts/ApexBarChart.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ApexBarChart_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/charts/ApexBarChart.vue?vue&type=template&id=123211d9&":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/charts/ApexBarChart.vue?vue&type=template&id=123211d9& ***!
+  \*****************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ApexBarChart_vue_vue_type_template_id_123211d9___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./ApexBarChart.vue?vue&type=template&id=123211d9& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/charts/ApexBarChart.vue?vue&type=template&id=123211d9&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ApexBarChart_vue_vue_type_template_id_123211d9___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ApexBarChart_vue_vue_type_template_id_123211d9___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
 
 /***/ }),
 
@@ -72215,75 +73121,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/student/StudentComponent.vue":
-/*!**************************************************************!*\
-  !*** ./resources/js/components/student/StudentComponent.vue ***!
-  \**************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _StudentComponent_vue_vue_type_template_id_cfce827e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./StudentComponent.vue?vue&type=template&id=cfce827e& */ "./resources/js/components/student/StudentComponent.vue?vue&type=template&id=cfce827e&");
-/* harmony import */ var _StudentComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./StudentComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/student/StudentComponent.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _StudentComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _StudentComponent_vue_vue_type_template_id_cfce827e___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _StudentComponent_vue_vue_type_template_id_cfce827e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/student/StudentComponent.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/student/StudentComponent.vue?vue&type=script&lang=js&":
-/*!***************************************************************************************!*\
-  !*** ./resources/js/components/student/StudentComponent.vue?vue&type=script&lang=js& ***!
-  \***************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_StudentComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./StudentComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/student/StudentComponent.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_StudentComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/student/StudentComponent.vue?vue&type=template&id=cfce827e&":
-/*!*********************************************************************************************!*\
-  !*** ./resources/js/components/student/StudentComponent.vue?vue&type=template&id=cfce827e& ***!
-  \*********************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_StudentComponent_vue_vue_type_template_id_cfce827e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./StudentComponent.vue?vue&type=template&id=cfce827e& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/student/StudentComponent.vue?vue&type=template&id=cfce827e&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_StudentComponent_vue_vue_type_template_id_cfce827e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_StudentComponent_vue_vue_type_template_id_cfce827e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
 /***/ "./resources/js/components/student/StudentSIASComponent.vue":
 /*!******************************************************************!*\
   !*** ./resources/js/components/student/StudentSIASComponent.vue ***!
@@ -72367,69 +73204,71 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
 /* harmony import */ var _components_login_LoginComponent__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/login/LoginComponent */ "./resources/js/components/login/LoginComponent.vue");
 /* harmony import */ var _components_AdminComponent__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/AdminComponent */ "./resources/js/components/AdminComponent.vue");
-/* harmony import */ var _components_student_StudentComponent__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/student/StudentComponent */ "./resources/js/components/student/StudentComponent.vue");
-/* harmony import */ var _components_cashier_CASHIERComponent__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/cashier/CASHIERComponent */ "./resources/js/components/cashier/CASHIERComponent.vue");
-/* harmony import */ var _components_library_LIBRARYComponent__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/library/LIBRARYComponent */ "./resources/js/components/library/LIBRARYComponent.vue");
-/* harmony import */ var _components_dean_DEANComponent__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/dean/DEANComponent */ "./resources/js/components/dean/DEANComponent.vue");
-/* harmony import */ var _components_registrarstaff_REGISTRARSTAFFComponent__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/registrarstaff/REGISTRARSTAFFComponent */ "./resources/js/components/registrarstaff/REGISTRARSTAFFComponent.vue");
-/* harmony import */ var _components_registrar_REGISTRARComponent__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/registrar/REGISTRARComponent */ "./resources/js/components/registrar/REGISTRARComponent.vue");
-/* harmony import */ var _components_osas_OSASComponent__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/osas/OSASComponent */ "./resources/js/components/osas/OSASComponent.vue");
-/* harmony import */ var _components_osas_OSASOtherCampusComponent__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/osas/OSASOtherCampusComponent */ "./resources/js/components/osas/OSASOtherCampusComponent.vue");
-/* harmony import */ var _components_stcouncil_STCOUNCILComponent__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/stcouncil/STCOUNCILComponent */ "./resources/js/components/stcouncil/STCOUNCILComponent.vue");
-/* harmony import */ var _components_student_SGSStudentComponent__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/student/SGSStudentComponent */ "./resources/js/components/student/SGSStudentComponent.vue");
-/* harmony import */ var _components_student_LHSStudentComponent__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/student/LHSStudentComponent */ "./resources/js/components/student/LHSStudentComponent.vue");
-/* harmony import */ var _components_principal_PRINCIPALComponent__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/principal/PRINCIPALComponent */ "./resources/js/components/principal/PRINCIPALComponent.vue");
-/* harmony import */ var _components_adviser_ADVISERComponent__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/adviser/ADVISERComponent */ "./resources/js/components/adviser/ADVISERComponent.vue");
-/* harmony import */ var _components_admin_DashboardComponent__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/admin/DashboardComponent */ "./resources/js/components/admin/DashboardComponent.vue");
-/* harmony import */ var _components_admin_DashboardComponentt__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/admin/DashboardComponentt */ "./resources/js/components/admin/DashboardComponentt.vue");
-/* harmony import */ var _components_StudentListComponent__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/StudentListComponent */ "./resources/js/components/StudentListComponent.vue");
-/* harmony import */ var _components_admin_CollegesComponent__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./components/admin/CollegesComponent */ "./resources/js/components/admin/CollegesComponent.vue");
-/* harmony import */ var _components_admin_CampusesComponent__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./components/admin/CampusesComponent */ "./resources/js/components/admin/CampusesComponent.vue");
-/* harmony import */ var _components_admin_GraduationsComponent__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./components/admin/GraduationsComponent */ "./resources/js/components/admin/GraduationsComponent.vue");
-/* harmony import */ var _components_admin_ProgramsComponent__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./components/admin/ProgramsComponent */ "./resources/js/components/admin/ProgramsComponent.vue");
-/* harmony import */ var _components_admin_PurposesComponent__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./components/admin/PurposesComponent */ "./resources/js/components/admin/PurposesComponent.vue");
-/* harmony import */ var _components_admin_SectionsComponent__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./components/admin/SectionsComponent */ "./resources/js/components/admin/SectionsComponent.vue");
-/* harmony import */ var _components_admin_SemestersComponent__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./components/admin/SemestersComponent */ "./resources/js/components/admin/SemestersComponent.vue");
-/* harmony import */ var _components_SIASAccountComponent__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./components/SIASAccountComponent */ "./resources/js/components/SIASAccountComponent.vue");
-/* harmony import */ var _components_ClearanceRequestsComponent__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./components/ClearanceRequestsComponent */ "./resources/js/components/ClearanceRequestsComponent.vue");
-/* harmony import */ var _components_ClearedClearancesComponent__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./components/ClearedClearancesComponent */ "./resources/js/components/ClearedClearancesComponent.vue");
-/* harmony import */ var _components_SubmittedClearancesComponent__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./components/SubmittedClearancesComponent */ "./resources/js/components/SubmittedClearancesComponent.vue");
-/* harmony import */ var _components_ActiveClearanceComponent__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./components/ActiveClearanceComponent */ "./resources/js/components/ActiveClearanceComponent.vue");
-/* harmony import */ var _components_ActiveClearanceComponentLHS__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./components/ActiveClearanceComponentLHS */ "./resources/js/components/ActiveClearanceComponentLHS.vue");
-/* harmony import */ var _components_ActiveClearanceComponentSGS__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./components/ActiveClearanceComponentSGS */ "./resources/js/components/ActiveClearanceComponentSGS.vue");
-/* harmony import */ var _components_ClearanceListComponent__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./components/ClearanceListComponent */ "./resources/js/components/ClearanceListComponent.vue");
-/* harmony import */ var _components_DeficiencyListComponent__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ./components/DeficiencyListComponent */ "./resources/js/components/DeficiencyListComponent.vue");
-/* harmony import */ var _components_RegistrarDeficiencyListComponent__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ./components/RegistrarDeficiencyListComponent */ "./resources/js/components/RegistrarDeficiencyListComponent.vue");
-/* harmony import */ var _components_SettingsComponent__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ./components/SettingsComponent */ "./resources/js/components/SettingsComponent.vue");
-/* harmony import */ var _components_student_SettingsComponent__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ./components/student/SettingsComponent */ "./resources/js/components/student/SettingsComponent.vue");
-/* harmony import */ var _components_student_StudentSIASComponent__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! ./components/student/StudentSIASComponent */ "./resources/js/components/student/StudentSIASComponent.vue");
-/* harmony import */ var _components_admin_UsersComponent__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(/*! ./components/admin/UsersComponent */ "./resources/js/components/admin/UsersComponent.vue");
-/* harmony import */ var _components_admin_SignatoryUsersComponent__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(/*! ./components/admin/SignatoryUsersComponent */ "./resources/js/components/admin/SignatoryUsersComponent.vue");
-/* harmony import */ var _components_admin_signatory_CashierComponent__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(/*! ./components/admin/signatory/CashierComponent */ "./resources/js/components/admin/signatory/CashierComponent.vue");
-/* harmony import */ var _components_admin_signatory_DeanComponent__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(/*! ./components/admin/signatory/DeanComponent */ "./resources/js/components/admin/signatory/DeanComponent.vue");
-/* harmony import */ var _components_admin_signatory_LibraryComponent__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(/*! ./components/admin/signatory/LibraryComponent */ "./resources/js/components/admin/signatory/LibraryComponent.vue");
-/* harmony import */ var _components_admin_signatory_OSASComponent__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(/*! ./components/admin/signatory/OSASComponent */ "./resources/js/components/admin/signatory/OSASComponent.vue");
-/* harmony import */ var _components_admin_signatory_ProgramDirectorComponent__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(/*! ./components/admin/signatory/ProgramDirectorComponent */ "./resources/js/components/admin/signatory/ProgramDirectorComponent.vue");
-/* harmony import */ var _components_admin_signatory_StudentCouncilComponent__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(/*! ./components/admin/signatory/StudentCouncilComponent */ "./resources/js/components/admin/signatory/StudentCouncilComponent.vue");
-/* harmony import */ var _components_admin_signatory_RegistrarComponent__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(/*! ./components/admin/signatory/RegistrarComponent */ "./resources/js/components/admin/signatory/RegistrarComponent.vue");
-/* harmony import */ var _components_admin_signatory_StaffComponent__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(/*! ./components/admin/signatory/StaffComponent */ "./resources/js/components/admin/signatory/StaffComponent.vue");
-/* harmony import */ var _components_programdirector_PDComponent__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(/*! ./components/programdirector/PDComponent */ "./resources/js/components/programdirector/PDComponent.vue");
-/* harmony import */ var _components_programdirector_DashboardComponent__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(/*! ./components/programdirector/DashboardComponent */ "./resources/js/components/programdirector/DashboardComponent.vue");
-/* harmony import */ var _components_programdirector_StudentListComponent__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(/*! ./components/programdirector/StudentListComponent */ "./resources/js/components/programdirector/StudentListComponent.vue");
-/* harmony import */ var _components_programdirector_ClearanceRequestsComponent__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(/*! ./components/programdirector/ClearanceRequestsComponent */ "./resources/js/components/programdirector/ClearanceRequestsComponent.vue");
-/* harmony import */ var _components_programdirector_ClearanceCASRequestsComponent__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(/*! ./components/programdirector/ClearanceCASRequestsComponent */ "./resources/js/components/programdirector/ClearanceCASRequestsComponent.vue");
-/* harmony import */ var _components_programdirector_ClearanceCBMRequestsComponent__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(/*! ./components/programdirector/ClearanceCBMRequestsComponent */ "./resources/js/components/programdirector/ClearanceCBMRequestsComponent.vue");
-/* harmony import */ var _components_programdirector_ClearanceCETRequestsComponent__WEBPACK_IMPORTED_MODULE_56__ = __webpack_require__(/*! ./components/programdirector/ClearanceCETRequestsComponent */ "./resources/js/components/programdirector/ClearanceCETRequestsComponent.vue");
-/* harmony import */ var _components_programdirector_ClearanceCOEDRequestsComponent__WEBPACK_IMPORTED_MODULE_57__ = __webpack_require__(/*! ./components/programdirector/ClearanceCOEDRequestsComponent */ "./resources/js/components/programdirector/ClearanceCOEDRequestsComponent.vue");
-/* harmony import */ var _components_programdirector_ClearanceSGSRequestsComponent__WEBPACK_IMPORTED_MODULE_58__ = __webpack_require__(/*! ./components/programdirector/ClearanceSGSRequestsComponent */ "./resources/js/components/programdirector/ClearanceSGSRequestsComponent.vue");
-/* harmony import */ var _components_programdirector_ClearedClearancesComponent__WEBPACK_IMPORTED_MODULE_59__ = __webpack_require__(/*! ./components/programdirector/ClearedClearancesComponent */ "./resources/js/components/programdirector/ClearedClearancesComponent.vue");
-/* harmony import */ var _components_programdirector_SubmittedClearancesComponent__WEBPACK_IMPORTED_MODULE_60__ = __webpack_require__(/*! ./components/programdirector/SubmittedClearancesComponent */ "./resources/js/components/programdirector/SubmittedClearancesComponent.vue");
-/* harmony import */ var _components_programdirector_ClearanceListComponent__WEBPACK_IMPORTED_MODULE_61__ = __webpack_require__(/*! ./components/programdirector/ClearanceListComponent */ "./resources/js/components/programdirector/ClearanceListComponent.vue");
-/* harmony import */ var _components_programdirector_DeficiencyListComponent__WEBPACK_IMPORTED_MODULE_62__ = __webpack_require__(/*! ./components/programdirector/DeficiencyListComponent */ "./resources/js/components/programdirector/DeficiencyListComponent.vue");
-/* harmony import */ var _components_student_ClearanceListComponent__WEBPACK_IMPORTED_MODULE_63__ = __webpack_require__(/*! ./components/student/ClearanceListComponent */ "./resources/js/components/student/ClearanceListComponent.vue");
-/* harmony import */ var _components_page_ForgotPassword__WEBPACK_IMPORTED_MODULE_64__ = __webpack_require__(/*! ./components/page/ForgotPassword */ "./resources/js/components/page/ForgotPassword.vue");
-/* harmony import */ var _components_page_ResetPasswordForm__WEBPACK_IMPORTED_MODULE_65__ = __webpack_require__(/*! ./components/page/ResetPasswordForm */ "./resources/js/components/page/ResetPasswordForm.vue");
-/* harmony import */ var _components_page_ResetEmailForm__WEBPACK_IMPORTED_MODULE_66__ = __webpack_require__(/*! ./components/page/ResetEmailForm */ "./resources/js/components/page/ResetEmailForm.vue");
+/* harmony import */ var _shared_layout_StudentLayout__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./shared/layout/StudentLayout */ "./resources/js/shared/layout/StudentLayout.vue");
+/* harmony import */ var _shared_layout_SignatoryLayout__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./shared/layout/SignatoryLayout */ "./resources/js/shared/layout/SignatoryLayout.vue");
+/* harmony import */ var _components_cashier_CASHIERComponent__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/cashier/CASHIERComponent */ "./resources/js/components/cashier/CASHIERComponent.vue");
+/* harmony import */ var _components_library_LIBRARYComponent__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/library/LIBRARYComponent */ "./resources/js/components/library/LIBRARYComponent.vue");
+/* harmony import */ var _components_dean_DEANComponent__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/dean/DEANComponent */ "./resources/js/components/dean/DEANComponent.vue");
+/* harmony import */ var _components_registrarstaff_REGISTRARSTAFFComponent__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/registrarstaff/REGISTRARSTAFFComponent */ "./resources/js/components/registrarstaff/REGISTRARSTAFFComponent.vue");
+/* harmony import */ var _components_registrar_REGISTRARComponent__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/registrar/REGISTRARComponent */ "./resources/js/components/registrar/REGISTRARComponent.vue");
+/* harmony import */ var _components_osas_OSASComponent__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/osas/OSASComponent */ "./resources/js/components/osas/OSASComponent.vue");
+/* harmony import */ var _components_osas_OSASOtherCampusComponent__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/osas/OSASOtherCampusComponent */ "./resources/js/components/osas/OSASOtherCampusComponent.vue");
+/* harmony import */ var _components_stcouncil_STCOUNCILComponent__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/stcouncil/STCOUNCILComponent */ "./resources/js/components/stcouncil/STCOUNCILComponent.vue");
+/* harmony import */ var _components_student_SGSStudentComponent__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/student/SGSStudentComponent */ "./resources/js/components/student/SGSStudentComponent.vue");
+/* harmony import */ var _components_student_LHSStudentComponent__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/student/LHSStudentComponent */ "./resources/js/components/student/LHSStudentComponent.vue");
+/* harmony import */ var _components_principal_PRINCIPALComponent__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/principal/PRINCIPALComponent */ "./resources/js/components/principal/PRINCIPALComponent.vue");
+/* harmony import */ var _components_adviser_ADVISERComponent__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/adviser/ADVISERComponent */ "./resources/js/components/adviser/ADVISERComponent.vue");
+/* harmony import */ var _components_admin_DashboardComponent__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/admin/DashboardComponent */ "./resources/js/components/admin/DashboardComponent.vue");
+/* harmony import */ var _components_admin_DashboardComponentt__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/admin/DashboardComponentt */ "./resources/js/components/admin/DashboardComponentt.vue");
+/* harmony import */ var _components_StudentListComponent__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./components/StudentListComponent */ "./resources/js/components/StudentListComponent.vue");
+/* harmony import */ var _components_admin_CollegesComponent__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./components/admin/CollegesComponent */ "./resources/js/components/admin/CollegesComponent.vue");
+/* harmony import */ var _components_admin_CampusesComponent__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./components/admin/CampusesComponent */ "./resources/js/components/admin/CampusesComponent.vue");
+/* harmony import */ var _components_admin_GraduationsComponent__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./components/admin/GraduationsComponent */ "./resources/js/components/admin/GraduationsComponent.vue");
+/* harmony import */ var _components_admin_ProgramsComponent__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./components/admin/ProgramsComponent */ "./resources/js/components/admin/ProgramsComponent.vue");
+/* harmony import */ var _components_admin_PurposesComponent__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./components/admin/PurposesComponent */ "./resources/js/components/admin/PurposesComponent.vue");
+/* harmony import */ var _components_admin_SectionsComponent__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./components/admin/SectionsComponent */ "./resources/js/components/admin/SectionsComponent.vue");
+/* harmony import */ var _components_admin_SemestersComponent__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./components/admin/SemestersComponent */ "./resources/js/components/admin/SemestersComponent.vue");
+/* harmony import */ var _components_SIASAccountComponent__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./components/SIASAccountComponent */ "./resources/js/components/SIASAccountComponent.vue");
+/* harmony import */ var _components_ClearanceRequestsComponent__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./components/ClearanceRequestsComponent */ "./resources/js/components/ClearanceRequestsComponent.vue");
+/* harmony import */ var _components_ClearedClearancesComponent__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./components/ClearedClearancesComponent */ "./resources/js/components/ClearedClearancesComponent.vue");
+/* harmony import */ var _components_SubmittedClearancesComponent__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./components/SubmittedClearancesComponent */ "./resources/js/components/SubmittedClearancesComponent.vue");
+/* harmony import */ var _components_ActiveClearanceComponent__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./components/ActiveClearanceComponent */ "./resources/js/components/ActiveClearanceComponent.vue");
+/* harmony import */ var _components_ActiveClearanceComponentLHS__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./components/ActiveClearanceComponentLHS */ "./resources/js/components/ActiveClearanceComponentLHS.vue");
+/* harmony import */ var _components_ActiveClearanceComponentSGS__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./components/ActiveClearanceComponentSGS */ "./resources/js/components/ActiveClearanceComponentSGS.vue");
+/* harmony import */ var _components_ClearanceListComponent__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ./components/ClearanceListComponent */ "./resources/js/components/ClearanceListComponent.vue");
+/* harmony import */ var _components_DeficiencyListComponent__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ./components/DeficiencyListComponent */ "./resources/js/components/DeficiencyListComponent.vue");
+/* harmony import */ var _components_RegistrarDeficiencyListComponent__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ./components/RegistrarDeficiencyListComponent */ "./resources/js/components/RegistrarDeficiencyListComponent.vue");
+/* harmony import */ var _components_SettingsComponent__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ./components/SettingsComponent */ "./resources/js/components/SettingsComponent.vue");
+/* harmony import */ var _components_student_SettingsComponent__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! ./components/student/SettingsComponent */ "./resources/js/components/student/SettingsComponent.vue");
+/* harmony import */ var _components_student_StudentSIASComponent__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(/*! ./components/student/StudentSIASComponent */ "./resources/js/components/student/StudentSIASComponent.vue");
+/* harmony import */ var _components_admin_UsersComponent__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(/*! ./components/admin/UsersComponent */ "./resources/js/components/admin/UsersComponent.vue");
+/* harmony import */ var _components_admin_SignatoryUsersComponent__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(/*! ./components/admin/SignatoryUsersComponent */ "./resources/js/components/admin/SignatoryUsersComponent.vue");
+/* harmony import */ var _components_admin_signatory_CashierComponent__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(/*! ./components/admin/signatory/CashierComponent */ "./resources/js/components/admin/signatory/CashierComponent.vue");
+/* harmony import */ var _components_admin_signatory_DeanComponent__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(/*! ./components/admin/signatory/DeanComponent */ "./resources/js/components/admin/signatory/DeanComponent.vue");
+/* harmony import */ var _components_admin_signatory_LibraryComponent__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(/*! ./components/admin/signatory/LibraryComponent */ "./resources/js/components/admin/signatory/LibraryComponent.vue");
+/* harmony import */ var _components_admin_signatory_OSASComponent__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(/*! ./components/admin/signatory/OSASComponent */ "./resources/js/components/admin/signatory/OSASComponent.vue");
+/* harmony import */ var _components_admin_signatory_ProgramDirectorComponent__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(/*! ./components/admin/signatory/ProgramDirectorComponent */ "./resources/js/components/admin/signatory/ProgramDirectorComponent.vue");
+/* harmony import */ var _components_admin_signatory_StudentCouncilComponent__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(/*! ./components/admin/signatory/StudentCouncilComponent */ "./resources/js/components/admin/signatory/StudentCouncilComponent.vue");
+/* harmony import */ var _components_admin_signatory_RegistrarComponent__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(/*! ./components/admin/signatory/RegistrarComponent */ "./resources/js/components/admin/signatory/RegistrarComponent.vue");
+/* harmony import */ var _components_admin_signatory_StaffComponent__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(/*! ./components/admin/signatory/StaffComponent */ "./resources/js/components/admin/signatory/StaffComponent.vue");
+/* harmony import */ var _components_programdirector_PDComponent__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(/*! ./components/programdirector/PDComponent */ "./resources/js/components/programdirector/PDComponent.vue");
+/* harmony import */ var _components_programdirector_DashboardComponent__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(/*! ./components/programdirector/DashboardComponent */ "./resources/js/components/programdirector/DashboardComponent.vue");
+/* harmony import */ var _components_programdirector_StudentListComponent__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(/*! ./components/programdirector/StudentListComponent */ "./resources/js/components/programdirector/StudentListComponent.vue");
+/* harmony import */ var _components_programdirector_ClearanceRequestsComponent__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(/*! ./components/programdirector/ClearanceRequestsComponent */ "./resources/js/components/programdirector/ClearanceRequestsComponent.vue");
+/* harmony import */ var _components_programdirector_ClearanceCASRequestsComponent__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(/*! ./components/programdirector/ClearanceCASRequestsComponent */ "./resources/js/components/programdirector/ClearanceCASRequestsComponent.vue");
+/* harmony import */ var _components_programdirector_ClearanceCBMRequestsComponent__WEBPACK_IMPORTED_MODULE_56__ = __webpack_require__(/*! ./components/programdirector/ClearanceCBMRequestsComponent */ "./resources/js/components/programdirector/ClearanceCBMRequestsComponent.vue");
+/* harmony import */ var _components_programdirector_ClearanceCETRequestsComponent__WEBPACK_IMPORTED_MODULE_57__ = __webpack_require__(/*! ./components/programdirector/ClearanceCETRequestsComponent */ "./resources/js/components/programdirector/ClearanceCETRequestsComponent.vue");
+/* harmony import */ var _components_programdirector_ClearanceCOEDRequestsComponent__WEBPACK_IMPORTED_MODULE_58__ = __webpack_require__(/*! ./components/programdirector/ClearanceCOEDRequestsComponent */ "./resources/js/components/programdirector/ClearanceCOEDRequestsComponent.vue");
+/* harmony import */ var _components_programdirector_ClearanceSGSRequestsComponent__WEBPACK_IMPORTED_MODULE_59__ = __webpack_require__(/*! ./components/programdirector/ClearanceSGSRequestsComponent */ "./resources/js/components/programdirector/ClearanceSGSRequestsComponent.vue");
+/* harmony import */ var _components_programdirector_ClearedClearancesComponent__WEBPACK_IMPORTED_MODULE_60__ = __webpack_require__(/*! ./components/programdirector/ClearedClearancesComponent */ "./resources/js/components/programdirector/ClearedClearancesComponent.vue");
+/* harmony import */ var _components_programdirector_SubmittedClearancesComponent__WEBPACK_IMPORTED_MODULE_61__ = __webpack_require__(/*! ./components/programdirector/SubmittedClearancesComponent */ "./resources/js/components/programdirector/SubmittedClearancesComponent.vue");
+/* harmony import */ var _components_programdirector_ClearanceListComponent__WEBPACK_IMPORTED_MODULE_62__ = __webpack_require__(/*! ./components/programdirector/ClearanceListComponent */ "./resources/js/components/programdirector/ClearanceListComponent.vue");
+/* harmony import */ var _components_programdirector_DeficiencyListComponent__WEBPACK_IMPORTED_MODULE_63__ = __webpack_require__(/*! ./components/programdirector/DeficiencyListComponent */ "./resources/js/components/programdirector/DeficiencyListComponent.vue");
+/* harmony import */ var _components_student_ClearanceListComponent__WEBPACK_IMPORTED_MODULE_64__ = __webpack_require__(/*! ./components/student/ClearanceListComponent */ "./resources/js/components/student/ClearanceListComponent.vue");
+/* harmony import */ var _components_page_ForgotPassword__WEBPACK_IMPORTED_MODULE_65__ = __webpack_require__(/*! ./components/page/ForgotPassword */ "./resources/js/components/page/ForgotPassword.vue");
+/* harmony import */ var _components_page_ResetPasswordForm__WEBPACK_IMPORTED_MODULE_66__ = __webpack_require__(/*! ./components/page/ResetPasswordForm */ "./resources/js/components/page/ResetPasswordForm.vue");
+/* harmony import */ var _components_page_ResetEmailForm__WEBPACK_IMPORTED_MODULE_67__ = __webpack_require__(/*! ./components/page/ResetEmailForm */ "./resources/js/components/page/ResetEmailForm.vue");
+
 
 
 
@@ -72509,21 +73348,21 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
 var routes = [{
   path: '/reset-password',
   name: 'reset-password',
-  component: _components_page_ForgotPassword__WEBPACK_IMPORTED_MODULE_64__["default"],
+  component: _components_page_ForgotPassword__WEBPACK_IMPORTED_MODULE_65__["default"],
   meta: {
     auth: false
   }
 }, {
   path: '/reset-password/:token',
   name: 'reset-password-form',
-  component: _components_page_ResetPasswordForm__WEBPACK_IMPORTED_MODULE_65__["default"],
+  component: _components_page_ResetPasswordForm__WEBPACK_IMPORTED_MODULE_66__["default"],
   meta: {
     auth: false
   }
 }, {
   path: '/reset-email/:token',
   name: 'reset-email-form',
-  component: _components_page_ResetEmailForm__WEBPACK_IMPORTED_MODULE_66__["default"],
+  component: _components_page_ResetEmailForm__WEBPACK_IMPORTED_MODULE_67__["default"],
   meta: {
     auth: false
   }
@@ -72554,750 +73393,750 @@ var routes = [{
   {
     path: 'dashboard',
     beforeEnter: isADMIN,
-    component: _components_admin_DashboardComponent__WEBPACK_IMPORTED_MODULE_17__["default"],
+    component: _components_admin_DashboardComponent__WEBPACK_IMPORTED_MODULE_18__["default"],
     name: 'Dashboard'
   }, {
     path: 'student/list',
     beforeEnter: isADMIN,
-    component: _components_StudentListComponent__WEBPACK_IMPORTED_MODULE_19__["default"],
+    component: _components_StudentListComponent__WEBPACK_IMPORTED_MODULE_20__["default"],
     name: 'Student List'
   }, {
     path: 'colleges',
     beforeEnter: isADMIN,
-    component: _components_admin_CollegesComponent__WEBPACK_IMPORTED_MODULE_20__["default"],
+    component: _components_admin_CollegesComponent__WEBPACK_IMPORTED_MODULE_21__["default"],
     name: 'Colleges'
   }, {
     path: 'campuses',
     beforeEnter: isADMIN,
-    component: _components_admin_CampusesComponent__WEBPACK_IMPORTED_MODULE_21__["default"],
+    component: _components_admin_CampusesComponent__WEBPACK_IMPORTED_MODULE_22__["default"],
     name: 'Campuses'
   }, {
     path: 'programs',
     beforeEnter: isADMIN,
-    component: _components_admin_ProgramsComponent__WEBPACK_IMPORTED_MODULE_23__["default"],
+    component: _components_admin_ProgramsComponent__WEBPACK_IMPORTED_MODULE_24__["default"],
     name: 'Programs'
   }, {
     path: 'sections',
     beforeEnter: isADMIN,
-    component: _components_admin_SectionsComponent__WEBPACK_IMPORTED_MODULE_25__["default"],
+    component: _components_admin_SectionsComponent__WEBPACK_IMPORTED_MODULE_26__["default"],
     name: 'Sections'
   }, {
     path: 'semesters',
     beforeEnter: isADMIN,
-    component: _components_admin_SemestersComponent__WEBPACK_IMPORTED_MODULE_26__["default"],
+    component: _components_admin_SemestersComponent__WEBPACK_IMPORTED_MODULE_27__["default"],
     name: 'Semesters'
   }, {
     path: 'graduations',
     beforeEnter: isADMIN,
-    component: _components_admin_GraduationsComponent__WEBPACK_IMPORTED_MODULE_22__["default"],
+    component: _components_admin_GraduationsComponent__WEBPACK_IMPORTED_MODULE_23__["default"],
     name: 'Graduations'
   }, {
     path: 'purposes',
     beforeEnter: isADMIN,
-    component: _components_admin_PurposesComponent__WEBPACK_IMPORTED_MODULE_24__["default"],
+    component: _components_admin_PurposesComponent__WEBPACK_IMPORTED_MODULE_25__["default"],
     name: 'Purposes'
   }, {
     path: 'stcouncils',
     beforeEnter: isADMIN,
-    component: _components_admin_signatory_StudentCouncilComponent__WEBPACK_IMPORTED_MODULE_47__["default"],
+    component: _components_admin_signatory_StudentCouncilComponent__WEBPACK_IMPORTED_MODULE_48__["default"],
     name: 'Student Council'
   }, {
     path: 'deans',
     beforeEnter: isADMIN,
-    component: _components_admin_signatory_DeanComponent__WEBPACK_IMPORTED_MODULE_43__["default"],
+    component: _components_admin_signatory_DeanComponent__WEBPACK_IMPORTED_MODULE_44__["default"],
     name: 'Dean'
   }, {
     path: 'osas',
     beforeEnter: isADMIN,
-    component: _components_admin_signatory_OSASComponent__WEBPACK_IMPORTED_MODULE_45__["default"],
+    component: _components_admin_signatory_OSASComponent__WEBPACK_IMPORTED_MODULE_46__["default"],
     name: 'OSAS'
   }, {
     path: 'library',
     beforeEnter: isADMIN,
-    component: _components_admin_signatory_LibraryComponent__WEBPACK_IMPORTED_MODULE_44__["default"],
+    component: _components_admin_signatory_LibraryComponent__WEBPACK_IMPORTED_MODULE_45__["default"],
     name: 'Library'
   }, {
     path: 'cashiers',
     beforeEnter: isADMIN,
-    component: _components_admin_signatory_CashierComponent__WEBPACK_IMPORTED_MODULE_42__["default"],
+    component: _components_admin_signatory_CashierComponent__WEBPACK_IMPORTED_MODULE_43__["default"],
     name: 'Cashier'
   }, {
     path: 'registrar',
     beforeEnter: isADMIN,
-    component: _components_admin_signatory_RegistrarComponent__WEBPACK_IMPORTED_MODULE_48__["default"],
+    component: _components_admin_signatory_RegistrarComponent__WEBPACK_IMPORTED_MODULE_49__["default"],
     name: 'Registrar'
   }, {
     path: 'staff',
     beforeEnter: isADMIN,
-    component: _components_admin_signatory_StaffComponent__WEBPACK_IMPORTED_MODULE_49__["default"],
+    component: _components_admin_signatory_StaffComponent__WEBPACK_IMPORTED_MODULE_50__["default"],
     name: 'Staff'
   }, {
     path: 'programdirector',
     beforeEnter: isADMIN,
-    component: _components_admin_signatory_ProgramDirectorComponent__WEBPACK_IMPORTED_MODULE_46__["default"],
+    component: _components_admin_signatory_ProgramDirectorComponent__WEBPACK_IMPORTED_MODULE_47__["default"],
     name: 'Program Director'
   }, //Signatories Routes
   {
     path: 'clearance/requests',
     beforeEnter: isADMIN,
-    component: _components_ClearanceRequestsComponent__WEBPACK_IMPORTED_MODULE_28__["default"],
+    component: _components_ClearanceRequestsComponent__WEBPACK_IMPORTED_MODULE_29__["default"],
     name: 'Clearance Requests'
   }, {
     path: 'cleared/clearances',
     beforeEnter: isADMIN,
-    component: _components_ClearedClearancesComponent__WEBPACK_IMPORTED_MODULE_29__["default"],
+    component: _components_ClearedClearancesComponent__WEBPACK_IMPORTED_MODULE_30__["default"],
     name: 'Cleared Clearances'
   }, {
     path: 'submitted/clearances',
     beforeEnter: isADMIN,
-    component: _components_SubmittedClearancesComponent__WEBPACK_IMPORTED_MODULE_30__["default"],
+    component: _components_SubmittedClearancesComponent__WEBPACK_IMPORTED_MODULE_31__["default"],
     name: 'Submitted Clearances'
   }, {
     path: 'sias/account',
     beforeEnter: isADMIN,
-    component: _components_SIASAccountComponent__WEBPACK_IMPORTED_MODULE_27__["default"],
+    component: _components_SIASAccountComponent__WEBPACK_IMPORTED_MODULE_28__["default"],
     name: 'Sias Account'
   }, //Student Routes
   {
     path: 'active/clearance',
     beforeEnter: isADMIN,
-    component: _components_ActiveClearanceComponent__WEBPACK_IMPORTED_MODULE_31__["default"],
+    component: _components_ActiveClearanceComponent__WEBPACK_IMPORTED_MODULE_32__["default"],
     name: 'Active Clearance'
   }, {
     path: 'clearance/list',
     beforeEnter: isADMIN,
-    component: _components_ClearanceListComponent__WEBPACK_IMPORTED_MODULE_34__["default"],
+    component: _components_ClearanceListComponent__WEBPACK_IMPORTED_MODULE_35__["default"],
     name: 'Clearance List'
   }, {
     path: 'deficiency/list',
     beforeEnter: isADMIN,
-    component: _components_DeficiencyListComponent__WEBPACK_IMPORTED_MODULE_35__["default"],
+    component: _components_DeficiencyListComponent__WEBPACK_IMPORTED_MODULE_36__["default"],
     name: 'Deficiency List'
   }, //Settings Route
   {
     path: 'settings',
     beforeEnter: isADMIN,
-    component: _components_SettingsComponent__WEBPACK_IMPORTED_MODULE_37__["default"],
+    component: _components_SettingsComponent__WEBPACK_IMPORTED_MODULE_38__["default"],
     name: 'Settings'
   }, //Users Route
   {
     path: 'users',
     beforeEnter: isADMIN,
-    component: _components_admin_UsersComponent__WEBPACK_IMPORTED_MODULE_40__["default"],
+    component: _components_admin_UsersComponent__WEBPACK_IMPORTED_MODULE_41__["default"],
     name: 'Users'
   }]
 }, //Cashier Links
 {
   path: '/stcouncil',
-  component: _components_stcouncil_STCOUNCILComponent__WEBPACK_IMPORTED_MODULE_12__["default"],
+  component: _shared_layout_SignatoryLayout__WEBPACK_IMPORTED_MODULE_5__["default"],
   name: 'STCOUNCIL',
-  redirect: '/stcouncil/dashboard',
+  redirect: '/stcouncil/clearance/requests',
   children: [//PD Routes
   {
     path: 'dashboard',
     beforeEnter: isSTCOUNCIL,
-    component: _components_programdirector_DashboardComponent__WEBPACK_IMPORTED_MODULE_51__["default"],
+    component: _components_programdirector_DashboardComponent__WEBPACK_IMPORTED_MODULE_52__["default"],
     name: 'Dashboard'
   }, {
     path: 'student/list',
     beforeEnter: isSTCOUNCIL,
-    component: _components_programdirector_StudentListComponent__WEBPACK_IMPORTED_MODULE_52__["default"],
+    component: _components_programdirector_StudentListComponent__WEBPACK_IMPORTED_MODULE_53__["default"],
     name: 'Student List'
   }, //Signatories Routes
   {
     path: 'clearance/requests',
     beforeEnter: isSTCOUNCIL,
-    component: _components_programdirector_ClearanceRequestsComponent__WEBPACK_IMPORTED_MODULE_53__["default"],
+    component: _components_programdirector_ClearanceRequestsComponent__WEBPACK_IMPORTED_MODULE_54__["default"],
     name: 'Clearance Requests'
   }, {
     path: 'cleared/clearances',
     beforeEnter: isSTCOUNCIL,
-    component: _components_programdirector_ClearedClearancesComponent__WEBPACK_IMPORTED_MODULE_59__["default"],
+    component: _components_programdirector_ClearedClearancesComponent__WEBPACK_IMPORTED_MODULE_60__["default"],
     name: 'Cleared Clearances'
   }, {
     path: 'submitted/clearances',
     beforeEnter: isSTCOUNCIL,
-    component: _components_programdirector_SubmittedClearancesComponent__WEBPACK_IMPORTED_MODULE_60__["default"],
+    component: _components_programdirector_SubmittedClearancesComponent__WEBPACK_IMPORTED_MODULE_61__["default"],
     name: 'Submitted Clearances'
   }, {
     path: 'clearance/list',
     beforeEnter: isSTCOUNCIL,
-    component: _components_programdirector_ClearanceListComponent__WEBPACK_IMPORTED_MODULE_61__["default"],
+    component: _components_programdirector_ClearanceListComponent__WEBPACK_IMPORTED_MODULE_62__["default"],
     name: 'Clearance List'
   }, {
     path: 'deficiency/list',
     beforeEnter: isSTCOUNCIL,
-    component: _components_programdirector_DeficiencyListComponent__WEBPACK_IMPORTED_MODULE_62__["default"],
+    component: _components_programdirector_DeficiencyListComponent__WEBPACK_IMPORTED_MODULE_63__["default"],
     name: 'Deficiency List'
   }, //Settings Route
   {
     path: 'settings',
     beforeEnter: isSTCOUNCIL,
-    component: _components_SettingsComponent__WEBPACK_IMPORTED_MODULE_37__["default"],
+    component: _components_SettingsComponent__WEBPACK_IMPORTED_MODULE_38__["default"],
     name: 'Settings'
   }, {
     path: 'users',
     beforeEnter: isSTCOUNCIL,
-    component: _components_admin_SignatoryUsersComponent__WEBPACK_IMPORTED_MODULE_41__["default"],
+    component: _components_admin_SignatoryUsersComponent__WEBPACK_IMPORTED_MODULE_42__["default"],
     name: 'Users'
   }]
 }, //Cashier Links
 {
   path: '/cashier',
-  component: _components_cashier_CASHIERComponent__WEBPACK_IMPORTED_MODULE_5__["default"],
+  component: _shared_layout_SignatoryLayout__WEBPACK_IMPORTED_MODULE_5__["default"],
   name: 'CASHIER',
-  redirect: '/cashier/dashboard',
+  redirect: '/cashier/clearance/requests',
   children: [//PD Routes
   {
     path: 'dashboard',
     beforeEnter: isCASHIER,
-    component: _components_programdirector_DashboardComponent__WEBPACK_IMPORTED_MODULE_51__["default"],
+    component: _components_programdirector_DashboardComponent__WEBPACK_IMPORTED_MODULE_52__["default"],
     name: 'Dashboard'
   }, {
     path: 'student/list',
     beforeEnter: isCASHIER,
-    component: _components_programdirector_StudentListComponent__WEBPACK_IMPORTED_MODULE_52__["default"],
+    component: _components_programdirector_StudentListComponent__WEBPACK_IMPORTED_MODULE_53__["default"],
     name: 'Student List'
   }, //Signatories Routes
   {
     path: 'clearance/requests',
     beforeEnter: isCASHIER,
-    component: _components_programdirector_ClearanceRequestsComponent__WEBPACK_IMPORTED_MODULE_53__["default"],
+    component: _components_programdirector_ClearanceRequestsComponent__WEBPACK_IMPORTED_MODULE_54__["default"],
     name: 'Clearance Requests'
   }, {
     path: 'cleared/clearances',
     beforeEnter: isCASHIER,
-    component: _components_programdirector_ClearedClearancesComponent__WEBPACK_IMPORTED_MODULE_59__["default"],
+    component: _components_programdirector_ClearedClearancesComponent__WEBPACK_IMPORTED_MODULE_60__["default"],
     name: 'Cleared Clearances'
   }, {
     path: 'submitted/clearances',
     beforeEnter: isCASHIER,
-    component: _components_programdirector_SubmittedClearancesComponent__WEBPACK_IMPORTED_MODULE_60__["default"],
+    component: _components_programdirector_SubmittedClearancesComponent__WEBPACK_IMPORTED_MODULE_61__["default"],
     name: 'Submitted Clearances'
   }, {
     path: 'clearance/list',
     beforeEnter: isCASHIER,
-    component: _components_programdirector_ClearanceListComponent__WEBPACK_IMPORTED_MODULE_61__["default"],
+    component: _components_programdirector_ClearanceListComponent__WEBPACK_IMPORTED_MODULE_62__["default"],
     name: 'Clearance List'
   }, {
     path: 'deficiency/list',
     beforeEnter: isCASHIER,
-    component: _components_programdirector_DeficiencyListComponent__WEBPACK_IMPORTED_MODULE_62__["default"],
+    component: _components_programdirector_DeficiencyListComponent__WEBPACK_IMPORTED_MODULE_63__["default"],
     name: 'Deficiency List'
   }, //Settings Route
   {
     path: 'settings',
     beforeEnter: isCASHIER,
-    component: _components_SettingsComponent__WEBPACK_IMPORTED_MODULE_37__["default"],
+    component: _components_SettingsComponent__WEBPACK_IMPORTED_MODULE_38__["default"],
     name: 'Settings'
   }]
 }, //OSAS Links
 {
   path: '/osas',
-  component: _components_osas_OSASOtherCampusComponent__WEBPACK_IMPORTED_MODULE_11__["default"],
+  component: _shared_layout_SignatoryLayout__WEBPACK_IMPORTED_MODULE_5__["default"],
   name: 'OSAS Other Campus',
-  redirect: '/osas/dashboard',
+  redirect: '/osas/clearance/requests',
   children: [//PD Routes
   {
     path: 'dashboard',
     beforeEnter: isOSAS,
-    component: _components_programdirector_DashboardComponent__WEBPACK_IMPORTED_MODULE_51__["default"],
+    component: _components_programdirector_DashboardComponent__WEBPACK_IMPORTED_MODULE_52__["default"],
     name: 'Dashboard'
   }, {
     path: 'student/list',
     beforeEnter: isOSAS,
-    component: _components_programdirector_StudentListComponent__WEBPACK_IMPORTED_MODULE_52__["default"],
+    component: _components_programdirector_StudentListComponent__WEBPACK_IMPORTED_MODULE_53__["default"],
     name: 'Student List'
   }, //Signatories Routes
   {
     path: 'clearance/requests',
     beforeEnter: isOSAS,
-    component: _components_programdirector_ClearanceRequestsComponent__WEBPACK_IMPORTED_MODULE_53__["default"],
+    component: _components_programdirector_ClearanceRequestsComponent__WEBPACK_IMPORTED_MODULE_54__["default"],
     name: 'Clearance Requests'
   }, {
     path: 'cleared/clearances',
     beforeEnter: isOSAS,
-    component: _components_programdirector_ClearedClearancesComponent__WEBPACK_IMPORTED_MODULE_59__["default"],
+    component: _components_programdirector_ClearedClearancesComponent__WEBPACK_IMPORTED_MODULE_60__["default"],
     name: 'Cleared Clearances'
   }, {
     path: 'submitted/clearances',
     beforeEnter: isOSAS,
-    component: _components_programdirector_SubmittedClearancesComponent__WEBPACK_IMPORTED_MODULE_60__["default"],
+    component: _components_programdirector_SubmittedClearancesComponent__WEBPACK_IMPORTED_MODULE_61__["default"],
     name: 'Submitted Clearances'
   }, {
     path: 'clearance/list',
     beforeEnter: isOSAS,
-    component: _components_programdirector_ClearanceListComponent__WEBPACK_IMPORTED_MODULE_61__["default"],
+    component: _components_programdirector_ClearanceListComponent__WEBPACK_IMPORTED_MODULE_62__["default"],
     name: 'Clearance List'
   }, {
     path: 'deficiency/list',
     beforeEnter: isOSAS,
-    component: _components_programdirector_DeficiencyListComponent__WEBPACK_IMPORTED_MODULE_62__["default"],
+    component: _components_programdirector_DeficiencyListComponent__WEBPACK_IMPORTED_MODULE_63__["default"],
     name: 'Deficiency List'
   }, //Settings Route
   {
     path: 'settings',
     beforeEnter: isOSAS,
-    component: _components_SettingsComponent__WEBPACK_IMPORTED_MODULE_37__["default"],
+    component: _components_SettingsComponent__WEBPACK_IMPORTED_MODULE_38__["default"],
     name: 'Settings'
   }, {
     path: 'users',
     beforeEnter: isOSAS,
-    component: _components_admin_SignatoryUsersComponent__WEBPACK_IMPORTED_MODULE_41__["default"],
+    component: _components_admin_SignatoryUsersComponent__WEBPACK_IMPORTED_MODULE_42__["default"],
     name: 'Users'
   }]
 }, //OSAS Links
 {
   path: '/osas/goa',
-  component: _components_osas_OSASComponent__WEBPACK_IMPORTED_MODULE_10__["default"],
+  component: _shared_layout_SignatoryLayout__WEBPACK_IMPORTED_MODULE_5__["default"],
   name: 'OSAS',
-  redirect: '/osas/goa/dashboard',
+  redirect: '/osas/goa/clearance/requests',
   children: [//PD Routes
   {
     path: 'dashboard',
     beforeEnter: isOSAS,
-    component: _components_programdirector_DashboardComponent__WEBPACK_IMPORTED_MODULE_51__["default"],
+    component: _components_programdirector_DashboardComponent__WEBPACK_IMPORTED_MODULE_52__["default"],
     name: 'Dashboard'
   }, {
     path: 'student/list',
     beforeEnter: isOSAS,
-    component: _components_programdirector_StudentListComponent__WEBPACK_IMPORTED_MODULE_52__["default"],
+    component: _components_programdirector_StudentListComponent__WEBPACK_IMPORTED_MODULE_53__["default"],
     name: 'Student List'
   }, //Signatories Routes
   {
     path: 'clearance/requests/cas',
     beforeEnter: isOSAS,
-    component: _components_programdirector_ClearanceCASRequestsComponent__WEBPACK_IMPORTED_MODULE_54__["default"],
+    component: _components_programdirector_ClearanceCASRequestsComponent__WEBPACK_IMPORTED_MODULE_55__["default"],
     name: 'Clearance Requests'
   }, {
     path: 'clearance/requests/cbm',
     beforeEnter: isOSAS,
-    component: _components_programdirector_ClearanceCBMRequestsComponent__WEBPACK_IMPORTED_MODULE_55__["default"],
+    component: _components_programdirector_ClearanceCBMRequestsComponent__WEBPACK_IMPORTED_MODULE_56__["default"],
     name: 'Clearance Requests'
   }, {
     path: 'clearance/requests/cet',
     beforeEnter: isOSAS,
-    component: _components_programdirector_ClearanceCETRequestsComponent__WEBPACK_IMPORTED_MODULE_56__["default"],
+    component: _components_programdirector_ClearanceCETRequestsComponent__WEBPACK_IMPORTED_MODULE_57__["default"],
     name: 'Clearance Requests'
   }, {
     path: 'clearance/requests/coed',
     beforeEnter: isOSAS,
-    component: _components_programdirector_ClearanceCOEDRequestsComponent__WEBPACK_IMPORTED_MODULE_57__["default"],
+    component: _components_programdirector_ClearanceCOEDRequestsComponent__WEBPACK_IMPORTED_MODULE_58__["default"],
     name: 'Clearance Requests'
   }, {
     path: 'clearance/requests/sgs',
     beforeEnter: isOSAS,
-    component: _components_programdirector_ClearanceSGSRequestsComponent__WEBPACK_IMPORTED_MODULE_58__["default"],
+    component: _components_programdirector_ClearanceSGSRequestsComponent__WEBPACK_IMPORTED_MODULE_59__["default"],
     name: 'Clearance Requests'
   }, {
     path: 'cleared/clearances',
     beforeEnter: isOSAS,
-    component: _components_programdirector_ClearedClearancesComponent__WEBPACK_IMPORTED_MODULE_59__["default"],
+    component: _components_programdirector_ClearedClearancesComponent__WEBPACK_IMPORTED_MODULE_60__["default"],
     name: 'Cleared Clearances'
   }, {
     path: 'submitted/clearances',
     beforeEnter: isOSAS,
-    component: _components_programdirector_SubmittedClearancesComponent__WEBPACK_IMPORTED_MODULE_60__["default"],
+    component: _components_programdirector_SubmittedClearancesComponent__WEBPACK_IMPORTED_MODULE_61__["default"],
     name: 'Submitted Clearances'
   }, {
     path: 'clearance/list',
     beforeEnter: isOSAS,
-    component: _components_programdirector_ClearanceListComponent__WEBPACK_IMPORTED_MODULE_61__["default"],
+    component: _components_programdirector_ClearanceListComponent__WEBPACK_IMPORTED_MODULE_62__["default"],
     name: 'Clearance List'
   }, {
     path: 'deficiency/list',
     beforeEnter: isOSAS,
-    component: _components_programdirector_DeficiencyListComponent__WEBPACK_IMPORTED_MODULE_62__["default"],
+    component: _components_programdirector_DeficiencyListComponent__WEBPACK_IMPORTED_MODULE_63__["default"],
     name: 'Deficiency List'
   }, //Settings Route
   {
     path: 'settings',
     beforeEnter: isOSAS,
-    component: _components_SettingsComponent__WEBPACK_IMPORTED_MODULE_37__["default"],
+    component: _components_SettingsComponent__WEBPACK_IMPORTED_MODULE_38__["default"],
     name: 'Settings'
   }, {
     path: 'users',
     beforeEnter: isOSAS,
-    component: _components_admin_SignatoryUsersComponent__WEBPACK_IMPORTED_MODULE_41__["default"],
+    component: _components_admin_SignatoryUsersComponent__WEBPACK_IMPORTED_MODULE_42__["default"],
     name: 'Users'
   }]
 }, //REGISTRARSTAFF Links
 {
   path: '/registrarstaff',
-  component: _components_registrarstaff_REGISTRARSTAFFComponent__WEBPACK_IMPORTED_MODULE_8__["default"],
+  component: _shared_layout_SignatoryLayout__WEBPACK_IMPORTED_MODULE_5__["default"],
   name: 'REGISTRARSTAFF',
-  redirect: '/registrarstaff/dashboard',
+  redirect: '/registrarstaff/clearance/requests',
   children: [//PD Routes
   {
     path: 'dashboard',
     beforeEnter: isREGISTRARSTAFF,
-    component: _components_programdirector_DashboardComponent__WEBPACK_IMPORTED_MODULE_51__["default"],
+    component: _components_programdirector_DashboardComponent__WEBPACK_IMPORTED_MODULE_52__["default"],
     name: 'Dashboard'
   }, {
     path: 'student/list',
     beforeEnter: isREGISTRARSTAFF,
-    component: _components_programdirector_StudentListComponent__WEBPACK_IMPORTED_MODULE_52__["default"],
+    component: _components_programdirector_StudentListComponent__WEBPACK_IMPORTED_MODULE_53__["default"],
     name: 'Student List'
   }, //Signatories Routes
   {
     path: 'clearance/requests',
     beforeEnter: isREGISTRARSTAFF,
-    component: _components_programdirector_ClearanceRequestsComponent__WEBPACK_IMPORTED_MODULE_53__["default"],
+    component: _components_programdirector_ClearanceRequestsComponent__WEBPACK_IMPORTED_MODULE_54__["default"],
     name: 'Clearance Requests'
   }, {
     path: 'cleared/clearances',
     beforeEnter: isREGISTRARSTAFF,
-    component: _components_programdirector_ClearedClearancesComponent__WEBPACK_IMPORTED_MODULE_59__["default"],
+    component: _components_programdirector_ClearedClearancesComponent__WEBPACK_IMPORTED_MODULE_60__["default"],
     name: 'Cleared Clearances'
   }, {
     path: 'submitted/clearances',
     beforeEnter: isREGISTRARSTAFF,
-    component: _components_programdirector_SubmittedClearancesComponent__WEBPACK_IMPORTED_MODULE_60__["default"],
+    component: _components_programdirector_SubmittedClearancesComponent__WEBPACK_IMPORTED_MODULE_61__["default"],
     name: 'Submitted Clearances'
   }, {
     path: 'clearance/list',
     beforeEnter: isREGISTRARSTAFF,
-    component: _components_programdirector_ClearanceListComponent__WEBPACK_IMPORTED_MODULE_61__["default"],
+    component: _components_programdirector_ClearanceListComponent__WEBPACK_IMPORTED_MODULE_62__["default"],
     name: 'Clearance List'
   }, {
     path: 'deficiency/list',
     beforeEnter: isREGISTRARSTAFF,
-    component: _components_programdirector_DeficiencyListComponent__WEBPACK_IMPORTED_MODULE_62__["default"],
+    component: _components_programdirector_DeficiencyListComponent__WEBPACK_IMPORTED_MODULE_63__["default"],
     name: 'Deficiency List'
   }, {
     path: 'deficiency/all/list',
     beforeEnter: isREGISTRARSTAFF,
-    component: _components_RegistrarDeficiencyListComponent__WEBPACK_IMPORTED_MODULE_36__["default"],
+    component: _components_RegistrarDeficiencyListComponent__WEBPACK_IMPORTED_MODULE_37__["default"],
     name: 'Registrar Deficiency List'
   }, //Settings Route
   {
     path: 'settings',
     beforeEnter: isREGISTRARSTAFF,
-    component: _components_SettingsComponent__WEBPACK_IMPORTED_MODULE_37__["default"],
+    component: _components_SettingsComponent__WEBPACK_IMPORTED_MODULE_38__["default"],
     name: 'Settings'
   }, {
     path: 'users',
     beforeEnter: isREGISTRARSTAFF,
-    component: _components_admin_SignatoryUsersComponent__WEBPACK_IMPORTED_MODULE_41__["default"],
+    component: _components_admin_SignatoryUsersComponent__WEBPACK_IMPORTED_MODULE_42__["default"],
     name: 'Users'
   }]
 }, //REGISTRAR Links
 {
   path: '/registrar',
-  component: _components_registrar_REGISTRARComponent__WEBPACK_IMPORTED_MODULE_9__["default"],
+  component: _shared_layout_SignatoryLayout__WEBPACK_IMPORTED_MODULE_5__["default"],
   name: 'REGISTRAR',
-  redirect: '/registrar/dashboard',
+  redirect: '/registrar/clearance/requests',
   children: [//PD Routes
   {
     path: 'dashboard',
     beforeEnter: isREGISTRAR,
-    component: _components_programdirector_DashboardComponent__WEBPACK_IMPORTED_MODULE_51__["default"],
+    component: _components_programdirector_DashboardComponent__WEBPACK_IMPORTED_MODULE_52__["default"],
     name: 'Dashboard'
   }, {
     path: 'student/list',
     beforeEnter: isREGISTRAR,
-    component: _components_programdirector_StudentListComponent__WEBPACK_IMPORTED_MODULE_52__["default"],
+    component: _components_programdirector_StudentListComponent__WEBPACK_IMPORTED_MODULE_53__["default"],
     name: 'Student List'
   }, //Signatories Routes
   {
     path: 'clearance/requests',
     beforeEnter: isREGISTRAR,
-    component: _components_programdirector_ClearanceRequestsComponent__WEBPACK_IMPORTED_MODULE_53__["default"],
+    component: _components_programdirector_ClearanceRequestsComponent__WEBPACK_IMPORTED_MODULE_54__["default"],
     name: 'Clearance Requests'
   }, {
     path: 'cleared/clearances',
     beforeEnter: isREGISTRAR,
-    component: _components_programdirector_ClearedClearancesComponent__WEBPACK_IMPORTED_MODULE_59__["default"],
+    component: _components_programdirector_ClearedClearancesComponent__WEBPACK_IMPORTED_MODULE_60__["default"],
     name: 'Cleared Clearances'
   }, {
     path: 'submitted/clearances',
     beforeEnter: isREGISTRAR,
-    component: _components_programdirector_SubmittedClearancesComponent__WEBPACK_IMPORTED_MODULE_60__["default"],
+    component: _components_programdirector_SubmittedClearancesComponent__WEBPACK_IMPORTED_MODULE_61__["default"],
     name: 'Submitted Clearances'
   }, {
     path: 'clearance/list',
     beforeEnter: isREGISTRAR,
-    component: _components_programdirector_ClearanceListComponent__WEBPACK_IMPORTED_MODULE_61__["default"],
+    component: _components_programdirector_ClearanceListComponent__WEBPACK_IMPORTED_MODULE_62__["default"],
     name: 'Clearance List'
   }, {
     path: 'deficiency/list',
     beforeEnter: isREGISTRAR,
-    component: _components_programdirector_DeficiencyListComponent__WEBPACK_IMPORTED_MODULE_62__["default"],
+    component: _components_programdirector_DeficiencyListComponent__WEBPACK_IMPORTED_MODULE_63__["default"],
     name: 'Deficiency List'
   }, {
     path: 'deficiency/all/list',
     beforeEnter: isREGISTRAR,
-    component: _components_RegistrarDeficiencyListComponent__WEBPACK_IMPORTED_MODULE_36__["default"],
+    component: _components_RegistrarDeficiencyListComponent__WEBPACK_IMPORTED_MODULE_37__["default"],
     name: 'Registrar Deficiency List'
   }, //Settings Route
   {
     path: 'settings',
     beforeEnter: isREGISTRAR,
-    component: _components_SettingsComponent__WEBPACK_IMPORTED_MODULE_37__["default"],
+    component: _components_SettingsComponent__WEBPACK_IMPORTED_MODULE_38__["default"],
     name: 'Settings'
   }, {
     path: 'users',
     beforeEnter: isREGISTRAR,
-    component: _components_admin_SignatoryUsersComponent__WEBPACK_IMPORTED_MODULE_41__["default"],
+    component: _components_admin_SignatoryUsersComponent__WEBPACK_IMPORTED_MODULE_42__["default"],
     name: 'Users'
   }]
 }, //DEAN Links
 {
   path: '/dean',
-  component: _components_dean_DEANComponent__WEBPACK_IMPORTED_MODULE_7__["default"],
+  component: _shared_layout_SignatoryLayout__WEBPACK_IMPORTED_MODULE_5__["default"],
   name: 'DEAN',
-  redirect: '/dean/dashboard',
+  redirect: '/dean/clearance/requests',
   children: [{
     path: 'dashboard',
     beforeEnter: isDEAN,
-    component: _components_programdirector_DashboardComponent__WEBPACK_IMPORTED_MODULE_51__["default"],
+    component: _components_programdirector_DashboardComponent__WEBPACK_IMPORTED_MODULE_52__["default"],
     name: 'Dashboard'
   }, {
     path: 'student/list',
     beforeEnter: isDEAN,
-    component: _components_programdirector_StudentListComponent__WEBPACK_IMPORTED_MODULE_52__["default"],
+    component: _components_programdirector_StudentListComponent__WEBPACK_IMPORTED_MODULE_53__["default"],
     name: 'Student List'
   }, //Signatories Routes
   {
     path: 'clearance/requests',
     beforeEnter: isDEAN,
-    component: _components_programdirector_ClearanceRequestsComponent__WEBPACK_IMPORTED_MODULE_53__["default"],
+    component: _components_programdirector_ClearanceRequestsComponent__WEBPACK_IMPORTED_MODULE_54__["default"],
     name: 'Clearance Requests'
   }, {
     path: 'cleared/clearances',
     beforeEnter: isDEAN,
-    component: _components_programdirector_ClearedClearancesComponent__WEBPACK_IMPORTED_MODULE_59__["default"],
+    component: _components_programdirector_ClearedClearancesComponent__WEBPACK_IMPORTED_MODULE_60__["default"],
     name: 'Cleared Clearances'
   }, {
     path: 'submitted/clearances',
     beforeEnter: isDEAN,
-    component: _components_programdirector_SubmittedClearancesComponent__WEBPACK_IMPORTED_MODULE_60__["default"],
+    component: _components_programdirector_SubmittedClearancesComponent__WEBPACK_IMPORTED_MODULE_61__["default"],
     name: 'Submitted Clearances'
   }, {
     path: 'clearance/list',
     beforeEnter: isDEAN,
-    component: _components_programdirector_ClearanceListComponent__WEBPACK_IMPORTED_MODULE_61__["default"],
+    component: _components_programdirector_ClearanceListComponent__WEBPACK_IMPORTED_MODULE_62__["default"],
     name: 'Clearance List'
   }, {
     path: 'deficiency/list',
     beforeEnter: isDEAN,
-    component: _components_programdirector_DeficiencyListComponent__WEBPACK_IMPORTED_MODULE_62__["default"],
+    component: _components_programdirector_DeficiencyListComponent__WEBPACK_IMPORTED_MODULE_63__["default"],
     name: 'Deficiency List'
   }, //Settings Route
   {
     path: 'settings',
     beforeEnter: isDEAN,
-    component: _components_SettingsComponent__WEBPACK_IMPORTED_MODULE_37__["default"],
+    component: _components_SettingsComponent__WEBPACK_IMPORTED_MODULE_38__["default"],
     name: 'Settings'
   }]
 }, //LIBRARY Links
 {
   path: '/library',
-  component: _components_library_LIBRARYComponent__WEBPACK_IMPORTED_MODULE_6__["default"],
+  component: _shared_layout_SignatoryLayout__WEBPACK_IMPORTED_MODULE_5__["default"],
   name: 'LIBRARY',
-  redirect: '/library/dashboard',
+  redirect: '/library/clearance/requests',
   children: [{
     path: 'dashboard',
     beforeEnter: isLIBRARY,
-    component: _components_programdirector_DashboardComponent__WEBPACK_IMPORTED_MODULE_51__["default"],
+    component: _components_programdirector_DashboardComponent__WEBPACK_IMPORTED_MODULE_52__["default"],
     name: 'Dashboard'
   }, {
     path: 'student/list',
     beforeEnter: isLIBRARY,
-    component: _components_programdirector_StudentListComponent__WEBPACK_IMPORTED_MODULE_52__["default"],
+    component: _components_programdirector_StudentListComponent__WEBPACK_IMPORTED_MODULE_53__["default"],
     name: 'Student List'
   }, //Signatories Routes
   {
     path: 'clearance/requests',
     beforeEnter: isLIBRARY,
-    component: _components_programdirector_ClearanceRequestsComponent__WEBPACK_IMPORTED_MODULE_53__["default"],
+    component: _components_programdirector_ClearanceRequestsComponent__WEBPACK_IMPORTED_MODULE_54__["default"],
     name: 'Clearance Requests'
   }, {
     path: 'cleared/clearances',
     beforeEnter: isLIBRARY,
-    component: _components_programdirector_ClearedClearancesComponent__WEBPACK_IMPORTED_MODULE_59__["default"],
+    component: _components_programdirector_ClearedClearancesComponent__WEBPACK_IMPORTED_MODULE_60__["default"],
     name: 'Cleared Clearances'
   }, {
     path: 'submitted/clearances',
     beforeEnter: isLIBRARY,
-    component: _components_programdirector_SubmittedClearancesComponent__WEBPACK_IMPORTED_MODULE_60__["default"],
+    component: _components_programdirector_SubmittedClearancesComponent__WEBPACK_IMPORTED_MODULE_61__["default"],
     name: 'Submitted Clearances'
   }, {
     path: 'clearance/list',
     beforeEnter: isLIBRARY,
-    component: _components_programdirector_ClearanceListComponent__WEBPACK_IMPORTED_MODULE_61__["default"],
+    component: _components_programdirector_ClearanceListComponent__WEBPACK_IMPORTED_MODULE_62__["default"],
     name: 'Clearance List'
   }, {
     path: 'deficiency/list',
     beforeEnter: isLIBRARY,
-    component: _components_programdirector_DeficiencyListComponent__WEBPACK_IMPORTED_MODULE_62__["default"],
+    component: _components_programdirector_DeficiencyListComponent__WEBPACK_IMPORTED_MODULE_63__["default"],
     name: 'Deficiency List'
   }, //Settings Route
   {
     path: 'settings',
     beforeEnter: isLIBRARY,
-    component: _components_SettingsComponent__WEBPACK_IMPORTED_MODULE_37__["default"],
+    component: _components_SettingsComponent__WEBPACK_IMPORTED_MODULE_38__["default"],
     name: 'Settings'
   }]
 }, //pd links
 {
   path: '/pd',
-  component: _components_programdirector_PDComponent__WEBPACK_IMPORTED_MODULE_50__["default"],
+  component: _shared_layout_SignatoryLayout__WEBPACK_IMPORTED_MODULE_5__["default"],
   name: 'pd',
-  redirect: '/pd/dashboard',
+  redirect: '/pd/clearance/requests',
   children: [//PD Routes
   {
     path: 'dashboard',
     beforeEnter: isPD,
-    component: _components_programdirector_DashboardComponent__WEBPACK_IMPORTED_MODULE_51__["default"],
+    component: _components_programdirector_DashboardComponent__WEBPACK_IMPORTED_MODULE_52__["default"],
     name: 'Dashboard'
   }, {
     path: 'student/list',
     beforeEnter: isPD,
-    component: _components_programdirector_StudentListComponent__WEBPACK_IMPORTED_MODULE_52__["default"],
+    component: _components_programdirector_StudentListComponent__WEBPACK_IMPORTED_MODULE_53__["default"],
     name: 'Student List'
   }, //Signatories Routes
   {
     path: 'clearance/requests',
     beforeEnter: isPD,
-    component: _components_programdirector_ClearanceRequestsComponent__WEBPACK_IMPORTED_MODULE_53__["default"],
+    component: _components_programdirector_ClearanceRequestsComponent__WEBPACK_IMPORTED_MODULE_54__["default"],
     name: 'Clearance Requests'
   }, {
     path: 'cleared/clearances',
     beforeEnter: isPD,
-    component: _components_programdirector_ClearedClearancesComponent__WEBPACK_IMPORTED_MODULE_59__["default"],
+    component: _components_programdirector_ClearedClearancesComponent__WEBPACK_IMPORTED_MODULE_60__["default"],
     name: 'Cleared Clearances'
   }, {
     path: 'submitted/clearances',
     beforeEnter: isPD,
-    component: _components_programdirector_SubmittedClearancesComponent__WEBPACK_IMPORTED_MODULE_60__["default"],
+    component: _components_programdirector_SubmittedClearancesComponent__WEBPACK_IMPORTED_MODULE_61__["default"],
     name: 'Submitted Clearances'
   }, {
     path: 'clearance/list',
     beforeEnter: isPD,
-    component: _components_programdirector_ClearanceListComponent__WEBPACK_IMPORTED_MODULE_61__["default"],
+    component: _components_programdirector_ClearanceListComponent__WEBPACK_IMPORTED_MODULE_62__["default"],
     name: 'Clearance List'
   }, {
     path: 'deficiency/list',
     beforeEnter: isPD,
-    component: _components_programdirector_DeficiencyListComponent__WEBPACK_IMPORTED_MODULE_62__["default"],
+    component: _components_programdirector_DeficiencyListComponent__WEBPACK_IMPORTED_MODULE_63__["default"],
     name: 'Deficiency List'
   }, //Settings Route
   {
     path: 'settings',
     beforeEnter: isPD,
-    component: _components_SettingsComponent__WEBPACK_IMPORTED_MODULE_37__["default"],
+    component: _components_SettingsComponent__WEBPACK_IMPORTED_MODULE_38__["default"],
     name: 'Settings'
   }, {
     path: 'users',
     beforeEnter: isPD,
-    component: _components_admin_SignatoryUsersComponent__WEBPACK_IMPORTED_MODULE_41__["default"],
+    component: _components_admin_SignatoryUsersComponent__WEBPACK_IMPORTED_MODULE_42__["default"],
     name: 'Users'
   }]
 }, //adviser links
 {
   path: '/adviser',
-  component: _components_adviser_ADVISERComponent__WEBPACK_IMPORTED_MODULE_16__["default"],
+  component: _components_adviser_ADVISERComponent__WEBPACK_IMPORTED_MODULE_17__["default"],
   name: 'adviser',
   redirect: '/adviser/dashboard',
   children: [//PD Routes
   {
     path: 'dashboard',
     beforeEnter: isADVISER,
-    component: _components_programdirector_DashboardComponent__WEBPACK_IMPORTED_MODULE_51__["default"],
+    component: _components_programdirector_DashboardComponent__WEBPACK_IMPORTED_MODULE_52__["default"],
     name: 'Dashboard'
   }, {
     path: 'student/list',
     beforeEnter: isADVISER,
-    component: _components_programdirector_StudentListComponent__WEBPACK_IMPORTED_MODULE_52__["default"],
+    component: _components_programdirector_StudentListComponent__WEBPACK_IMPORTED_MODULE_53__["default"],
     name: 'Student List'
   }, //Signatories Routes
   {
     path: 'clearance/requests',
     beforeEnter: isADVISER,
-    component: _components_programdirector_ClearanceRequestsComponent__WEBPACK_IMPORTED_MODULE_53__["default"],
+    component: _components_programdirector_ClearanceRequestsComponent__WEBPACK_IMPORTED_MODULE_54__["default"],
     name: 'Clearance Requests'
   }, {
     path: 'cleared/clearances',
     beforeEnter: isADVISER,
-    component: _components_programdirector_ClearedClearancesComponent__WEBPACK_IMPORTED_MODULE_59__["default"],
+    component: _components_programdirector_ClearedClearancesComponent__WEBPACK_IMPORTED_MODULE_60__["default"],
     name: 'Cleared Clearances'
   }, {
     path: 'submitted/clearances',
     beforeEnter: isADVISER,
-    component: _components_programdirector_SubmittedClearancesComponent__WEBPACK_IMPORTED_MODULE_60__["default"],
+    component: _components_programdirector_SubmittedClearancesComponent__WEBPACK_IMPORTED_MODULE_61__["default"],
     name: 'Submitted Clearances'
   }, {
     path: 'clearance/list',
     beforeEnter: isADVISER,
-    component: _components_programdirector_ClearanceListComponent__WEBPACK_IMPORTED_MODULE_61__["default"],
+    component: _components_programdirector_ClearanceListComponent__WEBPACK_IMPORTED_MODULE_62__["default"],
     name: 'Clearance List'
   }, {
     path: 'deficiency/list',
     beforeEnter: isADVISER,
-    component: _components_programdirector_DeficiencyListComponent__WEBPACK_IMPORTED_MODULE_62__["default"],
+    component: _components_programdirector_DeficiencyListComponent__WEBPACK_IMPORTED_MODULE_63__["default"],
     name: 'Deficiency List'
   }, //Settings Route
   {
     path: 'settings',
     beforeEnter: isADVISER,
-    component: _components_SettingsComponent__WEBPACK_IMPORTED_MODULE_37__["default"],
+    component: _components_SettingsComponent__WEBPACK_IMPORTED_MODULE_38__["default"],
     name: 'Settings'
   }]
 }, //principal links
 {
   path: '/principal',
-  component: _components_principal_PRINCIPALComponent__WEBPACK_IMPORTED_MODULE_15__["default"],
+  component: _components_principal_PRINCIPALComponent__WEBPACK_IMPORTED_MODULE_16__["default"],
   name: 'principal',
   redirect: '/principal/dashboard',
   children: [//PD Routes
   {
     path: 'dashboard',
     beforeEnter: isPRINCIPAL,
-    component: _components_programdirector_DashboardComponent__WEBPACK_IMPORTED_MODULE_51__["default"],
+    component: _components_programdirector_DashboardComponent__WEBPACK_IMPORTED_MODULE_52__["default"],
     name: 'Dashboard'
   }, {
     path: 'student/list',
     beforeEnter: isPRINCIPAL,
-    component: _components_programdirector_StudentListComponent__WEBPACK_IMPORTED_MODULE_52__["default"],
+    component: _components_programdirector_StudentListComponent__WEBPACK_IMPORTED_MODULE_53__["default"],
     name: 'Student List'
   }, //Signatories Routes
   {
     path: 'clearance/requests',
     beforeEnter: isPRINCIPAL,
-    component: _components_programdirector_ClearanceRequestsComponent__WEBPACK_IMPORTED_MODULE_53__["default"],
+    component: _components_programdirector_ClearanceRequestsComponent__WEBPACK_IMPORTED_MODULE_54__["default"],
     name: 'Clearance Requests'
   }, {
     path: 'cleared/clearances',
     beforeEnter: isPRINCIPAL,
-    component: _components_programdirector_ClearedClearancesComponent__WEBPACK_IMPORTED_MODULE_59__["default"],
+    component: _components_programdirector_ClearedClearancesComponent__WEBPACK_IMPORTED_MODULE_60__["default"],
     name: 'Cleared Clearances'
   }, {
     path: 'submitted/clearances',
     beforeEnter: isPRINCIPAL,
-    component: _components_programdirector_SubmittedClearancesComponent__WEBPACK_IMPORTED_MODULE_60__["default"],
+    component: _components_programdirector_SubmittedClearancesComponent__WEBPACK_IMPORTED_MODULE_61__["default"],
     name: 'Submitted Clearances'
   }, {
     path: 'clearance/list',
     beforeEnter: isPRINCIPAL,
-    component: _components_programdirector_ClearanceListComponent__WEBPACK_IMPORTED_MODULE_61__["default"],
+    component: _components_programdirector_ClearanceListComponent__WEBPACK_IMPORTED_MODULE_62__["default"],
     name: 'Clearance List'
   }, {
     path: 'deficiency/list',
     beforeEnter: isPRINCIPAL,
-    component: _components_programdirector_DeficiencyListComponent__WEBPACK_IMPORTED_MODULE_62__["default"],
+    component: _components_programdirector_DeficiencyListComponent__WEBPACK_IMPORTED_MODULE_63__["default"],
     name: 'Deficiency List'
   }, //Settings Route
   {
     path: 'settings',
     beforeEnter: isPRINCIPAL,
-    component: _components_SettingsComponent__WEBPACK_IMPORTED_MODULE_37__["default"],
+    component: _components_SettingsComponent__WEBPACK_IMPORTED_MODULE_38__["default"],
     name: 'Settings'
   }]
 }, //student links
 {
   path: '/student',
-  component: _components_student_StudentComponent__WEBPACK_IMPORTED_MODULE_4__["default"],
+  component: _shared_layout_StudentLayout__WEBPACK_IMPORTED_MODULE_4__["default"],
   name: 'Student',
   beforeEnter: function beforeEnter(to, from, next) {
     if (localStorage.getItem('token')) {
@@ -73315,40 +74154,40 @@ var routes = [{
   {
     path: 'dashboard',
     beforeEnter: isSTUDENT,
-    component: _components_admin_DashboardComponent__WEBPACK_IMPORTED_MODULE_17__["default"],
+    component: _components_admin_DashboardComponent__WEBPACK_IMPORTED_MODULE_18__["default"],
     name: 'Dashboard'
   }, //Student Routes
   {
     path: 'active/clearance',
     beforeEnter: isSTUDENT,
-    component: _components_ActiveClearanceComponent__WEBPACK_IMPORTED_MODULE_31__["default"],
+    component: _components_ActiveClearanceComponent__WEBPACK_IMPORTED_MODULE_32__["default"],
     name: 'Active Clearance'
   }, {
     path: 'clearance/list',
     beforeEnter: isSTUDENT,
-    component: _components_student_ClearanceListComponent__WEBPACK_IMPORTED_MODULE_63__["default"],
+    component: _components_student_ClearanceListComponent__WEBPACK_IMPORTED_MODULE_64__["default"],
     name: 'Clearance List'
   }, {
     path: 'deficiency/list',
     beforeEnter: isSTUDENT,
-    component: _components_DeficiencyListComponent__WEBPACK_IMPORTED_MODULE_35__["default"],
+    component: _components_DeficiencyListComponent__WEBPACK_IMPORTED_MODULE_36__["default"],
     name: 'Deficiency List'
   }, {
     path: 'sias/account',
     beforeEnter: isSTUDENT,
-    component: _components_student_StudentSIASComponent__WEBPACK_IMPORTED_MODULE_39__["default"],
+    component: _components_student_StudentSIASComponent__WEBPACK_IMPORTED_MODULE_40__["default"],
     name: 'SIAS Account'
   }, //Settings Route
   {
     path: 'settings',
     beforeEnter: isSTUDENT,
-    component: _components_student_SettingsComponent__WEBPACK_IMPORTED_MODULE_38__["default"],
+    component: _components_student_SettingsComponent__WEBPACK_IMPORTED_MODULE_39__["default"],
     name: 'Settings'
   }]
 }, //SGS student links
 {
   path: '/sgs/student',
-  component: _components_student_SGSStudentComponent__WEBPACK_IMPORTED_MODULE_13__["default"],
+  component: _shared_layout_StudentLayout__WEBPACK_IMPORTED_MODULE_4__["default"],
   name: 'SGSStudent',
   beforeEnter: function beforeEnter(to, from, next) {
     if (localStorage.getItem('token')) {
@@ -73366,34 +74205,34 @@ var routes = [{
   {
     path: 'dashboard',
     beforeEnter: isSTUDENTSGS,
-    component: _components_admin_DashboardComponent__WEBPACK_IMPORTED_MODULE_17__["default"],
+    component: _components_admin_DashboardComponent__WEBPACK_IMPORTED_MODULE_18__["default"],
     name: 'Dashboard'
   }, //Student Routes
   {
     path: 'active/clearance',
     beforeEnter: isSTUDENTSGS,
-    component: _components_ActiveClearanceComponentSGS__WEBPACK_IMPORTED_MODULE_33__["default"],
+    component: _components_ActiveClearanceComponentSGS__WEBPACK_IMPORTED_MODULE_34__["default"],
     name: 'Active Clearance'
   }, {
     path: 'clearance/list',
     beforeEnter: isSTUDENTSGS,
-    component: _components_student_ClearanceListComponent__WEBPACK_IMPORTED_MODULE_63__["default"],
+    component: _components_student_ClearanceListComponent__WEBPACK_IMPORTED_MODULE_64__["default"],
     name: 'Clearance List'
   }, {
     path: 'deficiency/list',
     beforeEnter: isSTUDENTSGS,
-    component: _components_DeficiencyListComponent__WEBPACK_IMPORTED_MODULE_35__["default"],
+    component: _components_DeficiencyListComponent__WEBPACK_IMPORTED_MODULE_36__["default"],
     name: 'Deficiency List'
   }, {
     path: 'sias/account',
     beforeEnter: isSTUDENTSGS,
-    component: _components_student_StudentSIASComponent__WEBPACK_IMPORTED_MODULE_39__["default"],
+    component: _components_student_StudentSIASComponent__WEBPACK_IMPORTED_MODULE_40__["default"],
     name: 'SIAS Account'
   }, //Settings Route
   {
     path: 'settings',
     beforeEnter: isSTUDENTSGS,
-    component: _components_student_SettingsComponent__WEBPACK_IMPORTED_MODULE_38__["default"],
+    component: _components_student_SettingsComponent__WEBPACK_IMPORTED_MODULE_39__["default"],
     name: 'Settings'
   }]
 }];
@@ -73418,6 +74257,8 @@ function requireLogin(to, from, next) {
 function isADMIN(to, from, next) {
   axios.get('/api/v1/verify').then(function (res) {
     if (res.data.user_role.role.name == "admin") {
+      // console.log('Next:');
+      // console.log(to);
       next();
     } else {
       next('/');
@@ -73593,12 +74434,11 @@ function isPRINCIPAL(to, from, next) {
 
 function isSTUDENT(to, from, next) {
   axios.get('/api/v1/verify').then(function (res) {
-    console.log(to);
-    console.log(from);
-    console.log(next);
-    console.log(res.data.user_role.role.name);
-
-    if (res.data.user_role.role.name == "student" && res.data.student != "Laboratory High School" && res.data.student != "School of Graduate Studies and Research") {
+    // console.log(to)
+    // console.log(from)
+    // console.log(next)
+    // console.log(res.data.user_role.role.name)
+    if (res.data.user_role.role.name == "student") {
       next();
     } else {
       next('/');
@@ -73660,7 +74500,7 @@ function checkRoleRoute(to, from, next) {
       next('/library');
     } else if (res.data.user_role.role.name == "osas") {
       if (res.data.staff_campus == "Goa Campus") {
-        next('/osas/goa');
+        next('/osas');
       } else {
         next('/osas');
       }
@@ -73674,7 +74514,7 @@ function checkRoleRoute(to, from, next) {
       next('/principal');
     } else if (res.data.user_role.role.name == "student") {
       if (res.data.student == "School of Graduate Studies and Research") {
-        next('/sgs/student');
+        next('/student');
       } else {
         next('/student');
       }
@@ -73707,6 +74547,351 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
 /* harmony default export */ __webpack_exports__["default"] = (new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   routes: routes
 }));
+
+/***/ }),
+
+/***/ "./resources/js/shared/layout/OSCSAppBar.vue":
+/*!***************************************************!*\
+  !*** ./resources/js/shared/layout/OSCSAppBar.vue ***!
+  \***************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _OSCSAppBar_vue_vue_type_template_id_e60b2102___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./OSCSAppBar.vue?vue&type=template&id=e60b2102& */ "./resources/js/shared/layout/OSCSAppBar.vue?vue&type=template&id=e60b2102&");
+/* harmony import */ var _OSCSAppBar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./OSCSAppBar.vue?vue&type=script&lang=js& */ "./resources/js/shared/layout/OSCSAppBar.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _OSCSAppBar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _OSCSAppBar_vue_vue_type_template_id_e60b2102___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _OSCSAppBar_vue_vue_type_template_id_e60b2102___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/shared/layout/OSCSAppBar.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/shared/layout/OSCSAppBar.vue?vue&type=script&lang=js&":
+/*!****************************************************************************!*\
+  !*** ./resources/js/shared/layout/OSCSAppBar.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_OSCSAppBar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./OSCSAppBar.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/shared/layout/OSCSAppBar.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_OSCSAppBar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/shared/layout/OSCSAppBar.vue?vue&type=template&id=e60b2102&":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/shared/layout/OSCSAppBar.vue?vue&type=template&id=e60b2102& ***!
+  \**********************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_OSCSAppBar_vue_vue_type_template_id_e60b2102___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./OSCSAppBar.vue?vue&type=template&id=e60b2102& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/shared/layout/OSCSAppBar.vue?vue&type=template&id=e60b2102&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_OSCSAppBar_vue_vue_type_template_id_e60b2102___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_OSCSAppBar_vue_vue_type_template_id_e60b2102___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/shared/layout/OSCSNavigationDrawer.vue":
+/*!*************************************************************!*\
+  !*** ./resources/js/shared/layout/OSCSNavigationDrawer.vue ***!
+  \*************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _OSCSNavigationDrawer_vue_vue_type_template_id_54b9a5b2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./OSCSNavigationDrawer.vue?vue&type=template&id=54b9a5b2& */ "./resources/js/shared/layout/OSCSNavigationDrawer.vue?vue&type=template&id=54b9a5b2&");
+/* harmony import */ var _OSCSNavigationDrawer_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./OSCSNavigationDrawer.vue?vue&type=script&lang=js& */ "./resources/js/shared/layout/OSCSNavigationDrawer.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _OSCSNavigationDrawer_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _OSCSNavigationDrawer_vue_vue_type_template_id_54b9a5b2___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _OSCSNavigationDrawer_vue_vue_type_template_id_54b9a5b2___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/shared/layout/OSCSNavigationDrawer.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/shared/layout/OSCSNavigationDrawer.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/shared/layout/OSCSNavigationDrawer.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_OSCSNavigationDrawer_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./OSCSNavigationDrawer.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/shared/layout/OSCSNavigationDrawer.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_OSCSNavigationDrawer_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/shared/layout/OSCSNavigationDrawer.vue?vue&type=template&id=54b9a5b2&":
+/*!********************************************************************************************!*\
+  !*** ./resources/js/shared/layout/OSCSNavigationDrawer.vue?vue&type=template&id=54b9a5b2& ***!
+  \********************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_OSCSNavigationDrawer_vue_vue_type_template_id_54b9a5b2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./OSCSNavigationDrawer.vue?vue&type=template&id=54b9a5b2& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/shared/layout/OSCSNavigationDrawer.vue?vue&type=template&id=54b9a5b2&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_OSCSNavigationDrawer_vue_vue_type_template_id_54b9a5b2___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_OSCSNavigationDrawer_vue_vue_type_template_id_54b9a5b2___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/shared/layout/SignatoryLayout.vue":
+/*!********************************************************!*\
+  !*** ./resources/js/shared/layout/SignatoryLayout.vue ***!
+  \********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _SignatoryLayout_vue_vue_type_template_id_c576fe32___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SignatoryLayout.vue?vue&type=template&id=c576fe32& */ "./resources/js/shared/layout/SignatoryLayout.vue?vue&type=template&id=c576fe32&");
+/* harmony import */ var _SignatoryLayout_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SignatoryLayout.vue?vue&type=script&lang=js& */ "./resources/js/shared/layout/SignatoryLayout.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _SignatoryLayout_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _SignatoryLayout_vue_vue_type_template_id_c576fe32___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _SignatoryLayout_vue_vue_type_template_id_c576fe32___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/shared/layout/SignatoryLayout.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/shared/layout/SignatoryLayout.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************!*\
+  !*** ./resources/js/shared/layout/SignatoryLayout.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SignatoryLayout_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./SignatoryLayout.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/shared/layout/SignatoryLayout.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SignatoryLayout_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/shared/layout/SignatoryLayout.vue?vue&type=template&id=c576fe32&":
+/*!***************************************************************************************!*\
+  !*** ./resources/js/shared/layout/SignatoryLayout.vue?vue&type=template&id=c576fe32& ***!
+  \***************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SignatoryLayout_vue_vue_type_template_id_c576fe32___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./SignatoryLayout.vue?vue&type=template&id=c576fe32& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/shared/layout/SignatoryLayout.vue?vue&type=template&id=c576fe32&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SignatoryLayout_vue_vue_type_template_id_c576fe32___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SignatoryLayout_vue_vue_type_template_id_c576fe32___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/shared/layout/StudentLayout.vue":
+/*!******************************************************!*\
+  !*** ./resources/js/shared/layout/StudentLayout.vue ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _StudentLayout_vue_vue_type_template_id_4bbd165c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./StudentLayout.vue?vue&type=template&id=4bbd165c& */ "./resources/js/shared/layout/StudentLayout.vue?vue&type=template&id=4bbd165c&");
+/* harmony import */ var _StudentLayout_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./StudentLayout.vue?vue&type=script&lang=js& */ "./resources/js/shared/layout/StudentLayout.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _StudentLayout_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _StudentLayout_vue_vue_type_template_id_4bbd165c___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _StudentLayout_vue_vue_type_template_id_4bbd165c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/shared/layout/StudentLayout.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/shared/layout/StudentLayout.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/shared/layout/StudentLayout.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_StudentLayout_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./StudentLayout.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/shared/layout/StudentLayout.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_StudentLayout_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/shared/layout/StudentLayout.vue?vue&type=template&id=4bbd165c&":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/shared/layout/StudentLayout.vue?vue&type=template&id=4bbd165c& ***!
+  \*************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_StudentLayout_vue_vue_type_template_id_4bbd165c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./StudentLayout.vue?vue&type=template&id=4bbd165c& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/shared/layout/StudentLayout.vue?vue&type=template&id=4bbd165c&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_StudentLayout_vue_vue_type_template_id_4bbd165c___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_StudentLayout_vue_vue_type_template_id_4bbd165c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/shared/table/OSCSActiveClearanceEnrollmentTable.vue":
+/*!**************************************************************************!*\
+  !*** ./resources/js/shared/table/OSCSActiveClearanceEnrollmentTable.vue ***!
+  \**************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _OSCSActiveClearanceEnrollmentTable_vue_vue_type_template_id_0680de76___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./OSCSActiveClearanceEnrollmentTable.vue?vue&type=template&id=0680de76& */ "./resources/js/shared/table/OSCSActiveClearanceEnrollmentTable.vue?vue&type=template&id=0680de76&");
+/* harmony import */ var _OSCSActiveClearanceEnrollmentTable_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./OSCSActiveClearanceEnrollmentTable.vue?vue&type=script&lang=js& */ "./resources/js/shared/table/OSCSActiveClearanceEnrollmentTable.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _OSCSActiveClearanceEnrollmentTable_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _OSCSActiveClearanceEnrollmentTable_vue_vue_type_template_id_0680de76___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _OSCSActiveClearanceEnrollmentTable_vue_vue_type_template_id_0680de76___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/shared/table/OSCSActiveClearanceEnrollmentTable.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/shared/table/OSCSActiveClearanceEnrollmentTable.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************!*\
+  !*** ./resources/js/shared/table/OSCSActiveClearanceEnrollmentTable.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_OSCSActiveClearanceEnrollmentTable_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./OSCSActiveClearanceEnrollmentTable.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/shared/table/OSCSActiveClearanceEnrollmentTable.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_OSCSActiveClearanceEnrollmentTable_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/shared/table/OSCSActiveClearanceEnrollmentTable.vue?vue&type=template&id=0680de76&":
+/*!*********************************************************************************************************!*\
+  !*** ./resources/js/shared/table/OSCSActiveClearanceEnrollmentTable.vue?vue&type=template&id=0680de76& ***!
+  \*********************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_OSCSActiveClearanceEnrollmentTable_vue_vue_type_template_id_0680de76___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./OSCSActiveClearanceEnrollmentTable.vue?vue&type=template&id=0680de76& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/shared/table/OSCSActiveClearanceEnrollmentTable.vue?vue&type=template&id=0680de76&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_OSCSActiveClearanceEnrollmentTable_vue_vue_type_template_id_0680de76___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_OSCSActiveClearanceEnrollmentTable_vue_vue_type_template_id_0680de76___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
 
 /***/ }),
 
@@ -73760,6 +74945,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _getters__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_getters__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _mutations__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./mutations */ "./resources/js/store/mutations.js");
 /* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./actions */ "./resources/js/store/actions.js");
+/* harmony import */ var _modules_dashboard__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/dashboard */ "./resources/js/store/modules/dashboard/index.js");
 
  // import currentUser from "./modules/currentUser"
 // import user from "./modules/user"
@@ -73770,7 +74956,11 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
 
 
 
+
 /* harmony default export */ __webpack_exports__["default"] = (new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
+  modules: {
+    dashboard: _modules_dashboard__WEBPACK_IMPORTED_MODULE_6__["default"]
+  },
   // modules: {
   //     activeclearance,
   //     currentUser,
@@ -73786,6 +74976,112 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
   mutations: _mutations__WEBPACK_IMPORTED_MODULE_4__,
   actions: _actions__WEBPACK_IMPORTED_MODULE_5__
 }));
+
+/***/ }),
+
+/***/ "./resources/js/store/modules/dashboard/actions.js":
+/*!*********************************************************!*\
+  !*** ./resources/js/store/modules/dashboard/actions.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+
+
+/***/ }),
+
+/***/ "./resources/js/store/modules/dashboard/getters.js":
+/*!*********************************************************!*\
+  !*** ./resources/js/store/modules/dashboard/getters.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+
+
+/***/ }),
+
+/***/ "./resources/js/store/modules/dashboard/index.js":
+/*!*******************************************************!*\
+  !*** ./resources/js/store/modules/dashboard/index.js ***!
+  \*******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./state */ "./resources/js/store/modules/dashboard/state.js");
+/* harmony import */ var _getters__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./getters */ "./resources/js/store/modules/dashboard/getters.js");
+/* harmony import */ var _getters__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_getters__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _mutations__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./mutations */ "./resources/js/store/modules/dashboard/mutations.js");
+/* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./actions */ "./resources/js/store/modules/dashboard/actions.js");
+/* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_actions__WEBPACK_IMPORTED_MODULE_5__);
+
+
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = (new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
+  state: _state__WEBPACK_IMPORTED_MODULE_2__["default"],
+  getters: _getters__WEBPACK_IMPORTED_MODULE_3__,
+  mutations: _mutations__WEBPACK_IMPORTED_MODULE_4__,
+  actions: _actions__WEBPACK_IMPORTED_MODULE_5__
+}));
+
+/***/ }),
+
+/***/ "./resources/js/store/modules/dashboard/mutations.js":
+/*!***********************************************************!*\
+  !*** ./resources/js/store/modules/dashboard/mutations.js ***!
+  \***********************************************************/
+/*! exports provided: SET_DASHBOARD */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SET_DASHBOARD", function() { return SET_DASHBOARD; });
+var SET_DASHBOARD = function SET_DASHBOARD(state, _ref) {
+  var completed = _ref.completed,
+      totalStudent = _ref.totalStudent,
+      approvedRequest = _ref.approvedRequest,
+      pendingRequest = _ref.pendingRequest,
+      totalClearanceRequest = _ref.totalClearanceRequest,
+      totalActivatedAccount = _ref.totalActivatedAccount,
+      semester = _ref.semester;
+  state.completed = completed;
+  state.totalStudent = totalStudent;
+  state.approvedRequest = approvedRequest;
+  state.pendingRequest = pendingRequest;
+  state.totalClearanceRequest = totalClearanceRequest;
+  state.totalActivatedAccount = totalActivatedAccount;
+  state.semester = semester;
+};
+
+/***/ }),
+
+/***/ "./resources/js/store/modules/dashboard/state.js":
+/*!*******************************************************!*\
+  !*** ./resources/js/store/modules/dashboard/state.js ***!
+  \*******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  completed: 0,
+  totalStudent: 0,
+  approvedRequest: 0,
+  pendingRequest: 0,
+  totalClearanceRequest: 0,
+  totalActivatedAccount: 0,
+  semester: ''
+});
 
 /***/ }),
 

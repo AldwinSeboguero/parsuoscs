@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\SubmittedClearance as SubmittedClearanceResource;
 use App\Http\Resources\SubmittedClearanceCollection;
 use App\Staff;
+use App\SignatoryV2;
 class SubmittedController extends Controller
 {
     
@@ -152,61 +153,67 @@ class SubmittedController extends Controller
         $semester_id = $request->semester_id;
 		if(Auth::user()->hasRole("admin")){
 			if ($semester_id ) {
-        return response()->json([
-            'submittedclearances' => new SubmittedClearanceCollection(
-                SubmitClearance::orderByDesc('updated_at')->with('clearance')
-                ->with('clearance.purpose') 
-                
-                ->with('clearance.student')  
-                ->with('clearance.student.program')  
-                ->whereHas('clearance.student', function($q) use ($id){
-                    $q->where('name', 'ILIKE', '%' . $id . '%');
-                })  
-                ->paginate($per_page))  
-            ],200);
-        }
-        else{
-            return response()->json([
-                'submittedclearances' => new SubmittedClearanceCollection(
-                    SubmitClearance::orderByDesc('updated_at')->with('clearance')
-                    ->with('clearance.purpose')
-                    ->with('clearance.student')   
-                    ->with('clearance.student')  
-                    ->with('clearance.student.program') 
-                   
-                    ->whereHas('clearance.student', function($q) use ($id){
-                        $q->where('name', 'ILIKE', '%' . $id . '%');
-                    }) 
-                    ->orWhereHas('clearance.student', function($q) use ($id){
-                        $q->where('student_number', 'ILIKE', '%' . $id . '%');
-                    })  
-                    ->orWhereHas('clearance.student', function($q) use ($id){
-                        $q->where('name', 'ILIKE', '%' . $id . '%');
-                    })  
-                    ->orWhereHas('clearance.purpose', function($q) use ($id){
-                        $q->where('purpose', 'ILIKE', '%' . $id . '%');
-                    }) 
-                    ->paginate($per_page))  
-                ],200);
-        }
+                return response()->json([
+                    'submittedclearances' => new SubmittedClearanceCollection(
+                        SubmitClearance::orderByDesc('updated_at')->with('clearance')
+                        ->with('clearance.purpose') 
+                        
+                        ->with('clearance.student')  
+                        ->with('clearance.student.program')  
+                        ->whereHas('clearance.student', function($q) use ($id){
+                            $q->where('name', 'ILIKE', '%' . $id . '%');
+                        })  
+                        ->paginate($per_page))  
+                    ],200);
+                }
+                else{
+                    return response()->json([
+                        'submittedclearances' => new SubmittedClearanceCollection(
+                            SubmitClearance::orderByDesc('updated_at')->with('clearance')
+                            ->with('clearance.purpose')
+                            ->with('clearance.student')   
+                            ->with('clearance.student')  
+                            ->with('clearance.student.program') 
+                        
+                            ->whereHas('clearance.student', function($q) use ($id){
+                                $q->where('name', 'ILIKE', '%' . $id . '%');
+                            }) 
+                            ->orWhereHas('clearance.student', function($q) use ($id){
+                                $q->where('student_number', 'ILIKE', '%' . $id . '%');
+                            })  
+                            ->orWhereHas('clearance.student', function($q) use ($id){
+                                $q->where('name', 'ILIKE', '%' . $id . '%');
+                            })  
+                            ->orWhereHas('clearance.purpose', function($q) use ($id){
+                                $q->where('purpose', 'ILIKE', '%' . $id . '%');
+                            }) 
+                            ->paginate($per_page))  
+                        ],200);
+                }
 		}
 		else{
 			
-        $campus = Staff::where('user_id', Auth::user()->id)->first()->campus->id;
+        $campus = SignatoryV2::where('user_id', Auth::user()->id)->first()->campus_id;
         if ($semester_id ) {
         return response()->json([
             'submittedclearances' => new SubmittedClearanceCollection(
-                SubmitClearance::orderByDesc('updated_at')->with('clearance')
-                ->with('clearance.purpose') 
+                SubmitClearance::orderByDesc('updated_at')
+                // ->with('clearance')
+                // ->with('clearance.purpose') 
                 
-                ->with('clearance.student')  
-                ->with('clearance.student.program') 
+                // ->with('clearance.student')  
+                // ->with('clearance.student.program') 
                 ->whereHas('clearance.purpose', function($q) use($semester_id){
                     $q->where('semester_id', $semester_id);
                 }) 
                 ->whereHas('clearance.student', function($q) use ($id){
-                    $q->where('name', 'ILIKE', '%' . $id . '%');
-                }) 
+                    $q->where('name', 'ILIKE', '%' . $id . '%')
+                    ->orWhere('student_number', 'ILIKE', '%' . $id . '%')
+                    ->orWhere('name', 'ILIKE', '%' . $id . '%')
+                    ->orWhereHas('program', function($q) use($id){
+                        $q->where('name', 'ILIKE', '%' . $id . '%');
+                    });
+                })  
                 ->whereHas('clearance.student.program', function($q) use($campus){
                     $q->where('campus_id', $campus);
                 })  
@@ -223,17 +230,16 @@ class SubmittedController extends Controller
                     ->with('clearance.student.program') 
                    
                     ->whereHas('clearance.student', function($q) use ($id){
-                        $q->where('name', 'ILIKE', '%' . $id . '%');
-                    }) 
-                    ->orWhereHas('clearance.student', function($q) use ($id){
-                        $q->where('student_number', 'ILIKE', '%' . $id . '%');
+                        $q->where('name', 'ILIKE', '%' . $id . '%')
+                        ->orWhere('student_number', 'ILIKE', '%' . $id . '%')
+                        ->orWhere('name', 'ILIKE', '%' . $id . '%')
+                        ->orWhereHas('program', function($q) use($id){
+                            $q->where('name', 'ILIKE', '%' . $id . '%');
+                        });
                     })  
-                    ->orWhereHas('clearance.student', function($q) use ($id){
-                        $q->where('name', 'ILIKE', '%' . $id . '%');
-                    })  
-                    ->orWhereHas('clearance.purpose', function($q) use ($id){
-                        $q->where('purpose', 'ILIKE', '%' . $id . '%');
-                    })
+                    // ->orWhereHas('clearance.purpose', function($q) use ($id){
+                    //     $q->where('purpose', 'ILIKE', '%' . $id . '%');
+                    // })
                     ->whereHas('clearance.student.program', function($q) use($campus){
                         $q->where('campus_id', $campus);
                     })  

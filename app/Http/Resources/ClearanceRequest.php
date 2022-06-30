@@ -21,12 +21,12 @@ class ClearanceRequest extends JsonResource
             'name' => $this->student->name,
             'student_number' => $this->student->student_number,
             'program' => $this->student->program->short_name,
-            'staff' => $this->staff->user->name,
-            'deficiencies' => $this->student,
+            'staff' => $this->signatory ? $this->signatory->name : '',
+            // 'deficiencies' => $this->student,
             'approved_at' => $this->approved_at ? $this->approved_at->toDayDateTimeString() : null,
-            'request_at' => $this->request_at ? $this->request_at->toDayDateTimeString() : null,
-            'purpose' => json_decode(json_decode($this->purpose)->purpose)->name.' '
-            .json_decode(json_decode($this->purpose)->purpose)->description,
+            'request_at' => $this->requested_at ? $this->requested_at->toDayDateTimeString() : null,
+            'purpose' => json_decode(json_decode($this->purpose)->purpose)->name.' '.
+            json_decode(json_decode($this->purpose)->purpose)->description, 
             
         ];
      

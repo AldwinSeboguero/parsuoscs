@@ -2,7 +2,9 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import LoginComponent from './components/login/LoginComponent';
 import AdminComponent from './components/AdminComponent';
-import StudentComponent from './components/student/StudentComponent';
+import StudentComponent from './shared/layout/StudentLayout';
+import SignatoryComponent from './shared/layout/SignatoryLayout';
+
 import CASHIERComponent from './components/cashier/CASHIERComponent'; 
 import LIBRARYComponent from './components/library/LIBRARYComponent';
 import DEANComponent from './components/dean/DEANComponent';
@@ -307,9 +309,9 @@ const routes =[
     //Cashier Links
     {
         path: '/stcouncil',
-        component: STCOUNCILComponent,
+        component: SignatoryComponent,
         name: 'STCOUNCIL', 
-        redirect: '/stcouncil/dashboard',
+        redirect: '/stcouncil/clearance/requests',
         children: [
             //PD Routes
             
@@ -379,12 +381,11 @@ const routes =[
     //Cashier Links
     {
         path: '/cashier',
-        component: CASHIERComponent,
+        component: SignatoryComponent,
         name: 'CASHIER', 
-        redirect: '/cashier/dashboard',
+        redirect: '/cashier/clearance/requests',
         children: [
             //PD Routes
-            
                 {
                     path: 'dashboard', 
                     beforeEnter: isCASHIER,
@@ -445,9 +446,9 @@ const routes =[
     //OSAS Links
     {
         path: '/osas',
-        component: OSASOtherCampusComponent,
+        component: SignatoryComponent,
         name: 'OSAS Other Campus', 
-        redirect: '/osas/dashboard',
+        redirect: '/osas/clearance/requests',
         children: [
             //PD Routes
             
@@ -517,9 +518,9 @@ const routes =[
     //OSAS Links
     {
         path: '/osas/goa',
-        component: OSASComponent,
+        component: SignatoryComponent,
         name: 'OSAS', 
-        redirect: '/osas/goa/dashboard',
+        redirect: '/osas/goa/clearance/requests',
         children: [
             //PD Routes
             
@@ -613,9 +614,9 @@ const routes =[
     //REGISTRARSTAFF Links
     {
         path: '/registrarstaff',
-        component: REGISTRARSTAFFComponent,
+        component: SignatoryComponent,
         name: 'REGISTRARSTAFF', 
-        redirect: '/registrarstaff/dashboard',
+        redirect: '/registrarstaff/clearance/requests',
         children: [
             //PD Routes
             
@@ -691,9 +692,9 @@ const routes =[
      //REGISTRAR Links
      {
         path: '/registrar',
-        component: REGISTRARComponent,
+        component: SignatoryComponent,
         name: 'REGISTRAR', 
-        redirect: '/registrar/dashboard',
+        redirect: '/registrar/clearance/requests',
         children: [
             //PD Routes
             
@@ -769,9 +770,9 @@ const routes =[
      //DEAN Links
      {
         path: '/dean',
-        component: DEANComponent,
+        component: SignatoryComponent,
         name: 'DEAN', 
-        redirect: '/dean/dashboard',
+        redirect: '/dean/clearance/requests',
         children: [
              
             
@@ -835,9 +836,9 @@ const routes =[
     //LIBRARY Links
     {
         path: '/library',
-        component: LIBRARYComponent,
+        component: SignatoryComponent,
         name: 'LIBRARY', 
-        redirect: '/library/dashboard',
+        redirect: '/library/clearance/requests',
         children: [
              
             
@@ -901,9 +902,9 @@ const routes =[
     //pd links
     {
         path: '/pd',
-        component: PDComponent,
+        component: SignatoryComponent,
         name: 'pd', 
-        redirect: '/pd/dashboard',
+        redirect: '/pd/clearance/requests',
         children: [
             //PD Routes
             
@@ -1172,7 +1173,7 @@ const routes =[
         //SGS student links
         {
             path: '/sgs/student',
-            component: SGSStudentComponent,
+            component: StudentComponent,
             name: 'SGSStudent', 
             beforeEnter: (to, from, next) => {
                 if (localStorage.getItem('token')) {
@@ -1254,7 +1255,10 @@ function requireLogin(to, from, next) {
 function isADMIN(to, from, next) {
     axios.get('/api/v1/verify')
     .then(res => {
-            if(res.data.user_role.role.name=="admin") {next();} 
+            if(res.data.user_role.role.name=="admin") {
+                // console.log('Next:');
+                // console.log(to);
+                next();} 
             else{next('/');}
         }).catch(err => {
     localStorage.removeItem('token');
@@ -1386,11 +1390,11 @@ function isPRINCIPAL(to, from, next) {
 function isSTUDENT(to, from, next) {
  axios.get('/api/v1/verify')
     .then(res => {
-        console.log(to)
-        console.log(from)
-        console.log(next)
-        console.log(res.data.user_role.role.name)
-            if(res.data.user_role.role.name=="student"  && res.data.student != "Laboratory High School"  && res.data.student != "School of Graduate Studies and Research") {next();} 
+        // console.log(to)
+        // console.log(from)
+        // console.log(next)
+        // console.log(res.data.user_role.role.name)
+            if(res.data.user_role.role.name=="student"  ) {next();} 
             else{next('/');}
         }).catch(err => {
     localStorage.removeItem('token');
@@ -1446,7 +1450,7 @@ function checkRoleRoute(to, from, next) {
                 } 
                 else if(res.data.user_role.role.name=="osas") {
                     if (res.data.staff_campus == "Goa Campus") {
-                        next('/osas/goa');
+                        next('/osas');
                     }
                     else{
                     next('/osas');
@@ -1466,7 +1470,7 @@ function checkRoleRoute(to, from, next) {
                 } 
                 else if(res.data.user_role.role.name=="student") {
                     if (res.data.student == "School of Graduate Studies and Research") {
-                        next('/sgs/student');
+                        next('/student');
                     } 
                     else{
                     next('/student');

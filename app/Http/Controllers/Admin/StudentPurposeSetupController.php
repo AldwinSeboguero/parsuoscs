@@ -23,7 +23,7 @@ class StudentPurposeSetupController extends Controller
     {
         $purposes = Purpose::orderBy('id')->get();
         $semesters = Semester::orderByDesc('id')->get();
-        $graduations = Graduation::orderBy('id')->get();
+        $graduations = Graduation::orderByDesc('id')->get();
         $activeStudentPurposeSetup = StudentPurposeSetup::where('user_id',Auth::user()->id)->first();
         $purpose_id ="";
         $semester_id="";
@@ -115,6 +115,8 @@ class StudentPurposeSetupController extends Controller
                         if(!$exist){
                         $newClearance = new Clearance([
                             'student_id'=> $student->id, 
+                             'program_id'=> Student::where('user_id',Auth::user()->id)->get()->first()->program_id, 
+
                             'purpose_id' =>$clearancePurpose->id, 
                         ]);
                         $newClearance->save();
@@ -144,11 +146,13 @@ class StudentPurposeSetupController extends Controller
                     'semester_id' => Semester::latest('id')->first()->id,
                 ]);  
                 $clearancePurpose->save();
-                $newClearance = new Clearance([
-                    'student_id'=> Student::where('user_id',Auth::user()->id)->first()->id, 
+                // dd($clearancePurpose->id);
+                $newClearance = Clearance::create([
+                    'student_id'=> Student::where('user_id',Auth::user()->id)->get()->first()->id, 
+                    'program_id'=> Student::where('user_id',Auth::user()->id)->get()->first()->program_id, 
                     'purpose_id' =>$clearancePurpose->id,  
+
                 ]);
-                $newClearance->save();
                 $studentPurposeSetup = StudentPurposeSetup::whereUser_id(Auth::user()->id)->first();
                 $studentPurposeSetup['status'] = 1;
                 $studentPurposeSetup['purpose_id'] = $clearancePurpose->id;   

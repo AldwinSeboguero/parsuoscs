@@ -1,9 +1,29 @@
 <template>
-  <v-sheet>
+  <v-container>
    <v-card> 
+   <v-card-subtitle class="white--text text-uppercase elevation-2 mb-0 pb-1"   style="background: linear-gradient(to left, #1A237E, #1A237E, #0D47A1);">
+          <span class="text-h6">  Approved Requests </span>
+
+    </v-card-subtitle>
+     <v-card-title class="white--text elevation-2 mb-0 pb-0 mt-0 pt-0"  style="background: linear-gradient(to left, #1A237E, #1A237E, #0D47A1);">
+         <v-text-field 
+            append-icon="mdi-magnify"
+            label="Search"
+            class="mb-0 pb-0 mt-2 pt-0"
+             v-model="searchItem"
+            @input="searchIt"
+            solo-inverted
+            flat
+            dark
+            dense
+          ></v-text-field>
+         
+           
+    </v-card-title>
      <v-data-table
         item-key="id"
-        class="elevation-0"
+        class="px-6 pb-6  mt-4"
+
         :loading="loading"
         loading-text="Loading... Please wait"
         :headers="headers"
@@ -26,26 +46,8 @@
             {{ item.approved_at }}
         </v-chip>
          </template>
-      <template v-slot:top>
-          <v-col cols="12" sm="4">
-        <v-text-field 
-            append-icon="mdi-magnify"
-            label="Search"
-            @input="searchIt"
-            v-model="searchItem"
-          ></v-text-field>
-          </v-col>
-        <v-toolbar flat color="white">
-          <div class="overline text-h6">
-              Approved Clearance Request List
-              
-            </div>
-          <v-spacer></v-spacer> 
-        </v-toolbar>
-      </template>
-      <template v-slot:item.id="{ item }">
-      <td>{{clearancerequests.data.indexOf(item)+1}}</td> 
-    </template>
+   
+     
        
       <template v-slot:item.actions="{ item }">
           <template>
@@ -88,7 +90,7 @@
       </template>
     </v-snackbar> 
     </v-card>
-  </v-sheet>
+  </v-container>
 </template>
 <script>
 export default {
@@ -105,7 +107,7 @@ export default {
     searchItem: "",
       headers: [
       {
-        text: "No",
+        text: "#",
         align: "left",
         value: "id",
       }, 

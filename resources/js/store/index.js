@@ -10,8 +10,12 @@ import *  as getters from "./getters"
 import * as mutations from "./mutations"
 import *  as actions from "./actions"
 
+import dashboard from "./modules/dashboard"
 
 export default new Vuex.Store({
+    modules: {
+        dashboard,
+    },
     // modules: {
     //     activeclearance,
     //     currentUser,

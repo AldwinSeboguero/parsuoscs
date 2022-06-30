@@ -1,57 +1,19 @@
 <template>
-  <v-sheet>
-   <v-card> 
-     <v-data-table
-        item-key="id"
-        class="elevation-0"
-        :loading="loading"
-        loading-text="Loading... Please wait"
-        :headers="headers"
-        :page="page + 1"
-        :pageCount="numberOfPages"
-        :items="clearancerequests.data"
-        :options.sync="options"
-        :server-items-length="totalclearancerequests"
-        :items-per-page="10" 
-        :sort-by="actions" 
-        :footer-props="{
-          itemsPerPageOptions: [5, 10, 15],
-          itemsPerPageText: 'Clearance Request Per Page',
-          'show-current-page': true,
-          'show-first-last-page': true,
-        }"
-      >
-      <template v-slot:top>
-          <v-col cols="12" sm="4">
-        <v-text-field 
-            append-icon="mdi-magnify"
-            label="Search"
-            
-            v-model="searchItem"
-            @input="searchIt"
-          ></v-text-field>
-          </v-col>
-        <v-toolbar flat color="white">
-          <div class="overline text-h6">
-              Clearance Request List
-               
-            </div>
-          <v-spacer></v-spacer> 
-
-          
-        <v-dialog
+  <v-container>
+      <v-dialog
       v-model="dialog"
       persistent
-      max-width="300"
+      max-width="400"
       v-if="editedIndex > -1"
     >
      
       <v-card>
-        
-        <v-card-title class="headline">
-          Approve this Clearance Request?
-        </v-card-title>
-        <v-card-text>This will certifiy that {{studentName}} is cleared from any property and money responsibility as of this date.</v-card-text>
+        <v-card-subtitle class="white--text text-uppercase elevation-2 pt-4"   style="background: linear-gradient(to left, #1A237E, #1A237E, #0D47A1);">
+          <span class="text-h6"> Approving Request </span>
+
+    </v-card-subtitle>
+       
+        <v-card-text class="pt-4">This will certifiy that {{studentName}} is cleared from any property and money responsibility as of this date.</v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn
@@ -72,46 +34,85 @@
         
       </v-card>
     </v-dialog>
-    <v-dialog v-model="deferDialog" persistent max-width="600px">
+
+      <v-dialog
+     v-model="deferDialog" persistent max-width="500"
+    >
      
       <v-card>
-        <v-card-title>
-          <span class="headline">Add Deficiency</span>
-        </v-card-title>
-        <v-card-text>
-          <v-container>
-            <v-row>
-              <v-col cols="12" sm="12" md="12">
-                <v-text-field v-model="deficiency.title" label="Item of Deficiency*" required></v-text-field>
+        <v-card-subtitle class="white--text text-uppercase elevation-2 pt-4"   style="background: linear-gradient(to left, #1A237E, #1A237E, #0D47A1);">
+          <span class="text-h6">Add Deficiency </span>
+
+    </v-card-subtitle>
+       
+        <v-card-text class="pt-4">
+            <v-col cols="12" sm="12" md="12">
+                <v-text-field filled class="elevation-0" v-model="deficiency.title" label="Item of Deficiency*" required></v-text-field>
               </v-col>
               <v-col cols="12" sm="12" md="12">
-                <v-textarea v-model="deficiency.note"  label="Additional Information" hint="Notes or Instructions for student"></v-textarea>
+                <v-textarea filled v-model="deficiency.note"  label="Additional Information" hint="Notes or Instructions for student"></v-textarea>
               </v-col>
           
-              <!-- <v-col cols="12" sm="12">
-                <v-autocomplete
-                  :items="['Skiing', 'Ice hockey', 'Soccer', 'Basketball', 'Hockey', 'Reading', 'Writing', 'Coding', 'Basejump']"
-                  label="Interests"
-                  multiple
-                ></v-autocomplete>
-              </v-col> -->
-            </v-row>
-          </v-container>
+       
           <small>*indicates required field</small>
         </v-card-text>
         <v-card-actions>
-          <v-spacer></v-spacer>
+           <v-spacer></v-spacer>
           <v-btn color="blue darken-1" text @click="deferDialog = false">Close</v-btn>
           <v-btn color="blue darken-1" text @click="deferItem()">Save</v-btn>
         </v-card-actions>
+        
       </v-card>
-    </v-dialog>  
+    </v-dialog>
+   
 
-        </v-toolbar>
-      </template>
-      <template v-slot:item.id="{ item }">
+   <v-card> 
+     <v-card-subtitle class="white--text text-uppercase elevation-2 mb-0 pb-1"   style="background: linear-gradient(to left, #1A237E, #1A237E, #0D47A1);">
+          <span class="text-h6"> Clearance Requests </span>
+
+    </v-card-subtitle>
+     <v-card-title class="white--text elevation-2 mb-0 pb-0 mt-0 pt-0"  style="background: linear-gradient(to left, #1A237E, #1A237E, #0D47A1);">
+         <v-text-field 
+            append-icon="mdi-magnify"
+            label="Search"
+            class="mb-0 pb-0 mt-2 pt-0"
+             v-model="searchItem"
+            @input="searchIt"
+            solo-inverted
+            flat
+            dark
+            dense
+          ></v-text-field>
+         
+           
+    </v-card-title>
+
+     <v-data-table
+        item-key="id"
+        class="px-6 pb-6  mt-2"
+        :loading="loading"
+        loading-text="Loading... Please wait"
+        :headers="headers"
+        :page="page + 1"
+        :pageCount="numberOfPages"
+        :items="clearancerequests.data"
+        :options.sync="options"
+        :server-items-length="totalclearancerequests"
+        :items-per-page="10" 
+        
+        :footer-props="{
+          itemsPerPageOptions: [5, 10, 15],
+          itemsPerPageText: 'Clearance Request Per Page',
+          'show-current-page': true,
+          'show-first-last-page': true,
+        }"
+      >
+    
+      
+        
+      <!-- <template v-slot:item.id="{ item }">
       <td>{{clearancerequests.data.indexOf(item)+1}}</td> 
-    </template>
+    </template> -->
 
      <template v-slot:item.request_at="{ item }" >
         <v-chip text-color="white" color="success" small >
@@ -122,13 +123,13 @@
        
       <template v-slot:item.actions="{ item }">
           <template>
-        <v-btn class="ma-2" color="success" depressed x-small  @click="editItem(item)"
-         v-if="!item.deficiencies.deficiencies_count" ><v-icon
+        <v-btn class="ma-2 pr-5 pl-4 text-center" color="success" depressed x-small  @click="editItem(item)"
+          ><v-icon
           dark
           x-small
         >
           mdi-check-circle-outline
-        </v-icon></v-btn
+        </v-icon>APPROVE</v-btn
         > 
          </template> 
             <template>
@@ -138,11 +139,11 @@
           x-small
         >
           mdi-close-circle-outline
-        </v-icon></v-btn
+        </v-icon>DISAPPROVE</v-btn
         > 
          </template> 
       </template> 
-    </v-data-table>
+    </v-data-table> 
   <v-snackbar
       v-model="snackbar" 
       :color="snackbarColor" 
@@ -176,9 +177,11 @@
       </template>
     </v-snackbar> 
     </v-card>
-  </v-sheet>
+  </v-container>
 </template>
 <script>
+import debounce from "lodash/debounce";
+
 export default {
   data: () => ({
     valid: true,
@@ -195,7 +198,7 @@ export default {
     snackbarColor:"",
       headers: [
       {
-        text: "No",
+        text: "#",
         align: "left",
         value: "id",
       }, 
@@ -254,6 +257,26 @@ export default {
   },
 
   watch: {
+    searchItem: debounce(function (val) {
+      this.loading = true;
+      
+      const { page, itemsPerPage } = this.options;
+      let pageNumber = page;
+      axios
+      .get(`/api/v1/clearance-requests?page=` + pageNumber, {
+        params: { 'per_page': itemsPerPage,
+          'search': val },
+      })
+      .then((response) => {
+        //Then injecting the result to datatable parameters.
+        this.clearancerequests = response.data.clearance_requests; 
+        this.totalclearancerequests = response.data.clearance_requests.total;
+        this.numberOfPages = response.data.clearance_requests.last_page;
+        this.loading = false;
+
+      });
+      
+    }, 300),
     dialog(val) {
       val || this.close();
     },
@@ -270,20 +293,29 @@ export default {
   },
 
   methods: {
+    clean($val) {
+      if($val){$val = $val.replace(/ +(?= )/g, "");
+      $val = $val.replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, " "); // Replaces all spaces with hyphens.
+      $val = $val.replace(/ +(?= )/g, "");
+      
+      return $val;
+      }
+       // Removes special chars.
+    },
      readDataFromAPI() {
       this.loading = true;
       const { page, itemsPerPage } = this.options;
       let pageNumber = page;
       axios
-        .get(`/api/v1/clearancerequests?page=` + pageNumber, {
+        .get(`/api/v1/clearance-requests?page=` + pageNumber, {
           params: { 'per_page': itemsPerPage },
         })
         .then((response) => {
           //Then injecting the result to datatable parameters.
           this.loading = false;
-         this.clearancerequests = response.data.clearancerequests; 
-          this.totalclearancerequests = response.data.clearancerequests.total;
-          this.numberOfPages = response.data.clearancerequests.last_page;
+         this.clearancerequests = response.data.clearance_requests; 
+          this.totalclearancerequests = response.data.clearance_requests.total;
+          this.numberOfPages = response.data.clearance_requests.last_page;
         });
     },
 
@@ -293,14 +325,14 @@ export default {
       if (d.length > 2) {
        
         axios
-          .get(`/api/v1/clearancerequests/${d}?page=` + pageNumber, {
+          .get(`/api/v1/clearance-requests/${d}?page=` + pageNumber, {
           params: { 'per_page': itemsPerPage },
         })
           .then((res) => {
             this.loading = false;  
-            this.clearancerequests = res.data.clearancerequests; 
-            this.totalclearancerequests = res.data.clearancerequests.total;
-            this.numberOfPages = res.data.clearancerequests.last_page;
+            this.clearancerequests = res.data.clearance_requests; 
+            this.totalclearancerequests = res.data.clearance_requests.total;
+            this.numberOfPages = res.data.clearance_requests.last_page;
           })
           .catch((err) => {
             console.error(err);
@@ -308,14 +340,14 @@ export default {
       }
       if (d.length <= 0) {
         axios
-          .get(`/api/v1/clearancerequests?page=` + pageNumber, {
+          .get(`/api/v1/clearance-requests?page=` + pageNumber, {
             params: { 'per_page': d.itemsPerPage },
           })
           .then((res) => {
             this.loading = false;  
-            this.clearancerequests = res.data.clearancerequests;
-            this.totalclearancerequests = res.data.clearancerequests.total;
-            this.numberOfPages = res.data.clearancerequests.last_page;
+            this.clearancerequests = res.data.clearance_requests;
+            this.totalclearancerequests = res.data.clearance_requests.total;
+            this.numberOfPages = res.data.clearance_requests.last_page;
           })
           .catch((err) => {
             console.error(err);
@@ -375,18 +407,16 @@ export default {
       }
     },
     approve() {
-      // const index = this.clearancerequests.data.indexOf(item);
-      // let decide = confirm("Are you sure you want to approve this request?");
-      // if (decide) {
+      // console.log(this.clearanceRequest.id);
         axios
-          .post("/api/v1/approveclearancerequest", this.clearanceRequest)
+          .post("/api/v1/clearance-requests/approve", this.clearanceRequest)
           .then((res) => {
-            this.text = "Request Approved Successfully!";
+            this.text = "Successfully Approved!";
             this.snackbarColor ="primary darken-1";
             this.snackbar = true;
-           this.clearancerequests = res.data.clearancerequests; 
-          this.totalclearancerequests = res.data.clearancerequests.total;
-          this.numberOfPages = res.data.clearancerequests.last_page; 
+            this.clearancerequests = res.data.clearance_requests; 
+            this.totalclearancerequests = res.data.clearance_requests.total;
+            this.numberOfPages = res.data.clearance_requests.last_page;
           this.dialog = false;
           })
           .catch((err) => {
@@ -395,8 +425,8 @@ export default {
             this.snackbarColor ="error darken-1";
             this.snackbar = true;
           });
-      // }
-      close();
+      
+      this.close();
     },
     defer(item){
       this.editedIndex = this.clearancerequests.data.indexOf(item);
@@ -407,14 +437,22 @@ export default {
     deferItem(){
       const index = this.editedIndex;
         axios
-          .put("/api/v1/clearancerequests/" + this.clearanceRequest.id, this.deficiency)
+          .get("/api/v1/clearance-requests/disapprove",
+          {
+            params: {
+              'requestId': this.clearanceRequest.id,
+              'title': this.deficiency.title,
+              'note': this.deficiency.note,
+            },
+          })
           .then((res) => {
             this.text = "Record Updated Successfully!";
             this.snackbarColor ="primary darken-1";
             this.snackbar = true; 
-            this.clearancerequests = res.data.clearancerequests; 
-          this.totalclearancerequests = res.data.clearancerequests.total;
-          this.numberOfPages = res.data.clearancerequests.last_page;
+            this.loading = false;
+          this.clearancerequests = res.data.clearance_requests; 
+            this.totalclearancerequests = res.data.clearance_requests.total;
+            this.numberOfPages = res.data.clearance_requests.last_page;
           })
           .catch((err) => {
             console.log(err.response);
@@ -427,10 +465,8 @@ export default {
 
     close() {
       this.dialog = false;
-      setTimeout(() => {
         this.editedItem = Object.assign({}, this.defaultItem);
         this.editedIndex = -1;
-      }, 300);
     }, 
     save() {
       console.log(this.editedItem);

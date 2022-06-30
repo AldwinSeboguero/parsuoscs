@@ -162,4 +162,28 @@ Route::post('/getFileName', 'Admin\StudentController@filename');
 Route::post('/resetP', 'Admin\StudentController@resetP');
 
 //v3 routes
-Route::get('/active-clearance', 'Student\ActiveClearanceController@index');
+Route::get('/active-clearance', 'V2\Student\ActiveClearanceController@index');
+Route::post('/active-clearance/send-request', 'V2\Student\ActiveClearanceController@sendRequest');
+Route::get('/active-clearance/pdf', 'V2\Student\ActiveClearanceController@createPdf');
+Route::post('/active-clearance/submit', 'V2\Student\ActiveClearanceController@submitClearance');
+Route::get('/active-clearance/clearances', 'V2\Student\ClearanceListController@index');
+
+//Signatory Routes V3
+Route::get('/clearance-requests', 'V2\Signatory\ClearanceRequestController@index');
+Route::post('/clearance-requests/approve', 'V2\Signatory\ClearanceRequestController@approve');
+Route::get('/clearance-requests/disapprove', 'V2\Signatory\ClearanceRequestController@disapprove');
+
+
+//deficency
+Route::post('/deficeincy/edit', 'Admin\DeficiencyController@update');
+
+
+
+
+
+
+
+
+
+
+

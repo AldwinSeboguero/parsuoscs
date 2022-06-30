@@ -1,10 +1,29 @@
 <template>
-  <v-sheet>
+  <v-container>
    <v-card>
+   <v-card-subtitle class="white--text text-uppercase elevation-2 mb-0 pb-1"   style="background: linear-gradient(to left, #1A237E, #1A237E, #0D47A1);">
+          <span class="text-h6"> Student Deficiencies </span>
+
+    </v-card-subtitle>
+     <v-card-title class="white--text elevation-2 mb-0 pb-0 mt-0 pt-0"  style="background: linear-gradient(to left, #1A237E, #1A237E, #0D47A1);">
+         <v-text-field 
+            append-icon="mdi-magnify"
+            label="Search"
+            class="mb-0 pb-0 mt-2 pt-0"
+             v-model="searchItem"
+            @input="searchIt"
+            solo-inverted
+            flat
+            dark
+            dense
+          ></v-text-field>
+         
+           
+    </v-card-title>
     <v-container>
      <v-data-table
         item-key="id"
-        class="elevation-0"
+        class="px-6 pb-6  mt-4"
         :loading="loading"
         loading-text="Loading... Please wait"
         :headers="headers"
@@ -14,7 +33,6 @@
         :options.sync="options"
         :server-items-length="totaldeficiencies"
         :items-per-page="10" 
-        show-select 
         :footer-props="{
           itemsPerPageOptions: [5, 10, 15],
           itemsPerPageText: 'Deficiency Per Page',
@@ -24,20 +42,21 @@
       >
       <template v-slot:top>
 
-<v-dialog v-model="editdialog" persistent max-width="600px">
+<v-dialog v-model="editdialog" persistent max-width="500">
      
       <v-card>
-        <v-card-title>
-          <span class="headline">Edit Deficiency</span>
-        </v-card-title>
+      <v-card-title class="white--text text-uppercase elevation-2 "   style="background: linear-gradient(to left, #1A237E, #1A237E, #0D47A1);">
+          <span class="text-h6">Edit Deficiency </span>
+
+    </v-card-title>
         <v-card-text>
           <v-container>
             <v-row>
               <v-col cols="12" sm="12" md="12">
-                <v-text-field label="Item of Deficiency*" v-model="editedItem.deficiency" required></v-text-field>
+                <v-text-field filled label="Item of Deficiency*" v-model="editedItem.deficiency" required></v-text-field>
               </v-col>
               <v-col cols="12" sm="12" md="12">
-                <v-textarea label="Additional Information" v-model="editedItem.note" hint="Notes or Instructions for student"></v-textarea>
+                <v-textarea filled label="Additional Information" v-model="editedItem.note" hint="Notes or Instructions for student"></v-textarea>
               </v-col>
           
               <!-- <v-col cols="12" sm="12">
@@ -128,22 +147,9 @@
 
 
 
-        <v-text-field 
-            append-icon="mdi-magnify"
-            label="Search"
-            @input="searchIt"
-          ></v-text-field>
-        <v-toolbar flat color="white">
-          <div class="overline text-h6">
-              Deficiency List
-              
-            </div>
-          <v-spacer></v-spacer> 
-        </v-toolbar>
+      
       </template>
-      <template v-slot:item.id="{ item }">
-      <td>{{deficiencies.data.indexOf(item)+1}}</td> 
-    </template>
+     
 
     <template v-slot:item.completed="{ item }">
         <v-chip text-color="white" color="success" small  v-if="item.completed == 1">
@@ -155,37 +161,37 @@
            Pending
         </v-chip>
          </template>
-     <template v-slot:item.actions="{ item }">
-          <template>
+     <template v-slot:item.actions="{ item }" >
+          <template v-if="item.completed != 1">
         <v-btn class="ma-1" color="success" depressed x-small  @click="approveItem(item)"
         ><v-icon
           dark
           x-small
         >
           mdi-check-circle
-        </v-icon></v-btn
+        </v-icon>APPROVE</v-btn
         > 
          </template> 
-           <template>
-        <v-btn class="ma-1" color="primary" depressed x-small   @click="editItem(item)"
+           <template v-if="item.completed != 1">
+        <v-btn class="ma-1 px-6" color="primary" depressed x-small   @click="editItem(item)"
           ><v-icon
           dark
           x-small
         >
           mdi-circle-edit-outline
-        </v-icon></v-btn
+        </v-icon>EDIT</v-btn
         > 
          </template> 
-            <template>
+            <!-- <template v-if="item.completed != 1"> 
         <v-btn class="ma-1" color="error" depressed x-small @click="deleteItem(item)"
           ><v-icon
           dark
           x-small
         >
           mdi-delete-circle
-        </v-icon></v-btn
+        </v-icon>DELETE</v-btn
         > 
-         </template> 
+         </template>  -->
       </template> 
     </v-data-table>
   <v-snackbar
@@ -222,7 +228,7 @@
     </v-snackbar>
     </v-container>
     </v-card>
-  </v-sheet>
+  </v-container>
 </template>
 <script>
 export default {
@@ -242,7 +248,7 @@ export default {
     snackbarColor:"",
       headers: [
       {
-        text: "No",
+        text: "#",
         align: "left",
         value: "id",
       },   
@@ -442,19 +448,26 @@ export default {
       if (this.editedIndex > -1) {
         const index = this.editedIndex;
         axios
-          .put("/api/v1/deficiencies/" + this.editedItem.id, this.editedItem)
+          .post("/api/v1/deficeincy/edit", this.editedItem)
           .then((res) => {
             this.text = "Record Updated Successfully!";
             this.snackbarColor ="primary darken-1";
             this.snackbar = true;
-            Object.assign(this.deficiencies.data[index], res.data.deficiency); 
+            // Object.assign(this.deficiencies.data[index], res.data.deficiency); 
+            this.loading = false;
+            this.deficiencies = res.data.deficiencies; 
+              this.totaldeficiencies = res.data.deficiencies.total;
+              this.numberOfPages = res.data.deficiencies.last_page; 
+            this.editdialog= false;
           })
           .catch((err) => {
             console.log(err.response);
             this.text = "Error Updating Record";
             this.snackbarColor ="error darken-1";
             this.snackbar = true;
+            this.editdialog= false;
           });
+          this.editdialog= false;
       } else {
         axios
           .post("/api/v1/deficiencies", this.editedItem)

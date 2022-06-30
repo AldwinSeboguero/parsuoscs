@@ -145,10 +145,6 @@
 	<body>
 		<div class="content">
 		<div class="header">
-			{{--  COLLEGE OF ARTS AND SCIENCES<br/>  --}}
-			{{-- <div class="navbar-brand"><img src="img/psu_logo.png" width="50" alt=""></div>
-			
-			Partido State University<br/> --}}
 			<table style="border:0px; padding:0px;">
 				<tr style="border:0px; padding:0px;">
 				<td rowspan="3" style="width:18%; border:0px; padding:0px; padding-left:40px; 	"><img src="images/psu_logo.png" width="60" alt=""></td>
@@ -232,80 +228,14 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-					<td>Student Council</td>
-					<td style="padding-left:20px;"> {{$staffSTCOUNCIL->user->name}}</td>
-					<td style="text-align:center">
-						{{$clearanceRequestSTCOUNCIL->approved_at->toFormattedDateString()}}
-					</td>
-					<td style="text-align:center">
-                    {{$clearanceRequestSTCOUNCIL->token}}
-					</td>
-				</tr>
-				<tr>
-					<td>Cashier</td>
-					<td style="padding-left:20px;"> {{$staffCASHIER->user->name}}</td>
-					<td style="text-align:center">
-						{{$clearanceRequestCASHIER->approved_at->toFormattedDateString()}}
-					</td>
-					<td style="text-align:center">
-                    {{$clearanceRequestCASHIER->token}}
-					</td>
-				</tr>
-				<tr>
-					<td>Program Director</td>
-					<td style="padding-left:20px;"> {{$staffPD->user->name}}</td>
-					<td style="text-align:center">
-                    {{$clearanceRequestPROGRAMDIRECTOR->approved_at->toFormattedDateString()}}
-					
-					</td>
-					<td style="text-align:center">
-					{{$clearanceRequestPROGRAMDIRECTOR->token}}
-					</td>
-				</tr>
-				<tr>
-					<td>College Dean</td>
-					<td style="padding-left:20px;"> {{$staffDEAN->user->name}}</td>
-					<td style="text-align:center">
-					{{$clearanceRequestDEAN->approved_at->toFormattedDateString()}}
-					</td>
-					<td style="text-align:center">
-					{{$clearanceRequestDEAN->token}}
-					</td>
-				</tr>
-				<tr>
-					<td>Library</td>
-					<td style="padding-left:20px;"> {{$staffLIBRARY->user->name}}</td>
-					<td style="text-align:center">
-					{{$clearanceRequestLIBRARY->approved_at->toFormattedDateString()}}
-					</td>
-					<td style="text-align:center">
-                    {{$clearanceRequestLIBRARY->token}}
-					</td>
-				</tr>
-				<tr>
-					<td>Student Affairs & Services</td>
-					<td style="padding-left:20px;"> {{$staffOSAS->user->name}}</td>
-					<td style="text-align:center">
-                    {{$clearanceRequestOSAS->approved_at->toFormattedDateString()}}
-					</td>
-					<td style="text-align:center">
-                    {{$clearanceRequestOSAS->token}}
-					</td>
-				</tr>
-				<tr>
-					<td>Registrar</td>
-				
-					<td style="padding-left:20px;"> {{$staffREGISTRARSTAFF->user->name}}</td>
-					<td style="text-align:center">
-                    {{$clearanceREGS->approved_at->toFormattedDateString()}}
-					</td>
-					<td style="text-align:center">
-                    {{$clearanceREGS->token}}
-					</td>
-					
-					
-				</tr>
+			@foreach ($signatories as $key => $signatory)
+			<tr>
+				<td align="left"><b>{{ $signatory['office']}}</b></td>
+				<td align="left">{{ $signatory['designee']}}</td>
+				<td align="left">{{ $signatory['approved_at']}}</td>
+				<td align="center">{{ $signatory['clearanceRequest_id']}}</td>
+			</tr>
+			@endforeach
 
 			</tbody>
 		</table>

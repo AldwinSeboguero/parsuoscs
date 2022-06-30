@@ -1,10 +1,29 @@
 <template>
-  <v-sheet>
+<v-container>
    <v-card>
-    <v-container>
+     <v-card-subtitle class="white--text text-uppercase elevation-2 mb-0 pb-1"   style="background: linear-gradient(to left, #1A237E, #1A237E, #0D47A1);">
+          <span class="text-h6"> Clearance List </span>
+
+    </v-card-subtitle>
+     <v-card-title class="white--text elevation-2 mb-0 pb-0 mt-0 pt-0"  style="background: linear-gradient(to left, #1A237E, #1A237E, #0D47A1);">
+         <v-text-field 
+            append-icon="mdi-magnify"
+            label="Search"
+            class="mb-0 pb-0 mt-2 pt-0"
+            v-model="search"
+            solo-inverted
+            flat
+            dark
+            dense
+          ></v-text-field>
+         
+           
+    </v-card-title>
+
      <v-data-table
         item-key="id"
-        class="elevation-0"
+          class="px-6 pb-6  mt-1"
+
         :loading="loading"
         loading-text="Loading... Please wait"
         :headers="headers"
@@ -23,22 +42,8 @@
         }"
       >
       <template v-slot:top>
-        <v-text-field 
-            append-icon="mdi-magnify"
-            
-            label="Search"
-            @input="searchIt"
-            solo-inverted
-            flat
-            light
-          ></v-text-field>
-        <v-toolbar flat color="white">
-          <div class="overline text-h6">
-              Clearance List
-              
-            </div>
-          <v-spacer></v-spacer> 
-        </v-toolbar>
+       
+       
       </template>
       <template v-slot:item.id="{ item }">
       <td>{{clearances.data.indexOf(item)+1}}</td> 
@@ -49,16 +54,7 @@
                 <v-chip   text-color="white"
                   color="success"
                   x-small
-                  v-if="(
-                  item.cashier==true
-                  && item.library==true
-                  && item.osas==true
-                  && item.pd==true
-                  && item.dean==true
-                  && item.registrar==true)
-                  || (item.adviser==true
-                  && item.principal==true)
-                  "
+                  v-if="item.status"
                 >
                   Completed
                 </v-chip>
@@ -66,7 +62,7 @@
                   Pending
                 </v-chip>
           </template>
-      </template>
+      </template> 
     </v-data-table>
   <v-snackbar
       v-model="snackbar" 
@@ -100,11 +96,12 @@
       </v-btn>
       </template>
     </v-snackbar>
-    </v-container>
     </v-card>
-  </v-sheet>
+</v-container>
 </template>
 <script>
+import debounce from "lodash/debounce";
+
 export default {
   data: () => ({
     valid: true,
@@ -115,16 +112,16 @@ export default {
     text: "",
     success: "",
     error: "", 
+    search: '',
     snackbarColor:"",
       headers: [
-      {
-        text: "No",
-        align: "left",
-        value: "id",
-      },    
-      { text: "Student Number", value: "student_number" },
-      { text: "Name", value: "name" },
+      // {
+      //   text: "No",
+      //   align: "left",
+      //   value: "key",
+      // },    
       { text: "Program", value: "program" }, 
+      { text: "Campus", value: "campus" }, 
       { text: "Purpose", value: "purpose" },    
       { text: "Status", value: "status" },
     ], 
@@ -157,6 +154,21 @@ export default {
   },
 
   watch: {
+    search: debounce(function (val) {
+      axios.get(
+        "/api/v1/active-clearance/clearances",
+        {
+          params: { search: this.clean(val) },
+        },
+      ).then((response) => {
+          //Then injecting the result to datatable parameters.
+          console.log(response.data.clearances.data);
+          this.loading = false;
+          this.clearances = response.data.clearances; 
+          this.totalclearances = response.data.clearances.total;
+          this.numberOfPages = response.data.clearances.last_page;
+        });
+    }, 100),
     dialog(val) {
       val || this.close();
     },
@@ -173,18 +185,28 @@ export default {
   },
 
   methods: {
+    clean($val) {
+      if($val){$val = $val.replace(/ +(?= )/g, "");
+      $val = $val.replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, " "); // Replaces all spaces with hyphens.
+      $val = $val.replace(/ +(?= )/g, "");
+      
+      return $val;
+      }
+       // Removes special chars.
+    },
      readDataFromAPI() {
       this.loading = true;
       const { page, itemsPerPage } = this.options;
       let pageNumber = page;
       axios
-        .get(`/api/v1/clearances?page=` + pageNumber, {
+        .get(`/api/v1/active-clearance/clearances?page=` + pageNumber, {
           params: { 'per_page': itemsPerPage },
         })
         .then((response) => {
           //Then injecting the result to datatable parameters.
+          console.log(response.data.clearances.data);
           this.loading = false;
-         this.clearances = response.data.clearances; 
+          this.clearances = response.data.clearances; 
           this.totalclearances = response.data.clearances.total;
           this.numberOfPages = response.data.clearances.last_page;
         });
@@ -246,12 +268,12 @@ export default {
     },
 
     editItem(item) {
-      this.editedIndex = this.clearances.data.indexOf(item);
+      this.editedIndex = this.clearances.indexOf(item);
       this.editedItem = Object.assign({}, item); 
       this.dialog = true;
     },    
     deleteItem(item) {
-      const index = this.clearances.data.indexOf(item);
+      const index = this.clearances.indexOf(item);
       let decide = confirm("Are you sure you want to delete this item?");
       if (decide) {
         axios
@@ -260,7 +282,7 @@ export default {
             this.text = "Record Deleted Successfully!"; 
             this.snackbarColor ="primary darken-1";
             this.snackbar = true;
-            this.clearances.data.splice(index, 1);
+            this.clearances.splice(index, 1);
           })
           .catch((err) => {
             console.log(err.response);
@@ -289,7 +311,7 @@ export default {
             this.text = "Record Updated Successfully!";
             this.snackbarColor ="primary darken-1";
             this.snackbar = true;
-            Object.assign(this.clearances.data[index], res.data.clearance); 
+            Object.assign(this.clearances[index], res.data.clearance); 
           })
           .catch((err) => {
             console.log(err.response);

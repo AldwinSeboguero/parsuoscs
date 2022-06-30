@@ -1,6 +1,25 @@
 <template>
-  <v-sheet>
+  <v-container>
    <v-card>
+     <v-card-subtitle class="white--text text-uppercase elevation-2 mb-0 pb-1"   style="background: linear-gradient(to left, #1A237E, #1A237E, #0D47A1);">
+          <span class="text-h6"> Clearance List </span>
+
+    </v-card-subtitle>
+     <v-card-title class="white--text elevation-2 mb-0 pb-0 mt-0 pt-0"  style="background: linear-gradient(to left, #1A237E, #1A237E, #0D47A1);">
+         <v-text-field 
+            append-icon="mdi-magnify"
+            label="Search"
+            class="mb-0 pb-0 mt-0 pt-0"
+            v-model="search"
+            solo-inverted
+            flat
+            dark
+            dense
+          ></v-text-field>
+         
+           
+    </v-card-title>
+
     <v-container>
      <v-data-table
         item-key="id"
@@ -82,7 +101,7 @@
     </v-snackbar>
     </v-container>
     </v-card>
-  </v-sheet>
+  </v-container>
 </template>
 <script>
 export default {

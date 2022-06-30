@@ -1,6 +1,7 @@
 <template>
   <v-sheet>
     <v-card elevation="0">
+      
       <v-container class="grey lighten-5" fluid>
         <v-row wrap>
           <v-col cols="12" lg="4">
@@ -292,8 +293,32 @@
               </v-list-item>
             </v-card>
           </v-col>
-          <v-col cols="12" lg="8" class="elevation-2 white">
-          <strong>Note: </strong>
+          <v-col cols="12" lg="8">
+          <v-card>
+            <v-card-subtitle class="white--text text-uppercase elevation-2 mb-0 pb-1"   style="background: linear-gradient(to left, #1A237E, #1A237E, #0D47A1);">
+          <span class="text-h6"> Clearance Request List </span>
+
+          </v-card-subtitle>
+          <v-card-title class="white--text elevation-2 mb-0 pb-0 mt-0 pt-0"  style="background: linear-gradient(to left, #1A237E, #1A237E, #0D47A1);">
+              <v-text-field 
+                  append-icon="mdi-magnify"
+                  label="Search"
+                  class="mb-0 pb-0 mt-2 pt-0"
+                  v-model="searchItem"
+                  @input="searchIt"
+                  solo-inverted
+                  flat
+                  dark
+                  dense
+                ></v-text-field>
+              
+                
+          </v-card-title>
+          
+          <v-container>
+          <v-row>
+            <v-container>
+                  <strong>Note: </strong>
              <span class="overline"><v-icon
                   small
                   class="mr-1 ml-2 warning--text"
@@ -318,9 +343,12 @@
                 </v-icon>
                 - Copy Activation Code
                </span>
+               </v-container>
+                </v-row>
             <v-data-table
               item-key="id"
-              class="elevation-0 pr-2 pl-2"
+              class="px-6 pb-6  mt-4"
+
               dense
               :loading="loading"
               loading-text="Loading... Please wait"
@@ -338,14 +366,7 @@
                 'show-first-last-page': true,
               }"
             >
-              <template v-slot:top>
-                <v-text-field
-                  append-icon="mdi-magnify"
-                  label="Search"
-                  v-model="searchItem"
-                  @input="searchIt"
-                ></v-text-field>
-              </template>
+              
               <template v-slot:item.id="{ item }">
                 <td>{{ students.data.indexOf(item) + 1 }}</td>
               </template>
@@ -389,6 +410,9 @@
                 </v-icon>
               </template>
             </v-data-table>
+            </v-container>
+          </v-card>
+
           </v-col>
         </v-row>
         <div class="row">

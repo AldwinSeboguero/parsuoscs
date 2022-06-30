@@ -2,17 +2,16 @@
   <v-app id="inspire" >
    <v-navigation-drawer
       v-model="drawer"
-      color="#1d232e"
+      color="#FF6F00"
       width="220px"
-    
+    class="pa-0 ma-0"
       dark
-      
       app
     >
     <template v-slot:img="props">
       <v-img
-        :gradient="`to bottom left, rgba(00,00,00,.7), rgba(00,00,00,.7)`"
-        
+        :gradient="`to bottom left, rgba(00,00,00,1), rgba(00,00,00,1)`"
+        class="pa-0 ma-0"
         v-bind="props"
       />
     </template>
@@ -26,7 +25,7 @@
           </v-list-item-avatar>
 
           <v-list-item-content>
-            <v-list-item-title class="caption text-wrap" > {{user.name}}</v-list-item-title>
+            <v-list-item-title class="caption text-wrap white--text" > {{user.name}}</v-list-item-title>
             <v-list-item-subtitle class="caption">{{role.description}}</v-list-item-subtitle>
           </v-list-item-content>
           
@@ -283,8 +282,12 @@
   </v-app>
 </template>
 <script>
+import OSCSACctiveClearaneTable from './../../shared/table/OSCSActiveClearanceEnrollmentTable.vue'
 export default {
   name: "main-app",
+  components:{
+    OSCSACctiveClearaneTable,
+  },
   props: {
     source: String,
   },
@@ -365,13 +368,13 @@ computed: {
       }
     )
     axios.defaults.headers['Authorization'] = "Bearer " + localStorage.getItem("token");
-    // this.$store.dispatch('currentUser/getUser');
-    //       axios.get('/api/v1/getUser')
-    //   .then(res => {
-    //     this.user = res.data.user
-    //     this.role = res.data.role.role
-    //     ////console.dir(res)
-    //   })
+    this.$store.dispatch('currentUser/getUser');
+          axios.get('/api/v1/getUser')
+      .then(res => {
+        this.user = res.data.user
+        this.role = res.data.role.role
+        ////console.dir(res)
+      })
 
   }, 
  

@@ -13,6 +13,8 @@ use App\Deficiency;
 use App\Staff;
 use App\Clearance;
 use App\ClearanceRequest;
+use App\SignatoryV2;
+use App\ClearanceRequestV2;
 class DeficiencyController extends Controller
 {
     /**
@@ -26,7 +28,7 @@ class DeficiencyController extends Controller
        if(Auth::user()->hasRole("student")){
             return response()->json([
             'deficiencies' => new DeficiencyCollection(Deficiency::orderBy('completed')
-            ->with('staff.user')
+            ->with('signatory.user')
             ->with('designee')
             ->with('semester')
             ->with('student')
@@ -48,13 +50,14 @@ class DeficiencyController extends Controller
            else{
                 return response()->json([
                 'deficiencies' => new DeficiencyCollection(Deficiency::orderBy('completed')
+                ->orderByDesc('id')
                 ->with('designee')
                 ->with('semester')
                 ->with('student')
                 ->with('purpose')   
-                ->whereIn('staff_id',Staff::where('user_id',Auth::user()->id)->get('id')) 
-                ->with('staff')
-                ->with('staff.user')  
+                ->whereIn('signatory_id',SignatoryV2::where('user_id',Auth::user()->id)->get('id')) 
+                ->with('signatory')
+                ->with('signatory.user')  
                 ->paginate($per_page)) 
                 ],200);
                 }
@@ -70,12 +73,12 @@ class DeficiencyController extends Controller
          
         $staffDef = Deficiency::where('student_id',$deficiency->student_id)
         ->where('purpose_id',$deficiency->purpose_id)
-        ->where('staff_id',$deficiency->staff_id) 
+        ->where('signatory_id',$deficiency->signatory_id) 
         ->where('completed',0)->get();  
 
         if($staffDef->count() == 0 ){
-            $clearance = ClearanceRequest::where('student_id',$deficiency->student_id)
-            ->where('staff_id',$deficiency->staff_id)
+            $clearance = ClearanceRequestV2::where('student_id',$deficiency->student_id)
+            ->where('signatory_id',$deficiency->signatory_id)
             ->where('purpose_id',$deficiency->purpose_id)
             ->first();
             $clearance->status = 0;
@@ -83,13 +86,13 @@ class DeficiencyController extends Controller
         }
         return response()->json([
             'deficiencies' => new DeficiencyCollection(Deficiency::orderBy('completed')
+            ->orderByDesc('id')
             ->with('designee')
             ->with('semester')
             ->with('student')
             ->with('purpose')   
-            ->whereIn('staff_id',Staff::where('user_id',Auth::user()->id)->get('id')) 
-            ->with('staff')
-            ->with('staff.user')  
+            ->whereIn('signatory_id',SignatoryV2::where('user_id',Auth::user()->id)->get('id')) 
+           
             ->paginate(10)) 
             ],200);
         }
@@ -150,7 +153,6 @@ class DeficiencyController extends Controller
                     ->with('semester')
                     ->with('student')
                     ->with('purpose')   
-                    ->whereIn('staff_id',Staff::where('user_id',Auth::user()->id)->get('id'))
                     ->whereHas('student', function($q) use ($id){
                         $q->where('name', 'ILIKE', '%' . $id . '%');
                     }) 
@@ -159,7 +161,8 @@ class DeficiencyController extends Controller
                         $q->where('student_number', 'ILIKE', '%' . $id . '%');
                     })  
                      ->with('purpose')  
-                    ->whereIn('staff_id',Staff::where('user_id',Auth::user()->id)->get('id'))  
+                     ->whereIn('signatory_id',SignatoryV2::where('user_id',Auth::user()->id)->get('id'))
+                   
                     ->paginate(10)),
                     ],200); 
             }
@@ -183,9 +186,15 @@ class DeficiencyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        // dd($request);
+        Deficiency::find($request->id)->update([
+            'title' => $request->deficiency,
+            'note' => $request->note,
+            'updated_at' => now(),
+        ]);
+        return $this->index($request);
     }
 
     /**

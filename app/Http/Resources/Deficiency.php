@@ -19,7 +19,7 @@ class Deficiency extends JsonResource
             'deficiency' => $this->title,  
             'note' => $this->note,
             'completed' => $this->completed,
-            'staff' => $this->staff->user->name,
+            'staff' => $this->signatory->user->name,
             'designee' => $this->designee->name, 
             'student_name' => $this->student->name, 
             'student_number' => $this->student->student_number, 

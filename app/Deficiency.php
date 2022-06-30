@@ -8,7 +8,11 @@ class Deficiency extends Model
 {
     
     protected $table='deficiencies';   
-    protected $fillable =['title','note','staff_id','completed','designee_id','student_id','purpose_id','semester_id'];
+    protected $fillable =['title','note','staff_id','completed','designee_id','student_id','purpose_id','semester_id','signatory_id'];
+    public function signatory()
+    {
+        return $this->belongsTo('App\SignatoryV2','signatory_id');
+    }
     public function designee()
     {
         return $this->belongsTo('App\Designee','designee_id');

@@ -1,5 +1,5 @@
 <template>
-  <v-sheet>
+  <v-container>
    <v-card>
      <v-data-table
         item-key="id"
@@ -106,7 +106,7 @@
       </template>
     </v-snackbar> 
     </v-card>
-  </v-sheet>
+  </v-container>
 </template>
 <script>
 export default {

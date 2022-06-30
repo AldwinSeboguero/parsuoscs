@@ -2,22 +2,21 @@
   <v-app id="inspire" >
     <v-navigation-drawer
       v-model="drawer"
-      color="#1d232e"
+      color="#262f3d"
       width="220px"
-      src="images/sidebar/sidebar-2.jpg" 
       dark
       
       app
     >
-    <template v-slot:img="props">
+    <!-- <template v-slot:img="props">
       <v-img
         :gradient="`to bottom left, rgba(00,00,00,.7), rgba(00,00,00,.7)`"
         
         v-bind="props"
       />
-    </template>
+    </template> -->
       <template v-slot:prepend>
-        <v-list-item class="margin-bottom:0" >
+        <v-list-item class="margin-bottom:0" style="background-color: #1d232e !important">
           <v-list-item-avatar class="text-center" style="margin:0; margin-right:10px;" >
         
                   <v-icon dark large style="margin-left: 10px; padding-right:10px" >
@@ -53,7 +52,7 @@
             :key="item.text"
             v-model="item.model" 
             append-icon=""
-            color="grey lighten-2"
+           
           >
             <template v-slot:activator>
               <v-list-item-action  style="margin-right: 10px">
@@ -164,8 +163,14 @@
                 alt="Vuetify"
             ></v-img>
         </v-avatar> -->
+         <v-img
+                src="/images/OSCS_LOGO.jpg" 
+                 max-height="100"
+                  max-width="100"
+                alt="OSCS Logo"
+            ></v-img> 
       <v-toolbar-title style="width: 300px" class="ml-0 pl-4 font-weight-medium blue-grey--text text--darken-4">
-        <span>{{ currentRouteName }}</span>
+        | <span>{{ currentRouteName }}</span>
       </v-toolbar-title>
 
       <v-spacer></v-spacer>

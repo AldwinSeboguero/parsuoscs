@@ -21,5 +21,6 @@ class Program extends Model
     {
         return $this->belongsTo('App\Campus','campus_id');
     }
+   
     
 }

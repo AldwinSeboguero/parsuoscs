@@ -1,31 +1,79 @@
 <template >
   <v-row>
     <!-- activated account -->
+   
+    <v-col cols="12" sm="12" md="8">
+           <v-card  class="transparent rounded-lg pa-0"
+              elevation="2"
+              >
+              <v-sheet class="transparent
+                  grey--text
+                  text--darken-2
+                  
+                  ">
+                <v-card-title class=" align-self-start">
+                  <v-list-item two-line>
+                <v-list-item-content>
+                  <v-list-item-title class=" font-semibold">
+                    <span class=" font-semibold">Clearance Requests Status</span>  
+                  </v-list-item-title>
+                  <v-list-item-subtitle>{{semester}}</v-list-item-subtitle>
+                </v-list-item-content>
+              </v-list-item>
+               
+                </v-card-title>    
+                
+                <v-card-text>
+                  <v-row>
+                    <v-col sm="6" cols="12">
+                       <Apex :datas="[pendingRequest]" :pendingR="[pendingRequest]"></Apex>
+                    </v-col>
+                    <v-col sm="6" cols="12" class=" d-flex flex-column justify-center pl-8">
+                    <div class="d-flex align-center">
+                      <v-avatar class="rounded font-bold" style="background: rgba(145, 85, 253, .05)"><v-icon class="deep-purple--text text--darken-3 text--accent-2 font-bold">mdi-note-text</v-icon></v-avatar>
+                      <div class="ms-4 d-flex flex-column">
+                        <p class="grey--text text--darken-1 mb-0 text-base"> Total Clearance Request </p>
+                        <span class="grey--text text--darken-3 font-semibold text-xl">{{Number(pendingRequest+approvedRequest).toLocaleString()}}</span>
+                      </div>
+                    </div>
+                    <v-divider class="ma-4" dark></v-divider>
+                    <table>
+                        
+                        <tr>
+                          <td class="pb-4">
+                            <div class="mb-0"><div class="pa-1 d-inline-block rounded-circle me-2" style="background: #2E7D32"></div>
+                            <span class="grey--text text--darken-1">Approved Requests</span>
+                            </div >
+                            <span class=" text-base grey--text text--darken-3 font-semibold ms-4">{{Number(approvedRequest).toLocaleString()}}</span>
+                          </td >
+                          
+                           <td class="pb-4">
+                            <div class="mb-0"><div class="pa-1 d-inline-block rounded-circle me-2" style="background: rgba(255,180,0,1)"></div>
+                            <span class="grey--text text--darken-1">Pending Requests</span>
+                            </div>
+                            <span class=" text-base grey--text text--darken-3 font-semibold ms-4">{{Number(pendingRequest).toLocaleString()}}</span>
+                          </td>
+                        
+                        </tr>
+                       
+                      </table>
+                    </v-col>
+                  </v-row>
+                </v-card-text>
+               </v-sheet>
+            </v-card>
+          </v-col>
+
      <v-col lg="6" sm="6" cols="12">
           <v-card class="mx-1 mb-1">
             <v-card-title class="pa-4 pb-0">
               <v-list-item two-line>
                 <v-list-item-content>
                   <v-list-item-title class="headline">
-                     Completed Clearance
+                     Completed Clearances
                   </v-list-item-title>
                   <v-list-item-subtitle>{{semester}}</v-list-item-subtitle>
                 </v-list-item-content>
-                 <!-- <v-spacer></v-spacer>
-              <v-menu>
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn icon v-bind="attrs" v-on="on">
-                    <v-icon color="textColor">mdi-dots-vertical</v-icon>
-                  </v-btn>
-                </template>
-                <v-list>
-                  <v-list-item
-                   
-                  >
-                    <v-list-item-title></v-list-item-title>
-                  </v-list-item>
-                </v-list>
-              </v-menu> -->
               </v-list-item>
              
             </v-card-title>
@@ -196,9 +244,15 @@ const gradients = [
   ["#42b3f4", "#42b3f4", "#42b3f4"],
 ];
 const exhale = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
+import Apex from '../../charts/ApexBarChart.vue'
 export default {
-  
+  components:{
+    Apex,
+  },
+  props:{
+    approved: 0,
+    pending: 0,
+  },
   data: () => ({
     apexBar1: {
     options: {
@@ -356,8 +410,9 @@ export default {
     },
   },
 
-  created() {
-    this.initialize();
+  async created() {
+    await this.initialize();
+     this.pendingRequest = 100;
   },
 
   methods: {

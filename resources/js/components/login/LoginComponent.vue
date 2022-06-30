@@ -238,25 +238,16 @@
                             
                           >
                             <v-card>
-                              <v-card-title
-                                class="headline font-weight-500 justify-space-between"
-                  
-                              >
-                                <span>
-                                 <h1
-                                    class="text-center overline primary--text text--accent4"
-                                  >
-                                    Activate Account
-                                  </h1>
-                                  
-                                </span>
-
+                            <v-card-title class="white--text text-uppercase elevation-2 mb-0 pb-1 justify-space-between"   style="background: linear-gradient(to left, #1A237E, #1A237E, #0D47A1);">
+                                <span class="text-h6">  Activate Account </span>
                                 <v-btn
                                   icon
                                   @click="(dialog = false), (step = 1),(activationCode='')"
+                                  dark
                                   ><v-icon dark> mdi-close </v-icon></v-btn
                                 >
-                              </v-card-title>
+                          </v-card-title>
+                             
                               <v-divider />
                               <v-window v-model="step" touchless>
                                 <v-form v-model="validUserInfo">

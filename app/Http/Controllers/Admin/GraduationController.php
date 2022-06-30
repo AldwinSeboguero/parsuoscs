@@ -14,7 +14,7 @@ class GraduationController extends Controller
      */
     public function index()
     {
-        return response()->json(['graduations'=> Graduation::orderbyDesc('graduation')->get()],200);
+        return response()->json(['graduations'=> Graduation::orderByDesc('id')->get()],200);
     }
 
     /**

@@ -1,28 +1,17 @@
 <template>
+<v-container>
   <v-card>
-    <v-toolbar flat>
-     
+  
+     <v-card-title class="white--text elevation-2"  style="background: linear-gradient(to left, #1A237E, #1A237E, #0D47A1);">
+       <span class="text-h6 white--text"><v-icon class="white--text" left>mdi-cog</v-icon>Settings</span>
 
-      <v-toolbar-title><v-icon left>mdi-cog</v-icon>Settings</v-toolbar-title>
+           
+    </v-card-title>
 
-      <v-spacer></v-spacer>
-
-      <!-- <v-btn icon>
-        <v-icon>mdi-magnify</v-icon>
-      </v-btn>
-
-      <v-btn icon>
-        <v-icon>mdi-dots-vertical</v-icon>
-      </v-btn> -->
-
-      <template v-slot:extension>
         <v-tabs
           v-model="tabs"
-          fixed-tabs
-          VERTICAL
-         
         >
-          <v-tabs-slider></v-tabs-slider>
+          <!-- <v-tabs-slider></v-tabs-slider> -->
           <v-tab
             href="#mobile-tabs-5-1"
             class="primary--text"
@@ -45,11 +34,9 @@
 
      
         </v-tabs>
-      </template>
-    </v-toolbar>
 
     <v-tabs-items v-model="tabs">
-      <v-tab-item
+      <v-tab-item class="ml-6 mr-6"
       :value="'mobile-tabs-5-1'"
       >
         <v-card flat>
@@ -121,7 +108,7 @@
      </v-card-actions>
         </v-card>
       </v-tab-item>
-      <v-tab-item
+      <v-tab-item class="ml-6 mr-6"
        :value="'mobile-tabs-5-2'"
       >
         <v-card flat >
@@ -174,7 +161,7 @@
         </v-card>
       </v-tab-item>
 
-       <v-tab-item
+       <v-tab-item class="ml-6 mr-6"
        :value="'mobile-tabs-5-3'"
       >
         <v-card flat>
@@ -265,6 +252,8 @@
       </template>
     </v-snackbar>
   </v-card>
+  
+</v-container>
 </template>
 
 <script>

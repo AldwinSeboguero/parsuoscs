@@ -1,10 +1,29 @@
 <template>
-  <v-sheet>
+  <v-container>
    <v-card>
+     <v-card-subtitle class="white--text text-uppercase elevation-2 mb-0 pb-1"   style="background: linear-gradient(to left, #1A237E, #1A237E, #0D47A1);">
+          <span class="text-h6"> Deficiency List</span>
+       
+    </v-card-subtitle>
+     <v-card-title class="white--text elevation-2 mb-0 pb-0 mt-0 pt-0"  style="background: linear-gradient(to left, #1A237E, #1A237E, #0D47A1);">
+         <v-text-field 
+            append-icon="mdi-magnify"
+            label="Search"
+            class="mb-0 pb-0 mt-2 pt-0"
+            @input="searchIt"
+            solo-inverted
+            flat
+            dark
+            dense
+          ></v-text-field>
+         
+           
+    </v-card-title>
     <v-container>
      <v-data-table
         item-key="id"
-        class="elevation-0"
+       class="px-6 pb-6  mt-1"
+
         :loading="loading"
         loading-text="Loading... Please wait"
         :headers="headers"
@@ -21,20 +40,7 @@
           'show-first-last-page': true,
         }"
       >
-      <template v-slot:top>
-        <v-text-field 
-            append-icon="mdi-magnify"
-            label="Search"
-            @input="searchIt"
-          ></v-text-field>
-        <v-toolbar flat color="white">
-          <div class="overline text-h6">
-              Deficiency List
-              
-            </div>
-          <v-spacer></v-spacer> 
-        </v-toolbar>
-      </template>
+    
       <template v-slot:item.id="{ item }">
       <td>{{deficiencies.data.indexOf(item)+1}}</td> 
     </template>
@@ -84,7 +90,7 @@
     </v-snackbar>
     </v-container>
     </v-card>
-  </v-sheet>
+  </v-container>
 </template>
 <script>
 export default {
@@ -104,12 +110,11 @@ export default {
         align: "left",
         value: "id",
       },   
-      { text: "Student Number", value: "student_number" },
-      { text: "Name", value: "student_name" },
-      { text: "Completed", value: "completed" }, 
        { text: "Deficiency", value: "deficiency" }, 
        { text: "Note", value: "note" },
       { text: "Staff", value: "staff" },   
+      { text: "Completed", value: "completed" }, 
+
     ], 
     page: 0,
     totaldeficiencies: 0,

@@ -13,6 +13,8 @@ use App\ClearancePurpose;
 use App\Deficiency; 
 use App\Staff;
 use App\Clearance;
+use App\ClearanceRequestV2;
+use App\SignatoryV2;
 use Illuminate\Support\Facades\Hash; 
 use Illuminate\Pagination\Paginator;
 use App\Http\Resources\ClearanceRequest as ClearanceRequestResource;
@@ -48,35 +50,31 @@ class CompletedClearanceController extends Controller
         }
          else if(Auth::user()->hasRole("pd")){
             $per_page =$request->per_page ? $request->per_page : 10; 
-            $pd_programs = Staff_PD::where('user_id',Auth::user()->id)->get('program_id');
+            $signatory_ids = SignatoryV2::where('user_id',Auth::user()->id)->get('id');
+
+            $clearance_requests =new ClearanceRequestCollection( ClearanceRequestV2::orderByDesc('approved_at')
+                                                    ->whereIn('signatory_id', $signatory_ids)
+                                                    ->where('status', true)
+                                                    ->paginate($per_page));
 
             return response()->json([
-                'clearancerequests' => new ClearanceRequestCollection(ClearanceRequest::orderBy('approved_at')
-                ->where('status', 1)->with('purpose')  
-                ->with('staff')
-                ->with('staff.user') 
-                ->where('designee_id', 1)
-                ->whereHas('student', function($query) use($pd_programs){
-                    $query->whereIn('program_id', $pd_programs);
-                })
-                ->paginate($per_page)),
-                'user' => Auth::user(), 
-                
-                ],200);
+                'signatory' => $signatory_ids->count(),
+                'clearancerequests' => $clearance_requests,
+            ]);
         }
         else{
-        $per_page =$request->per_page ? $request->per_page : 10; 
-         
-        return response()->json([
-            'clearancerequests' => new ClearanceRequestCollection(ClearanceRequest::orderByDesc('approved_at')
-            ->where('status', true)->with('purpose')   
-            ->whereIn('staff_id',Staff::where('user_id',Auth::user()->id)->get('id')) 
-            ->with('staff')
-            ->with('staff.user') 
-            ->paginate($per_page)),
-            'user' => Auth::user(), 
-            
-            ],200);
+            $per_page =$request->per_page ? $request->per_page : 10; 
+            $signatory_ids = SignatoryV2::where('user_id',Auth::user()->id)->get('id');
+
+            $clearance_requests =new ClearanceRequestCollection( ClearanceRequestV2::orderByDesc('approved_at')
+                                                    ->whereIn('signatory_id', $signatory_ids)
+                                                    ->where('status', true)
+                                                    ->paginate($per_page));
+
+            return response()->json([
+                'signatory' => $signatory_ids->count(),
+                'clearancerequests' => $clearance_requests,
+            ]);
         }
     }
 
@@ -120,40 +118,42 @@ class CompletedClearanceController extends Controller
     {
         $id = $request->id;
         $per_page =$request->per_page ? $request->per_page : 10; 
+        $signatory_ids = SignatoryV2::where('user_id',Auth::user()->id)->get('id');
         if(Auth::user()->hasRole("admin")){
             $per_page =$request->per_page ? $request->per_page : 10;  
            
             return response()->json([
                   'clearancerequests' => new ClearanceRequestCollection(
-                ClearanceRequest::where('status', true) 
-                ->where('status', true)->with('purpose')    
-                ->whereHas('student', function($q) use ($id){
-                    $q->where('name', 'ILIKE', '%' . $id . '%');
-                }) 
-                 
-                ->orWhereHas('student', function($q) use ($id){
-                    $q->where('student_number', 'ILIKE', '%' . $id . '%');
-                })   
-                ->paginate(10)), 
+                    ClearanceRequestV2::orderByDesc('approved_at')
+                                                    ->where('status', true)
+                                                    ->whereHas('student', function($q) use ($id){
+                                                        $q->where('name', 'ILIKE', '%' . $id . '%');
+                                                    }) 
+                                                     
+                                                    ->orWhereHas('student', function($q) use ($id){
+                                                        $q->where('student_number', 'ILIKE', '%' . $id . '%');
+                                                    }) 
+                                                    ->whereIn('signatory_id', $signatory_ids)
+
+                                                    ->paginate($per_page)),
+              
             ],200);
         }
         else{
         $per_page =$request->per_page ? $request->per_page : 10; 
          
         return response()->json([
-            'clearancerequests' => new ClearanceRequestCollection(ClearanceRequest::orderBy('approved_at')
-            ->where('status', true)->with('purpose')   
-            ->whereIn('staff_id',Staff::where('user_id',Auth::user()->id)->get('id'))
-            ->whereHas('student', function($q) use ($id){
-                $q->where('name', 'ILIKE', '%' . $id . '%');
-            }) 
-             
-            ->orWhereHas('student', function($q) use ($id){
-                $q->where('student_number', 'ILIKE', '%' . $id . '%');
-            })  
-            ->where('status', true)->with('purpose')  
-            ->whereIn('staff_id',Staff::where('user_id',Auth::user()->id)->get('id')) 
-            ->paginate(10)),
+            'clearancerequests' => new ClearanceRequestCollection(
+                ClearanceRequestV2::orderByDesc('approved_at')
+                                                    
+                                                    ->whereHas('student', function($q) use ($id){
+                                                        $q->where('name', 'ILIKE', '%' . $id . '%')
+                                                        ->orWhere('student_number', 'ILIKE', '%' . $id . '%');
+                                                    }) 
+                                                    ->whereIn('signatory_id', $signatory_ids)
+                                                    ->where('status', true)
+                                                    ->paginate($per_page)),
+               
             'user' => Auth::user(), 
             ],200); 
         }
