@@ -259,6 +259,83 @@ class ActiveClearanceController extends Controller
         return $pdf->output();
     }
 
+    public function signatoryCreatePdf(Request $request)
+    {   
+       
+        $paperSize = 'a4';
+        $orientation = 'portrait';
+        $clearance = Clearance::where('id',$request->clearance_id)->get()->first();
+        // dd($clearance);
+        $student = Student::find($clearance->student_id);
+        $purposeClearance = ClearancePurpose::where('id',$clearance->purpose_id)->first();
+       
+		/* When saved, the PDF file generated will have a name with the format */
+        /* 2010-john-doe-01012085945.pdf */
+       
+        $activeClearancePurpose = StudentPurposeSetup::where('user_id',$student->user_id)->first();
+        $countApproved = 0;
+
+        $purpose = $activeClearancePurpose ? json_decode($purposeClearance->purpose)->name.' '.json_decode($purposeClearance->purpose)->description : null;
+		// dd($purpose);
+        $signatories  = SignatoryV2::orderBy('order')
+                        ->where('campus_id', $student->program->campus_id)
+                        ->where('college_id', $student->program->college_id)
+                        ->where('program_id', $student->program_id)
+                        ->whereHas('purpose', function($query) use($purposeClearance){
+                            $query->when($purposeClearance, function($inner) use($purposeClearance){
+                                $inner->where('purpose',json_decode($purposeClearance->purpose)->name)
+                                ->where('semester_id', $purposeClearance->semester_id);
+                            });
+                        })
+                        ->get()->map(function($inner) use($purposeClearance,$student,$countApproved){
+                            if($purposeClearance){
+                               $cr = ClearanceRequestV2::where('purpose_id',$purposeClearance->id)
+                                                ->where('designee_id',$inner->designee_id)
+                                                ->where('signatory_id',$inner->id)
+                                                ->where('student_id',$student->id)
+                                                ->get();
+                                $deficiency = Deficiency::where('purpose_id',$purposeClearance->id)
+                                                ->where('student_id',$student->id)
+                                                ->where('designee_id',$inner->designee_id)
+                                                ->where('completed',false)
+                                                ->get();
+                                return [
+                                    'signatory_id' => $inner->id,
+                                    'designee' => $inner->name,
+                                    'office' => $inner->designee->name,
+                                    'status' => $cr->first() ? $cr->first()->status : 0,   
+                                    'clearanceRequest_id' => $cr->first() ? $cr->first()->token : '',   
+                                    'approved_at' => $cr->first() ? ($cr->first()->approved_at ? $cr->first()->approved_at->toFormattedDateString() :  '') : '',
+                                    'requestCount' => $cr ? $cr->count() : 0 ,
+                                    'deficiencyCount' => $deficiency ? $deficiency->count() : 0 ,
+                                    'defieciencyList' => $deficiency ? $deficiency : null,
+                                    'loadingBtn' => false,
+                                    'designee_id' => $inner->designee_id,
+                                ];
+                            }
+                            
+                            
+                        });
+
+
+        $format = "mdyhis";
+		$file_name = $student->slug . "-".
+                    $clearance->id . ".pdf";
+      
+           $pdf = PDF::loadView('pdf',compact('student'
+           , 'file_name'
+           ,'purpose'
+           ,'signatories'
+           ,'clearance'
+           ,'purpose'
+        ));
+       
+    	// $data = ['title' => 'Laravel 7 Generate PDF From View Example Tutorial'];
+        // $pdf = PDF::loadView('pdf', $student);
+  
+        return $pdf->output();
+    }
+
     public function submitClearance(Request $request)
     {
         // dd($request);

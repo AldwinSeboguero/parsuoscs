@@ -165,6 +165,8 @@ Route::post('/resetP', 'Admin\StudentController@resetP');
 Route::get('/active-clearance', 'V2\Student\ActiveClearanceController@index');
 Route::post('/active-clearance/send-request', 'V2\Student\ActiveClearanceController@sendRequest');
 Route::get('/active-clearance/pdf', 'V2\Student\ActiveClearanceController@createPdf');
+Route::get('/active-clearance/signatory/pdf', 'V2\Student\ActiveClearanceController@signatoryCreatePdf');
+
 Route::post('/active-clearance/submit', 'V2\Student\ActiveClearanceController@submitClearance');
 Route::get('/active-clearance/clearances', 'V2\Student\ClearanceListController@index');
 

@@ -25595,7 +25595,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     generatePDF: function generatePDF(item) {
-      axios.get('/api/v1/active-clearance/pdf', {
+      axios.get('/api/v1/active-clearance/signatory/pdf', {
         responseType: 'blob',
         params: {
           'clearance_id': item.clearance_id

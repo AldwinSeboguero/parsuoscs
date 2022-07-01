@@ -206,7 +206,7 @@ export default {
 
   methods: {
     generatePDF(item) { 
-      axios.get('/api/v1/active-clearance/pdf',{responseType: 'blob'
+      axios.get('/api/v1/active-clearance/signatory/pdf',{responseType: 'blob'
             ,params: { 'clearance_id': item.clearance_id }
 
             }).then((response) => {
