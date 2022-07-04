@@ -148,7 +148,7 @@
             label="Search"
             class="mb-0 pb-0 mt-2 pt-0"
             v-model="searchItem"
-           
+            @input="searchIt"
             solo-inverted
             flat
             dark
@@ -446,7 +446,7 @@ export default {
     },
      options: {
       handler() {
-        // this.searchIt(this.searchItem);
+        this.searchIt(this.searchItem);
       },
     },
     deep: true,
@@ -487,47 +487,47 @@ export default {
         });
     },
 
-    // searchIt(d) {
-    //    const { page, itemsPerPage } = this.options;
-    //        let pageNumber = page;
-    //   if (d.length > 2) {
+    searchIt(d) {
+       const { page, itemsPerPage } = this.options;
+           let pageNumber = page;
+      if (d.length > 2) {
        
-    //     axios
-    //       .get(`/api/v1/clearance-requests/${d}?page=` + pageNumber, {
-    //       params: { 'per_page': itemsPerPage },
-    //     })
-    //       .then((res) => {
-    //         this.loading = false;  
-    //         this.semesters = res.data.semesters; 
-    //         this.colleges = res.data.colleges; 
-    //         this.programs = res.data.programs; 
-    //         this.clearancerequests = res.data.clearance_requests; 
-    //         this.totalclearancerequests = res.data.clearance_requests.total;
-    //         this.numberOfPages = res.data.clearance_requests.last_page;
-    //       })
-    //       .catch((err) => {
-    //         console.error(err);
-    //       });
-    //   }
-    //   if (d.length <= 0) {
-    //     axios
-    //       .get(`/api/v1/clearance-requests?page=` + pageNumber, {
-    //         params: { 'per_page': d.itemsPerPage },
-    //       })
-    //       .then((res) => {
-    //         this.loading = false;  
-    //         this.semesters = res.data.semesters; 
-    //         this.colleges = res.data.colleges; 
-    //         this.programs = res.data.programs; 
-    //         this.clearancerequests = res.data.clearance_requests;
-    //         this.totalclearancerequests = res.data.clearance_requests.total;
-    //         this.numberOfPages = res.data.clearance_requests.last_page;
-    //       })
-    //       .catch((err) => {
-    //         console.error(err);
-    //       });
-    //   }
-    // },  
+        axios
+          .get(`/api/v1/clearance-requests/${d}?page=` + pageNumber, {
+          params: { 'per_page': itemsPerPage },
+        })
+          .then((res) => {
+            this.loading = false;  
+            this.semesters = res.data.semesters; 
+            this.colleges = res.data.colleges; 
+            this.programs = res.data.programs; 
+            this.clearancerequests = res.data.clearance_requests; 
+            this.totalclearancerequests = res.data.clearance_requests.total;
+            this.numberOfPages = res.data.clearance_requests.last_page;
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      }
+      if (d.length <= 0) {
+        axios
+          .get(`/api/v1/clearance-requests?page=` + pageNumber, {
+            params: { 'per_page': d.itemsPerPage },
+          })
+          .then((res) => {
+            this.loading = false;  
+            this.semesters = res.data.semesters; 
+            this.colleges = res.data.colleges; 
+            this.programs = res.data.programs; 
+            this.clearancerequests = res.data.clearance_requests;
+            this.totalclearancerequests = res.data.clearance_requests.total;
+            this.numberOfPages = res.data.clearance_requests.last_page;
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      }
+    },  
     initialize() {
       axios.interceptors.request.use(
         (config) => {

@@ -21905,7 +21905,8 @@ __webpack_require__.r(__webpack_exports__);
       val || this.close();
     },
     options: {
-      handler: function handler() {// this.searchIt(this.searchItem);
+      handler: function handler() {
+        this.searchIt(this.searchItem);
       }
     },
     deep: true
@@ -21947,61 +21948,65 @@ __webpack_require__.r(__webpack_exports__);
         _this5.numberOfPages = response.data.clearance_requests.last_page;
       });
     },
-    // searchIt(d) {
-    //    const { page, itemsPerPage } = this.options;
-    //        let pageNumber = page;
-    //   if (d.length > 2) {
-    //     axios
-    //       .get(`/api/v1/clearance-requests/${d}?page=` + pageNumber, {
-    //       params: { 'per_page': itemsPerPage },
-    //     })
-    //       .then((res) => {
-    //         this.loading = false;  
-    //         this.semesters = res.data.semesters; 
-    //         this.colleges = res.data.colleges; 
-    //         this.programs = res.data.programs; 
-    //         this.clearancerequests = res.data.clearance_requests; 
-    //         this.totalclearancerequests = res.data.clearance_requests.total;
-    //         this.numberOfPages = res.data.clearance_requests.last_page;
-    //       })
-    //       .catch((err) => {
-    //         console.error(err);
-    //       });
-    //   }
-    //   if (d.length <= 0) {
-    //     axios
-    //       .get(`/api/v1/clearance-requests?page=` + pageNumber, {
-    //         params: { 'per_page': d.itemsPerPage },
-    //       })
-    //       .then((res) => {
-    //         this.loading = false;  
-    //         this.semesters = res.data.semesters; 
-    //         this.colleges = res.data.colleges; 
-    //         this.programs = res.data.programs; 
-    //         this.clearancerequests = res.data.clearance_requests;
-    //         this.totalclearancerequests = res.data.clearance_requests.total;
-    //         this.numberOfPages = res.data.clearance_requests.last_page;
-    //       })
-    //       .catch((err) => {
-    //         console.error(err);
-    //       });
-    //   }
-    // },  
-    initialize: function initialize() {
+    searchIt: function searchIt(d) {
       var _this6 = this;
 
+      var _this$options6 = this.options,
+          page = _this$options6.page,
+          itemsPerPage = _this$options6.itemsPerPage;
+      var pageNumber = page;
+
+      if (d.length > 2) {
+        axios.get("/api/v1/clearance-requests/".concat(d, "?page=") + pageNumber, {
+          params: {
+            'per_page': itemsPerPage
+          }
+        }).then(function (res) {
+          _this6.loading = false;
+          _this6.semesters = res.data.semesters;
+          _this6.colleges = res.data.colleges;
+          _this6.programs = res.data.programs;
+          _this6.clearancerequests = res.data.clearance_requests;
+          _this6.totalclearancerequests = res.data.clearance_requests.total;
+          _this6.numberOfPages = res.data.clearance_requests.last_page;
+        })["catch"](function (err) {
+          console.error(err);
+        });
+      }
+
+      if (d.length <= 0) {
+        axios.get("/api/v1/clearance-requests?page=" + pageNumber, {
+          params: {
+            'per_page': d.itemsPerPage
+          }
+        }).then(function (res) {
+          _this6.loading = false;
+          _this6.semesters = res.data.semesters;
+          _this6.colleges = res.data.colleges;
+          _this6.programs = res.data.programs;
+          _this6.clearancerequests = res.data.clearance_requests;
+          _this6.totalclearancerequests = res.data.clearance_requests.total;
+          _this6.numberOfPages = res.data.clearance_requests.last_page;
+        })["catch"](function (err) {
+          console.error(err);
+        });
+      }
+    },
+    initialize: function initialize() {
+      var _this7 = this;
+
       axios.interceptors.request.use(function (config) {
-        _this6.loading = true;
+        _this7.loading = true;
         return config;
       }, function (error) {
-        _this6.loading = false;
+        _this7.loading = false;
         return Promise.reject(error);
       });
       axios.interceptors.response.use(function (response) {
-        _this6.loading = false;
+        _this7.loading = false;
         return response;
       }, function (error) {
-        _this6.loading = false;
+        _this7.loading = false;
         return Promise.reject(error);
       });
     },
@@ -22013,28 +22018,28 @@ __webpack_require__.r(__webpack_exports__);
       this.dialog = true;
     },
     deleteItem: function deleteItem(item) {
-      var _this7 = this;
+      var _this8 = this;
 
       var index = this.clearancerequests.data.indexOf(item);
       var decide = confirm("Are you sure you want to delete this item?");
 
       if (decide) {
         axios["delete"]("/api/v1/clearancerequests/" + item.id).then(function (res) {
-          _this7.text = "Record Deleted Successfully!";
-          _this7.snackbarColor = "primary darken-1";
-          _this7.snackbar = true;
+          _this8.text = "Record Deleted Successfully!";
+          _this8.snackbarColor = "primary darken-1";
+          _this8.snackbar = true;
 
-          _this7.clearancerequests.data.splice(index, 1);
+          _this8.clearancerequests.data.splice(index, 1);
         })["catch"](function (err) {
           console.log(err.response);
-          _this7.text = "Error Deleting Record";
-          _this7.snackbarColor = "error darken-1";
-          _this7.snackbar = true;
+          _this8.text = "Error Deleting Record";
+          _this8.snackbarColor = "error darken-1";
+          _this8.snackbar = true;
         });
       }
     },
     approve: function approve() {
-      var _this8 = this;
+      var _this9 = this;
 
       // console.log(this.clearanceRequest.id);
       axios.post("/api/v1/clearance-requests/approve", {
@@ -22043,18 +22048,18 @@ __webpack_require__.r(__webpack_exports__);
         'college': this.college,
         'program': this.program
       }).then(function (res) {
-        _this8.text = "Successfully Approved!";
-        _this8.snackbarColor = "primary darken-1";
-        _this8.snackbar = true;
-        _this8.clearancerequests = res.data.clearance_requests;
-        _this8.totalclearancerequests = res.data.clearance_requests.total;
-        _this8.numberOfPages = res.data.clearance_requests.last_page;
-        _this8.dialog = false;
+        _this9.text = "Successfully Approved!";
+        _this9.snackbarColor = "primary darken-1";
+        _this9.snackbar = true;
+        _this9.clearancerequests = res.data.clearance_requests;
+        _this9.totalclearancerequests = res.data.clearance_requests.total;
+        _this9.numberOfPages = res.data.clearance_requests.last_page;
+        _this9.dialog = false;
       })["catch"](function (err) {
         console.log(err.response);
-        _this8.text = "Error Approving Request";
-        _this8.snackbarColor = "error darken-1";
-        _this8.snackbar = true;
+        _this9.text = "Error Approving Request";
+        _this9.snackbarColor = "error darken-1";
+        _this9.snackbar = true;
       });
       this.close();
     },
@@ -22065,7 +22070,7 @@ __webpack_require__.r(__webpack_exports__);
       this.deferDialog = true;
     },
     deferItem: function deferItem() {
-      var _this9 = this;
+      var _this10 = this;
 
       var index = this.editedIndex;
       axios.get("/api/v1/clearance-requests/disapprove", {
@@ -22078,18 +22083,18 @@ __webpack_require__.r(__webpack_exports__);
           'program': this.program
         }
       }).then(function (res) {
-        _this9.text = "Record Updated Successfully!";
-        _this9.snackbarColor = "primary darken-1";
-        _this9.snackbar = true;
-        _this9.loading = false;
-        _this9.clearancerequests = res.data.clearance_requests;
-        _this9.totalclearancerequests = res.data.clearance_requests.total;
-        _this9.numberOfPages = res.data.clearance_requests.last_page;
+        _this10.text = "Record Updated Successfully!";
+        _this10.snackbarColor = "primary darken-1";
+        _this10.snackbar = true;
+        _this10.loading = false;
+        _this10.clearancerequests = res.data.clearance_requests;
+        _this10.totalclearancerequests = res.data.clearance_requests.total;
+        _this10.numberOfPages = res.data.clearance_requests.last_page;
       })["catch"](function (err) {
         console.log(err.response);
-        _this9.text = "Error Updating Record";
-        _this9.snackbarColor = "error darken-1";
-        _this9.snackbar = true;
+        _this10.text = "Error Updating Record";
+        _this10.snackbarColor = "error darken-1";
+        _this10.snackbar = true;
       });
       this.deferDialog = false;
     },
@@ -22099,35 +22104,35 @@ __webpack_require__.r(__webpack_exports__);
       this.editedIndex = -1;
     },
     save: function save() {
-      var _this10 = this;
+      var _this11 = this;
 
       console.log(this.editedItem);
 
       if (this.editedIndex > -1) {
         var index = this.editedIndex;
         axios.put("/api/v1/clearancerequests/" + this.editedItem.id, this.editedItem).then(function (res) {
-          _this10.text = "Record Updated Successfully!";
-          _this10.snackbarColor = "primary darken-1";
-          _this10.snackbar = true;
-          Object.assign(_this10.clearancerequests.data[index], res.data.clearancerequest);
+          _this11.text = "Record Updated Successfully!";
+          _this11.snackbarColor = "primary darken-1";
+          _this11.snackbar = true;
+          Object.assign(_this11.clearancerequests.data[index], res.data.clearancerequest);
         })["catch"](function (err) {
           console.log(err.response);
-          _this10.text = "Error Updating Record";
-          _this10.snackbarColor = "error darken-1";
-          _this10.snackbar = true;
+          _this11.text = "Error Updating Record";
+          _this11.snackbarColor = "error darken-1";
+          _this11.snackbar = true;
         });
       } else {
         axios.post("/api/v1/clearancerequests", this.editedItem).then(function (res) {
-          _this10.text = "Record Added Successfully!";
-          _this10.snackbarColor = "primary darken-1";
-          _this10.snackbar = true; // this.students.data.push(res.data.student); 
+          _this11.text = "Record Added Successfully!";
+          _this11.snackbarColor = "primary darken-1";
+          _this11.snackbar = true; // this.students.data.push(res.data.student); 
 
-          _this10.clearancerequests = res.data.clearancerequests;
+          _this11.clearancerequests = res.data.clearancerequests;
         })["catch"](function (err) {
           console.dir(err);
-          _this10.text = "Error Inserting Record";
-          _this10.snackbarColor = "error darken-1";
-          _this10.snackbar = true;
+          _this11.text = "Error Inserting Record";
+          _this11.snackbarColor = "error darken-1";
+          _this11.snackbar = true;
         });
       }
 
@@ -57228,6 +57233,7 @@ var render = function () {
                           dense: "",
                           "hide-details": "",
                         },
+                        on: { input: _vm.searchIt },
                         model: {
                           value: _vm.searchItem,
                           callback: function ($$v) {
