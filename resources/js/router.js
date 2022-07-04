@@ -1,9 +1,11 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import LoginComponent from './components/login/LoginComponent';
-import AdminComponent from './components/AdminComponent';
+// import AdminComponent from './components/AdminComponent';
 import StudentComponent from './shared/layout/StudentLayout';
 import SignatoryComponent from './shared/layout/SignatoryLayout';
+import AdminComponent from './shared/layout/AdminLayout';
+
 
 import CASHIERComponent from './components/cashier/CASHIERComponent'; 
 import LIBRARYComponent from './components/library/LIBRARYComponent';

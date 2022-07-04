@@ -71,20 +71,93 @@
           <span class="text-h6"> Clearance Requests </span>
 
     </v-card-subtitle>
-     <v-card-title class="white--text elevation-2 mb-0 pb-0 mt-0 pt-0"  style="background: linear-gradient(to left, #1A237E, #1A237E, #0D47A1);">
-         <v-text-field 
-            append-icon="mdi-magnify"
-            label="Search"
+     <v-card-title class="white--text elevation-2 mb-0 pb-6 mt-0 pt-2"  style="background: linear-gradient(to left, #1A237E, #1A237E, #0D47A1);">
+     <v-row>
+        <v-col
+        class="mb-0 pb-0 mt-0 pt-0"
+        cols="12"
+        md="3">
+        <v-select 
+        label="Select Semester"
+        class="mb-0 pb-0 mt-2 pt-0"
+
+        item-value="id"
+        item-text="semester" 
+        :items="semesters"
+        v-model="semester"
+     
+        solo-inverted
+        flat
+        dark
+        dense
+        hide-details
+        ></v-select>
+
+        </v-col>
+         <v-col
+           class="mb-0 pb-0 mt-0 pt-0"
+          cols="12"
+          md="3">
+            <v-select 
+            label="Select College"
             class="mb-0 pb-0 mt-2 pt-0"
-             v-model="searchItem"
-            @input="searchIt"
+
+            item-value="id"
+            item-text="name" 
+            :items="colleges"
+            v-model="college"
+            
             solo-inverted
             flat
             dark
             dense
-          ></v-text-field>
-         
+            hide-details
+            ></v-select>
+            
+            </v-col>
+            <v-col
+           class="mb-0 pb-0 mt-0 pt-0"
+          cols="12"
+          md="3">
+            <v-select 
+            label="Select Program"
+            class="mb-0 pb-0 mt-2 pt-0"
+
+            item-value="id"
+            item-text="name" 
+            :items="programs"
+            v-model="program"
+            
+            solo-inverted
+            flat
+            dark
+            dense
+            hide-details
+            ></v-select>
+            
+            </v-col>
+
+            <v-col
+            cols="12"
+            md="3"
+            class="mb-0 pb-0 mt-0 pt-0"
+
+            > 
+            <v-text-field 
+            append-icon="mdi-magnify"
+            label="Search"
+            class="mb-0 pb-0 mt-2 pt-0"
+            v-model="searchItem"
            
+            solo-inverted
+            flat
+            dark
+            dense
+            hide-details
+            ></v-text-field>
+          </v-col>
+        </v-row>
+
     </v-card-title>
 
      <v-data-table
@@ -215,7 +288,13 @@ export default {
     totalclearancerequests: 0,
     numberOfPages: 0,
     options: {},
-     clearancerequests: [], 
+    clearancerequests: [], 
+    semesters: [],
+    colleges: [],
+    programs:[],
+    semester: '',
+    college: '',
+    program:'',
     editedIndex: -1,
     itemIndex: 0,
     deficiency:{
@@ -265,7 +344,10 @@ export default {
       axios
       .get(`/api/v1/clearance-requests?page=` + pageNumber, {
         params: { 'per_page': itemsPerPage,
-          'search': val },
+          'search': val,
+          'semester': this.semester,
+          'college': this.college,
+          'program': this.program,  },
       })
       .then((response) => {
         //Then injecting the result to datatable parameters.
@@ -277,19 +359,101 @@ export default {
       });
       
     }, 300),
+
+    semester: debounce(function (val) {
+      this.college = '';
+      this.program = '';
+      this.loading = true;
+      
+      const { page, itemsPerPage } = this.options;
+      let pageNumber = page;
+      axios
+      .get(`/api/v1/clearance-requests?page=` + pageNumber, {
+        params: { 'per_page': itemsPerPage,
+          'semester': val,
+          'search': this.searchItem,
+          'college': this.college,
+          'program': this.program, },
+      })
+      .then((response) => {
+        //Then injecting the result to datatable parameters.
+        
+        this.colleges = response.data.colleges; 
+
+        this.clearancerequests = response.data.clearance_requests; 
+        this.totalclearancerequests = response.data.clearance_requests.total;
+        this.numberOfPages = response.data.clearance_requests.last_page;
+        this.loading = false;
+
+      });
+      
+    }, 300),
+    college: debounce(function (val) {
+      this.loading = true;
+      this.program = '';
+      
+      const { page, itemsPerPage } = this.options;
+      let pageNumber = page;
+      axios
+      .get(`/api/v1/clearance-requests?page=` + pageNumber, {
+        params: { 'per_page': itemsPerPage,
+          'semester': this.semester,
+          'program': this.program,
+          'search': this.searchItem,
+          'college': val },
+      })
+      .then((response) => {
+        //ThhIten injecting the result to datatable parameters.
+        this.programs = response.data.programs; 
+
+        this.clearancerequests = response.data.clearance_requests; 
+        this.totalclearancerequests = response.data.clearance_requests.total;
+        this.numberOfPages = response.data.clearance_requests.last_page;
+        this.loading = false;
+
+      });
+      
+    }, 300),
+    program: debounce(function (val) {
+      this.loading = true;
+      
+      const { page, itemsPerPage } = this.options;
+      let pageNumber = page;
+      axios
+      .get(`/api/v1/clearance-requests?page=` + pageNumber, {
+        params: { 'per_page': itemsPerPage,
+          'semester': this.semester,
+          'search': this.searchItem,
+          'program': val,
+          'college': this.college },
+      })
+      .then((response) => {
+        //Then injecting the result to datatable parameters.
+        // this.programs = response.data.programs; 
+
+        this.clearancerequests = response.data.clearance_requests; 
+        this.totalclearancerequests = response.data.clearance_requests.total;
+        this.numberOfPages = response.data.clearance_requests.last_page;
+        this.loading = false;
+
+      });
+      
+    }, 300),
+
+
     dialog(val) {
       val || this.close();
     },
      options: {
       handler() {
-        this.searchIt(this.searchItem);
+        // this.searchIt(this.searchItem);
       },
     },
     deep: true,
   },
 
   created() {
-    this.initialize();
+    this.readDataFromAPI();
   },
 
   methods: {
@@ -313,47 +477,57 @@ export default {
         .then((response) => {
           //Then injecting the result to datatable parameters.
           this.loading = false;
+          this.semesters = response.data.semesters; 
+          this.colleges = response.data.colleges; 
+          this.programs = response.data.programs; 
+        
          this.clearancerequests = response.data.clearance_requests; 
           this.totalclearancerequests = response.data.clearance_requests.total;
           this.numberOfPages = response.data.clearance_requests.last_page;
         });
     },
 
-    searchIt(d) {
-       const { page, itemsPerPage } = this.options;
-           let pageNumber = page;
-      if (d.length > 2) {
+    // searchIt(d) {
+    //    const { page, itemsPerPage } = this.options;
+    //        let pageNumber = page;
+    //   if (d.length > 2) {
        
-        axios
-          .get(`/api/v1/clearance-requests/${d}?page=` + pageNumber, {
-          params: { 'per_page': itemsPerPage },
-        })
-          .then((res) => {
-            this.loading = false;  
-            this.clearancerequests = res.data.clearance_requests; 
-            this.totalclearancerequests = res.data.clearance_requests.total;
-            this.numberOfPages = res.data.clearance_requests.last_page;
-          })
-          .catch((err) => {
-            console.error(err);
-          });
-      }
-      if (d.length <= 0) {
-        axios
-          .get(`/api/v1/clearance-requests?page=` + pageNumber, {
-            params: { 'per_page': d.itemsPerPage },
-          })
-          .then((res) => {
-            this.loading = false;  
-            this.clearancerequests = res.data.clearance_requests;
-            this.totalclearancerequests = res.data.clearance_requests.total;
-            this.numberOfPages = res.data.clearance_requests.last_page;
-          })
-          .catch((err) => {
-            console.error(err);
-          });
-      }
-    },  
+    //     axios
+    //       .get(`/api/v1/clearance-requests/${d}?page=` + pageNumber, {
+    //       params: { 'per_page': itemsPerPage },
+    //     })
+    //       .then((res) => {
+    //         this.loading = false;  
+    //         this.semesters = res.data.semesters; 
+    //         this.colleges = res.data.colleges; 
+    //         this.programs = res.data.programs; 
+    //         this.clearancerequests = res.data.clearance_requests; 
+    //         this.totalclearancerequests = res.data.clearance_requests.total;
+    //         this.numberOfPages = res.data.clearance_requests.last_page;
+    //       })
+    //       .catch((err) => {
+    //         console.error(err);
+    //       });
+    //   }
+    //   if (d.length <= 0) {
+    //     axios
+    //       .get(`/api/v1/clearance-requests?page=` + pageNumber, {
+    //         params: { 'per_page': d.itemsPerPage },
+    //       })
+    //       .then((res) => {
+    //         this.loading = false;  
+    //         this.semesters = res.data.semesters; 
+    //         this.colleges = res.data.colleges; 
+    //         this.programs = res.data.programs; 
+    //         this.clearancerequests = res.data.clearance_requests;
+    //         this.totalclearancerequests = res.data.clearance_requests.total;
+    //         this.numberOfPages = res.data.clearance_requests.last_page;
+    //       })
+    //       .catch((err) => {
+    //         console.error(err);
+    //       });
+    //   }
+    // },  
     initialize() {
       axios.interceptors.request.use(
         (config) => {
@@ -409,7 +583,13 @@ export default {
     approve() {
       // console.log(this.clearanceRequest.id);
         axios
-          .post("/api/v1/clearance-requests/approve", this.clearanceRequest)
+          .post("/api/v1/clearance-requests/approve", 
+          {
+             'clearanceRequest': this.clearanceRequest,
+              'semester': this.semester,
+              'college': this.college ,
+              'program': this.program,
+          })
           .then((res) => {
             this.text = "Successfully Approved!";
             this.snackbarColor ="primary darken-1";
@@ -443,6 +623,9 @@ export default {
               'requestId': this.clearanceRequest.id,
               'title': this.deficiency.title,
               'note': this.deficiency.note,
+              'semester': this.semester,
+              'college': this.college ,
+              'program': this.program,
             },
           })
           .then((res) => {
