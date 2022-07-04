@@ -64,6 +64,7 @@ class ClearanceRequestController extends Controller
                                                         $q->where('program_id',$request->program);
                                                     });
                                                 })
+                                                
                                                 ->where('status', false)
                                                 ->paginate($per_page));
 
