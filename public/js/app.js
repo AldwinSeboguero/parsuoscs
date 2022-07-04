@@ -2228,8 +2228,8 @@ __webpack_require__.r(__webpack_exports__);
     semester: lodash_debounce__WEBPACK_IMPORTED_MODULE_0___default()(function (val) {
       var _this2 = this;
 
-      this.college = '';
-      this.program = '';
+      // this.college = '';
+      // this.program = '';
       this.loading = true;
       var _this$options2 = this.options,
           page = _this$options2.page,
@@ -2245,7 +2245,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (response) {
         //Then injecting the result to datatable parameters.
-        _this2.colleges = response.data.colleges;
+        // this.colleges = response.data.colleges; 
         _this2.clearancerequests = response.data.clearance_requests;
         _this2.totalclearancerequests = response.data.clearance_requests.total;
         _this2.numberOfPages = response.data.clearance_requests.last_page;

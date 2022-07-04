@@ -361,8 +361,8 @@ export default {
     }, 300),
 
     semester: debounce(function (val) {
-      this.college = '';
-      this.program = '';
+      // this.college = '';
+      // this.program = '';
       this.loading = true;
       
       const { page, itemsPerPage } = this.options;
@@ -378,7 +378,7 @@ export default {
       .then((response) => {
         //Then injecting the result to datatable parameters.
         
-        this.colleges = response.data.colleges; 
+        // this.colleges = response.data.colleges; 
 
         this.clearancerequests = response.data.clearance_requests; 
         this.totalclearancerequests = response.data.clearance_requests.total;
