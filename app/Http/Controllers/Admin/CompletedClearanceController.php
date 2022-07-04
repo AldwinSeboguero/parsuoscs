@@ -38,15 +38,16 @@ class CompletedClearanceController extends Controller
         $per_page =$request->per_page ? $request->per_page : 10; 
         if(Auth::user()->hasRole("admin")){
             $per_page =$request->per_page ? $request->per_page : 10; 
-            
+            // $signatory_ids = SignatoryV2::where('user_id',Auth::user()->id)->get('id');
+
+            $clearance_requests =new ClearanceRequestCollection( ClearanceRequestV2::orderByDesc('approved_at')
+                                                    ->where('status', true)
+                                                    ->paginate($per_page));
+
             return response()->json([
-            'clearancerequests' => new ClearanceRequestCollection(ClearanceRequest::orderByDesc('approved_at')
-            ->where('status', true)->with('purpose')  
-            ->with('staff')
-            ->with('staff.user') 
-            ->paginate($per_page)),
-            'user' => Auth::user(), 
-            ],200);
+                // 'signatory' => $signatory_ids->count(),
+                'clearancerequests' => $clearance_requests,
+            ]);
         }
          else if(Auth::user()->hasRole("pd")){
             $per_page =$request->per_page ? $request->per_page : 10; 
@@ -120,24 +121,21 @@ class CompletedClearanceController extends Controller
         $per_page =$request->per_page ? $request->per_page : 10; 
         $signatory_ids = SignatoryV2::where('user_id',Auth::user()->id)->get('id');
         if(Auth::user()->hasRole("admin")){
-            $per_page =$request->per_page ? $request->per_page : 10;  
-           
-            return response()->json([
-                  'clearancerequests' => new ClearanceRequestCollection(
-                    ClearanceRequestV2::orderByDesc('approved_at')
-                                                    ->where('status', true)
+            $per_page =$request->per_page ? $request->per_page : 10; 
+         
+        return response()->json([
+            'clearancerequests' => new ClearanceRequestCollection(
+                ClearanceRequestV2::orderByDesc('approved_at')
+                                                    
                                                     ->whereHas('student', function($q) use ($id){
-                                                        $q->where('name', 'ILIKE', '%' . $id . '%');
+                                                        $q->where('name', 'ILIKE', '%' . $id . '%')
+                                                        ->orWhere('student_number', 'ILIKE', '%' . $id . '%');
                                                     }) 
-                                                     
-                                                    ->orWhereHas('student', function($q) use ($id){
-                                                        $q->where('student_number', 'ILIKE', '%' . $id . '%');
-                                                    }) 
-                                                    ->whereIn('signatory_id', $signatory_ids)
-
+                                                    ->where('status', true)
                                                     ->paginate($per_page)),
-              
-            ],200);
+               
+            'user' => Auth::user(), 
+            ],200); 
         }
         else{
         $per_page =$request->per_page ? $request->per_page : 10; 

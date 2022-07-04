@@ -37,21 +37,21 @@ export default {
                       height:'100%',  
                   },
     navigationList: [
-      {
-        icon: "mdi-view-dashboard",
-        text: "Dashboard",
-        link: "/admin/dashboard",
-      },
+      // {
+      //   icon: "mdi-view-dashboard",
+      //   text: "Dashboard",
+      //   link: "/admin/dashboard",
+      // },
       {
         icon: "mdi-account-multiple-plus",
         text: "Student List",
         link: "/admin/student/list",
       },
-       {
-        icon: "mdi-clipboard-list",
-        text: "SIAS Accounts",
-        link: "/admin/sias/account",
-      },
+      //  {
+      //   icon: "mdi-clipboard-list",
+      //   text: "SIAS Accounts",
+      //   link: "/admin/sias/account",
+      // },
       {
         icon: "mdi-video-input-component",
         "icon-alt": "mdi-chevron-down",
@@ -98,16 +98,16 @@ export default {
         text: "Submitted Clearances",
         link: "/admin/submitted/clearances",
       },
-      {
-        icon: "mdi-clipboard-check",
-        text: "Active Clearance",
-        link: "/admin/active/clearance",
-      },
-      {
-        icon: "mdi-clipboard-text",
-        text: "Clearance List",
-        link: "/admin/clearance/list",
-      },
+      // {
+      //   icon: "mdi-clipboard-check",
+      //   text: "Active Clearance",
+      //   link: "/admin/active/clearance",
+      // },
+      // {
+      //   icon: "mdi-clipboard-text",
+      //   text: "Clearance List",
+      //   link: "/admin/clearance/list",
+      // },
       {
         icon: "mdi-history",
         text: "List of Deficiency",

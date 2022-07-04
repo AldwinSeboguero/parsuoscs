@@ -136,7 +136,7 @@ const routes =[
     next('/login');
             }
         },
-        redirect: '/admin/dashboard',
+        redirect: '/admin/student/list',
         children: [
             //Admin Routes
             

@@ -50,7 +50,7 @@
                 <v-icon>{{item.icon}}</v-icon>
               </v-list-item-action>
               <v-list-item-content>
-                <v-list-item-title class="caption   text--darken-1 font-weight-light">
+                <v-list-item-title class="caption   text--darken-1 font-weight-medium">
                   {{ item.text }}
                 </v-list-item-title>
               </v-list-item-content>
@@ -71,7 +71,7 @@
               <v-list-item-content 
               style="padding-left: 20px"
                  >
-                <v-list-item-title class="caption   text--darken-1 font-weight-light">
+                <v-list-item-title class="caption   text--darken-1 font-weight-medium">
                   {{ child.text }}
                 </v-list-item-title>
               </v-list-item-content>
@@ -117,6 +117,7 @@
         </div>
       </template>
     </v-navigation-drawer>
+
    
 </template>
 

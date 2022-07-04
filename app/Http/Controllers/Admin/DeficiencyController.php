@@ -133,9 +133,7 @@ class DeficiencyController extends Controller
                 ->with('designee')
                 ->with('semester')
                 ->with('student')
-                ->with('purpose')    
-                ->with('staff')
-                ->with('staff.user')  
+                ->with('purpose')   
                 ->whereHas('student', function($q) use ($id){
                     $q->where('name', 'ILIKE', '%' . $id . '%');
                 }) 
@@ -143,8 +141,9 @@ class DeficiencyController extends Controller
                 ->orWhereHas('student', function($q) use ($id){
                     $q->where('student_number', 'ILIKE', '%' . $id . '%');
                 })  
-                ->paginate(10)) 
-                ],200);
+                 ->with('purpose')  
+                ->paginate(10)),
+                ],200); 
             }
             else{
                 return response()->json([

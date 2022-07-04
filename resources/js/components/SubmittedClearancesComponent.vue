@@ -1,9 +1,60 @@
 <template>
   <v-container>
    <v-card>
+   <v-card-subtitle class="white--text text-uppercase elevation-2 mb-0 pb-1"   style="background: linear-gradient(to left, #1A237E, #1A237E, #0D47A1);">
+          <span class="text-h6"> Submitted Clearances </span>
+
+    </v-card-subtitle>
+     <v-card-title class="white--text elevation-2 mb-0 pb-6 mt-0 pt-2"  style="background: linear-gradient(to left, #1A237E, #1A237E, #0D47A1);">
+     <v-row>
+        <v-col
+           class="mb-0 pb-0 mt-0 pt-0"
+
+          cols="12"
+          md="4"
+        >
+                          <v-select 
+                            label="Select Semester"
+                            class="mb-0 pb-0 mt-2 pt-0"
+
+                             item-value="id"
+                              item-text="semester" 
+                            :items="semesters"
+                            v-model="semester_id"
+                            @change="semesterChange(searchItem)"
+                            solo-inverted
+                            flat
+                            dark
+                            dense
+                            hide-details
+                          ></v-select>
+                          </v-col>
+
+<v-col
+  cols="12"
+  md="4"
+  class="mb-0 pb-0 mt-0 pt-0"
+
+> 
+      <v-text-field 
+            append-icon="mdi-magnify"
+            label="Search"
+            class="mb-0 pb-0 mt-2 pt-0"
+             v-model="searchItem"
+            @input="searchIt"
+            solo-inverted
+            flat
+            dark
+            dense
+            hide-details
+          ></v-text-field>
+          </v-col>
+      </v-row>
+           
+    </v-card-title>
      <v-data-table
         item-key="id"
-        class="elevation-0"
+        class="px-6 pb-6  mt-4"
         :loading="loading"
         loading-text="Loading... Please wait"
         :headers="headers"
@@ -20,45 +71,8 @@
           'show-first-last-page': true,
         }"
       >
-      <template v-slot:top>
-        <v-row>
-           <v-col cols="12" sm="2" style="margin: 0">
-                          <v-select 
-                            label="Select Semester"
-                             item-value="id"
-                              item-text="semester" 
-                            color="primary" 
-                            :items="semesters"
-                            v-model="semester_id"
-                            style="margin-left:15px"
-                            @change="semesterChange(searchItem)"
-          outlined
-                          ></v-select>
-                        </v-col>
-         <v-col cols="12" sm="4">
-        <v-text-field 
-            append-icon="mdi-magnify"
-            label="Search"
-            
-            v-model="searchItem"
-            @input="searchIt"
-          ></v-text-field>
-          </v-col>
-         
-     </v-row>
-        <v-toolbar flat color="white">
-          <div class="overline text-h6">
-              Submitted Clearance Request List
-              <!-- <span class="font-italic subtitle-2"
-                >(2nd Semester A/Y 2020-2021 )</span
-              > -->
-            </div>
-          <v-spacer></v-spacer> 
-        </v-toolbar>
-      </template>
-      <template v-slot:item.id="{ item }">
-      <td>{{submittedclearances.data.indexOf(item)+1}}</td> 
-    </template>
+      
+   
        <template v-slot:item.datesubmitted="{ item }" >
         <v-chip text-color="white" color="success" small >
            
@@ -67,9 +81,13 @@
          </template>
       <template v-slot:item.actions="{ item }">
           <template>
-        <v-btn class="ma-2" color="error" text depressed small @click="generatePDF(item)"
+        <!-- <v-btn class="ma-2" color="error" text depressed small @click="generatePDF(item)"
           ><v-icon>mdi-file-pdf</v-icon></v-btn
-        >  
+        >   -->
+        <v-btn :loading="downloadLoading" @click="generatePDF(item)" class="elevation-0 error lighten-1 ml-2"  small dark  
+                 >
+                  <v-icon x-small>mdi-file-pdf</v-icon>
+                  Download</v-btn>
           </template>
       </template>
     </v-data-table>
@@ -124,7 +142,7 @@ export default {
     snackbarColor:"",
       headers: [
       {
-        text: "No",
+        text: "#",
         align: "left",
         value: "id",
       }, 
@@ -188,37 +206,50 @@ export default {
 
   methods: {
     generatePDF(item) { 
-      this.editedIndex = this.submittedclearances.data.indexOf(item);
-      this.editedItem = Object.assign({}, item); 
-    if(item.college == "School of Graduate Studies and Research")
-    {
-       axios.get('/api/v1/pdf-createSGS',{responseType: 'blob'
-     ,params: { 'clearance': this.editedItem.clearance_id }
+      axios.get('/api/v1/active-clearance/signatory/pdf',{responseType: 'blob'
+            ,params: { 'clearance_id': item.clearance_id }
 
-     }).then((response) => {
-     var fileURL = window.URL.createObjectURL(new Blob([response.data], {type: 'application/pdf'}));
-     var fileLink = document.createElement('a');
-     fileLink.href = fileURL;
-     fileLink.setAttribute('download', this.editedItem.name+this.editedItem.clearance_id+'.pdf');
-     document.body.appendChild(fileLink);
-     fileLink.click();
+            }).then((response) => {
+              item.name = item.name.replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, "_"); // Replaces all spaces with hyphens.
+              item.name = item.name.replace(/ +(?= )/g, "");
+              
+                var fileURL = window.URL.createObjectURL(new Blob([response.data], {type: 'application/pdf'}));
+                var fileLink = document.createElement('a');
+                fileLink.href = fileURL;
+                fileLink.setAttribute('download', item.name+'-'+item.clearance_id+'.pdf');
+                document.body.appendChild(fileLink);
+                fileLink.click();
+                // this.downloadLoading = false;
+              });
+    //  this.editedIndex = this.submittedclearances.data.indexOf(item);
+    //   this.editedItem = Object.assign({}, item); 
+    // if(item.college == "School of Graduate Studies and Research")
+    // {
+    //    axios.get('/api/v1/pdf-createSGS',{responseType: 'blob'
+    //  ,params: { 'clearance': this.editedItem.clearance_id }
+
+    //  }).then((response) => {
+    //  var fileURL = window.URL.createObjectURL(new Blob([response.data], {type: 'application/pdf'}));
+    //  var fileLink = document.createElement('a');
+    //  fileLink.href = fileURL;
+    //  fileLink.setAttribute('download', this.editedItem.name+this.editedItem.clearance_id+'.pdf');
+    //  document.body.appendChild(fileLink);
+    //  fileLink.click();
+    //  });
+    // }
     
+    // else{
+    //    axios.get('/api/v1/pdf-create',{responseType: 'blob'
+    //  ,params: { 'clearance': this.editedItem.clearance_id }
 
-    });}
-    
-    else{
-       axios.get('/api/v1/pdf-create',{responseType: 'blob'
-     ,params: { 'clearance': this.editedItem.clearance_id }
-
-     }).then((response) => {
-     var fileURL = window.URL.createObjectURL(new Blob([response.data], {type: 'application/pdf'}));
-     var fileLink = document.createElement('a');
-     fileLink.href = fileURL;
-     fileLink.setAttribute('download', this.editedItem.name+this.editedItem.clearance_id+'.pdf');
-     document.body.appendChild(fileLink);
-     fileLink.click();
-    });}
-
+    //  }).then((response) => {
+    //  var fileURL = window.URL.createObjectURL(new Blob([response.data], {type: 'application/pdf'}));
+    //  var fileLink = document.createElement('a');
+    //  fileLink.href = fileURL;
+    //  fileLink.setAttribute('download', this.editedItem.name+this.editedItem.clearance_id+'.pdf');
+    //  document.body.appendChild(fileLink);
+    //  fileLink.click();
+    // });}
     },
      readDataFromAPI() {
       this.loading = true;

@@ -493,8 +493,12 @@ export default {
       if (d.length > 2) {
        
         axios
-          .get(`/api/v1/clearance-requests/${d}?page=` + pageNumber, {
-          params: { 'per_page': itemsPerPage },
+          .get(`/api/v1/clearance-requests?page=` + pageNumber, {
+          params: { 'per_page': itemsPerPage,
+             'semester': this.semester,
+          'search': this.searchItem,
+          'program': this.program,
+          'college': this.college},
         })
           .then((res) => {
             this.loading = false;  

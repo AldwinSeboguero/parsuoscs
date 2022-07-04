@@ -36,6 +36,9 @@ class SubmittedController extends Controller
                 
                 ->with('clearance.student')  
                 ->with('clearance.student.program')  
+                ->whereHas('clearance.purpose', function($q) use($semester_id){
+                    $q->where('semester_id', $semester_id);
+                })  
                 ->paginate($per_page)) ,
                 'semesters' => Semester::orderByDesc('id')->get(),
                 ],200);

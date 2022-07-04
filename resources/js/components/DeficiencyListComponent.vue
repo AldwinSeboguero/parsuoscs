@@ -1,15 +1,16 @@
 <template>
   <v-container>
    <v-card>
-     <v-card-subtitle class="white--text text-uppercase elevation-2 mb-0 pb-1"   style="background: linear-gradient(to left, #1A237E, #1A237E, #0D47A1);">
-          <span class="text-h6"> Deficiency List</span>
-       
+   <v-card-subtitle class="white--text text-uppercase elevation-2 mb-0 pb-1"   style="background: linear-gradient(to left, #1A237E, #1A237E, #0D47A1);">
+          <span class="text-h6"> Student Deficiencies </span>
+
     </v-card-subtitle>
      <v-card-title class="white--text elevation-2 mb-0 pb-0 mt-0 pt-0"  style="background: linear-gradient(to left, #1A237E, #1A237E, #0D47A1);">
          <v-text-field 
             append-icon="mdi-magnify"
             label="Search"
             class="mb-0 pb-0 mt-2 pt-0"
+             v-model="searchItem"
             @input="searchIt"
             solo-inverted
             flat
@@ -22,8 +23,7 @@
     <v-container>
      <v-data-table
         item-key="id"
-       class="px-6 pb-6  mt-1"
-
+        class="px-6 pb-6  mt-4"
         :loading="loading"
         loading-text="Loading... Please wait"
         :headers="headers"
@@ -32,7 +32,7 @@
         :items="deficiencies.data"
         :options.sync="options"
         :server-items-length="totaldeficiencies"
-        :items-per-page="10"  
+        :items-per-page="10" 
         :footer-props="{
           itemsPerPageOptions: [5, 10, 15],
           itemsPerPageText: 'Deficiency Per Page',
@@ -40,10 +40,117 @@
           'show-first-last-page': true,
         }"
       >
-    
-      <template v-slot:item.id="{ item }">
-      <td>{{deficiencies.data.indexOf(item)+1}}</td> 
-    </template>
+      <template v-slot:top>
+
+<v-dialog v-model="editdialog" persistent max-width="500">
+     
+      <v-card>
+      <v-card-title class="white--text text-uppercase elevation-2 "   style="background: linear-gradient(to left, #1A237E, #1A237E, #0D47A1);">
+          <span class="text-h6">Edit Deficiency </span>
+
+    </v-card-title>
+        <v-card-text>
+          <v-container>
+            <v-row>
+              <v-col cols="12" sm="12" md="12">
+                <v-text-field filled label="Item of Deficiency*" v-model="editedItem.deficiency" required></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="12" md="12">
+                <v-textarea filled label="Additional Information" v-model="editedItem.note" hint="Notes or Instructions for student"></v-textarea>
+              </v-col>
+          
+              <!-- <v-col cols="12" sm="12">
+                <v-autocomplete
+                  :items="['Skiing', 'Ice hockey', 'Soccer', 'Basketball', 'Hockey', 'Reading', 'Writing', 'Coding', 'Basejump']"
+                  label="Interests"
+                  multiple
+                ></v-autocomplete>
+              </v-col> -->
+            </v-row>
+          </v-container>
+          <small>*indicates required field</small>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="blue darken-1" text @click="editdialog = false">Close</v-btn>
+          <v-btn color="blue darken-1" text @click="save()">Save</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>  
+
+
+          <v-dialog
+      v-model="dialog"
+      persistent
+      max-width="320" 
+    >
+     
+      <v-card>
+        
+        <v-card-title class="headline">
+          Approve this Deficiency?
+        </v-card-title>
+        <v-card-text>This will certifiy that {{studentName}} has completed the deficiency ({{deficiencyName}}).</v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="primary darken-1"
+            text
+            @click="dialog = false"
+          >
+            Cancel
+          </v-btn>
+          <v-btn
+            color="green darken-1"
+            text
+            @click="approve()"
+          >
+            Approve
+          </v-btn>
+        </v-card-actions>
+        
+      </v-card>
+    </v-dialog>
+
+       <v-dialog
+      v-model="deletedialog"
+      persistent
+      max-width="320" 
+    >
+     
+      <v-card>
+        
+        <v-card-title class="headline">
+          Delete this Deficiency?
+        </v-card-title>
+        <v-card-text>This will delete the deficiency ({{deficiencyName}}) of {{studentName}}.</v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="primary darken-1"
+            text
+            @click="deletedialog = false"
+          >
+            Cancel
+          </v-btn>
+          <v-btn
+            color="error darken-1"
+            text
+            @click="deleteDeficiency()"
+          >
+            Delete
+          </v-btn>
+        </v-card-actions>
+        
+      </v-card>
+    </v-dialog>
+
+
+
+      
+      </template>
+     
+
     <template v-slot:item.completed="{ item }">
         <v-chip text-color="white" color="success" small  v-if="item.completed == 1">
            
@@ -54,7 +161,38 @@
            Pending
         </v-chip>
          </template>
-     
+     <template v-slot:item.actions="{ item }" >
+          <template v-if="item.completed != 1">
+        <v-btn class="ma-1" color="success" depressed x-small  @click="approveItem(item)"
+        ><v-icon
+          dark
+          x-small
+        >
+          mdi-check-circle
+        </v-icon>APPROVE</v-btn
+        > 
+         </template> 
+           <template v-if="item.completed != 1">
+        <v-btn class="ma-1 px-6" color="primary" depressed x-small   @click="editItem(item)"
+          ><v-icon
+          dark
+          x-small
+        >
+          mdi-circle-edit-outline
+        </v-icon>EDIT</v-btn
+        > 
+         </template> 
+            <!-- <template v-if="item.completed != 1"> 
+        <v-btn class="ma-1" color="error" depressed x-small @click="deleteItem(item)"
+          ><v-icon
+          dark
+          x-small
+        >
+          mdi-delete-circle
+        </v-icon>DELETE</v-btn
+        > 
+         </template>  -->
+      </template> 
     </v-data-table>
   <v-snackbar
       v-model="snackbar" 
@@ -97,24 +235,29 @@ export default {
   data: () => ({
     valid: true,
     dialog: false,
+    deletedialog: false,
+    editdialog: false,
     loading: false,
     snackbar: false,
     selected: [],
+    studentName:"",
+    deficiencyName:"",
     text: "",
     success: "",
     error: "", 
     snackbarColor:"",
       headers: [
       {
-        text: "No",
+        text: "#",
         align: "left",
         value: "id",
       },   
-       { text: "Deficiency", value: "deficiency" }, 
-       { text: "Note", value: "note" },
-      { text: "Staff", value: "staff" },   
+      { text: "Student Number", value: "student_number" },
+      { text: "Name", value: "student_name" },
       { text: "Completed", value: "completed" }, 
-
+       { text: "Deficiency", value: "deficiency" }, 
+      { text: "Staff", value: "staff" },   
+      { text: "Action", value: "actions" },
     ], 
     page: 0,
     totaldeficiencies: 0,
@@ -128,6 +271,8 @@ export default {
       student_number: "",
       program: "", 
       semester:"", 
+      deficiency:"",
+      note:'',
     },
     defaultItem: {
        id: "", 
@@ -234,14 +379,27 @@ export default {
     editItem(item) {
       this.editedIndex = this.deficiencies.data.indexOf(item);
       this.editedItem = Object.assign({}, item); 
-      this.dialog = true;
+     this.editdialog = true;
+    },  
+    approveItem(item) {
+      this.editedIndex = this.deficiencies.data.indexOf(item);
+      this.editedItem = Object.assign({}, item); 
+      this.studentName = this.editedItem.student_name;
+      this.deficiencyName = this.editedItem.deficiency;
+     this.dialog = true;
     },    
     deleteItem(item) {
-      const index = this.deficiencies.data.indexOf(item);
-      let decide = confirm("Are you sure you want to delete this item?");
-      if (decide) {
+      this.editedIndex = this.deficiencies.data.indexOf(item);
+      this.editedItem = Object.assign({}, item); 
+      this.studentName = this.editedItem.student_name;
+      this.deficiencyName = this.editedItem.deficiency;
+      this.deletedialog=true;
+      
+    },
+    deleteDeficiency(){
+      const index = this.editedIndex;  
         axios
-          .delete("/api/v1/deficiencies/" + item.id)
+          .delete("/api/v1/deficiencies/" + this.edited.id)
           .then((res) => {
             this.text = "Record Deleted Successfully!"; 
             this.snackbarColor ="primary darken-1";
@@ -254,10 +412,30 @@ export default {
             this.snackbarColor ="error darken-1";
             this.snackbar = true;
 
-          });
-      }
+          }); 
+          this.deletedialog = false;
     },
-
+    approve(){
+       const index = this.editedIndex;
+        axios
+          .post("/api/v1/deficiencies/approve", this.editedItem)
+          .then(res => {
+            this.text = "Record Updated Successfully!";
+            this.snackbarColor ="primary darken-1";
+            this.snackbar = true;
+            this.loading = false;
+            this.deficiencies = res.data.deficiencies; 
+              this.totaldeficiencies = res.data.deficiencies.total;
+              this.numberOfPages = res.data.deficiencies.last_page; 
+          })
+          .catch((err) => {
+           
+            this.text = "Error Updating Record";
+            this.snackbarColor ="error darken-1";
+            this.snackbar = true;
+       });
+       this.dialog = false;
+    },
     close() {
       this.dialog = false;
       setTimeout(() => {
@@ -270,19 +448,26 @@ export default {
       if (this.editedIndex > -1) {
         const index = this.editedIndex;
         axios
-          .put("/api/v1/deficiencies/" + this.editedItem.id, this.editedItem)
+          .post("/api/v1/deficeincy/edit", this.editedItem)
           .then((res) => {
             this.text = "Record Updated Successfully!";
             this.snackbarColor ="primary darken-1";
             this.snackbar = true;
-            Object.assign(this.deficiencies.data[index], res.data.deficiency); 
+            // Object.assign(this.deficiencies.data[index], res.data.deficiency); 
+            this.loading = false;
+            this.deficiencies = res.data.deficiencies; 
+              this.totaldeficiencies = res.data.deficiencies.total;
+              this.numberOfPages = res.data.deficiencies.last_page; 
+            this.editdialog= false;
           })
           .catch((err) => {
             console.log(err.response);
             this.text = "Error Updating Record";
             this.snackbarColor ="error darken-1";
             this.snackbar = true;
+            this.editdialog= false;
           });
+          this.editdialog= false;
       } else {
         axios
           .post("/api/v1/deficiencies", this.editedItem)

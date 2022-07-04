@@ -324,16 +324,16 @@ export default {
         text: "Submitted Clearances",
         link: "/admin/submitted/clearances",
       },
-      {
-        icon: "mdi-clipboard-check",
-        text: "Active Clearance",
-        link: "/admin/active/clearance",
-      },
-      {
-        icon: "mdi-clipboard-text",
-        text: "Clearance List",
-        link: "/admin/clearance/list",
-      },
+      // {
+      //   icon: "mdi-clipboard-check",
+      //   text: "Active Clearance",
+      //   link: "/admin/active/clearance",
+      // },
+      // {
+      //   icon: "mdi-clipboard-text",
+      //   text: "Clearance List",
+      //   link: "/admin/clearance/list",
+      // },
       {
         icon: "mdi-history",
         text: "List of Deficiency",

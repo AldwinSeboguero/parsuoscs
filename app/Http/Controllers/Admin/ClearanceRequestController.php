@@ -23,6 +23,11 @@ use App\Support\Collection;
 use App\StudentPurposeSetup;
 use DB;
 use Illuminate\Support\Facades\Auth;
+use App\ClearanceRequestV2;
+use App\SignatoryV2;
+use App\Semester;
+use App\Program;
+use App\College;
 class ClearanceRequestController extends Controller
 {
     
@@ -32,50 +37,55 @@ class ClearanceRequestController extends Controller
      * @return \Illuminate\Http\Response
      */
  
-    public function index(Request $request)
-    {
-        if(Auth::user()->hasRole("admin")){
-            $per_page =$request->per_page ? $request->per_page : 10; 
-            
-            return response()->json([
-            'clearancerequests' => new ClearanceRequestCollection(ClearanceRequest::orderBy('request_at')
-            ->where('status', 0)->with('purpose')  
-            ->with('staff')
-            ->with('staff.user') 
-            ->paginate($per_page)),
-            'user' => Auth::user(), 
-            ],200);
-        }
-        else if(Auth::user()->hasRole("pd")){
-            $per_page =$request->per_page ? $request->per_page : 10; 
-            $pd_programs = Staff_PD::where('user_id',Auth::user()->id)->get('program_id');
-            return response()->json([
-            'clearancerequests' => new ClearanceRequestCollection(ClearanceRequest::orderBy('request_at')
-            ->where('status', 0)->with('purpose')  
-            ->with('staff')
-            ->with('staff.user')
-            ->where('designee_id', 1)
-            ->whereHas('student', function($query) use($pd_programs){
-                $query->whereIn('program_id', $pd_programs);
-            })
-            ->paginate($per_page)),
-            'user' => Auth::user(), 
-            ],200);
-        }
-        else{
+    public function index(Request $request){
         $per_page =$request->per_page ? $request->per_page : 10; 
-         
+        // $signatory_ids = SignatoryV2::where('user_id',Auth::user()->id)->get('id');
+
+        $clearance_requests =new ClearanceRequestCollection( ClearanceRequestV2::orderBy('requested_at')
+                                                ->where('status', false)
+                                                ->when($request->search, function($inner) use($request){
+                                                    $inner->whereHas('student', function($q) use ($request){
+                                                        $q->where('name', 'ILIKE', '%' . $request->search . '%')
+                                                        ->orWhere('student_number', 'ILIKE', '%' . $request->search . '%');
+                                                    });
+                                                })
+                                                ->when($request->semester, function($inner) use($request){
+                                                    $inner->whereHas('purpose',function($q) use($request){
+                                                        $q->where('semester_id',$request->semester);
+                                                    });
+                                                }) 
+                                                ->when($request->college, function($inner) use($request){
+                                                    $inner->whereHas('student.program',function($q) use($request){
+                                                        $q->where('college_id',$request->college);
+                                                    });
+                                                }) 
+                                                ->when($request->program, function($inner) use($request){
+                                                    $inner->whereHas('student',function($q) use($request){
+                                                        $q->where('program_id',$request->program);
+                                                    });
+                                                }) 
+                                                ->whereHas('purpose',function($q) use($request){
+                                                    $q->orderByDesc('semester_id');
+                                                })
+                                                ->where('status', false)
+                                                ->paginate($per_page));
+
         return response()->json([
-            'clearancerequests' => new ClearanceRequestCollection(ClearanceRequest::orderBy('request_at')
-            ->where('status', 0)->with('purpose')   
-            ->whereIn('staff_id',Staff::where('user_id',Auth::user()->id)->get('id')) 
-            ->with('staff')
-            ->with('staff.user') 
-            ->paginate($per_page)),
-            'user' => Auth::user(), 
-            
-            ],200);
-        }
+            // 'signatory' => $signatory_ids->count(),
+            'clearance_requests' => $clearance_requests,
+            'semester' => $request->semester,
+            'college' =>$request->college,
+            'program' =>$request->program,
+
+            'semesters' => Semester::orderByDesc('id')->get(),
+            'colleges' => $request->semester ? College::orderBy('id')
+                                                        ->get(): [] ,
+            'programs' => $request->college ? Program::orderBy('id')
+                                                        ->when($request->college, function($inner) use($request){
+                                                            $inner->where('college_id',$request->college);
+                                                        }) 
+                                                        ->get() : [],
+        ]);
     }
 
     /**
