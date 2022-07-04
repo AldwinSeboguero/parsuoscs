@@ -64,7 +64,7 @@ class ClearanceRequestController extends Controller
                                                         $q->where('program_id',$request->program);
                                                     });
                                                 })
-                                                
+
                                                 ->where('status', false)
                                                 ->paginate($per_page));
 
@@ -76,8 +76,8 @@ class ClearanceRequestController extends Controller
             'program' =>$request->program,
 
             'semesters' => Semester::orderByDesc('id')->get(),
-            'colleges' => $request->semester ? College::orderBy('id')
-                                                        ->get(): [] ,
+            'colleges' => College::orderBy('id')
+                                                        ->get(),
             'programs' => $request->college ? Program::orderBy('id')
                                                         ->when($request->college, function($inner) use($request){
                                                             $inner->where('college_id',$request->college);
