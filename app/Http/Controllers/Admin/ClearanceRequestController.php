@@ -63,9 +63,6 @@ class ClearanceRequestController extends Controller
                                                     $inner->whereHas('student',function($q) use($request){
                                                         $q->where('program_id',$request->program);
                                                     });
-                                                }) 
-                                                ->whereHas('purpose',function($q) use($request){
-                                                    $q->orderByDesc('semester_id');
                                                 })
                                                 ->where('status', false)
                                                 ->paginate($per_page));
