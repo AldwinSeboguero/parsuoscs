@@ -2383,7 +2383,11 @@ __webpack_require__.r(__webpack_exports__);
       if (d.length <= 0) {
         axios.get("/api/v1/clearancerequests?page=" + pageNumber, {
           params: {
-            'per_page': d.itemsPerPage
+            'per_page': d.itemsPerPage,
+            'semester': this.semester,
+            'search': this.searchItem,
+            'program': this.program,
+            'college': this.college
           }
         }).then(function (res) {
           _this6.loading = false;
@@ -22313,7 +22317,11 @@ __webpack_require__.r(__webpack_exports__);
       if (d.length <= 0) {
         axios.get("/api/v1/clearance-requests?page=" + pageNumber, {
           params: {
-            'per_page': d.itemsPerPage
+            'per_page': d.itemsPerPage,
+            'semester': this.semester,
+            'search': this.searchItem,
+            'program': this.program,
+            'college': this.college
           }
         }).then(function (res) {
           _this6.loading = false;

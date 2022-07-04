@@ -124,40 +124,40 @@ class ClearanceRequestController extends Controller
      */
     public function show($id)
     {
-        if(Auth::user()->hasRole("admin")){
-        return response()->json([
-              'clearancerequests' => new ClearanceRequestCollection(
-                ClearanceRequest::where('status', false) 
-                ->where('status', false)->with('purpose')    
-                ->whereHas('student', function($q) use ($id){
-                    $q->where('name', 'ILIKE', '%' . $id . '%');
-                }) 
+        // if(Auth::user()->hasRole("admin")){
+        // return response()->json([
+        //       'clearancerequests' => new ClearanceRequestCollection(
+        //         ClearanceRequest::where('status', false) 
+        //         ->where('status', false)->with('purpose')    
+        //         ->whereHas('student', function($q) use ($id){
+        //             $q->where('name', 'ILIKE', '%' . $id . '%');
+        //         }) 
                  
-                ->orWhereHas('student', function($q) use ($id){
-                    $q->where('student_number', 'ILIKE', '%' . $id . '%');
-                })   
-                ->where('status', false)->with('purpose')  
-                ->paginate(10)), 
-            ],200);
-        }
-        else{
-            return response()->json([
-                'clearancerequests' => new ClearanceRequestCollection(ClearanceRequest::orderBy('request_at')
-                ->where('status', false)->with('purpose')   
-                ->whereIn('staff_id',Staff::where('user_id',Auth::user()->id)->get('id'))
-                ->whereHas('student', function($q) use ($id){
-                    $q->where('name', 'ILIKE', '%' . $id . '%');
-                }) 
+        //         ->orWhereHas('student', function($q) use ($id){
+        //             $q->where('student_number', 'ILIKE', '%' . $id . '%');
+        //         })   
+        //         ->where('status', false)->with('purpose')  
+        //         ->paginate(10)), 
+        //     ],200);
+        // }
+        // else{
+        //     return response()->json([
+        //         'clearancerequests' => new ClearanceRequestCollection(ClearanceRequest::orderBy('request_at')
+        //         ->where('status', false)->with('purpose')   
+        //         ->whereIn('staff_id',Staff::where('user_id',Auth::user()->id)->get('id'))
+        //         ->whereHas('student', function($q) use ($id){
+        //             $q->where('name', 'ILIKE', '%' . $id . '%');
+        //         }) 
                  
-                ->orWhereHas('student', function($q) use ($id){
-                    $q->where('student_number', 'ILIKE', '%' . $id . '%');
-                })  
-                ->where('status', false)->with('purpose')  
-                ->whereIn('staff_id',Staff::where('user_id',Auth::user()->id)->get('id')) 
-                ->paginate(10)),
-                'user' => Auth::user(), 
-                ],200); 
-        }
+        //         ->orWhereHas('student', function($q) use ($id){
+        //             $q->where('student_number', 'ILIKE', '%' . $id . '%');
+        //         })  
+        //         ->where('status', false)->with('purpose')  
+        //         ->whereIn('staff_id',Staff::where('user_id',Auth::user()->id)->get('id')) 
+        //         ->paginate(10)),
+        //         'user' => Auth::user(), 
+        //         ],200); 
+        // }
     }
 
     /**
