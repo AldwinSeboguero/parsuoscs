@@ -26,7 +26,7 @@ class StudentsImport implements ToModel, WithHeadingRow
     */
     public function model(array $row)
     {
-        $isAccountExits = User::where('email',$row['student_id'])->get()->count();
+        $isAccountExits = User::where('email',$row['email'])->get()->count();
         if($isAccountExits == 0){
             $role = Role::where('description','Student')->first();
             $user = User::create([
