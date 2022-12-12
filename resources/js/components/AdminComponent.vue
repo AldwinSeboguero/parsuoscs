@@ -35,7 +35,7 @@
 
      
   <div  v-slimscroll="scrollOptions">
-      <v-list dense shaped>
+      <v-list nav dense >
         <template v-for="item in items">
           <v-row v-if="item.heading" :key="item.heading" align="center">
             <v-col cols="4">

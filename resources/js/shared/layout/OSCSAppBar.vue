@@ -13,12 +13,12 @@
       max-width="100"
       alt="OSCS Logo"
     ></v-img>
-    <v-divider class="ml-4" inset vertical></v-divider>
+    <v-divider class="ml-4 hidden-sm-and-down" inset vertical></v-divider>
     <v-toolbar-title
       style="width: 300px"
-      class="ml-0 pl-4 font-weight-medium blue-grey--text text--darken-4"
+      class="ml-0 pl-4 font-weight-medium blue-grey--text text--darken-4 hidden-sm-and-down"
     >
-      <h6 class="font-weight-medium grey--text text--darken-2 text-overline text-uppercase text-large">{{ currentRouteName }}</h6>
+      <h6 class="font-weight-medium grey--text text--darken-2 text-overline text-uppercase text-large hidden-sm-and-down">{{ currentRouteName }}</h6>
     </v-toolbar-title>
 
     <v-spacer></v-spacer>

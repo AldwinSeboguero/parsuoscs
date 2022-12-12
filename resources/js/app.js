@@ -22,6 +22,40 @@ import Clipboard from 'v-clipboard'
 import VueParticlesBg from "particles-bg-vue";
 import VueCompositionAPI from '@vue/composition-api'
 import VueApexCharts from 'vue-apexcharts'
+import VueBreadcrumbs from 'vue-2-breadcrumbs';
+// import '@mdi/font/css/materialdesignicons.css';
+// import VueConfirmDialog from 'vue-confirm-dialog'
+
+// Vue.use(VueConfirmDialog)
+// Vue.component('vue-confirm-dialog', VueConfirmDialog.default)
+Vue.use(VueBreadcrumbs,{
+  template:
+  '<ol class="wizard">\n'+
+  '<li v-for="(crumb, key) in $breadcrumbs" v-if="crumb.meta.breadcrumb" :key="key"\n' +
+  // '    v-for="crumb in breadcrumbs" \n'+
+  '    tabindex="1" \n'+
+  '    class="wizard__item"\n'+
+  // '    v-on:click="setStep(step.id)"\n'+
+  // '    v-bind:title="step.desc"\n'+
+  '    v-bind:class="{ \'wizard__item--visited\': false,  \'wizard__item--disabled\': false, \'wizard__item--active\': $route.name == getBreadcrumb(crumb.meta.breadcrumb) }"\n'+
+  '     >\n'+
+  '    <span class="wizard__item-desc">\n'+
+  '         <router-link v-if="$route.name != getBreadcrumb(crumb.meta.breadcrumb)" :to="{ path: getPath(crumb) }">{{ getBreadcrumb(crumb.meta.breadcrumb) }}</router-link>' +
+  '         <span v-else >{{ getBreadcrumb(crumb.meta.breadcrumb) }}</span>' +
+
+  // '\n {{getPath(crumb)}} \n'+
+  '    </span>\n'+
+  '    <span class="wizard__item-arrows"></span>\n'+
+  '  </li>\n'+
+  '</ol>\n'
+    // '        <nav v-if="$breadcrumbs.length" aria-label="breadcrumb">\n' +
+    // '            <ol class="breadcrumb">\n' +
+    // '                <li v-for="(crumb, key) in $breadcrumbs" v-if="crumb.meta.breadcrumb" :key="key" class="breadcrumb-item active" aria-current="page">\n' +
+    // '                    <router-link :to="{ path: getPath(crumb) }">{{ getBreadcrumb(crumb.meta.breadcrumb) }}</router-link>' +
+    // '                </li>\n' +
+    // '            </ol>\n' +
+    // '        </nav>'
+});
 Vue.use(VueApexCharts)
 
 Vue.component('apexchart', VueApexCharts)

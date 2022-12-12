@@ -8,7 +8,7 @@ use App\Student;
 use App\Http\Resources\Student as StudentResource;
 use App\Http\Resources\StudentCollection;
 use App\Campus;
-use App\Program;
+use App\Program;    
 use App\Section;
 use Illuminate\Support\Str;
 use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Uuid;
@@ -22,6 +22,7 @@ use App\Staff;
 use App\Staff_PD;
 use App\Semester;
 use App\User;
+use App\ClearanceRequestV2;
 use App\Exports\StudentActivationCode;
 class StudentController extends Controller
 {
@@ -42,26 +43,37 @@ class StudentController extends Controller
         'campuses' => Campus::orderBy('name')->get(),
         'programs' => Program::orderBy('name')->get(),
         'sections' => Section::orderBy('name')->get(),
+        'duplicateRequest' => DB::table('clearance_request_v2')
+        ->select(
+            'student_id',
+            'designee_id',
+            'purpose_id', DB::raw('COUNT(*) as count'))
+        ->groupBy(
+            'student_id',
+            'designee_id',
+            'purpose_id')
+        ->havingRaw('COUNT(*) > 1')
+        ->get(),
         ],200);
     
         }
-        else if(Auth::user()->hasRole("pd")){
+        // else if(Auth::user()->hasRole("pd")){
            
-        $per_page =$request->per_page ? $request->per_page : 10; 
-        return response()->json([
-        'students'=> new StudentCollection(Student::orderByDesc('created_at')->with('section')->with('deficiencies')->with('program')->with('program.campus')
+        // $per_page =$request->per_page ? $request->per_page : 10; 
+        // return response()->json([
+        // 'students'=> new StudentCollection(Student::orderByDesc('created_at')->with('section')->with('deficiencies')->with('program')->with('program.campus')
         
-        ->whereIn('program_id',Staff_PD::where('user_id',Auth::user()->id)->get('program_id'))
-        // ->whereHas('program.campus', function($q){
-        //     $q->where('id', Staff::where('user_id',Auth::user()->id)->first()->campus_id);
-        // }) 
-        ->paginate($per_page)),
-        'campuses' => Campus::orderBy('name')->where('id', Staff::where('user_id',Auth::user()->id)->first()->campus_id)->get(),
-        'programs' => Program::orderBy('name')->whereIn('id',Staff_PD::where('user_id',Auth::user()->id)->get('program_id'))->get(),
-        'sections' => Section::orderBy('name')->get(),
-        ],200);
+        // ->whereIn('program_id',Staff_PD::where('user_id',Auth::user()->id)->get('program_id'))
+        // // ->whereHas('program.campus', function($q){
+        // //     $q->where('id', Staff::where('user_id',Auth::user()->id)->first()->campus_id);
+        // // }) 
+        // ->paginate($per_page)),
+        // 'campuses' => Campus::orderBy('name')->where('id', Staff::where('user_id',Auth::user()->id)->first()->campus_id)->get(),
+        // 'programs' => Program::orderBy('name')->whereIn('id',Staff_PD::where('user_id',Auth::user()->id)->get('program_id'))->get(),
+        // 'sections' => Section::orderBy('name')->get(),
+        // ],200);
 
-        }
+        // }
         else{
           
         $per_page =$request->per_page ? $request->per_page : 10; 
@@ -102,14 +114,14 @@ class StudentController extends Controller
             'name' => $request->name,
             'slug' => $request->student_number.'-'.str_replace(".","",str_replace(",","",str_replace(" ","",$request->name))),
             'name' => $request->name,
-            'year'    => $request->year,
+            'year'    => 1,
             'section_id'     => 1, 
             'program_id'     => $request->program_id, 
             'initial_password' => Str::uuid()->toString(),
             ]);  
             $student->save(); 
-            return response()->json(['students'=> new StudentCollection(Student::orderByDesc('created_at')->paginate()),
-            'student'=> new StudentResource($student)],200);
+            return $this->index($request);
+            
     }
 
     /**
@@ -240,12 +252,13 @@ class StudentController extends Controller
         $student = Student::find($id);
         $student->name= $request->name;  
         $student->student_number= $request->student_number;  
-        $student->year= $request->year;   
+        $student->year= 1;   
         $student->section_id= 1; 
-        $program = Program::where('campus_id',$request->campus_id)->where('id',$request->program_id)->first();
-        $student->program_id= $program->id;  
-        $student->initial_password = $request->code;   
+        // $program = Program::where('campus_id',$request->campus_id)->where('id',$request->program_id)->first();
+        $student->program_id= $request->program_id;  
+        $student->initial_password = $request->code;     
         $student->save();  
+
         return response()->json(['student'=> new StudentResource($student)],200);
     }
 

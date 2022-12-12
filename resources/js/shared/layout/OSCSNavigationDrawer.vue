@@ -28,7 +28,7 @@
   <v-divider></v-divider>
      
   <div  v-slimscroll="scrollOptions">
-      <v-list dense shaped>
+      <v-list dense nav>
         <template v-for="item in navigationList">
           <v-row v-if="item.heading" :key="item.heading" align="center">
             <v-col cols="4">
@@ -110,7 +110,7 @@
            style="background: transparent"
           class="overline  lighten-1 text-center ">
            <v-card-text class="caption">
-            {{ new Date().getFullYear() }} &copy;
+            2020 - {{ new Date().getFullYear() }} &copy;
             <strong>ICTMO, Partido State University</strong>
           </v-card-text>
         </v-card>

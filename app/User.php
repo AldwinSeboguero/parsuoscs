@@ -54,6 +54,10 @@ class User extends Authenticatable
 
         return false;
     }
+    public function designees(){
+        return $this->hasMany('App\SignatoryV2'::class,'user_id','id');
+ 
+    }
     public function hasRole($role){
         if($this->roles()->where('name', $role)->first()){
             return true;

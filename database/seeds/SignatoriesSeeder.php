@@ -55,7 +55,7 @@ class SignatoriesSeeder extends Seeder
                     'name' => $signatory->user->name,
                     'designee_id' => 9,
                     'order' => 7,
-                'purpose_id' => $purpose->id,
+                    'purpose_id' => $purpose->id,
                     'semester_id' => $signatory->semester_id,
                     'updated_at' => $signatory->updated_at ?$signatory->updated_at:'',
                     'created_at' => $signatory->created_at ? $signatory->created_at : '',
@@ -65,7 +65,7 @@ class SignatoriesSeeder extends Seeder
                 echo($signatory->id);
             };
 
-
+        
        $programs = Program::orderBy('id')->get();
        foreach($programs as $key => $program){
 

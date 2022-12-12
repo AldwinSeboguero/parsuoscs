@@ -3,6 +3,11 @@
 use Illuminate\Http\Request;
 use Illuminate\Routing\RouteGroup;
 use Illuminate\Support\Facades\Route;
+use app\Http\Controllers\SemesterController;
+use app\Http\Controllers\CampusController;
+use app\Http\Controllers\ProgramController;
+// use app\Http\Controllers\PurposeController;
+use app\Http\Controllers\DesignationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,7 +30,7 @@ use Illuminate\Support\Facades\Route;
     Route::resource('colleges', 'Admin\CollegeController');
     Route::resource('programs', 'Admin\ProgramController');
     Route::resource('sections', 'Admin\SectionController');
-    Route::resource('semesters', 'Admin\SemesterController');
+    Route::resource('adminsemesters', 'Admin\SemesterController');
     Route::resource('graduations', 'Admin\GraduationController');
     Route::resource('purposes', 'Admin\PurposeController');
     Route::resource('campuses', 'Admin\CampusController');
@@ -125,6 +130,8 @@ Route::resource('clearancerequestssgs', 'Admin\SGSClearanceController');
 Route::post('approveclearancerequestsgs', 'Admin\SGSClearanceController@approveRequest');
 
 
+
+
     
         // Send reset password mail
         Route::post('reset-password', 'Admin\AuthController@sendPasswordResetLink');
@@ -178,6 +185,42 @@ Route::get('/clearance-requests/disapprove', 'V2\Signatory\ClearanceRequestContr
 
 //deficency
 Route::post('/deficeincy/edit', 'Admin\DeficiencyController@update');
+
+
+//Admin Route
+Route::get('/getStaff', 'Admin\StaffController@getStaff');
+Route::get('/getSemesters', 'Admin\SemesterController@getSemesters');
+
+
+
+
+Route::resources([
+    'semesters' => 'SemesterController',
+    'campuses' => 'CampusController',
+    'programs' => 'ProgramController',
+    'designations' => 'DesignationController',
+    'purposes' => 'Admin\PurposeController',
+
+    'signatories' => 'Admin\StaffController',
+
+]);
+
+Route::get('/getprev', 'SemesterController@prev');
+Route::get('/getnext', 'SemesterController@next');
+Route::get('/getPrevDeanEnrollment', 'Admin\StaffController@getPrevDeanEnrollment');
+Route::get('/getPrevCashierEnrollment', 'Admin\StaffController@getPrevCashierEnrollment');
+Route::get('/getPrevLibraryEnrollment', 'Admin\StaffController@getPrevLibraryEnrollment');
+Route::get('/getPrevOSASEnrollment', 'Admin\StaffController@getPrevOSASEnrollment');
+Route::get('/getPrevGraduation', 'Admin\StaffController@getPrevGraduation');
+Route::get('/getPrevRequestCredentials', 'Admin\StaffController@getPrevRequestCredentials');
+
+
+Route::get('/copyPrevDeanEnrollment', 'Admin\StaffController@copyPrevDeanEnrollment');
+Route::get('/copyPrevCashierEnrollment', 'Admin\StaffController@copyPrevCashierEnrollment');
+Route::get('/copyPrevLibraryEnrollment', 'Admin\StaffController@copyPrevLibraryEnrollment');
+Route::get('/copyPrevOSASEnrollment', 'Admin\StaffController@copyPrevOSASEnrollment');
+Route::get('/copyPrevGraduation', 'Admin\StaffController@copyPrevGraduation');
+Route::get('/copyPrevRequestCredentials', 'Admin\StaffController@copyPrevRequestCredentials');
 
 
 

@@ -1,5 +1,11 @@
 <template>
 <v-sheet >
+<v-row >
+      <v-col cols="12" lg="5" class="mt-2">
+       <Breadcrumbs class="mb-4"/>
+
+      </v-col>
+    </v-row>
    <v-card elevation="0">
     <v-container class="grey lighten-5" fluid>
      <v-row wrap>

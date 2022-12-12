@@ -90,7 +90,7 @@ class UserController extends Controller
                 'users' => new UserCollection(UserRole::orderByDesc('created_at')->with('user')->with('role')
                 ->whereHas('user', function($q) use ($id)
                 {
-                    $q->where('name','ILIKE','%'.$id.'%');
+                    $q->where('name','ILIKE','%'.$id.'%')->orWhere('email','ILIKE','%'.$id.'%');
         
                 })->paginate(10)),
                 'roles' => Role::pluck('description')->all()

@@ -12,6 +12,7 @@
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
         <!-- <script src="{{ asset('js/app.js') }}" defer></script>  -->
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <style>
             .v-navigation-drawer__content {
               overflow: hidden !important;
@@ -28,12 +29,14 @@
         <script src="{{ mix('js/manifest.js') }}" defer></script>
         <script src="{{ mix('js/vendor.js') }}" defer></script>
     </head>
+   
     <body>
         <div id="app">
             <app/>
         </div>
     </body>
 </html>
+
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-173156254-1"></script>
 <script>

@@ -1,14 +1,22 @@
 <template>
   <v-sheet>
+  <v-row >
+      <v-col cols="12" lg="5" class="mt-2">
+       <Breadcrumbs class="mb-4"/>
+
+      </v-col>
+    </v-row>
     <v-card elevation="0">
       <v-container class="grey lighten-5" fluid>
         <v-row wrap>
-          <v-col cols="12" lg="4">
+          <v-col cols="12" lg="12">
             <v-card>
-              <v-card-text style="padding-bottom: 10">
-                <h1 class="title desplay-2 black--text text--accent3">
-                  <v-icon class="ma-1 mb-2">mdi-account-plus-outline</v-icon>
-                  Add Student
+            <v-card-title class="white--text elevation-2"  style="background: linear-gradient(to left, #1A237E, #1A237E, #0D47A1);">
+            <span> <v-icon class="ma-1 mb-2 white--text ">mdi-account-plus-outline</v-icon>
+                  Add Student</span>
+                 
+                  <v-spacer></v-spacer>
+                  <span></span>
                   <v-dialog v-model="exportDialog" width="390">
                     <template v-slot:activator="{ on, attrs }">
                       <v-btn
@@ -196,80 +204,82 @@
                       </v-card-actions>
                     </v-card>
                   </v-dialog>
-                </h1>
-              </v-card-text>
-              <v-list-item three-line>
-                <v-list-item-content>
-                  <div class="text-center pb-3">
+                
+          </v-card-title>
+             <v-card-text>
+            
+                  <div class="text-center pa-4 mt-6">
                     <v-form
                       method="post"
                       lazy-validation
                       v-on:submit.stop.prevent="save"
                       ref="entryForm"
                     >
-                      <v-text-field
-                        v-model="editedItem.student_number"
-                        label="Student Number"
-                        :rules="[rules.required]"
-                        name="student_number"
-                        type="number"
-                        color="teal accent-4"
-                        dense
-                        class="text-sm-h6 mr-2 ml-2 mb-2 mb-1"
-                      />
-                      <v-text-field
-                        dense
-                        class="text-sm-h6 mr-2 ml-2 mb-2 mb-1"
-                        type="text"
-                        v-model="editedItem.name"
-                        label="Full Name"
-                        :rules="[rules.required, rules.min]"
-                        hint="(Surname, First name MI)"
-                        color="teal accent-4"
-                      />
-
-                      <v-select
-                        v-model="editedItem.campus_id"
-                        :items="campuses"
-                        item-text="name"
-                        label="Select Campus"
-                        item-value="id"
-                        color="primary"
-                        @change="campusListener"
-                        :rules="[rules.required]"
-                        class="text-sm-h6 mr-2 ml-2 mb-2 mb-1"
-                        dense
-                        chip
-                      ></v-select>
-
-                      <v-select
-                        v-model="editedItem.program_id"
-                        :items="programs"
-                        label="Select Program"
-                        item-value="id"
-                        item-text="name"
-                        @change="programListener"
-                        color="primary"
-                        :rules="[rules.required]"
-                        class="mr-2 ml-2 mb-2 mb-1"
-                        wrap
-                        dense
-                        chip
-                      ></v-select>
-
-                      <v-select
-                        v-model="editedItem.year"
-                        :items="years"
-                        label="Select Year Level"
-                        item-value="id"
-                        item-text="name"
-                        color="primary"
-                        :rules="[rules.required]"
-                        class="text-sm-h6 mr-2 ml-2 mb-2 mb-1"
-                        dense
-                        chip
-                      ></v-select>
-
+                     <v-row>
+                        <v-col cols="12" lg="4" class="pa-0 ma-0">
+                            <v-text-field
+                            v-model="editedItem.student_number"
+                            label="Student Number"
+                            :rules="[rules.required]"
+                            name="student_number"
+                            type="number"
+                            color="primary"
+                            dense
+                            filled
+                            rounded
+                            class="mr-2 ml-2 mb-2 mb-1"
+                          />
+                        </v-col>
+                        <v-col cols="12" lg="8" class="pa-0 ma-0">
+                          <v-text-field
+                          dense
+                          class="mr-2 ml-2 mb-2 mb-1"
+                          type="text"
+                          v-model="editedItem.name"
+                          label="Full Name"
+                          :rules="[rules.required, rules.min]"
+                          hint="(Surname, First name MI)"
+                          color="primary"
+                          filled
+                            rounded
+                          />
+                        </v-col> 
+                        <v-col cols="12" lg="4" class="pa-0 ma-0">
+                          <v-select
+                          v-model="editedItem.campus_id"
+                          :items="campuses"
+                          item-text="name"
+                          label="Select Campus"
+                          item-value="id"
+                          color="primary"
+                          @change="campusListener"
+                          :rules="[rules.required]"
+                          class=" mr-2 ml-2 mb-2 mb-1"
+                          dense
+                          chip
+                          filled
+                            rounded
+                          ></v-select>
+                        </v-col> 
+                        <v-col cols="12" lg="8" class="pa-0 ma-0">
+                          <v-select
+                          v-model="editedItem.program_id"
+                          :items="programs"
+                          label="Select Program"
+                          item-value="id"
+                          item-text="name"
+                          @change="programListener"
+                          color="primary"
+                          :rules="[rules.required]"
+                          class="mr-2 ml-2 mb-2 mb-1"
+                          wrap
+                          dense
+                          chip
+                          filled
+                            rounded
+                        ></v-select>
+                        </v-col>  
+                      </v-row>
                       <v-divider />
 
                       <v-row class="ma-2">
@@ -288,14 +298,64 @@
                       </v-row>
                     </v-form>
                   </div>
-                </v-list-item-content>
-              </v-list-item>
+             </v-card-text>
+              
+              
             </v-card>
           </v-col>
-          <v-col cols="12" lg="8" class="elevation-2 white">
+          <v-col cols="12" lg="12">
+          <v-card>
+         
+          <v-card-title class="white--text elevation-2 mb-0 pb-0 mt-0 pt-2"  style="background: linear-gradient(to left, #1A237E, #1A237E, #0D47A1);">
+              <v-text-field 
+                  append-icon="mdi-magnify"
+                  label="Search"
+                  class="mb-0 pb-0 mt-2 pt-0"
+                  v-model="searchItem"
+                  @input="searchIt"
+                  solo-inverted
+                  flat
+                  dark
+                  dense
+                ></v-text-field>
+              
+                
+          </v-card-title>
+          
+          <v-container>
+          <v-row>
+            <v-container>
+                  <strong>Note: </strong>
+             <span class="overline"><v-icon
+                  small
+                  class="mr-1 ml-2 warning--text"
+             
+                >
+                  mdi-pencil
+                </v-icon>
+                - Edit
+             </span>
+               <span class="overline"> <v-icon small class="mr-1 ml-2 red--text" >
+                  mdi-delete-forever </v-icon
+                >
+              - Delete
+               </span>
+             
+               <span class="overline"> <v-icon
+                  small
+                  class="mr-1 ml-2 primary--text"
+                 
+                >
+                  mdi-qrcode
+                </v-icon>
+                - Copy Activation Code
+               </span>
+               </v-container>
+                </v-row>
             <v-data-table
               item-key="id"
-              class="elevation-0 pr-2 pl-2"
+              class="px-6 pb-6  mt-4"
+
               dense
               :loading="loading"
               loading-text="Loading... Please wait"
@@ -313,14 +373,7 @@
                 'show-first-last-page': true,
               }"
             >
-              <template v-slot:top>
-                <v-text-field
-                  append-icon="mdi-magnify"
-                  label="Search"
-                  v-model="searchItem"
-                  @input="searchIt"
-                ></v-text-field>
-              </template>
+              
               <template v-slot:item.id="{ item }">
                 <td>{{ students.data.indexOf(item) + 1 }}</td>
               </template>
@@ -352,9 +405,7 @@
                   mdi-delete-forever </v-icon
                 >
                 
-     <!-- <v-icon  @click="resetP(item)" small class="mr-2 red--text"  v-if="item.stat == '1'">
-                  mdi-lock-reset
-                </v-icon> -->
+ 
       
                 <v-icon
                   small
@@ -366,6 +417,9 @@
                 </v-icon>
               </template>
             </v-data-table>
+            </v-container>
+          </v-card>
+
           </v-col>
         </v-row>
         <div class="row">
@@ -409,6 +463,8 @@
   </v-sheet>
 </template>
 <script>
+import debounce from "lodash/debounce";
+
 export default {
   data: () => ({
     uploadDialog: "",
@@ -422,12 +478,15 @@ export default {
     isLoading:false,
     snackbar: false,
     cDialog:false,
+    exportDialog: false,
+    
     selected: [],
     text: "",
     success: "",
     error: "",
     snackbarColor: "",
     searchItem: "",
+    search: '',
     headers: [
       { text: "Student Number", value: "student_number" },
       { text: "Name", value: "name" },
@@ -456,21 +515,13 @@ export default {
       },
     ],
     editedIndex: -1,
+
     editedItem: {
       id: "",
       student_number: "",
       name: "",
-      campus: "",
-      section: "",
-      program: "",
       campus_id: "",
-      section_id: "",
       program_id: "",
-      user_id:"",
-      code: "",
-      year: "",
-      created_at: "",
-      stat: "",
     },
     defaultItem: {
       id: "",
@@ -520,9 +571,37 @@ export default {
   },
 
   watch: {
-    "editedItem.student_number"(val) {
-      this.rules = [];
-    },
+    "editedItem.student_number": debounce(function (val) {
+      console.log(val);
+      // this.loading = true;
+      
+      // const { page, itemsPerPage } = this.options;
+      // let pageNumber = page;
+      // axios
+      // .get(`/api/v1/clearancerequests?page=` + pageNumber, {
+      //   params: { 'per_page': itemsPerPage,
+      //     'semester': val,
+      //     'search': this.searchItem,
+      //     'college': this.college,
+      //     'program': this.program, },
+      // })
+      // .then((response) => {
+      //   //Then injecting the result to datatable parameters.
+        
+      //   // this.colleges = response.data.colleges; 
+
+      //   this.clearancerequests = response.data.clearance_requests; 
+      //   this.totalclearancerequests = response.data.clearance_requests.total;
+      //   this.numberOfPages = response.data.clearance_requests.last_page;
+      //   this.loading = false;
+
+      // });
+      
+    }, 300),
+    
+    // "editedItem.student_number"(val) {
+    //   this.rules = [];
+    // },
     dialog(val) {
       val || this.close();
     },

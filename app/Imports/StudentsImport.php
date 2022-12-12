@@ -10,6 +10,12 @@ use App\ProgramStudent;
 use App\Campus;
 use Illuminate\Support\Str;
 use App\Semester;
+use App\User;
+use App\Role;
+use App\UserRole;
+
+use Illuminate\Support\Facades\Hash;
+
 use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Uuid;
 class StudentsImport implements ToModel, WithHeadingRow
 {
@@ -20,18 +26,34 @@ class StudentsImport implements ToModel, WithHeadingRow
     */
     public function model(array $row)
     {
-        $student = Student::updateOrCreate([
-            'student_number'    => $row['student_id'],
-            'slug'    => str_replace(".","",str_replace(",","",str_replace(" ","", $row['campus']))).'-'.$row['student_id'].'-'.str_replace(".","",str_replace(",","",str_replace(" ","", $row['full_name']))),
-            'name'    => $row['full_name'],
-            'year'    => $row['year'],
-            'section_id'     => 1, 
-            'program_id'     => Program::where('name',$row['program'])->where('campus_id',Campus::where('name',$row['campus'])->first()->id)->first()->id, 
-            'initial_password' => Str::uuid()->toString(),
-            'semester_id' => Semester::latest('id')->first()->id,
+        $isAccountExits = User::where('email',$row['student_id'])->get()->count();
+        if($isAccountExits == 0){
+            $role = Role::where('description','Student')->first();
+            $user = User::create([
+                'name' => $row['last_name'].', '.$row['first_name'],
+                'email' => $row['email'],
+                'password' => Hash::make($row['student_id']), 
+                'username' => $row['email'],
+            ]);
+            $user->save();
+            $user->roles()->attach($role);
+            $userRole = UserRole::where('user_id',$user->id)->where('role_id',$role->id)->first();
 
-        ]);
-       
-        return $student;
+            $student = Student::updateOrCreate([
+                'student_number'    => $row['student_id'],
+                'slug'    => str_replace(".","",str_replace(",","",str_replace(" ","", $row['campus']))).'-'.$row['student_id'].'-'.str_replace(".","",str_replace(",","",str_replace(" ","", $row['last_name'].', '.$row['first_name']))),
+                'name'    => $row['last_name'].', '.$row['first_name'],
+                'year'    => 1,
+                'section_id'     => 1, 
+                'program_id'     => Program::where('name',$row['program'])->where('campus_id',Campus::where('name',$row['campus'])->first()->id)->first()->id, 
+                'initial_password' => Str::uuid()->toString(),
+                'semester_id' => Semester::latest('id')->first()->id,
+                'user_id' => $user->id,
+    
+            ]);
+           
+            return $student;
+        }
+        
     }
 }

@@ -12,6 +12,7 @@ use App\Clearance;
 use App\ClearancePurpose;
 use App\Student;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 class StudentPurposeSetupController extends Controller
 {
     /**
@@ -21,8 +22,13 @@ class StudentPurposeSetupController extends Controller
      */
     public function index()
     {
+        $now = Carbon::now();
+        $now = $now->format('Y-m-d');
         $purposes = Purpose::orderBy('id')->get();
-        $semesters = Semester::orderByDesc('id')->get();
+        $semesters = Semester::orderByDesc('id')
+        ->where('from', '<=', $now)
+        ->where('to', '>=', $now)
+        ->get();
         $graduations = Graduation::orderByDesc('id')->get();
         $activeStudentPurposeSetup = StudentPurposeSetup::where('user_id',Auth::user()->id)->first();
         $purpose_id ="";

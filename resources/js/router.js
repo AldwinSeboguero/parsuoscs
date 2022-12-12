@@ -60,6 +60,8 @@ import AdminProgramDirectorComponent from './components/admin/signatory/ProgramD
 import AdminStudentCouncilComponent from './components/admin/signatory/StudentCouncilComponent';
 import AdminRegistrarComponent from './components/admin/signatory/RegistrarComponent';
 import AdminStaffComponent from './components/admin/signatory/StaffComponent';
+import AdminStaffCopyPrevComponent from './components/admin/signatory/StaffCopyPrevComponent';
+
 
 //Program Director Import
 import PDComponent from './components/programdirector/PDComponent'; 
@@ -125,6 +127,9 @@ const routes =[
         path: '/admin',
         component: AdminComponent,
         name: 'Admin', 
+        meta: {
+            breadcrumb: 'Admin'
+          },
         beforeEnter: (to, from, next) => {
             if (localStorage.getItem('token')) {
                 next();
@@ -144,7 +149,8 @@ const routes =[
                     path: 'dashboard', 
                     beforeEnter: isADMIN,
                     component: AdminDashboardComponent, 
-                    name: 'Dashboard'
+                    name: 'Dashboard',
+                    
 
                     
                 },
@@ -152,19 +158,34 @@ const routes =[
                     path: 'student/list',
                     beforeEnter: isADMIN,
                     component: AdminStudentListComponent,
-                    name: 'Student List'
+                    name: 'Student List',
+                    meta: {
+                        breadcrumb: {
+                            label: 'Student List',
+                            parent:'admin'
+                          }
+                      }
+                   
                 },
                 {
                     path: 'colleges',
                     beforeEnter: isADMIN,
                     component: CollegesComponent,
-                    name: 'Colleges'
+                    name: 'Colleges',
+                    
+                    
                 },
                 {
                     path: 'campuses',
                     beforeEnter: isADMIN,
                     component: CampusesComponent,
-                    name: 'Campuses'
+                    name: 'Campuses',
+                    meta: {
+                        breadcrumb: {
+                            label: 'Campuses',
+                            parent:'admin'
+                          }
+                      } 
                 },
                 {
                     path: 'programs',
@@ -182,7 +203,13 @@ const routes =[
                     path: 'semesters',
                     beforeEnter: isADMIN,
                     component: SemestersComponent,
-                    name: 'Semesters'
+                    name: 'Semesters',
+                    meta: {
+                        breadcrumb: {
+                            label: 'Semesters',
+                            parent:'admin'
+                          }
+                      }
                 },
                 {
                     path: 'graduations',
@@ -233,11 +260,30 @@ const routes =[
                     name: 'Registrar'
                 }, 
                 {
-                    path: 'staff',
+                    path: 'signatories',
                     beforeEnter: isADMIN,
                     component: AdminStaffComponent,
-                    name: 'Staff'
+                    name: 'Signatories',
+                    meta: {
+                        breadcrumb: {
+                            label: 'Signatories',
+                            parent:'admin'
+                          }
+                      }
+                      
                 }, 
+                {
+                    path: 'signatories/copy-prev',
+                    beforeEnter: isADMIN,
+                    component: AdminStaffCopyPrevComponent,
+                    name: 'Copy Previous',
+                    meta: {
+                        breadcrumb: {
+                            label: 'Copy Previous',
+                            parent: 'Signatories'
+                        }
+                    },
+                },
                 {
                     path: 'programdirector',
                     beforeEnter: isADMIN,
@@ -449,7 +495,7 @@ const routes =[
     {
         path: '/osas',
         component: SignatoryComponent,
-        name: 'OSAS Other Campus', 
+        name: 'OSAS', 
         redirect: '/osas/clearance/requests',
         children: [
             //PD Routes

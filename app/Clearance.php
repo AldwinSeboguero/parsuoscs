@@ -13,7 +13,7 @@ class Clearance extends Model
     protected $fillable = [
         'student_id',
         'program_id',
-        'purpose_id'
+        'purpose_id',
 
     ] ;
     public function student(){

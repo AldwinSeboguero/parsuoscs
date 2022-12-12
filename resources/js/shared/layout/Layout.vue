@@ -236,7 +236,7 @@ export default {
         text: "Signatories",
         model: false,
         children: [
-          { text: "Staff", link: "/admin/staff" },
+          { text: "Staff", link: "/admin/signatories" },
           { text: "Student Council", link: "/admin/stcouncils" },
           { text: "Program Director", link: "/admin/programdirector" },
           { text: "Dean", link: "/admin/deans" },

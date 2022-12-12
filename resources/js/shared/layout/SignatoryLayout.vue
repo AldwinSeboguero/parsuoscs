@@ -291,6 +291,11 @@ mounted(){
                                 text: "Student List",
                                 link: "/osas/student/list",
                               }, 
+                              {
+                                icon: "mdi-account-group-outline",
+                                text: "User Accounts",
+                                link: "/osas/users",
+                              },
                               { icon: "mdi-cog", text: "Settings", link: "/osas/settings" }, 
                             ];
             }

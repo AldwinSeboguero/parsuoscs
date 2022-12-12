@@ -88,10 +88,12 @@ class ActiveClearanceController extends Controller
         return response()->json([
             // 'staff' => SignatoryV2::find(20720),
             // 'student' => $student,
-            'isOpen' =>$activeClearancePurpose ? 
+            // 'now' => $activeClearancePurpose->purpose->semester->from >= now()->format('Y-m-d'),
+            // 'now2' => $activeClearancePurpose->purpose->semester->to >= now()->format('Y-m-d') ,
+            'isOpen' => $activeClearancePurpose ? 
             (json_decode($activeClearancePurpose->purpose->purpose)->name == "Enrollment" ?
-                $activeClearancePurpose->purpose->semester->from <= now() && $activeClearancePurpose->purpose->semester->to >= now() 
-                : true )
+                $activeClearancePurpose->purpose->semester->from <= now()->format('Y-m-d') && $activeClearancePurpose->purpose->semester->to >= now()->format('Y-m-d') 
+                : false )
                 : false,
             'purpose' =>$activeClearancePurpose ? json_decode($activeClearancePurpose->purpose->purpose)->name.' '.json_decode($activeClearancePurpose->purpose->purpose)->description : null,
             'signatories'  => $activeClearancePurpose ? $signatories : null,
