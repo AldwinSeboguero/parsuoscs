@@ -41,7 +41,7 @@ class ClearanceRequestController extends Controller
         $per_page =$request->per_page ? $request->per_page : 10; 
         // $signatory_ids = SignatoryV2::where('user_id',Auth::user()->id)->get('id');
 
-        $clearance_requests =new ClearanceRequestCollection( ClearanceRequestV2::orderBy('requested_at')
+        $clearance_requests =new ClearanceRequestCollection( ClearanceRequestV2::orderByDesc('requested_at')
                                                 ->where('status', false)
                                                 ->when($request->search, function($inner) use($request){
                                                     $inner->whereHas('student', function($q) use ($request){

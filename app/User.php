@@ -43,6 +43,9 @@ class User extends Authenticatable
     public function roles(){
         return $this->belongsToMany('App\Role');
     }
+    public function role(){
+        return $this->hasOne('App\UserRole','user_id','id');
+    }
     public function programs(){
         return $this->belongsToMany('App\Program');
     }
@@ -65,9 +68,9 @@ class User extends Authenticatable
 
         return false;
     } 
-    public function role(){
-        return $this->belongsTo('App\UserRole');
-    }
+    // public function role(){
+    //     return $this->belongsTo('App\UserRole');
+    // }
     public function userRole($id){
     
         return $this->role()->where('user_id', $id)->first();

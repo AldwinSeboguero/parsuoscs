@@ -13,11 +13,14 @@ class CollegeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+
         return response()->json(
             [
-                'colleges'=> College::with('campus')->get(),
+                'colleges'=> College::when($request->campus, function($q) use($request){
+                    $q->where('campus_id',$request->campus);
+                })->get(),
                 'campuses' => Campus::orderBy('name')->get(),
             ],200);
     }

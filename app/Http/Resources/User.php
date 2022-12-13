@@ -16,12 +16,13 @@ class User extends JsonResource
     {
         return [
             
-            'id' => $this->user->id,
-            'name' => $this->user->name,
-            'email' => $this->user->email,
-            'role' => $this->role->description, 
-            'created_at' => $this->user->created_at->toDayDateTimeString(), 
-            'updated_at' => $this->user->updated_at->toDayDateTimeString(), 
+            'id' => $this->id,
+            'name' => $this->name,
+            'email' => $this->email,
+            'role' => $this->role->role ? ucfirst($this->role->role->name) : '', 
+            'role_id' => $this->role->role ? $this->role->role->id : '', 
+            'created_at' => $this->created_at->toDayDateTimeString(), 
+            'updated_at' => $this->updated_at->toDayDateTimeString(), 
         ];
     }
 }

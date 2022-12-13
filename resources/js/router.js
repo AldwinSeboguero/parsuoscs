@@ -22,7 +22,7 @@ import ADVISERComponent from './components/adviser/ADVISERComponent';
 //Admin Import Component
 import AdminDashboardComponent from './components/admin/DashboardComponent';
 import AdminDashboardComponentt from './components/admin/DashboardComponentt';
-import AdminStudentListComponent from './components/StudentListComponent';
+import AdminStudentListComponent from './components/admin/StudentsComponent';
 import CollegesComponent from './components/admin/CollegesComponent';
 import CampusesComponent from './components/admin/CampusesComponent';
 import GraduationsComponent from './components/admin/GraduationsComponent';
@@ -191,7 +191,13 @@ const routes =[
                     path: 'programs',
                     beforeEnter: isADMIN,
                     component: ProgramsComponent,
-                    name: 'Programs'
+                    name: 'Programs',
+                    meta: {
+                        breadcrumb: {
+                            label: 'Programs',
+                            parent:'admin'
+                          }
+                      }
                 },
                 {
                     path: 'sections',

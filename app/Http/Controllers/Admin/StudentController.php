@@ -24,6 +24,11 @@ use App\Semester;
 use App\User;
 use App\ClearanceRequestV2;
 use App\Exports\StudentActivationCode;
+use App\Http\Resources\ProgramCollection;
+
+use App\Role;
+use App\UserRole;
+
 class StudentController extends Controller
 {
     /**
@@ -108,22 +113,188 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     { 
-            
-            $student = new Student([
-            'student_number' => $request->student_number,
-            'name' => $request->name,
-            'slug' => $request->student_number.'-'.str_replace(".","",str_replace(",","",str_replace(" ","",$request->name))),
-            'name' => $request->name,
-            'year'    => 1,
-            'section_id'     => 1, 
-            'program_id'     => $request->program_id, 
-            'initial_password' => Str::uuid()->toString(),
-            ]);  
-            $student->save(); 
-            return $this->index($request);
+        $student_id = $request->student_id;
+        $name = $request->name;
+        $program_id = $request->program_id;
+        $campus_id = $request->campus_id;
+        $college_id = $request->college_id;
+        $email = $request->email;
+
+        $isAccountExits = User::where('email',$email)->get()->count();
+        $isStudentExits = Student::when($student_id, function ($q) use ($student_id){
+            $q->where('student_number','ilike','%'.$student_id.'%');
+        })
+        ->when($name, function ($q) use ($name){
+            $q->where('name','ilike','%'.$name.'%');
+        })
+        ->when($campus_id, function ($q) use ($campus_id){
+            $q->whereHas('program',function($q) use($campus_id){
+                $q->where('campus_id',$campus_id);
+            });
+        })
+        ->when($college_id, function ($q) use ($college_id){
+            $q->whereHas('program',function($q) use($college_id){
+                $q->where('college_id',$college_id);
+            });
+        })
+        ->when($program_id, function ($q) use ($program_id){
+            $q->where('program_id',$program_id);
+        })
+        ->when($email, function ($q) use ($email){
+                $q->has('user')->wherehas('user', function($q) use($email){
+                    $q->where('email','ilike','%'.$email.'%');
+                });
+        })->get()->count();
+
+        if($isAccountExits == 0 && $isStudentExits == 0){
+            $role = Role::where('description','Student')->first();
+            $user = User::create([
+                'name' => $name,
+                'email' => $email,
+                'password' => Hash::make($student_id), 
+                'username' => $email,
+            ]);
+            $user->save();
+            $user->roles()->attach($role);
+            $userRole = UserRole::where('user_id',$user->id)->where('role_id',$role->id)->first();
+
+            $student = Student::updateOrCreate([
+                'student_number'    => $student_id,
+                'slug'    => str_replace(".","",str_replace(",","",str_replace(" ","", $campus_id))).'-'.$student_id.'-'.str_replace(".","",str_replace(",","",str_replace(" ","", $name))),
+                'name'    => $name,
+                'year'    => 1,
+                'section_id'     => 1, 
+                'program_id'     => $program_id, 
+                'initial_password' => Str::uuid()->toString(),
+                'semester_id' => Semester::latest('id')->first()->id,
+                'user_id' => $user->id,
+    
+            ]);
+           
+            return $student;
+        }
+        elseif($isAccountExits != 0 ){
+            return response()->json([
+                'alert' => true,
+                'message' => 'Email Already Exist!'
+            ],500);
+        }
+        elseif($isStudentExits != 0 ){
+            return response()->json([
+                'alert' => true,
+                'count' => $isStudentExits,
+                'message' => 'Student Already Exist! Please check student data.'
+            ],500);
+        }
+        else{
+            return response()->json([
+                'alert' => true,
+                'message' => 'Student Record Added Successfully.'
+            ],200);
+        }
+            // $student = new Student([
+            // 'student_number' => $request->student_number,
+            // 'name' => $request->name,
+            // 'slug' => $request->student_number.'-'.str_replace(".","",str_replace(",","",str_replace(" ","",$request->name))),
+            // 'name' => $request->name,
+            // 'year'    => 1,
+            // 'section_id'     => 1, 
+            // 'program_id'     => $request->program_id, 
+            // 'initial_password' => Str::uuid()->toString(),
+            // ]);  
+            // $student->save(); 
+            // return $this->index($request);
             
     }
+    public function getStudents(Request $request){
+        
+        $student_id = $request->student_id;
+        $name = $request->name;
+        $program_id = $request->program_id;
+        $campus_id = $request->campus_id;
+        $college_id = $request->college_id;
+        $email = $request->email;
 
+
+
+        $students =  new StudentCollection(Student::orderByDesc('updated_at')
+        ->when($student_id, function ($q) use ($student_id){
+            $q->where('student_number','ilike','%'.$student_id.'%');
+        })
+        ->when($name, function ($q) use ($name){
+            $q->where('name','ilike','%'.$name.'%');
+        })
+        ->when($campus_id, function ($q) use ($campus_id){
+            $q->whereHas('program',function($q) use($campus_id){
+                $q->where('campus_id',$campus_id);
+            });
+        })
+        ->when($college_id, function ($q) use ($college_id){
+            $q->whereHas('program',function($q) use($college_id){
+                $q->where('college_id',$college_id);
+            });
+        })
+        ->when($program_id, function ($q) use ($program_id){
+            $q->where('program_id',$program_id);
+        })
+        ->when($email, function ($q) use ($email){
+                $q->has('user')->wherehas('user', function($q) use($email){
+                    $q->where('email','ilike','%'.$email.'%');
+                });
+        })
+        ->paginate($request->per_page));
+        return response()->json([
+            'table_data' => $students,
+            'headers' => [
+                [ 'text'=> 'Actions', 
+                  'sortable'=> false,
+                  'value'=> 'actions',
+                //   'class'=> 'blue darken-4 white--text', 
+                  'class' => 'blue--text text--darken-3 font-weight-black '
+                ],
+                [
+                  'text'=> '#',
+                  'align'=> 'start',
+                  'sortable'=> false,
+                  'value'=> 'id',
+                //   'class'=> 'blue darken-4 white--text',
+                  'class' => 'blue--text text--darken-3 font-weight-black '
+                ],
+                [ 'text'=> 'Student ID', 
+                  'sortable'=> false,
+                  'value'=> 'student_id',
+                //   'class'=> 'blue darken-4  white--text', 
+                  'class' => 'blue--text text--darken-3 font-weight-black '
+                ],
+                [ 'text'=> 'Name', 
+                  'sortable'=> false,
+                  'value'=> 'name',
+                //   'class'=> 'blue darken-4  white--text', 
+                  'class' => 'blue--text text--darken-3 font-weight-black '
+                ],
+                [ 'text'=> 'Email', 
+                  'sortable'=> false,
+                  'value'=> 'email',
+                //   'class'=> 'blue darken-4  white--text', 
+                  'class' => 'blue--text text--darken-3 font-weight-black '
+                ],
+                [ 'text'=> 'Program', 
+                  'sortable'=> false,
+                  'value'=> 'program',
+                //   'class'=> 'blue darken-4  white--text', 
+                  'class' => 'blue--text text--darken-3 font-weight-black '
+                ],
+                
+                [ 'text'=> 'Campus', 
+                  'sortable'=> false,
+                  'value'=> 'campus',
+                //   'class'=> 'blue darken-4  white--text', 
+                  'class' => 'blue--text text--darken-3 font-weight-black '
+                ],
+                  
+              ],
+        ]);
+    }
     /**
      * Display the specified resource.
      *
@@ -249,17 +420,41 @@ class StudentController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $student_id = $request->student_id;
+        $name = $request->name;
+        $program_id = $request->program_id;
+        $campus_id = $request->campus_id;
+        $college_id = $request->college_id;
+        $email = $request->email;
+
         $student = Student::find($id);
-        $student->name= $request->name;  
-        $student->student_number= $request->student_number;  
+        $student->name= $name;  
+        $student->student_number= $student_id;  
         $student->year= 1;   
         $student->section_id= 1; 
         // $program = Program::where('campus_id',$request->campus_id)->where('id',$request->program_id)->first();
-        $student->program_id= $request->program_id;  
-        $student->initial_password = $request->code;     
+        $student->program_id= $program_id;       
         $student->save();  
 
-        return response()->json(['student'=> new StudentResource($student)],200);
+        if($student->user_id && $student->user->email != $email){
+            User::where('email',$student->user->email)->update([
+                'email' => $email,
+            ]);
+        }
+        // $isAccountExits = User::where('email',$email)->get()->count();
+        // // return response()->json(['student'=> new StudentResource($student)],200);
+        // if($isAccountExits != 0 ){
+        //     return response()->json([
+        //         'alert' => true,
+        //         'message' => 'Email Already Exist!'
+        //     ],500);
+        // }
+        // else{
+            return response()->json([
+                'alert' => true,
+                'message' => 'Student Record Update Successfully.'
+            ],200);
+        // }
     }
 
     /**

@@ -11,10 +11,15 @@ class ProgramController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         return response()->json([
-            "programs" => Program::orderBy('college_id')->get()->map(function($inner){
+            "programs" => Program::when($request->campus, function($q) use($request){
+                $q->where('campus_id',$request->campus);
+            })
+            ->when($request->college, function($q) use($request){
+                $q->where('college_id',$request->college);
+            })->get()->map(function($inner){
                 return [
                     'id' => $inner->id,
                     'short_name' => $inner->college->short_name.'-'.$inner->short_name,

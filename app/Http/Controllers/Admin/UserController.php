@@ -8,7 +8,7 @@ use App\User;
 use Illuminate\Support\Facades\Auth;
 use App\Role; 
 use App\UserRole;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Hash;    
 use Illuminate\Support\Str;
 use App\Http\Resources\User as UserResource;
 use App\Http\Resources\UserCollection;
@@ -28,7 +28,7 @@ class UserController extends Controller
         if(Auth::user()->hasRole("admin")){
         $per_page =$request->per_page ? $request->per_page : 10; 
         return response()->json([
-        'users' => new UserCollection(UserRole::orderByDesc('created_at')->with('user')->with('role')->paginate($per_page)),
+        'users' => new UserCollection(User::orderByDesc('updated_at')->paginate($per_page)),
         'isAdmin' => Auth::User(),
         'roles' => Role::pluck('description')->all(),
         
@@ -141,7 +141,7 @@ class UserController extends Controller
         $user->save();
         $user->roles()->detach();
         $user->roles()->attach($role);
-        $userRole = UserRole::where('user_id',$user->id)->where('role_id',$role->id)->first();
+        $userRole = User::where('id',$user->id)->first();
         return response()->json(['user'=> new UserResource($userRole)],200);
 
     }

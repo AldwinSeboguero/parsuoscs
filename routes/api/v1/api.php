@@ -28,13 +28,13 @@ use app\Http\Controllers\DesignationController;
  
     Route::get('verify', 'Admin\UserController@verify');
     Route::resource('colleges', 'Admin\CollegeController');
-    Route::resource('programs', 'Admin\ProgramController');
+    Route::resource('adminprograms', 'Admin\ProgramController');
     Route::resource('sections', 'Admin\SectionController');
     Route::resource('adminsemesters', 'Admin\SemesterController');
     Route::resource('graduations', 'Admin\GraduationController');
     Route::resource('purposes', 'Admin\PurposeController');
     Route::resource('campuses', 'Admin\CampusController');
-    Route::resource('students', 'Admin\StudentController');
+    Route::resource('adminstudents', 'Admin\StudentController');
     Route::post('campusListener', 'Admin\StudentController@campusListener');
     Route::post('programListener', 'Admin\StudentController@programListener');
 
@@ -188,8 +188,11 @@ Route::post('/deficeincy/edit', 'Admin\DeficiencyController@update');
 
 
 //Admin Route
+Route::get('/getStudents', 'Admin\StudentController@getStudents');
 Route::get('/getStaff', 'Admin\StaffController@getStaff');
 Route::get('/getSemesters', 'Admin\SemesterController@getSemesters');
+Route::get('/getPrograms', 'Admin\ProgramController@getPrograms');
+
 
 
 

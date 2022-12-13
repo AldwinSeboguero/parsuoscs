@@ -35,6 +35,10 @@ class Student extends Model
     {
         return $this->belongsTo('App\Program','program_id'); 
     }
+	public function user()
+    {
+        return $this->belongsTo('App\User','user_id'); 
+    }
 	public function deficiencies()
     {
         return $this->belongsToMany('App\Deficiency','deficiency_student','student_id','deficiency_id')->withTimestamps();

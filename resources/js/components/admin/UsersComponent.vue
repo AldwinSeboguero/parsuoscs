@@ -1,7 +1,7 @@
 <template>
   <v-card>
   <v-card-subtitle class="white--text elevation-3 pt-4 pb-6"   style="background: linear-gradient(to left, #1A237E, #1A237E, #0D47A1);">
-  <span class="text-h6  text-uppercase"> User Accounts </span>
+  <span class="text-h6  text-uppercase"> Users </span>
   <v-row>
         <v-col
         class="mb-0 pb-0 mt-0 pt-4 mr-0 pr-0"
