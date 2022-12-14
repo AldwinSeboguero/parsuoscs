@@ -38,17 +38,20 @@
         :pageCount="total_pages"
         :server-items-length="total"
         :options.sync="options"
-        
-        dense
+        responsive
         class=" elevation-0  mt-1 font-weight-normal pa-0 font-sans text-uppercase mx-4"
     >
     <template v-slot:item.id="{ item }">
-     <span class="font-weight-bold">{{item.prefix}}{{pad(item.id,5)}}</span>
+     <span class="font-weight-bold" >{{item.prefix}}{{pad(item.id,5)}}</span>
     </template>
-   
+    
     <template v-slot:item="{ item, index }">
-      <tr :class="{ 'blue darken-3 white--text': editingRow === item }" @click="editRow(index)">
-        <td v-for="header in headers" :key="header.text">
+      
+      <tr :class=" { 'blue darken-3 white--text': editingRow === item }"   @click="editRow(index)" >
+        <td v-for="header in headers" 
+        style="font-size:12px !important;"
+         :key="header.text"
+         class="d-block d-sm-table-cell">
         <v-menu
            transition="slide-y-transition"
            v-if="header.value === 'actions'"
@@ -60,7 +63,7 @@
                <template v-slot:activator="{ on, attrs }">
                <v-btn
                class="blue lighten-4 blue--text text--darken-4 font-weight-light"
-               
+               small
                v-bind="attrs"
                v-on="on"
                depressed
@@ -102,7 +105,26 @@
       </tr>
       
     </template>
-    
+    <!-- <template v-slot:header.name="{ headers }">
+      {{ header.text.toUpperCase() }}
+    </template>
+    <template
+        v-slot:body="{ items }"
+      >
+        <tbody  v-for="item in items" 
+            :key="item.name">
+          
+            <tr
+            v-for="header in headers" 
+            :key="header.text"
+            style="font-size:12px !important;"
+            >
+              <td>{{ item[header.value] }}</td>
+            </tr>
+</span>
+         
+        </tbody>
+      </template> -->
     </v-data-table>
     <v-dialog v-model="showDeleteDialog" persistent width="400">
       <v-card class="pt-1">
@@ -320,7 +342,7 @@
     }
 </script>
 
-</style> -->
+
 <style scoped>
 
 .v-text-field--outlined >>> fieldset {
@@ -339,5 +361,10 @@
 }
 .edited-row {
   background-color: #eeeeee;
+}
+</style>
+<style scoped>
+  .large-font {
+  font-size: 128px;
 }
 </style>

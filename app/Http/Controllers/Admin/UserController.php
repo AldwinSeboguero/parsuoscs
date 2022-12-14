@@ -87,23 +87,17 @@ class UserController extends Controller
     { 
         if(Auth::user()->hasRole("admin")){
             return response()->json([
-                'users' => new UserCollection(UserRole::orderByDesc('created_at')->with('user')->with('role')
-                ->whereHas('user', function($q) use ($id)
-                {
-                    $q->where('name','ILIKE','%'.$id.'%')->orWhere('email','ILIKE','%'.$id.'%');
-        
-                })->paginate(10)),
+                'users' => new UserCollection(User::orderByDesc('updated_at')
+                ->where('name','ILIKE','%'.$id.'%')
+                ->orWhere('email','ILIKE','%'.$id.'%')->paginate(10)),
                 'roles' => Role::pluck('description')->all()
                 ],200);
             }
             else{
                 return response()->json([
-                    'users' => new UserCollection(UserRole::orderByDesc('created_at')->where('role_id',2)->with('user')->with('role')
-                    ->whereHas('user', function($q) use ($id)
-                    {
-                        $q->where('name','ILIKE','%'.$id.'%');
-            
-                    })->paginate(10)),
+                    'users' => new UserCollection(User::orderByDesc('updated_at')
+                    ->where('name','ILIKE','%'.$id.'%')
+                    ->orWhere('email','ILIKE','%'.$id.'%')->paginate(10)),
                     'roles' => Role::pluck('description')->all()
                     ],200);
             }

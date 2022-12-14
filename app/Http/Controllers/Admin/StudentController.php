@@ -246,7 +246,7 @@ class StudentController extends Controller
         return response()->json([
             'table_data' => $students,
             'headers' => [
-                [ 'text'=> 'Actions', 
+                [ 'text'=> '', 
                   'sortable'=> false,
                   'value'=> 'actions',
                 //   'class'=> 'blue darken-4 white--text', 
