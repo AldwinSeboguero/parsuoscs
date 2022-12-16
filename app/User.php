@@ -46,6 +46,9 @@ class User extends Authenticatable
     public function role(){
         return $this->hasOne('App\UserRole','user_id','id');
     }
+    public function studentAccount(){
+        return $this->hasOne('App\Student','user_id','id');
+    }
     public function programs(){
         return $this->belongsToMany('App\Program');
     }

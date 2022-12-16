@@ -30,16 +30,20 @@ class UserController extends Controller
         return response()->json([
         'users' => new UserCollection(User::orderByDesc('updated_at')->paginate($per_page)),
         'isAdmin' => Auth::User(),
-        'roles' => Role::pluck('description')->all(),
+        'roles' => Role::all(),
+
         
         ],200);
         }
         else{
             $per_page =$request->per_page ? $request->per_page : 10; 
         return response()->json([
-        'users' => new UserCollection(UserRole::orderByDesc('created_at')->where('role_id',2)->with('user')->with('role')->paginate($per_page)),
+        'users' => new UserCollection(User::orderByDesc('updated_at')->whereHas('role', function($q){
+            $q->where('role_id',2);
+        })->paginate($per_page)),
         'isAdmin' => Auth::User(),
-        'roles' => Role::pluck('description')->all(),
+        'roles' => Role::where('id',2)->get(),
+
         
         ],200);
         }
@@ -63,7 +67,8 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-            $role = Role::where('description',$request->role)->first();
+            $role = Role::where('id',$request->role_id)->first();
+
             $user = new User([
                 'name' => $request->name,
                 'email' => $request->email,
@@ -72,7 +77,7 @@ class UserController extends Controller
             ]);  
             $user->save();
             $user->roles()->attach($role);
-            $userRole = UserRole::where('user_id',$user->id)->where('role_id',$role->id)->first();
+            $userRole = UserRole::where('user_id',$user->id)->where('role_id',$request->role_id)->first();
             return response()->json(['user'=> new UserResource($userRole)],200);
      
     }
@@ -89,16 +94,31 @@ class UserController extends Controller
             return response()->json([
                 'users' => new UserCollection(User::orderByDesc('updated_at')
                 ->where('name','ILIKE','%'.$id.'%')
-                ->orWhere('email','ILIKE','%'.$id.'%')->paginate(10)),
-                'roles' => Role::pluck('description')->all()
+                ->orWhere('email','ILIKE','%'.$id.'%')
+                ->paginate(10)),
+                'roles' => Role::get(),
+
                 ],200);
             }
             else{
                 return response()->json([
                     'users' => new UserCollection(User::orderByDesc('updated_at')
-                    ->where('name','ILIKE','%'.$id.'%')
-                    ->orWhere('email','ILIKE','%'.$id.'%')->paginate(10)),
-                    'roles' => Role::pluck('description')->all()
+                    ->whereHas('roles', function($q){
+                        $q->where('role_id',2);
+                    })
+                    ->when($id, function($q) use($id){
+                        $q->where('name','ILIKE','%'.$id.'%');
+                            
+                    })
+                    ->when($id, function($q) use($id){
+                        $q->where('email','ILIKE','%'.$id.'%');
+                            
+                    })
+                    
+                    
+                    ->paginate(10)),
+                    'roles' => Role::where('id',2)->get(),
+    
                     ],200);
             }
        
@@ -125,7 +145,8 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $role = Role::where('description',$request->role)->first();
+        // dd($request->role_id);
+        $role = Role::where('id',$request->role_id)->first();
         $user = User::find($id);
         $user->name= $request->name;
         $user->email=$request->email;  
@@ -218,7 +239,7 @@ class UserController extends Controller
         return response()->json(['message' => 'Valid Email'], 200);
     }
     public function changeRole(Request $request){
-        $role = Role::where('description',$request->role)->first();
+        $role = Role::where('id',$request->role_id)->first();
         $user = User::find($request->user);  
         $user->roles()->detach();
         $user->roles()->attach($role);

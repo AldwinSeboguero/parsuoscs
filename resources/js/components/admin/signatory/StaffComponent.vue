@@ -291,22 +291,20 @@
               
             </v-card-text>
             <v-card-actions>
-            <div class="text-center pb-4">
+            <div class="text-center pb-4 ml-3">
                     <v-btn
                       type="submit" 
-                      @click.prevent="save" 
-                      
+                      @click="$router.push('signatories/create-update')"
                       dark
                       success
                       small
                       min-width="40%"
                       class="elevation-0 success"
                     >
-                    <v-icon left>mdi-magnify</v-icon>  Search
+                    <v-icon left>mdi-account-plus</v-icon>  Create
                     </v-btn>
                     <v-btn
                       type="submit" 
-                      @click.prevent="copy" 
                       
                       dark
                       small

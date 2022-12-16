@@ -61,12 +61,14 @@ import AdminStudentCouncilComponent from './components/admin/signatory/StudentCo
 import AdminRegistrarComponent from './components/admin/signatory/RegistrarComponent';
 import AdminStaffComponent from './components/admin/signatory/StaffComponent';
 import AdminStaffCopyPrevComponent from './components/admin/signatory/StaffCopyPrevComponent';
+import AdminStaffCreateComponent from './components/admin/signatory/StaffCreateComponent';
+
 
 
 //Program Director Import
 import PDComponent from './components/programdirector/PDComponent'; 
 import PDDashboardComponent from './components/programdirector/DashboardComponent'; 
-import PDStudentListComponent from './components/programdirector/StudentListComponent'; 
+import PDStudentListComponent from './components/admin/StudentsComponent'; 
 import PDClearanceRequestsComponent from './components/programdirector/ClearanceRequestsComponent';
 import PDCASClearanceRequestsComponent from './components/programdirector/ClearanceCASRequestsComponent';
 import PDCBMClearanceRequestsComponent from './components/programdirector/ClearanceCBMRequestsComponent';
@@ -290,6 +292,19 @@ const routes =[
                         }
                     },
                 },
+                {
+                    path: 'signatories/create-update',
+                    beforeEnter: isADMIN,
+                    component: AdminStaffCreateComponent,
+                    name: 'Create/Update Signatory',
+                    meta: {
+                        breadcrumb: {
+                            label: 'Create/Update Signatory',
+                            parent: 'Signatories'
+                        }
+                    },
+                },
+                
                 {
                     path: 'programdirector',
                     beforeEnter: isADMIN,

@@ -334,9 +334,9 @@ export default {
         },
        
     async setEditedItem(val){
-      this.editedForms = val;
+      // this.editedForms = val;
       this.isEditMode = true;
-      this.forms = this.editedForms;
+      this.forms = Object.assign({},val);
       this.formName = 'Update';
       this.formIcon = 'mdi-file-edit';
     },

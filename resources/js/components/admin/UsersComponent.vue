@@ -1,7 +1,8 @@
 <template>
   <v-card>
   <v-card-subtitle class="white--text elevation-3 pt-4 pb-6"   style="background: linear-gradient(to left, #1A237E, #1A237E, #0D47A1);">
-  <span class="text-h6  text-uppercase"> Users </span>
+  <span class="text-h6  text-uppercase"> Users
+     </span>
   <v-row>
         <v-col
         class="mb-0 pb-0 mt-0 pt-4 mr-0 pr-0"
@@ -129,11 +130,13 @@
                         ></v-text-field>
                       </v-col>
                       <v-col cols="12" sm="12" style="margin: 0">
-                        <v-select
-                          v-model="editedItem.role"
+                      <v-select
+                          v-model="editedItem.role_id"
                           :items="roles"
                           label="Select Role"
-                          value="editedItem.role"
+                          item-text="description"
+                          item-value="id"
+                          item-key="id" 
                           color="primary"
                           :rules="[rules.required]"
                           rounded

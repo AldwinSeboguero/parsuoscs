@@ -21,6 +21,16 @@ class Program extends Model
     {
         return $this->belongsTo('App\Campus','campus_id');
     }
+    public function signatories(){
+        return $this->hasMany('App\SignatoryV2','program_id','id');
+    }
+    public function signatory($designation){
+        if($this->signatories()->whereIn('designation_id', $designation)->first()){
+            return true;
+        }
+
+        return false;
+    }
    
     
 }

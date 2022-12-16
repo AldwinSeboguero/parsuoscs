@@ -26,10 +26,15 @@ class Staff extends JsonResource
             'college' => $this->college->short_name,
             'program' => $this->program->short_name,
             'purpose' => $this->purpose->purpose,
-            'user_id' => $this->user->id,   
+            'program_id' => $this->program->id,
+
+            'purpose_id' => $this->purpose->id,
+            'user_id' => $this->user->id,  
             'semester_id' => $this->semester->id,
             'campus_id' => $this->campus->id,
             'designee_id' => $this->designee->id,
+            'order' => $this->order ? $this->order : '',
+
     ];
     }
 }

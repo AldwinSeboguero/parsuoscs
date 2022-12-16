@@ -279,11 +279,10 @@
                     <v-icon left>{{formActionIcon}}</v-icon> {{ isEditMode ? 'Save Changes' : 'Save' }}
                     </v-btn>
                     <v-btn
-                      type="submit" 
                       dark
                       outlined
                       small
-                      @click="clearForms"
+                      @click.prevent="clearForms"
                       class="elevation-0"
                       color="primary"
                     >
@@ -350,6 +349,7 @@ export default {
     semesters: {},
     signatories:{},
     forms: {
+      id: '',
       name: '',
       student_id:'',
       campus_id:'',
@@ -487,29 +487,30 @@ export default {
           program_id: this.forms.program_id,
 
         };
+      
       if(!this.isEditMode){
        
       this.$refs.childComponent.filter(data);
       }
     }, 300),
   },
-  async mounted() {
+   mounted() {
     // await axios.get(`/api/v1/programs`).then((response) => {
     //           this.programs = response.data.programs;
     //         });
-    await axios.get(`/api/v1/campuses`).then((response) => {
+     axios.get(`/api/v1/campuses`).then((response) => {
           this.campuses = response.data.campuses;
     });
-    await axios.get(`/api/v1/adminstudents`).then((response) => {
+     axios.get(`/api/v1/adminstudents`).then((response) => {
           this.semesters = response.data.semesters;
     });
-    await axios.get(`/api/v1/designations`).then((response) => {
+     axios.get(`/api/v1/designations`).then((response) => {
           this.designations = response.data.designations;
     });
-    await axios.get(`/api/v1/signatories`).then((response) => {
+     axios.get(`/api/v1/signatories`).then((response) => {
           this.signatories = response.data.signatories.data;
     });
-    await axios.get(`/api/v1/purposes`).then((response) => {
+     axios.get(`/api/v1/purposes`).then((response) => {
           this.purposes = response.data.purposes;
     });
     // await axios.get(`/api/v1/colleges`,{
@@ -573,7 +574,7 @@ export default {
           // Removes special chars.
         },
        
-    async setEditedItem(val){
+     setEditedItem(val){
       console.log(val)
       this.editedForms = val;
       this.isEditMode = true;
@@ -581,10 +582,12 @@ export default {
       this.formName = 'Update';
       this.formIcon = 'mdi-file-edit';
     },
-    async clearForms(){
-      this.editedForms = this.defaultForms;
+     clearForms(){
+      this.editedForms = Object.assign({}, this.defaultForms);
+
       this.isEditMode = false;
-      this.forms = this.defaultForms;
+      this.forms = Object.assign({}, this.defaultForms);
+
       this.$refs.childComponent.editRowReset();
       this.formName = 'Add';
       this.formIcon = 'mdi-file-plus';

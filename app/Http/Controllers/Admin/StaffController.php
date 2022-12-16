@@ -17,6 +17,7 @@ use App\Staff_DEAN;
 use App\StaffRegistrar;
 use App\StaffStCouncil;
 use App\Purpose;
+use App\Program;
 use App\Staff_Adviser;
 use App\Http\Resources\Staff as StaffResource;
 use App\Http\Resources\StaffCollection;
@@ -147,13 +148,18 @@ class StaffController extends Controller
         //     });
         // })
         // ->paginate($request->per_page));
+        $users = User::whereHas('roles', function($q){
+            $q->where('role_id',2);
+        })->withCount('studentAccount')->doesnthave('studentAccount')->paginate(5);
+        $programs = Program::doesnthave('signatories')->paginate(5);
 
         return response()->json([
-            
             // 'users' => new UserStaffCollection(UserV2::with(['designees' => function($q) {
             //     $q->distinct('designee_id');
             // }])->withCount('designees')->has('designees')->paginate(104)),
             //  'users2' => UserV2::with('designees')->withCount('designees')->paginate(),
+            'programs' => $programs,
+            'user_with_no_student_act' => $users,
             'table_data' => $staffs,
             'semester' =>  $semester,
             'semester_name' => $semester_name,
@@ -187,6 +193,12 @@ class StaffController extends Controller
                 [ 'text'=> 'Purpose', 
                   'sortable'=> false,
                   'value'=> 'purpose',
+                //   'class'=> 'blue darken-4  white--text', 
+                  'class' => 'blue--text text--darken-3 font-weight-black '
+                ],
+                [ 'text'=> 'Order', 
+                  'sortable'=> false,
+                  'value'=> 'order',
                 //   'class'=> 'blue darken-4  white--text', 
                   'class' => 'blue--text text--darken-3 font-weight-black '
                 ],
@@ -277,17 +289,76 @@ class StaffController extends Controller
 
     public function store(Request $request)
     { 
-           
-            $staff = Staff::firstOrCreate([
-            'user_id' => $request->user_id,
-            'campus_id'=> $request->campus_id, 
-            'semester_id'=> $request->semester_id,
-            'designee_id'=> $request->designee_id,
-            ]);  
-            $staff->save(); 
-            $staffs =  new StaffCollection(Staff::orderByDesc('updated_at')->with('user')->with('semester')->with('campus')->with('designee')
-            ->paginate(5));
-            return response()->json(['staffs'=>$staffs,200]);
+        $designation = $request->designation;
+        $campus = $request->campus;
+        $program = $request->program;
+        $signatory = $request->signatory;
+        $purpose = $request->purpose;
+        $semester = $request->semester;
+        $order = $request->order;
+
+        if($designation && $campus && $program && $signatory && $purpose && $semester && $order){
+            $hasSignatory = 0;
+            $hasSignatory = SignatoryV2::when($campus, function($q) use($campus){
+                $q->where('campus_id', $campus);
+            })
+            ->when($semester, function($q) use($semester){
+                $q->where('semester_id', $semester);
+            })
+            ->when($designation, function($q) use($designation){
+                $q->where('designee_id', $designation);
+            })
+            ->when($purpose, function($q) use($purpose){
+                $q->where('purpose_id', $purpose);
+            })
+            ->when($program, function($q) use($program){
+                $q->where('program_id', $program);
+            })->paginate(5)->total();
+            $program_id = Program::find($program);
+            $user = User::find($signatory);
+            $designee = Designee::find($designation);
+            if(!$hasSignatory){
+                
+                SignatoryV2::create(
+                    [
+                    'program_id' => $program_id->id,
+                    'campus_id' => $program_id->campus_id,
+                    'college_id' => $program_id->college_id,
+                    'user_id' => $user->id,
+                    'name' => $user->name,
+                    'designee_id' => $designation,
+                    'order' => $order,
+                    'purpose_id' => $purpose,
+                    'semester_id' => $semester,
+                    ]
+                
+                );
+            }
+            else{
+                return response()->json([
+                    'message' => $designee->name.' for '.$program_id->name.' already exist!',
+                ],500);
+            }
+
+            return $hasSignatory;
+
+        }
+        else{
+            return response()->json([
+                'message' => 'Missing required data! Please complete filling out the forms.'
+            ],500);
+        }
+        
+            // $staff = Staff::firstOrCreate([
+            // 'user_id' => $request->user_id,
+            // 'campus_id'=> $request->campus_id, 
+            // 'semester_id'=> $request->semester_id,
+            // 'designee_id'=> $request->designee_id,
+            // ]);  
+            // $staff->save(); 
+            // $staffs =  new StaffCollection(Staff::orderByDesc('updated_at')->with('user')->with('semester')->with('campus')->with('designee')
+            // ->paginate(5));
+            // return response()->json(['staffs'=>$staffs,200]);
     }
 
     /**
@@ -318,14 +389,64 @@ class StaffController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $staff = Staff::find($id); 
-        $staff->user_id = $request->user_id;
-        $staff->campus_id= $request->campus_id; 
-        $staff->semester_id= $request->semester_id;
-        $staff->designee_id= $request->designee_id;
-        $staff->save();  
-        // return response()->json(['staff' => $staff],200);
-        return response()->json(['staff'=> new StaffResource($staff)],200);
+        $designation = $request->designation;
+        $campus = $request->campus;
+        $program = $request->program;
+        $signatory = $request->signatory;
+        $purpose = $request->purpose;
+        $semester = $request->semester;
+        $order = $request->order;
+        $signatory_id = $request->id;
+
+
+        if($designation && $campus && $program && $signatory && $purpose && $semester && $order){
+            $hasSignatory = 0;
+            $hasSignatory = SignatoryV2::when($campus, function($q) use($campus){
+                $q->where('campus_id', $campus);
+            })
+            ->when($semester, function($q) use($semester){
+                $q->where('semester_id', $semester);
+            })
+            ->when($designation, function($q) use($designation){
+                $q->where('designee_id', $designation);
+            })
+            ->when($purpose, function($q) use($purpose){
+                $q->where('purpose_id', $purpose);
+            })
+            ->when($program, function($q) use($program){
+                $q->where('program_id', $program);
+            })->paginate(5)->total();
+            $program_id = Program::find($program);
+            $user = User::find($signatory);
+            $designee = Designee::find($designation);
+            if($hasSignatory){
+                $signatoryV2 = SignatoryV2::find($signatory_id);
+                $signatoryV2->program_id = $program_id->id;
+                $signatoryV2->campus_id = $program_id->campus_id;
+                $signatoryV2->college_id = $program_id->college_id;
+                $signatoryV2->user_id = $user->id;
+                $signatoryV2->name = $user->name;
+                $signatoryV2->designee_id = $designation;
+                $signatoryV2->order = $order;
+                $signatoryV2->purpose_id = $purpose;
+                $signatoryV2->semester_id = $semester; 
+                $signatoryV2->save();
+                
+            }
+            else{
+                return response()->json([
+                    'message' => $designee->name.' for '.$program_id->name.' doesn\'t exist!',
+                ],500);
+            }
+
+            return $hasSignatory;
+
+        }
+        else{
+            return response()->json([
+                'message' => 'Missing required data! Please complete filling out the forms.'
+            ],500);
+        }
     }
 
     /**
@@ -342,9 +463,9 @@ class StaffController extends Controller
     public function getPrevDeanEnrollment(Request $request){
         $prevsem_id = $request->prev;
         $signatories = SignatoryV2::orderBy('designee_id')->whereIn('designee_id', [2])
-        ->where('campus_id',$request->campus)
+        ->where('college_id',$request->college)
         ->whereHas('program', function($q)use($request){
-            $q->where('campus_id',$request->campus);
+            $q->where('college_id',$request->college);
         })
         ->where('purpose_id',1)
         ->where('semester_id',$prevsem_id)

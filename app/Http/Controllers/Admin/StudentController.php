@@ -148,7 +148,7 @@ class StudentController extends Controller
 
         if($isAccountExits == 0 && $isStudentExits == 0){
             $role = Role::where('description','Student')->first();
-            $user = User::create([
+            $user = User::create([  
                 'name' => $name,
                 'email' => $email,
                 'password' => Hash::make($student_id), 
@@ -440,6 +440,20 @@ class StudentController extends Controller
             User::where('email',$student->user->email)->update([
                 'email' => $email,
             ]);
+        }
+        elseif($student->user_id == null){
+            $role = Role::where('description','Student')->first();
+            $user = User::create([  
+                'name' => $name,
+                'email' => $email,
+                'password' => Hash::make($student_id), 
+                'username' => $email,
+            ]);
+            $user->save();
+            $user->roles()->attach($role);
+            $userRole = UserRole::where('user_id',$user->id)->where('role_id',$role->id)->first();
+            $student->user_id = $user->id;
+            $student->save();
         }
         // $isAccountExits = User::where('email',$email)->get()->count();
         // // return response()->json(['student'=> new StudentResource($student)],200);

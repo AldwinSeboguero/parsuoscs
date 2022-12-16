@@ -1,9 +1,17 @@
 <template>
   <v-card>
-  <v-card-subtitle class="white--text text-uppercase elevation-2 pt-4"   style="background: linear-gradient(to left, #1A237E, #1A237E, #0D47A1);">
-  <span class="text-h6"> User Accounts </span>
-      
-  <v-text-field 
+  <v-card-subtitle class="white--text elevation-3 pt-4 pb-6"   style="background: linear-gradient(to left, #1A237E, #1A237E, #0D47A1);">
+  <span class="text-h6  text-uppercase"> Users
+     </span>
+  <v-row>
+        <v-col
+        class="mb-0 pb-0 mt-0 pt-4 mr-0 pr-0"
+        cols="9"
+        md="10"
+        lg="10"
+        
+        >
+        <v-text-field 
             append-icon="mdi-magnify"
             label="Search"
             v-model="searchItem"
@@ -14,9 +22,157 @@
             dense
             hide-details
           ></v-text-field>
+       </v-col>
+       <v-col
+        class="mb-0 pb-0 mt-0 pt-4 mr-0 text-right pl-1 ml-0"
+        cols="3"
+        md="2"
+        lg="2">
+        <v-dialog v-model="dialog" max-width="500px">
+            <template v-slot:activator="{ on, attrs }">
+              <span></span>
+             <v-spacer></v-spacer>
+              <span>
+              <v-btn color="" dark class="px-3" v-bind="attrs" v-on="on" text flat depressed>
+                <v-icon small class="mr-2"> mdi-account-plus</v-icon>
+               <span class="hidden-md-and-down">New User</span> 
+              </v-btn>
+              </span>
+              
+            </template>
+            <v-card>
+              <v-card-title class="elevation-2 white--text" style="background: linear-gradient(to left, #1A237E, #1A237E, #0D47A1);">
+                <v-icon class="white--text" style="padding-right: 8px">{{
+                  formIcon
+                }}</v-icon>
+                <span class="headline">{{ formTitle }}</span>
+              </v-card-title>
+              <v-form
+                v-model="valid"
+                method="post"
+                v-on:submit.stop.prevent="save"
+              >
+                <v-card-text>
+                  <v-container>
+                    <v-row>
+                      <v-col cols="12" sm="12">
+                        <v-text-field
+                          v-model="editedItem.name"
+                          label="Name"
+                          :rules="[rules.required, rules.min]"
+                          filled
+                          rounded
+                          hide-details
+                        ></v-text-field>
+                      </v-col>
+                      <v-col cols="12" sm="12" v-if="editedIndex == -1">
+                        <v-text-field
+                          type="text"
+                          color="primary"
+                          v-model="editedItem.password"
+                          hint="At least 8 characters"
+                          label="Type Password" 
+                          filled
+                          rounded
+                          hide-details
+                        ></v-text-field>
+                      </v-col>
+                      <v-col cols="12" sm="12" v-if="editedIndex > -1">
+                        <v-text-field
+                          type="text"
+                          color="primary"
+                          v-model="editedItem.password"
+                          label="Type Password" 
+                          :rules="[rules.required, rules.min]"
+                          filled
+                          rounded
+                          hide-details
+
+                        ></v-text-field>
+                      </v-col>
+                      <v-col cols="12" sm="12" v-if="editedIndex == -1">
+                        <v-text-field
+                          type="text"
+                          color="primary"
+                          v-model="editedItem.rpassword"
+                          label="Retype Password"
+                          hint="At least 8 characters"
+                          :rules="[rules.required, rules.min, passwordmatch]"
+                          filled
+                          rounded
+                          hide-details
+                        ></v-text-field>
+                      </v-col>
+
+                      <v-col cols="12" sm="12" v-if="editedIndex == -1">
+                        <v-text-field
+                          v-model="editedItem.email"
+                          type="email"
+                          :success-messages="success"
+                          :error-messages="error"
+                          :blur="checkEmail"
+                          label="Email"
+                          :rules="[rules.required, rules.validEmail]"
+                          filled
+                          rounded
+                          hide-details
+                        ></v-text-field>
+                      </v-col>
+                      <v-col cols="12" sm="12" v-if="editedIndex > -1">
+                        <v-text-field
+                          v-model="editedItem.email"
+                          type="email" 
+                          label="Email"
+                          :rules="[rules.required, rules.validEmail]"
+                          filled
+                          rounded
+                          hide-details
+                        ></v-text-field>
+                      </v-col>
+                      <v-col cols="12" sm="12" style="margin: 0">
+                        <v-select
+                          v-model="editedItem.role_id"
+                          :items="roles"
+                          label="Select Role"
+                          item-text="description"
+                          item-value="id"
+                          item-key="id" 
+                          color="primary"
+                          :rules="[rules.required]"
+                          rounded
+                          filled
+                          hide-details
+                        ></v-select>
+                      </v-col>
+                    </v-row>
+                  </v-container>
+                </v-card-text>
+
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn color="blue darken-1" text @click="close">
+                    Cancel
+                  </v-btn>
+                  <v-btn
+                    color="blue darken-1"
+                    text
+                    type="submit"
+                    :disabled="!valid"
+                    @click.prevent="save"
+                  >
+                    Save
+                  </v-btn>
+                </v-card-actions>
+              </v-form>
+            </v-card>
+          </v-dialog>
+       </v-col>
+  </v-row>
+  
          
-        
+          
     </v-card-subtitle>
+  
     <v-container>
      <v-data-table
         item-key="id"
@@ -30,7 +186,7 @@
         :options.sync="options"
         :server-items-length="totalUsers"
         :items-per-page="10" 
-  
+        
         :footer-props="{
           itemsPerPageOptions: [5, 10, 15],
           itemsPerPageText: 'Users Per Page',
@@ -38,8 +194,7 @@
           'show-first-last-page': true,
         }"
       >
-      
-     
+  
       <template v-slot:item.role="{ item }">
         <v-edit-dialog
         large
@@ -53,23 +208,23 @@
             <h2>Change Role</h2>
           </template>
           <template v-slot:input>
-            <v-select
+            <!-- <v-select
               v-model="item.role"
               :items="roles"
               label="Select Role"
               value="editedItem.role"
               color="primary"
               :rules="[rules.required]"
-            ></v-select>
+            ></v-select> -->
           </template>
         </v-edit-dialog>
       </template>
 
       <template v-slot:item.actions="{ item }">
         <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil </v-icon>
-        <!-- <v-icon small class="mr-2" @click="deleteItem(item)">
+        <v-icon small class="mr-2" @click="deleteItem(item)">
           mdi-delete-forever
-        </v-icon> -->
+        </v-icon>
       </template>
       <template v-slot:no-data>
         <v-btn color="primary" @click="initialize"> Reset </v-btn>
@@ -84,6 +239,8 @@
   </v-card>
 </template>
 <script>
+import generator from "generate-password";
+
 export default {
   data: () => ({
     valid: true,
@@ -95,11 +252,16 @@ export default {
     success: "",
     error: "", 
     headers: [
-    
+      {
+        text: "No",
+        align: "left",
+        value: "id",
+      },
       { text: "Name", value: "name" },
       { text: "Email", value: "email" },
-      { text: "Role", value: "role" }, 
-      { text: "Last Update", value: "updated_at" },
+      { text: "Role", value: "role" },
+      { text: "Date Created", value: "created_at" },
+      { text: "Updated Created", value: "updated_at" },
       { text: "Action", value: "actions" },
     ],
     page: 0,
@@ -288,7 +450,10 @@ export default {
     editItem(item) {
       this.editedIndex = this.users.data.indexOf(item);
       this.editedItem = Object.assign({}, item);
-      this.editedItem.password ="parsu2021";
+      this.editedItem.password =generator.generate({
+              length: 10,
+              numbers: true
+            });
       this.dialog = true;
     },
 

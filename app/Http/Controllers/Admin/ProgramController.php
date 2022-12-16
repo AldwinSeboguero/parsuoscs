@@ -27,7 +27,8 @@ class ProgramController extends Controller
                 })
                 ->when($request->college, function($q) use($request){
                     $q->where('college_id',$request->college);
-                })->get(),
+                })
+                ->get(),
                 'campuses' => Campus::orderBy('name')->get(),
                 'colleges' => College::orderBy('name')->get(),
               ],200);

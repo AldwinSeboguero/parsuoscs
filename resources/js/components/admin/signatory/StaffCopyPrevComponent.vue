@@ -204,6 +204,8 @@ export default {
     options: {},
     staffs: {},
     campuses: {},
+    colleges: {},
+
     programs:{},
     designations: {},
     semesters_prev: {},
@@ -249,6 +251,9 @@ export default {
     await axios.get(`/api/v1/campuses`).then((response) => {
           this.campuses = response.data.campuses;
     });
+    // await axios.get(`/api/v1/colleges`).then((response) => {
+    //       this.colleges = response.data.colleges;
+    // });
     await axios.get(`/api/v1/getprev`).then((response) => {
           this.semesters_prev = response.data.semesters;
     });
@@ -276,12 +281,22 @@ export default {
         var count = 1;
 
         for(this.campus of this.campuses){
-          console.log(this.campus)
+          // console.log(this.campus)
+          await axios.get(`/api/v1/colleges`,{
+              params: { 
+                'campus' : this.campus.id,
+
+
+              }}).then((response) => {
+                this.colleges = response.data.colleges;
+          });
+        for(this.college of this.colleges){
         await axios.get(`/api/v1/getPrevDeanEnrollment`,{
               params: { 
                 'prev': this.forms.semester_prev,
                 'next': this.forms.semester_next,
-                'campus' : this.campus.id,
+                'college' : this.college.id,
+
 
               }
             }).then(async (response) => {
@@ -300,7 +315,7 @@ export default {
           }
         });
         this.result = 'Copying Dean from previous semester has been completed!!\n'+this.result+'\n';
-
+        }
         await axios.get(`/api/v1/getPrevCashierEnrollment`,{
                 params: { 
                   'prev': this.forms.semester_prev,

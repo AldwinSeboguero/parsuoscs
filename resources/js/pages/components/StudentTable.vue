@@ -164,6 +164,7 @@
         pension:Array,
         annualincome: 0,
         forms: {
+          id: '',
           name: '',
           student_id:'',
           campus_id:'',
@@ -185,10 +186,11 @@
       },
       methods: {
         editRow(item) {
-          this.editingRow = item
+          this.editingRow = Object.assign({}, item);
+
         },
         editRowReset() {
-          this.editingRow = null
+           this.editingRow = Object.assign({}, this.defaultForms);
         },
          editData(val) {
           console.log(val)
@@ -220,30 +222,7 @@
             while (num.length < size) num = "0" + num;
             return num;
         },
-        view($val){
-          // console.log($item);
-          Inertia.get(
-            "/senior_citizens/view",
-            { senior: $val },
-            {
-              preserveState: true,
-              preserveScroll: true,
-              replace: true,
-            }
-          );
-        },
-        register($val){
-          // console.log($item);
-          Inertia.get(
-            "/senior_citizens/register",
-            { senior: $val },
-            {
-              preserveState: true,
-              preserveScroll: true,
-              replace: true,
-            }
-          );
-        },
+       
         clean($val) {
           if($val){$val = $val.replace(/ +(?= )/g, "");
           $val = $val.replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, " "); // Replaces all spaces with hyphens.
@@ -310,7 +289,24 @@
       return {
         showDeleteDialog: false,
         itemToDelete: null,
-        editingRow: null,
+        editingRow: {
+          id: '',
+          name: '',
+          student_id:'',
+          campus_id:'',
+          college_id:'',
+          email: '',
+          program_id:'',
+        },
+        defaultForms: {
+          id: '',
+          name: '',
+          student_id:'',
+          campus_id:'',
+          college_id:'',
+          email: '',
+          program_id:'',
+        },  
         semester:'',
         semester_name:'',
         forms_data : this.forms,
