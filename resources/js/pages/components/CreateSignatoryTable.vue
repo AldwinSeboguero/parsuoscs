@@ -363,9 +363,9 @@
           this.showDeleteDialog = true;
           this.itemToDelete = item;
         },
-         deleteData(val) {
+         async deleteData(val) {
           try {
-             axios.delete('/api/v1/signatories/'+ this.itemToDelete.id, {
+             await axios.delete('/api/v1/signatories/'+ this.itemToDelete.id, {
               // Optional config object
 
             });

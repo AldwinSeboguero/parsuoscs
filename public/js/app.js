@@ -15788,16 +15788,33 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.itemToDelete = item;
     },
     deleteData: function deleteData(val) {
-      try {
-        axios["delete"]('/api/v1/signatories/' + this.itemToDelete.id, {
-          // Optional config object
-        });
-        this.showDeleteDialog = false;
-        this.itemToDelete = null;
-        this.nextPage();
-      } catch (error) {
-        // Handle the error
-      }
+      var _this7 = this;
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.prev = 0;
+                _context.next = 3;
+                return axios["delete"]('/api/v1/signatories/' + _this7.itemToDelete.id, {
+                  // Optional config object
+                });
+              case 3:
+                _this7.showDeleteDialog = false;
+                _this7.itemToDelete = null;
+                _this7.nextPage();
+                _context.next = 10;
+                break;
+              case 8:
+                _context.prev = 8;
+                _context.t0 = _context["catch"](0);
+              case 10:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, null, [[0, 8]]);
+      }))();
     },
     pad: function pad(num, size) {
       num = num.toString();
@@ -15816,44 +15833,44 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       // Removes special chars.
     },
     nextPage: function nextPage() {
-      var _this7 = this;
-      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-        var _this7$options, page, itemsPerPage, pageNumber;
-        return _regeneratorRuntime().wrap(function _callee$(_context) {
+      var _this8 = this;
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+        var _this8$options, page, itemsPerPage, pageNumber;
+        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
           while (1) {
-            switch (_context.prev = _context.next) {
+            switch (_context2.prev = _context2.next) {
               case 0:
-                _this7$options = _this7.options, page = _this7$options.page, itemsPerPage = _this7$options.itemsPerPage;
+                _this8$options = _this8.options, page = _this8$options.page, itemsPerPage = _this8$options.itemsPerPage;
                 pageNumber = page;
-                if (!(_this7.forms.program || _this7.forms.college || _this7.forms.signatory)) {
-                  _context.next = 5;
+                if (!(_this8.forms.program || _this8.forms.college || _this8.forms.signatory)) {
+                  _context2.next = 5;
                   break;
                 }
-                _context.next = 5;
+                _context2.next = 5;
                 return axios.get("/api/v1/getStaff?page=" + pageNumber, {
                   params: {
                     'per_page': itemsPerPage,
-                    'semester': _this7.forms.semester,
-                    'program': _this7.forms.program,
-                    'college': _this7.forms.college,
-                    'purpose': _this7.forms.purpose,
-                    'designation': _this7.forms.designation,
-                    'signatory': _this7.forms.signatory
+                    'semester': _this8.forms.semester,
+                    'program': _this8.forms.program,
+                    'college': _this8.forms.college,
+                    'purpose': _this8.forms.purpose,
+                    'designation': _this8.forms.designation,
+                    'signatory': _this8.forms.signatory
                   }
                 }).then(function (response) {
-                  _this7.semester_name = response.data.semester_name;
-                  _this7.headers = response.data.headers;
-                  _this7.table_data = response.data.table_data.data;
-                  _this7.current_page = response.data.table_data.current_page;
-                  _this7.total_pages = response.data.table_data.total_pages;
-                  _this7.total = response.data.table_data.total;
+                  _this8.semester_name = response.data.semester_name;
+                  _this8.headers = response.data.headers;
+                  _this8.table_data = response.data.table_data.data;
+                  _this8.current_page = response.data.table_data.current_page;
+                  _this8.total_pages = response.data.table_data.total_pages;
+                  _this8.total = response.data.table_data.total;
                 });
               case 5:
               case "end":
-                return _context.stop();
+                return _context2.stop();
             }
           }
-        }, _callee);
+        }, _callee2);
       }))();
     }
   },
