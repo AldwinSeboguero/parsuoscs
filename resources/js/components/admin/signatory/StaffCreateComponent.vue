@@ -151,11 +151,11 @@
                     </v-list-item-content> 
                   </template>
                 </v-autocomplete>
-              <label class="black--text font-weight-medium mt-2" for="">Campus</label>
+              <label class="black--text font-weight-medium mt-2" for="">College</label>
 
                 <v-autocomplete
-                  v-model="forms.campus"
-                  :items="campuses"
+                  v-model="forms.college"
+                  :items="colleges"
                   :search-input.sync="search"
                   chips
                   clearable
@@ -193,7 +193,15 @@
                     </v-list-item-content> 
                   </template>
                 </v-autocomplete>
-                <label class="black--text font-weight-medium mt-2" for="">Program</label>
+                <v-checkbox v-model="forms.isForAllInCollege" small class="mt-0 pt-0 mb-0 pb-2" hide-details>
+                  <template v-slot:label>
+                    <span class="caption font-italic">
+                      Programs for selected college
+                    </span>
+                  </template>
+                </v-checkbox>
+                <label class="black--text font-weight-medium " for="" 
+                >Program</label>
 
                 <v-autocomplete
                   v-model="forms.program"
@@ -207,6 +215,7 @@
                   outlined
                   dense
                   hide-details
+                  :disabled="isProgramDisable"
                 class="mb-2"
                   :offset-y="offSet"
                 >
@@ -387,41 +396,47 @@ export default {
     options: {},
     staffs: {},
     campuses: {},
+    colleges:{},
     programs:{},
     designations: {},
     semesters_prev: {},
     semesters_next: {},
-
+    isProgramDisable: true,
     signatories:{},
     forms: {
       semester: '',
-      campus:'',
+      college:'',
       program: '',
       designation: '',
       signatory: '',
       purpose:'',
       order: '',
+      isForAllInCollege: false,
     },
     
 
     editedItem: {
       semester: '',
-      campus:'',
+      college:'',
       program: '',
       designation: '',
       signatory: '',
       purpose:'',
       order: '',
+      isForAllInCollege: false,
+
 
     },
     defaultItem: {
       semester: '',
-      campus:'',
+      college:'',
       program: '',
       designation: '',
       signatory: '',
       purpose:'',
       order: '',
+      isForAllInCollege: false,
+
 
     },
     purposes: {}
@@ -430,16 +445,27 @@ export default {
   },
 
   watch: {
-       
-       'forms.campus': debounce(function (val) {
-        axios.get(`/api/v1/programs`,{
-                  params: { 
-                    'campus' :  this.forms.campus
-                  },
-                }).then((response) => {
-              this.programs = response.data.programs;
-        });
-       }, 300),
+    'forms.college': debounce( function (val) {
+
+        
+          axios.get(`/api/v1/programs`,{
+                    params: { 
+                      'college': val,
+                      'campus' :  this.forms.campus_id
+                    },
+                  }).then((response) => {
+                this.programs = response.data.programs;
+          });
+        }, 300),
+    'forms.isForAllInCollege': debounce( function (val) {
+      if(this.forms.isForAllInCollege){
+        this.isProgramDisable = true;
+        this.forms.program = '';
+      }
+      else{
+        this.isProgramDisable = false;
+      }
+    }, 300),
 
       },
    mounted() {
@@ -456,10 +482,17 @@ export default {
           this.designations = response.data.designations;
     });
      axios.get(`/api/v1/signatories`).then((response) => {
-          this.signatories = response.data.signatories.data;
+          this.signatories = response.data.signatories;
     });
      axios.get(`/api/v1/purposes`).then((response) => {
           this.purposes = response.data.purposes;
+    });
+   axios.get(`/api/v1/colleges`,{
+              params: { 
+                'campus': this.forms.campus_id,
+              },
+            }).then((response) => {
+          this.colleges = response.data.colleges;
     });
 
   },
@@ -514,7 +547,7 @@ export default {
             this.$refs.childComponent.nextPage();
             this.$refs.childComponent.editRowReset();
 
-            this.forms = Object.assign({},this.defaultForms);
+            // this.forms = Object.assign({},this.defaultForms);
             this.formActionLoading = false;
             this.formName = 'Create Signatory';
             this.formIcon = 'mdi-account-plus';

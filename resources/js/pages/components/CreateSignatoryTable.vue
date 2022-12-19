@@ -119,12 +119,13 @@
         annualincome: 0,
         forms: {
           semester: '',
-          campus:'',
+          colleges:'',
           program: '',
           designation: '',
           signatory: '',
           purpose:'',
           order: '',
+          isForAllInCollege: false,
 
         },
       },
@@ -146,7 +147,7 @@
                 'per_page': itemsPerPage,
                 'semester': this.forms.semester,
                 'program': this.forms.program,
-                'campus': this.forms.campus,
+                'college': this.forms.college,
                 'purpose': this.forms.purpose,
                 'designation': this.forms.designation,
                 'signatory': val,
@@ -164,7 +165,7 @@
         }, 300),
         'forms.purpose': debounce(function (val) {
           // console.log(val)
-          if(this.forms.program || this.forms.campus || this.forms.signatory){
+          if(this.forms.program || this.forms.college || this.forms.signatory){
             const { page, itemsPerPage } = this.options;
             let pageNumber = page;
             axios
@@ -173,7 +174,7 @@
                   'per_page': itemsPerPage,
                   'semester': this.forms.semester,
                   'program': this.forms.program,
-                  'campus': this.forms.campus,
+                  'college': this.forms.college,
                   'designation': this.forms.designation,
                   'purpose': val,
                   'signatory': this.forms.signatory,
@@ -192,7 +193,7 @@
         }, 300),
         'forms.designation': debounce(function (val) {
           // console.log(val)
-          if(this.forms.program || this.forms.campus || this.forms.signatory){
+          if(this.forms.program || this.forms.college || this.forms.signatory){
 
           const { page, itemsPerPage } = this.options;
           let pageNumber = page;
@@ -202,7 +203,7 @@
                 'per_page': itemsPerPage,
                 'semester': this.forms.semester,
                 'program': this.forms.program,
-                'campus': this.forms.campus,
+                'college': this.forms.college,
                     'purpose': this.forms.purpose,
 
                 'designation': val,
@@ -219,7 +220,7 @@
             });}
         }, 300),
 
-        'forms.campus': debounce(function (val) {
+        'forms.college': debounce(function (val) {
           // console.log(val)
           if(this.forms.program || this.forms.signatory || this.forms.designation){
 
@@ -231,8 +232,8 @@
                 'per_page': itemsPerPage,
                 'semester': this.forms.semester,
                 'program': this.forms.program,
-                'campus': val,
-                    'purpose': this.forms.purpose,
+                'college': val,
+                'purpose': this.forms.purpose,
 
                 'designation': this.forms.designation,
                 'signatory': this.forms.signatory,
@@ -253,7 +254,7 @@
 
         'forms.semester': debounce(function (val) {
           // console.log(val)
-          if(this.forms.program || this.forms.campus || this.forms.signatory){
+          if(this.forms.program || this.forms.college || this.forms.signatory){
 
           const { page, itemsPerPage } = this.options;
           let pageNumber = page;
@@ -263,7 +264,7 @@
                 'per_page': itemsPerPage,
                 'semester': val,
                 'program': this.forms.program,
-                'campus': this.forms.campus,
+                'college': this.forms.college,
                     'purpose': this.forms.purpose,
 
                 'designation': this.forms.designation,
@@ -293,7 +294,7 @@
                 'per_page': itemsPerPage,
                 'semester': this.forms.semester,
                 'program': val,
-                'campus': this.forms.campus,
+                'college': this.forms.college,
                 'designation': this.forms.designation,
                 'signatory': this.forms.signatory,
                 'purpose': this.forms.purpose,
@@ -327,6 +328,8 @@
           this.editingRow = {
             semester: val.semester_id,
             campus: val.campus_id,
+            college: val.college_id,
+
             program:  val.program_id,
             designation:  val.designee_id,
             signatory:  val.user_id,
@@ -376,7 +379,7 @@
          async nextPage() {
           const { page, itemsPerPage } = this.options;
           let pageNumber = page;
-          if(this.forms.program || this.forms.campus || this.forms.signatory){
+          if(this.forms.program || this.forms.college || this.forms.signatory){
 
             await axios
             .get(`/api/v1/getStaff?page=` + pageNumber,{
@@ -384,7 +387,7 @@
                 'per_page': itemsPerPage,
                 'semester': this.forms.semester,
                 'program': this.forms.program,
-                'campus': this.forms.campus,
+                'college': this.forms.college,
                 'purpose': this.forms.purpose,
 
                 'designation': this.forms.designation,

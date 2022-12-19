@@ -51,13 +51,20 @@ class StaffController extends Controller
         //     'campuses' => Campus::orderBY('id')->get(),
         //     'semesters' => Semester::orderByDesc('created_at')->get(),
         //     ],200);
-        $signatories = new UserStaffCollection(UserV2::with(['designees' => function($q) {
-                $q->distinct('user_id');
-            }])->withCount('designees')->has('designees')
-            // ->whereHas('designees', function($q){
-            //     $q->where('designee_id',1);
-            // })
-            ->paginate(104));
+        $signatories = UserV2::
+            // with(['designees' => function($q) {
+            //     $q->distinct('user_id');
+            // }])
+            // ->whereHas('designees')->has('designees')
+            whereHas('role', function($q){
+                $q->where('role_id','!=',2);
+            })
+            ->get()->map(function($inner){
+                return [
+                    'id' => $inner->id,
+                    'name' => $inner->name,
+                ];
+            });
         return response()->json([
             'signatories' => $signatories
         ]);
@@ -75,6 +82,8 @@ class StaffController extends Controller
         $campus = $request->campus;
         $program = $request->program;
         $signatory = $request->signatory;
+        $college = $request->college;
+
         // $purpose = Purpose::orderBy('id')->when($request->purpose, function ($q) use ($request){
         //     $q->where('id',$request->purpose);
         // })->get()->first();
@@ -91,6 +100,9 @@ class StaffController extends Controller
         })
         ->when($semester, function($q) use($semester){
             $q->where('semester_id', $semester);
+        })
+        ->when($college, function($q) use($college){
+            $q->where('college_id', $college);
         })
         ->when($designation, function($q) use($designation){
             $q->where('designee_id', $designation);
@@ -296,6 +308,10 @@ class StaffController extends Controller
         $purpose = $request->purpose;
         $semester = $request->semester;
         $order = $request->order;
+        $college = $request->college;
+        $isForAllInCollege = $request->isForAllInCollege;
+
+
 
         if($designation && $campus && $program && $signatory && $purpose && $semester && $order){
             $hasSignatory = 0;
@@ -304,6 +320,11 @@ class StaffController extends Controller
             })
             ->when($semester, function($q) use($semester){
                 $q->where('semester_id', $semester);
+            })
+            ->when($college, function($q) use($college){
+                $q->whereHas('program', function($q) use($college){
+                    $q->where('college_id', $college);
+                });
             })
             ->when($designation, function($q) use($designation){
                 $q->where('designee_id', $designation);
@@ -397,56 +418,135 @@ class StaffController extends Controller
         $semester = $request->semester;
         $order = $request->order;
         $signatory_id = $request->id;
+        $college = $request->college;
 
+        $isForAllInCollege = $request->isForAllInCollege;
+        // dd($isForAllInCollege);
+        if($isForAllInCollege){
+            if($designation && $campus && $signatory && $purpose && $semester && $order){
+                $hasSignatory = 0;
+                $hasSignatory = SignatoryV2::when($campus, function($q) use($campus){
+                    $q->where('campus_id', $campus);
+                })
+                ->when($semester, function($q) use($semester){
+                    $q->where('semester_id', $semester);
+                })
+                ->when($designation, function($q) use($designation){
+                    $q->where('designee_id', $designation);
+                })
+                ->when($purpose, function($q) use($purpose){
+                    $q->where('purpose_id', $purpose);
+                })
+                ->when($college, function($q) use($college){
+                    $q->whereHas('program', function($q) use($college){
+                        $q->where('college_id', $college);
+                    });
+                })
+                ->when($program, function($q) use($program){
+                    $q->where('program_id', $program);
+                })->paginate(5)->total();
+                $program_id = Program::find($program);
+                $user = User::find($signatory);
+                $designee = Designee::find($designation);
+                if($hasSignatory){
 
-        if($designation && $campus && $program && $signatory && $purpose && $semester && $order){
-            $hasSignatory = 0;
-            $hasSignatory = SignatoryV2::when($campus, function($q) use($campus){
-                $q->where('campus_id', $campus);
-            })
-            ->when($semester, function($q) use($semester){
-                $q->where('semester_id', $semester);
-            })
-            ->when($designation, function($q) use($designation){
-                $q->where('designee_id', $designation);
-            })
-            ->when($purpose, function($q) use($purpose){
-                $q->where('purpose_id', $purpose);
-            })
-            ->when($program, function($q) use($program){
-                $q->where('program_id', $program);
-            })->paginate(5)->total();
-            $program_id = Program::find($program);
-            $user = User::find($signatory);
-            $designee = Designee::find($designation);
-            if($hasSignatory){
-                $signatoryV2 = SignatoryV2::find($signatory_id);
-                $signatoryV2->program_id = $program_id->id;
-                $signatoryV2->campus_id = $program_id->campus_id;
-                $signatoryV2->college_id = $program_id->college_id;
-                $signatoryV2->user_id = $user->id;
-                $signatoryV2->name = $user->name;
-                $signatoryV2->designee_id = $designation;
-                $signatoryV2->order = $order;
-                $signatoryV2->purpose_id = $purpose;
-                $signatoryV2->semester_id = $semester; 
-                $signatoryV2->save();
-                
+                    $signatoryV2 = SignatoryV2::when($college, function($q) use($college){
+                        $q->whereHas('program', function($q) use($college){
+                            $q->where('college_id', $college);
+                        });
+                    })
+                    ->when($semester, function($q) use($semester){
+                        $q->where('semester_id', $semester);
+                    })
+                    ->when($designation, function($q) use($designation){
+                        $q->where('designee_id', $designation);
+                    })
+                    ->when($purpose, function($q) use($purpose){
+                        $q->where('purpose_id', $purpose);
+                    })->update([
+                        'name' => $user->name,
+                        'user_id' => $user->id,
+                        'purpose_id' => $purpose,
+                        'semester_id' => $semester,
+                    ]);
+                    // $signatoryV2->program_id = $program_id->id;
+                    // $signatoryV2->campus_id = $program_id->campus_id;
+                    // $signatoryV2->college_id = $program_id->college_id;
+                    // $signatoryV2->user_id = $user->id;
+                    // $signatoryV2->name = $user->name;
+                    // $signatoryV2->designee_id = $designation;
+                    // $signatoryV2->order = $order;
+                    // $signatoryV2->purpose_id = $purpose;
+                    // $signatoryV2->semester_id = $semester; 
+                    // $signatoryV2->save();
+                    
+                }
+                else{
+                    return response()->json([
+                        'message' => $designee->name.' for '.$program_id->name.' doesn\'t exist!',
+                    ],500);
+                }
+    
+                return $hasSignatory;
+    
             }
             else{
                 return response()->json([
-                    'message' => $designee->name.' for '.$program_id->name.' doesn\'t exist!',
+                    'message' => 'Missing required data! Please complete filling out the forms.'
                 ],500);
             }
-
-            return $hasSignatory;
-
         }
         else{
-            return response()->json([
-                'message' => 'Missing required data! Please complete filling out the forms.'
-            ],500);
+            if($designation && $campus && $program && $signatory && $purpose && $semester && $order){
+                $hasSignatory = 0;
+                $hasSignatory = SignatoryV2::when($campus, function($q) use($campus){
+                    $q->where('campus_id', $campus);
+                })
+                ->when($semester, function($q) use($semester){
+                    $q->where('semester_id', $semester);
+                })
+                ->when($designation, function($q) use($designation){
+                    $q->where('designee_id', $designation);
+                })
+                ->when($purpose, function($q) use($purpose){
+                    $q->where('purpose_id', $purpose);
+                })
+                ->when($program, function($q) use($program){
+                    $q->where('program_id', $program);
+                })->paginate(5)->total();
+                $program_id = Program::find($program);
+                $user = User::find($signatory);
+                $designee = Designee::find($designation);
+                if($hasSignatory){
+                    $signatoryV2 = SignatoryV2::find($signatory_id);
+                    $signatoryV2->program_id = $program_id->id;
+                    $signatoryV2->campus_id = $program_id->campus_id;
+                    $signatoryV2->college_id = $program_id->college_id;
+                    $signatoryV2->user_id = $user->id;
+                    $signatoryV2->name = $user->name;
+                    $signatoryV2->designee_id = $designation;
+                    $signatoryV2->order = $order;
+                    $signatoryV2->purpose_id = $purpose;
+                    $signatoryV2->semester_id = $semester; 
+                    $signatoryV2->save();
+                    
+                }
+                else{
+                    return response()->json([
+                        'message' => $designee->name.' for '.$program_id->name.' doesn\'t exist!',
+                    ],500);
+                }
+    
+                return $hasSignatory;
+    
+            }
+            else{
+                return response()->json([
+                    'message' => 'Missing required data! Please complete filling out the forms.'
+                ],500);
+            }
         }
+        
     }
 
     /**

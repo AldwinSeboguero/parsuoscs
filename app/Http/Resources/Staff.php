@@ -27,6 +27,8 @@ class Staff extends JsonResource
             'program' => $this->program->short_name,
             'purpose' => $this->purpose->purpose,
             'program_id' => $this->program->id,
+            'college_id' => $this->program->college_id,
+
 
             'purpose_id' => $this->purpose->id,
             'user_id' => $this->user->id,  

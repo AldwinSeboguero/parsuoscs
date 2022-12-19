@@ -43,9 +43,6 @@ class Userv2 extends Model
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    public function roles(){
-        return $this->belongsToMany('App\Role');
-    }
     public function programs(){
         return $this->belongsToMany('App\Program');
     }
@@ -72,8 +69,11 @@ class Userv2 extends Model
 
         return false;
     } 
+    public function roles(){
+        return $this->belongsToMany('App\Role');
+    }
     public function role(){
-        return $this->belongsTo('App\UserRole');
+        return $this->hasOne('App\UserRole','user_id','id');
     }
     public function userRole($id){
     

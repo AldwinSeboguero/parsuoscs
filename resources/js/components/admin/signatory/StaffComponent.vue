@@ -395,7 +395,7 @@ export default {
           this.designations = response.data.designations;
     });
     await axios.get(`/api/v1/signatories`).then((response) => {
-          this.signatories = response.data.signatories.data;
+          this.signatories = response.data.signatories;
     });
     await axios.get(`/api/v1/purposes`).then((response) => {
           this.purposes = response.data.purposes;

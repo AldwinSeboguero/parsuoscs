@@ -7705,7 +7705,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             case 8:
               _context.next = 10;
               return axios.get("/api/v1/signatories").then(function (response) {
-                _this.signatories = response.data.signatories.data;
+                _this.signatories = response.data.signatories;
               });
             case 10:
               _context.next = 12;
@@ -8476,51 +8476,65 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       options: {},
       staffs: {},
       campuses: {},
+      colleges: {},
       programs: {},
       designations: {},
       semesters_prev: {},
       semesters_next: {},
+      isProgramDisable: true,
       signatories: {},
       forms: {
         semester: '',
-        campus: '',
+        college: '',
         program: '',
         designation: '',
         signatory: '',
         purpose: '',
-        order: ''
+        order: '',
+        isForAllInCollege: false
       },
       editedItem: {
         semester: '',
-        campus: '',
+        college: '',
         program: '',
         designation: '',
         signatory: '',
         purpose: '',
-        order: ''
+        order: '',
+        isForAllInCollege: false
       },
       defaultItem: {
         semester: '',
-        campus: '',
+        college: '',
         program: '',
         designation: '',
         signatory: '',
         purpose: '',
-        order: ''
+        order: '',
+        isForAllInCollege: false
       },
       purposes: {}
     };
   },
   watch: {
-    'forms.campus': lodash_debounce__WEBPACK_IMPORTED_MODULE_1___default()(function (val) {
+    'forms.college': lodash_debounce__WEBPACK_IMPORTED_MODULE_1___default()(function (val) {
       var _this = this;
       axios.get("/api/v1/programs", {
         params: {
-          'campus': this.forms.campus
+          'college': val,
+          'campus': this.forms.campus_id
         }
       }).then(function (response) {
         _this.programs = response.data.programs;
       });
+    }, 300),
+    'forms.isForAllInCollege': lodash_debounce__WEBPACK_IMPORTED_MODULE_1___default()(function (val) {
+      if (this.forms.isForAllInCollege) {
+        this.isProgramDisable = true;
+        this.forms.program = '';
+      } else {
+        this.isProgramDisable = false;
+      }
     }, 300)
   },
   mounted: function mounted() {
@@ -8538,10 +8552,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       _this2.designations = response.data.designations;
     });
     axios.get("/api/v1/signatories").then(function (response) {
-      _this2.signatories = response.data.signatories.data;
+      _this2.signatories = response.data.signatories;
     });
     axios.get("/api/v1/purposes").then(function (response) {
       _this2.purposes = response.data.purposes;
+    });
+    axios.get("/api/v1/colleges", {
+      params: {
+        'campus': this.forms.campus_id
+      }
+    }).then(function (response) {
+      _this2.colleges = response.data.colleges;
     });
   },
   methods: {
@@ -8600,7 +8621,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 // handle error
               case 18:
-                _context.next = 39;
+                _context.next = 38;
                 break;
               case 20:
                 _context.prev = 20;
@@ -8610,29 +8631,30 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _response = _context.sent;
                 _this3.$refs.childComponent.nextPage();
                 _this3.$refs.childComponent.editRowReset();
-                _this3.forms = Object.assign({}, _this3.defaultForms);
+
+                // this.forms = Object.assign({},this.defaultForms);
                 _this3.formActionLoading = false;
                 _this3.formName = 'Create Signatory';
                 _this3.formIcon = 'mdi-account-plus';
                 _this3.$refs.childComponent.filter(_this3.forms);
 
                 // handle success
-                _context.next = 39;
+                _context.next = 38;
                 break;
-              case 33:
-                _context.prev = 33;
+              case 32:
+                _context.prev = 32;
                 _context.t1 = _context["catch"](20);
                 _this3.formActionLoading = false;
                 console.log(_context.t1.response.data.message);
                 _this3.showErrorDialog = true;
                 _this3.errorMessage = _context.t1.response.data.message;
                 // handle error
-              case 39:
+              case 38:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[3, 15], [20, 33]]);
+        }, _callee, null, [[3, 15], [20, 32]]);
       }))();
     }
   }
@@ -15517,12 +15539,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     annualincome: 0,
     forms: {
       semester: '',
-      campus: '',
+      colleges: '',
       program: '',
       designation: '',
       signatory: '',
       purpose: '',
-      order: ''
+      order: '',
+      isForAllInCollege: false
     }
   },
   watch: {
@@ -15544,7 +15567,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           'per_page': itemsPerPage,
           'semester': this.forms.semester,
           'program': this.forms.program,
-          'campus': this.forms.campus,
+          'college': this.forms.college,
           'purpose': this.forms.purpose,
           'designation': this.forms.designation,
           'signatory': val
@@ -15561,7 +15584,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     'forms.purpose': lodash_debounce__WEBPACK_IMPORTED_MODULE_0___default()(function (val) {
       var _this2 = this;
       // console.log(val)
-      if (this.forms.program || this.forms.campus || this.forms.signatory) {
+      if (this.forms.program || this.forms.college || this.forms.signatory) {
         var _this$options2 = this.options,
           page = _this$options2.page,
           itemsPerPage = _this$options2.itemsPerPage;
@@ -15571,7 +15594,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             'per_page': itemsPerPage,
             'semester': this.forms.semester,
             'program': this.forms.program,
-            'campus': this.forms.campus,
+            'college': this.forms.college,
             'designation': this.forms.designation,
             'purpose': val,
             'signatory': this.forms.signatory
@@ -15589,7 +15612,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     'forms.designation': lodash_debounce__WEBPACK_IMPORTED_MODULE_0___default()(function (val) {
       var _this3 = this;
       // console.log(val)
-      if (this.forms.program || this.forms.campus || this.forms.signatory) {
+      if (this.forms.program || this.forms.college || this.forms.signatory) {
         var _this$options3 = this.options,
           page = _this$options3.page,
           itemsPerPage = _this$options3.itemsPerPage;
@@ -15599,7 +15622,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             'per_page': itemsPerPage,
             'semester': this.forms.semester,
             'program': this.forms.program,
-            'campus': this.forms.campus,
+            'college': this.forms.college,
             'purpose': this.forms.purpose,
             'designation': val,
             'signatory': this.forms.signatory
@@ -15614,7 +15637,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         });
       }
     }, 300),
-    'forms.campus': lodash_debounce__WEBPACK_IMPORTED_MODULE_0___default()(function (val) {
+    'forms.college': lodash_debounce__WEBPACK_IMPORTED_MODULE_0___default()(function (val) {
       var _this4 = this;
       // console.log(val)
       if (this.forms.program || this.forms.signatory || this.forms.designation) {
@@ -15627,7 +15650,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             'per_page': itemsPerPage,
             'semester': this.forms.semester,
             'program': this.forms.program,
-            'campus': val,
+            'college': val,
             'purpose': this.forms.purpose,
             'designation': this.forms.designation,
             'signatory': this.forms.signatory
@@ -15647,7 +15670,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     'forms.semester': lodash_debounce__WEBPACK_IMPORTED_MODULE_0___default()(function (val) {
       var _this5 = this;
       // console.log(val)
-      if (this.forms.program || this.forms.campus || this.forms.signatory) {
+      if (this.forms.program || this.forms.college || this.forms.signatory) {
         var _this$options5 = this.options,
           page = _this$options5.page,
           itemsPerPage = _this$options5.itemsPerPage;
@@ -15657,7 +15680,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             'per_page': itemsPerPage,
             'semester': val,
             'program': this.forms.program,
-            'campus': this.forms.campus,
+            'college': this.forms.college,
             'purpose': this.forms.purpose,
             'designation': this.forms.designation,
             'signatory': this.forms.signatory
@@ -15685,7 +15708,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           'per_page': itemsPerPage,
           'semester': this.forms.semester,
           'program': val,
-          'campus': this.forms.campus,
+          'college': this.forms.college,
           'designation': this.forms.designation,
           'signatory': this.forms.signatory,
           'purpose': this.forms.purpose
@@ -15713,6 +15736,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.editingRow = {
         semester: val.semester_id,
         campus: val.campus_id,
+        college: val.college_id,
         program: val.program_id,
         designation: val.designee_id,
         signatory: val.user_id,
@@ -15783,7 +15807,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _this8$options = _this8.options, page = _this8$options.page, itemsPerPage = _this8$options.itemsPerPage;
                 pageNumber = page;
-                if (!(_this8.forms.program || _this8.forms.campus || _this8.forms.signatory)) {
+                if (!(_this8.forms.program || _this8.forms.college || _this8.forms.signatory)) {
                   _context2.next = 5;
                   break;
                 }
@@ -15793,7 +15817,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     'per_page': itemsPerPage,
                     'semester': _this8.forms.semester,
                     'program': _this8.forms.program,
-                    'campus': _this8.forms.campus,
+                    'college': _this8.forms.college,
                     'purpose': _this8.forms.purpose,
                     'designation': _this8.forms.designation,
                     'signatory': _this8.forms.signatory
@@ -28045,10 +28069,10 @@ var render = function render() {
     attrs: {
       "for": ""
     }
-  }, [_vm._v("Campus")]), _vm._v(" "), _c("v-autocomplete", {
+  }, [_vm._v("College")]), _vm._v(" "), _c("v-autocomplete", {
     staticClass: "mb-2",
     attrs: {
-      items: _vm.campuses,
+      items: _vm.colleges,
       "search-input": _vm.search,
       chips: "",
       clearable: "",
@@ -28105,14 +28129,36 @@ var render = function render() {
       }
     }]),
     model: {
-      value: _vm.forms.campus,
+      value: _vm.forms.college,
       callback: function callback($$v) {
-        _vm.$set(_vm.forms, "campus", $$v);
+        _vm.$set(_vm.forms, "college", $$v);
       },
-      expression: "forms.campus"
+      expression: "forms.college"
+    }
+  }), _vm._v(" "), _c("v-checkbox", {
+    staticClass: "mt-0 pt-0 mb-0 pb-2",
+    attrs: {
+      small: "",
+      "hide-details": ""
+    },
+    scopedSlots: _vm._u([{
+      key: "label",
+      fn: function fn() {
+        return [_c("span", {
+          staticClass: "caption font-italic"
+        }, [_vm._v("\n                    Programs for selected college\n                  ")])];
+      },
+      proxy: true
+    }]),
+    model: {
+      value: _vm.forms.isForAllInCollege,
+      callback: function callback($$v) {
+        _vm.$set(_vm.forms, "isForAllInCollege", $$v);
+      },
+      expression: "forms.isForAllInCollege"
     }
   }), _vm._v(" "), _c("label", {
-    staticClass: "black--text font-weight-medium mt-2",
+    staticClass: "black--text font-weight-medium",
     attrs: {
       "for": ""
     }
@@ -28129,6 +28175,7 @@ var render = function render() {
       outlined: "",
       dense: "",
       "hide-details": "",
+      disabled: _vm.isProgramDisable,
       "offset-y": _vm.offSet
     },
     on: {
