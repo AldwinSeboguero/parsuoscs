@@ -375,6 +375,8 @@ export default {
   },
   data() {
     return {
+      showDeleteDialog: false,
+        itemToDelete: null,
       valid: true,
       formName:'Create Signatory',
       formIcon : 'mdi-account-plus',
@@ -498,6 +500,24 @@ export default {
   },
 
   methods: {
+    confirmDelete(item) {
+          this.showDeleteDialog = true;
+          this.itemToDelete = item;
+        },
+        async deleteData(val) {
+          try {
+            await axios.delete('/api/v1/signatories/'+ this.itemToDelete.id, {
+              // Optional config object
+
+            });
+          this.showDeleteDialog = false;
+          this.itemToDelete = null;
+          this.nextPage();
+
+          } catch (error) {
+            // Handle the error
+          }
+        },  
      setEditedItem(val){
       // this.editedForms = val;
       this.isEditMode = true;

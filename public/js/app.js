@@ -8455,6 +8455,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   data: function data() {
     return {
+      showDeleteDialog: false,
+      itemToDelete: null,
       valid: true,
       formName: 'Create Signatory',
       formIcon: 'mdi-account-plus',
@@ -8566,6 +8568,39 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     });
   },
   methods: {
+    confirmDelete: function confirmDelete(item) {
+      this.showDeleteDialog = true;
+      this.itemToDelete = item;
+    },
+    deleteData: function deleteData(val) {
+      var _this3 = this;
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.prev = 0;
+                _context.next = 3;
+                return axios["delete"]('/api/v1/signatories/' + _this3.itemToDelete.id, {
+                  // Optional config object
+                });
+              case 3:
+                _this3.showDeleteDialog = false;
+                _this3.itemToDelete = null;
+                _this3.nextPage();
+                _context.next = 10;
+                break;
+              case 8:
+                _context.prev = 8;
+                _context.t0 = _context["catch"](0);
+              case 10:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, null, [[0, 8]]);
+      }))();
+    },
     setEditedItem: function setEditedItem(val) {
       // this.editedForms = val;
       this.isEditMode = true;
@@ -8584,77 +8619,77 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.formIcon = 'mdi-file-plus';
     },
     submit: function submit() {
-      var _this3 = this;
-      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+      var _this4 = this;
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
         var data, response, _response;
-        return _regeneratorRuntime().wrap(function _callee$(_context) {
+        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
           while (1) {
-            switch (_context.prev = _context.next) {
+            switch (_context2.prev = _context2.next) {
               case 0:
-                _this3.formActionLoading = true;
-                data = Object.assign({}, _this3.forms); // console.log(this.forms);
-                if (!_this3.isEditMode) {
-                  _context.next = 20;
+                _this4.formActionLoading = true;
+                data = Object.assign({}, _this4.forms); // console.log(this.forms);
+                if (!_this4.isEditMode) {
+                  _context2.next = 20;
                   break;
                 }
-                _context.prev = 3;
-                _context.next = 6;
-                return axios.put('/api/v1/signatories/' + _this3.forms.id, data);
+                _context2.prev = 3;
+                _context2.next = 6;
+                return axios.put('/api/v1/signatories/' + _this4.forms.id, data);
               case 6:
-                response = _context.sent;
-                _this3.editedForms = Object.assign({}, _this3.defaultForms);
+                response = _context2.sent;
+                _this4.editedForms = Object.assign({}, _this4.defaultForms);
 
                 // this.forms = Object.assign({},this.defaultForms);
-                _this3.formName = 'Create Signatory';
-                _this3.formIcon = 'mdi-account-plus';
-                _this3.isEditMode = false;
-                _this3.formActionLoading = false;
-                _this3.$refs.childComponent.nextPage();
+                _this4.formName = 'Create Signatory';
+                _this4.formIcon = 'mdi-account-plus';
+                _this4.isEditMode = false;
+                _this4.formActionLoading = false;
+                _this4.$refs.childComponent.nextPage();
                 // this.$refs.childComponent.editRowReset();
                 // handle success
-                _context.next = 18;
+                _context2.next = 18;
                 break;
               case 15:
-                _context.prev = 15;
-                _context.t0 = _context["catch"](3);
-                _this3.formActionLoading = false;
+                _context2.prev = 15;
+                _context2.t0 = _context2["catch"](3);
+                _this4.formActionLoading = false;
 
                 // handle error
               case 18:
-                _context.next = 38;
+                _context2.next = 38;
                 break;
               case 20:
-                _context.prev = 20;
-                _context.next = 23;
-                return axios.post('/api/v1/signatories', _this3.forms);
+                _context2.prev = 20;
+                _context2.next = 23;
+                return axios.post('/api/v1/signatories', _this4.forms);
               case 23:
-                _response = _context.sent;
-                _this3.$refs.childComponent.nextPage();
-                _this3.$refs.childComponent.editRowReset();
+                _response = _context2.sent;
+                _this4.$refs.childComponent.nextPage();
+                _this4.$refs.childComponent.editRowReset();
 
                 // this.forms = Object.assign({},this.defaultForms);
-                _this3.formActionLoading = false;
-                _this3.formName = 'Create Signatory';
-                _this3.formIcon = 'mdi-account-plus';
-                _this3.$refs.childComponent.filter(_this3.forms);
+                _this4.formActionLoading = false;
+                _this4.formName = 'Create Signatory';
+                _this4.formIcon = 'mdi-account-plus';
+                _this4.$refs.childComponent.filter(_this4.forms);
 
                 // handle success
-                _context.next = 38;
+                _context2.next = 38;
                 break;
               case 32:
-                _context.prev = 32;
-                _context.t1 = _context["catch"](20);
-                _this3.formActionLoading = false;
-                console.log(_context.t1.response.data.message);
-                _this3.showErrorDialog = true;
-                _this3.errorMessage = _context.t1.response.data.message;
+                _context2.prev = 32;
+                _context2.t1 = _context2["catch"](20);
+                _this4.formActionLoading = false;
+                console.log(_context2.t1.response.data.message);
+                _this4.showErrorDialog = true;
+                _this4.errorMessage = _context2.t1.response.data.message;
                 // handle error
               case 38:
               case "end":
-                return _context.stop();
+                return _context2.stop();
             }
           }
-        }, _callee, null, [[3, 15], [20, 32]]);
+        }, _callee2, null, [[3, 15], [20, 32]]);
       }))();
     }
   }
@@ -15753,33 +15788,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.itemToDelete = item;
     },
     deleteData: function deleteData(val) {
-      var _this7 = this;
-      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-        return _regeneratorRuntime().wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _context.prev = 0;
-                _context.next = 3;
-                return axios["delete"]('/api/v1/adminprograms/' + _this7.itemToDelete.id, {
-                  // Optional config object
-                });
-              case 3:
-                _this7.showDeleteDialog = false;
-                _this7.itemToDelete = null;
-                _this7.nextPage();
-                _context.next = 10;
-                break;
-              case 8:
-                _context.prev = 8;
-                _context.t0 = _context["catch"](0);
-              case 10:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee, null, [[0, 8]]);
-      }))();
+      try {
+        axios["delete"]('/api/v1/signatories/' + this.itemToDelete.id, {
+          // Optional config object
+        });
+        this.showDeleteDialog = false;
+        this.itemToDelete = null;
+        this.nextPage();
+      } catch (error) {
+        // Handle the error
+      }
     },
     pad: function pad(num, size) {
       num = num.toString();
@@ -15798,49 +15816,51 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       // Removes special chars.
     },
     nextPage: function nextPage() {
-      var _this8 = this;
-      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-        var _this8$options, page, itemsPerPage, pageNumber;
-        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+      var _this7 = this;
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        var _this7$options, page, itemsPerPage, pageNumber;
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context.prev = _context.next) {
               case 0:
-                _this8$options = _this8.options, page = _this8$options.page, itemsPerPage = _this8$options.itemsPerPage;
+                _this7$options = _this7.options, page = _this7$options.page, itemsPerPage = _this7$options.itemsPerPage;
                 pageNumber = page;
-                if (!(_this8.forms.program || _this8.forms.college || _this8.forms.signatory)) {
-                  _context2.next = 5;
+                if (!(_this7.forms.program || _this7.forms.college || _this7.forms.signatory)) {
+                  _context.next = 5;
                   break;
                 }
-                _context2.next = 5;
+                _context.next = 5;
                 return axios.get("/api/v1/getStaff?page=" + pageNumber, {
                   params: {
                     'per_page': itemsPerPage,
-                    'semester': _this8.forms.semester,
-                    'program': _this8.forms.program,
-                    'college': _this8.forms.college,
-                    'purpose': _this8.forms.purpose,
-                    'designation': _this8.forms.designation,
-                    'signatory': _this8.forms.signatory
+                    'semester': _this7.forms.semester,
+                    'program': _this7.forms.program,
+                    'college': _this7.forms.college,
+                    'purpose': _this7.forms.purpose,
+                    'designation': _this7.forms.designation,
+                    'signatory': _this7.forms.signatory
                   }
                 }).then(function (response) {
-                  _this8.semester_name = response.data.semester_name;
-                  _this8.headers = response.data.headers;
-                  _this8.table_data = response.data.table_data.data;
-                  _this8.current_page = response.data.table_data.current_page;
-                  _this8.total_pages = response.data.table_data.total_pages;
-                  _this8.total = response.data.table_data.total;
+                  _this7.semester_name = response.data.semester_name;
+                  _this7.headers = response.data.headers;
+                  _this7.table_data = response.data.table_data.data;
+                  _this7.current_page = response.data.table_data.current_page;
+                  _this7.total_pages = response.data.table_data.total_pages;
+                  _this7.total = response.data.table_data.total;
                 });
               case 5:
               case "end":
-                return _context2.stop();
+                return _context.stop();
             }
           }
-        }, _callee2);
+        }, _callee);
       }))();
     }
   },
   data: function data() {
     return _defineProperty({
+      showDeleteDialog: false,
+      itemToDelete: null,
       semester: '',
       semester_name: '',
       forms_data: this.forms,
@@ -37886,7 +37906,48 @@ var render = function render() {
         }, [_vm._v("mdi-delete-circle-outline")]), _vm._v("Delete\n               ")], 1)], 1)], 1)]];
       }
     }])
-  })], 1)], 1);
+  }), _vm._v(" "), _c("v-dialog", {
+    attrs: {
+      persistent: "",
+      width: "400"
+    },
+    model: {
+      value: _vm.showDeleteDialog,
+      callback: function callback($$v) {
+        _vm.showDeleteDialog = $$v;
+      },
+      expression: "showDeleteDialog"
+    }
+  }, [_c("v-card", {
+    staticClass: "pt-1"
+  }, [_c("v-card-title", {
+    staticClass: "align-center ma-2 mt-0 pa-2 rounded white--red elevation-0"
+  }, [_c("v-icon", {
+    staticClass: "red--text text--lighten-1",
+    attrs: {
+      left: ""
+    }
+  }, [_vm._v("mdi-delete-circle")]), _vm._v(" Delete Item\n        ")], 1), _vm._v(" "), _c("v-card-text", [_vm._v("\n          Are you sure you want to delete this item?"), _c("br"), _vm._v("\n          ("), _c("i", [_vm._v(_vm._s(_vm.itemToDelete ? "Student ID: " + _vm.itemToDelete.student_id + " Name: " + _vm.itemToDelete.name + " Program: " + _vm.itemToDelete.program : ""))]), _vm._v(")\n        ")]), _vm._v(" "), _c("v-card-actions", [_c("v-spacer"), _vm._v(" "), _c("v-btn", {
+    attrs: {
+      "elevation-0": "",
+      color: "primary",
+      outlined: ""
+    },
+    on: {
+      click: function click($event) {
+        _vm.showDeleteDialog = false;
+      }
+    }
+  }, [_vm._v("Cancel")]), _vm._v(" "), _c("v-btn", {
+    attrs: {
+      "elevation-0": "",
+      color: "red",
+      dark: ""
+    },
+    on: {
+      click: _vm.deleteData
+    }
+  }, [_vm._v("Delete")])], 1)], 1)], 1)], 1)], 1);
 };
 var staticRenderFns = [];
 render._withStripped = true;

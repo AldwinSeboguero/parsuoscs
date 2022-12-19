@@ -98,6 +98,23 @@
        </template> 
      </template> 
     </v-data-table>
+    <v-dialog v-model="showDeleteDialog" persistent width="400">
+      <v-card class="pt-1">
+      <v-card-title class="align-center ma-2 mt-0 pa-2 rounded white--red elevation-0" >
+
+         <v-icon left class="red--text text--lighten-1">mdi-delete-circle</v-icon> Delete Item
+        </v-card-title>
+        <v-card-text>
+          Are you sure you want to delete this item?<br/>
+          (<i>{{itemToDelete ? 'Student ID: '+itemToDelete.student_id+' Name: '+itemToDelete.name+' Program: '+itemToDelete.program : ''}}</i>)
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer/>
+          <v-btn elevation-0 color="primary" outlined  @click="showDeleteDialog = false">Cancel</v-btn>
+          <v-btn elevation-0 color="red" dark @click="deleteData">Delete</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
     </v-card-text>
         </v-card>
 </div>
@@ -346,9 +363,9 @@
           this.showDeleteDialog = true;
           this.itemToDelete = item;
         },
-        async deleteData(val) {
+         deleteData(val) {
           try {
-            await axios.delete('/api/v1/adminprograms/'+ this.itemToDelete.id, {
+             axios.delete('/api/v1/signatories/'+ this.itemToDelete.id, {
               // Optional config object
 
             });
@@ -409,6 +426,8 @@
 
       data () {
       return {
+        showDeleteDialog: false,
+        itemToDelete: null,
         semester:'',
         semester_name:'',
         forms_data : this.forms,

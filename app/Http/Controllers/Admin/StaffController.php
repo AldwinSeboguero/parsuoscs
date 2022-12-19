@@ -557,7 +557,7 @@ class StaffController extends Controller
      */
     public function destroy($id)
     {
-        $staff = Staff::find($id)->delete();
+        $staff = SignatoryV2::find($id)->delete();
         return response()->json(['staff' => $staff],200);
     } 
     public function getPrevDeanEnrollment(Request $request){
