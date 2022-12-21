@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Program;
+use App\SignatoryV2;
+
+use Illuminate\Support\Facades\Auth; 
 class ProgramController extends Controller
 {
     /**
@@ -19,7 +22,11 @@ class ProgramController extends Controller
             })
             ->when($request->college, function($q) use($request){
                 $q->where('college_id',$request->college);
-            })->get()->map(function($inner){
+            })
+            ->when($request->signatoryProgram, function($q) use($request){
+                $q->whereIn('id',SignatoryV2::where('user_id',Auth::user()->id)->where('semester_id','>=',8)->distinct('program_id')->get('program_id'));
+            })
+            ->get()->map(function($inner){
                 return [
                     'id' => $inner->id,
                     'short_name' => $inner->college->short_name.'-'.$inner->short_name,

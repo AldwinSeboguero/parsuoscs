@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\College;
 use App\Campus;
+use App\SignatoryV2;
+use Illuminate\Support\Facades\Auth; 
+
 class CollegeController extends Controller
 {
     /**
@@ -17,11 +20,15 @@ class CollegeController extends Controller
     {
 
         return response()->json(
-            [
+            [   
                 'colleges'=> College::when($request->campus, function($q) use($request){
                     $q->where('campus_id',$request->campus);
-                })->get(),
-                'campuses' => Campus::orderBy('name')->get(),
+                })
+                ->when($request->signatoryCollege, function($q) use($request){
+                    $q->whereIn('id',SignatoryV2::where('user_id',Auth::user()->id)->where('semester_id','>=',8)->distinct('college_id')->get('college_id'));
+                })
+                ->get(),
+                // 'campuses' => Campus::orderBy('name')->get(),
             ],200);
     }
 

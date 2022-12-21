@@ -28,6 +28,7 @@ export default {
     OSCSAppBar,
   },
   data: () => ({
+    timer: null,
     dialog: false,
     menu: false,
     drawer: null,
@@ -49,8 +50,24 @@ export default {
     openDrawer(){
       this.drawer = !this.drawer;
     },
+  //   startTimer() {
+  //     // set the timer to navigate to the next route every 5 seconds
+  //     this.timer = setInterval(() => {
+  //       this.$router.push({ name: 'OSASG' })
+  //     }, 5000)
+  //   },
+  //   stopTimer() {
+  //     // stop the timer when the user interacts with the component
+  //     clearInterval(this.timer)
+  //   },
+  //   beforeDestroy() {
+  //   // clear the timer when the component is destroyed
+  //   clearInterval(this.timer)
+  // }
   },
+  
 mounted(){
+  // this.startTimer();
   axios.get('/api/v1/verify')
     .then(res => {
             if(res.data.user_role.role.name=="cashier") 
@@ -345,3 +362,35 @@ computed: {
 };
 
 </script>
+
+
+<style scoped>
+
+.v-text-field--outlined >>> fieldset {
+  border-color: #212121 solid 1px;
+  
+
+}
+.v-text-field >>> input {
+    height: 32px;
+    border-color: #212121 solid 1px;
+
+
+}
+.v-select--outlined >>> input {
+    height: 32px;
+    border-color: #212121 solid 1px;
+
+
+}
+.v-select >>> input {
+    height: 32px;
+    border-color: #212121 solid 1px;
+
+
+}
+
+.form-control{
+    height: 36px;
+}
+</style>

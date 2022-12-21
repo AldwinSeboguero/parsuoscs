@@ -12261,10 +12261,72 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var lodash_debounce__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash/debounce */ "./node_modules/lodash/debounce.js");
 /* harmony import */ var lodash_debounce__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash_debounce__WEBPACK_IMPORTED_MODULE_0__);
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
-    return {
+    var _ref;
+    return _ref = {
+      showDeleteDialog: false,
+      itemToDelete: null,
+      formName: 'Filters',
+      formIcon: 'mdi-filter-variant',
+      formAction: 'Save',
+      formActionIcon: 'mdi-content-save',
+      formActionColor: 'success',
+      formActionLoading: false,
+      isEditMode: false,
+      showErrorDialog: false,
+      errorMessage: '',
+      result: ' ',
+      generateLoading: false,
+      offSet: true,
+      campus: {},
+      options: {},
+      staffs: {},
+      campuses: {},
+      colleges: {},
+      programs: {},
+      students: {},
+      designations: {},
+      semesters_prev: {},
+      semesters_next: {},
+      isProgramDisable: true,
+      signatories: {},
+      forms: {
+        semester: '',
+        college: '',
+        program: '',
+        designation: '',
+        student: '',
+        purpose: '',
+        order: '',
+        isForAllInCollege: false
+      },
+      editedItem: {
+        semester: '',
+        college: '',
+        program: '',
+        designation: '',
+        student: '',
+        purpose: '',
+        order: '',
+        isForAllInCollege: false
+      },
+      defaultItem: {
+        semester: '',
+        college: '',
+        program: '',
+        designation: '',
+        student: '',
+        purpose: '',
+        order: '',
+        isForAllInCollege: false
+      },
+      purposes: {},
       valid: true,
       dialog: false,
       deferDialog: false,
@@ -12276,11 +12338,14 @@ __webpack_require__.r(__webpack_exports__);
       error: "",
       searchItem: '',
       snackbarColor: "",
-      headers: [{
-        text: "#",
-        align: "left",
-        value: "id"
-      }, {
+      headers: [
+      // {
+      //   text: "#",
+      //   align: "left",
+      //   value: "id",
+      // }, 
+
+      {
         text: "Student Number",
         value: "student_number"
       }, {
@@ -12303,56 +12368,73 @@ __webpack_require__.r(__webpack_exports__);
       }],
       page: 0,
       totalclearancerequests: 0,
-      numberOfPages: 0,
-      options: {},
-      clearancerequests: [],
-      semesters: [],
-      colleges: [],
-      programs: [],
-      semester: '',
-      college: '',
-      program: '',
-      editedIndex: -1,
-      itemIndex: 0,
-      deficiency: {
-        title: '',
-        note: ''
-      },
-      studentName: '',
-      clearanceRequest: {
-        id: "",
-        token: "",
-        name: "",
-        student_number: "",
-        program: "",
-        purpose: "",
-        staff: ""
-      },
-      editedItem: {
-        id: "",
-        token: "",
-        name: "",
-        student_number: "",
-        program: "",
-        purpose: "",
-        staff: ""
-      },
-      defaultItem: {
-        id: "",
-        token: "",
-        name: "",
-        student_number: "",
-        program: "",
-        purpose: "",
-        staff: ""
-      }
-    };
+      numberOfPages: 0
+    }, _defineProperty(_ref, "options", {}), _defineProperty(_ref, "clearancerequests", {}), _defineProperty(_ref, "semesters", {}), _defineProperty(_ref, "programs", {}), _defineProperty(_ref, "semester", ''), _defineProperty(_ref, "college", ''), _defineProperty(_ref, "program", ''), _defineProperty(_ref, "editedIndex", -1), _defineProperty(_ref, "itemIndex", 0), _defineProperty(_ref, "deficiency", {
+      title: '',
+      note: ''
+    }), _defineProperty(_ref, "studentName", ''), _defineProperty(_ref, "clearanceRequest", {
+      id: "",
+      token: "",
+      name: "",
+      student_number: "",
+      program: "",
+      purpose: "",
+      staff: ""
+    }), _defineProperty(_ref, "editedItem", {
+      id: "",
+      token: "",
+      name: "",
+      student_number: "",
+      program: "",
+      purpose: "",
+      staff: ""
+    }), _defineProperty(_ref, "defaultItem", {
+      id: "",
+      token: "",
+      name: "",
+      student_number: "",
+      program: "",
+      purpose: "",
+      staff: ""
+    }), _ref;
   },
   computed: {},
+  mounted: function mounted() {
+    var _this = this;
+    axios.get("/api/v1/programs", {
+      params: {
+        'signatoryProgram': true
+      }
+    }).then(function (response) {
+      _this.programs = response.data.programs;
+    });
+    axios.get("/api/v1/campuses").then(function (response) {
+      _this.campuses = response.data.campuses;
+    });
+    axios.get("/api/v1/semesters").then(function (response) {
+      _this.semesters = response.data.semesters;
+    });
+    axios.get("/api/v1/designations").then(function (response) {
+      _this.designations = response.data.designations;
+    });
+    axios.get("/api/v1/students").then(function (response) {
+      _this.students = response.data.students.data;
+    });
+    axios.get("/api/v1/purposes").then(function (response) {
+      _this.purposes = response.data.purposes;
+    });
+    axios.get("/api/v1/colleges", {
+      params: {
+        'signatoryCollege': true
+      }
+    }).then(function (response) {
+      _this.colleges = response.data.colleges;
+    });
+  },
   watch: {
-    searchItem: lodash_debounce__WEBPACK_IMPORTED_MODULE_0___default()(function (val) {
-      var _this = this;
-      this.loading = true;
+    'forms.student': lodash_debounce__WEBPACK_IMPORTED_MODULE_0___default()(function (val) {
+      var _this2 = this;
+      console.log(val);
       var _this$options = this.options,
         page = _this$options.page,
         itemsPerPage = _this$options.itemsPerPage;
@@ -12360,24 +12442,25 @@ __webpack_require__.r(__webpack_exports__);
       axios.get("/api/v1/clearance-requests?page=" + pageNumber, {
         params: {
           'per_page': itemsPerPage,
-          'search': val,
-          'semester': this.semester,
-          'college': this.college,
-          'program': this.program
+          'semester': this.forms.semester,
+          'program': this.forms.program,
+          'college': this.forms.college,
+          'purpose': this.forms.purpose,
+          'designation': this.forms.designation,
+          'student': this.clean(val)
         }
       }).then(function (response) {
-        //Then injecting the result to datatable parameters.
-        _this.clearancerequests = response.data.clearance_requests;
-        _this.totalclearancerequests = response.data.clearance_requests.total;
-        _this.numberOfPages = response.data.clearance_requests.last_page;
-        _this.loading = false;
+        // this.semester = response.data.semester.semester;
+        _this2.clearancerequests = response.data.clearance_requests;
+        _this2.totalclearancerequests = response.data.clearance_requests.total;
+        _this2.numberOfPages = response.data.clearance_requests.last_page;
+        _this2.loading = false;
       });
     }, 300),
-    semester: lodash_debounce__WEBPACK_IMPORTED_MODULE_0___default()(function (val) {
-      var _this2 = this;
-      this.college = '';
-      this.program = '';
-      this.loading = true;
+    'forms.purpose': lodash_debounce__WEBPACK_IMPORTED_MODULE_0___default()(function (val) {
+      var _this3 = this;
+      // console.log(val)
+      console.log(val);
       var _this$options2 = this.options,
         page = _this$options2.page,
         itemsPerPage = _this$options2.itemsPerPage;
@@ -12385,49 +12468,52 @@ __webpack_require__.r(__webpack_exports__);
       axios.get("/api/v1/clearance-requests?page=" + pageNumber, {
         params: {
           'per_page': itemsPerPage,
-          'semester': val,
-          'search': this.searchItem,
-          'college': this.college,
-          'program': this.program
+          'semester': this.forms.semester,
+          'program': this.forms.program,
+          'college': this.forms.college,
+          'purpose': val,
+          'designation': this.forms.designation,
+          'student': this.forms.student
         }
       }).then(function (response) {
-        //Then injecting the result to datatable parameters.
-
-        _this2.colleges = response.data.colleges;
-        _this2.clearancerequests = response.data.clearance_requests;
-        _this2.totalclearancerequests = response.data.clearance_requests.total;
-        _this2.numberOfPages = response.data.clearance_requests.last_page;
-        _this2.loading = false;
-      });
-    }, 300),
-    college: lodash_debounce__WEBPACK_IMPORTED_MODULE_0___default()(function (val) {
-      var _this3 = this;
-      this.loading = true;
-      this.program = '';
-      var _this$options3 = this.options,
-        page = _this$options3.page,
-        itemsPerPage = _this$options3.itemsPerPage;
-      var pageNumber = page;
-      axios.get("/api/v1/clearance-requests?page=" + pageNumber, {
-        params: {
-          'per_page': itemsPerPage,
-          'semester': this.semester,
-          'program': this.program,
-          'search': this.searchItem,
-          'college': val
-        }
-      }).then(function (response) {
-        //ThhIten injecting the result to datatable parameters.
-        _this3.programs = response.data.programs;
+        // this.semester = response.data.semester.semester;
         _this3.clearancerequests = response.data.clearance_requests;
         _this3.totalclearancerequests = response.data.clearance_requests.total;
         _this3.numberOfPages = response.data.clearance_requests.last_page;
         _this3.loading = false;
       });
     }, 300),
-    program: lodash_debounce__WEBPACK_IMPORTED_MODULE_0___default()(function (val) {
+    'forms.designation': lodash_debounce__WEBPACK_IMPORTED_MODULE_0___default()(function (val) {
       var _this4 = this;
-      this.loading = true;
+      // console.log(val)
+      if (this.forms.program || this.forms.college || this.forms.signatory) {
+        var _this$options3 = this.options,
+          page = _this$options3.page,
+          itemsPerPage = _this$options3.itemsPerPage;
+        var pageNumber = page;
+        axios.get("/api/v1/getStaff?page=" + pageNumber, {
+          params: {
+            'per_page': itemsPerPage,
+            'semester': this.forms.semester,
+            'program': this.forms.program,
+            'college': this.forms.college,
+            'purpose': this.forms.purpose,
+            'designation': val,
+            'signatory': this.forms.signatory
+          }
+        }).then(function (response) {
+          // this.semester = response.data.semester.semester;
+          _this4.headers = response.data.headers;
+          _this4.table_data = response.data.table_data.data;
+          _this4.current_page = response.data.table_data.current_page;
+          _this4.total_pages = response.data.table_data.total_pages;
+          _this4.total = response.data.table_data.total;
+        });
+      }
+    }, 300),
+    'forms.college': lodash_debounce__WEBPACK_IMPORTED_MODULE_0___default()(function (val) {
+      var _this5 = this;
+      console.log(val);
       var _this$options4 = this.options,
         page = _this$options4.page,
         itemsPerPage = _this$options4.itemsPerPage;
@@ -12435,19 +12521,69 @@ __webpack_require__.r(__webpack_exports__);
       axios.get("/api/v1/clearance-requests?page=" + pageNumber, {
         params: {
           'per_page': itemsPerPage,
-          'semester': this.semester,
-          'search': this.searchItem,
-          'program': val,
-          'college': this.college
+          'semester': this.forms.semester,
+          'program': this.forms.program,
+          'college': val,
+          'purpose': this.forms.purpose,
+          'designation': this.forms.designation,
+          'student': this.forms.student
         }
       }).then(function (response) {
-        //Then injecting the result to datatable parameters.
-        // this.programs = response.data.programs; 
-
-        _this4.clearancerequests = response.data.clearance_requests;
-        _this4.totalclearancerequests = response.data.clearance_requests.total;
-        _this4.numberOfPages = response.data.clearance_requests.last_page;
-        _this4.loading = false;
+        // this.semester = response.data.semester.semester;
+        _this5.clearancerequests = response.data.clearance_requests;
+        _this5.totalclearancerequests = response.data.clearance_requests.total;
+        _this5.numberOfPages = response.data.clearance_requests.last_page;
+        _this5.loading = false;
+      });
+    }, 300),
+    'forms.semester': lodash_debounce__WEBPACK_IMPORTED_MODULE_0___default()(function (val) {
+      var _this6 = this;
+      console.log(val);
+      var _this$options5 = this.options,
+        page = _this$options5.page,
+        itemsPerPage = _this$options5.itemsPerPage;
+      var pageNumber = page;
+      axios.get("/api/v1/clearance-requests?page=" + pageNumber, {
+        params: {
+          'per_page': itemsPerPage,
+          'semester': val,
+          'program': this.forms.program,
+          'college': this.forms.college,
+          'purpose': this.forms.purpose,
+          'designation': this.forms.designation,
+          'student': this.forms.student
+        }
+      }).then(function (response) {
+        // this.semester = response.data.semester.semester;
+        _this6.clearancerequests = response.data.clearance_requests;
+        _this6.totalclearancerequests = response.data.clearance_requests.total;
+        _this6.numberOfPages = response.data.clearance_requests.last_page;
+        _this6.loading = false;
+      });
+    }, 300),
+    'forms.program': lodash_debounce__WEBPACK_IMPORTED_MODULE_0___default()(function (val) {
+      var _this7 = this;
+      console.log(val);
+      var _this$options6 = this.options,
+        page = _this$options6.page,
+        itemsPerPage = _this$options6.itemsPerPage;
+      var pageNumber = page;
+      axios.get("/api/v1/clearance-requests?page=" + pageNumber, {
+        params: {
+          'per_page': itemsPerPage,
+          'semester': this.forms.semester,
+          'program': val,
+          'college': this.forms.college,
+          'purpose': this.forms.purpose,
+          'designation': this.forms.designation,
+          'student': this.forms.student
+        }
+      }).then(function (response) {
+        // this.semester = response.data.semester.semester;
+        _this7.clearancerequests = response.data.clearance_requests;
+        _this7.totalclearancerequests = response.data.clearance_requests.total;
+        _this7.numberOfPages = response.data.clearance_requests.last_page;
+        _this7.loading = false;
       });
     }, 300),
     dialog: function dialog(val) {
@@ -12464,6 +12600,16 @@ __webpack_require__.r(__webpack_exports__);
     this.readDataFromAPI();
   },
   methods: {
+    clearForms: function clearForms() {
+      // this.editedForms = Object.assign({}, this.defaultForms);
+
+      this.isEditMode = false;
+      this.forms = Object.assign({}, this.defaultForms);
+
+      // // this.$refs.childComponent.editRowReset();
+      // this.formName = 'Create Signatory';
+      // this.formIcon = 'mdi-file-plus';
+    },
     clean: function clean($val) {
       if ($val) {
         $val = $val.replace(/ +(?= )/g, "");
@@ -12474,11 +12620,11 @@ __webpack_require__.r(__webpack_exports__);
       // Removes special chars.
     },
     readDataFromAPI: function readDataFromAPI() {
-      var _this5 = this;
+      var _this8 = this;
       this.loading = true;
-      var _this$options5 = this.options,
-        page = _this$options5.page,
-        itemsPerPage = _this$options5.itemsPerPage;
+      var _this$options7 = this.options,
+        page = _this$options7.page,
+        itemsPerPage = _this$options7.itemsPerPage;
       var pageNumber = page;
       axios.get("/api/v1/clearance-requests?page=" + pageNumber, {
         params: {
@@ -12486,20 +12632,21 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (response) {
         //Then injecting the result to datatable parameters.
-        _this5.loading = false;
-        _this5.semesters = response.data.semesters;
-        _this5.colleges = response.data.colleges;
-        _this5.programs = response.data.programs;
-        _this5.clearancerequests = response.data.clearance_requests;
-        _this5.totalclearancerequests = response.data.clearance_requests.total;
-        _this5.numberOfPages = response.data.clearance_requests.last_page;
+        _this8.loading = false;
+        // this.semesters = response.data.semesters; 
+        // this.colleges = response.data.colleges; 
+        // this.programs = response.data.programs; 
+
+        _this8.clearancerequests = response.data.clearance_requests;
+        _this8.totalclearancerequests = response.data.clearance_requests.total;
+        _this8.numberOfPages = response.data.clearance_requests.last_page;
       });
     },
     searchIt: function searchIt(d) {
-      var _this6 = this;
-      var _this$options6 = this.options,
-        page = _this$options6.page,
-        itemsPerPage = _this$options6.itemsPerPage;
+      var _this9 = this;
+      var _this$options8 = this.options,
+        page = _this$options8.page,
+        itemsPerPage = _this$options8.itemsPerPage;
       var pageNumber = page;
       if (d.length > 2) {
         axios.get("/api/v1/clearance-requests?page=" + pageNumber, {
@@ -12511,13 +12658,13 @@ __webpack_require__.r(__webpack_exports__);
             'college': this.college
           }
         }).then(function (res) {
-          _this6.loading = false;
-          _this6.semesters = res.data.semesters;
-          _this6.colleges = res.data.colleges;
-          _this6.programs = res.data.programs;
-          _this6.clearancerequests = res.data.clearance_requests;
-          _this6.totalclearancerequests = res.data.clearance_requests.total;
-          _this6.numberOfPages = res.data.clearance_requests.last_page;
+          _this9.loading = false;
+          // this.semesters = res.data.semesters; 
+          // this.colleges = res.data.colleges; 
+          // this.programs = res.data.programs; 
+          _this9.clearancerequests = res.data.clearance_requests;
+          _this9.totalclearancerequests = res.data.clearance_requests.total;
+          _this9.numberOfPages = res.data.clearance_requests.last_page;
         })["catch"](function (err) {
           console.error(err);
         });
@@ -12532,32 +12679,32 @@ __webpack_require__.r(__webpack_exports__);
             'college': this.college
           }
         }).then(function (res) {
-          _this6.loading = false;
-          _this6.semesters = res.data.semesters;
-          _this6.colleges = res.data.colleges;
-          _this6.programs = res.data.programs;
-          _this6.clearancerequests = res.data.clearance_requests;
-          _this6.totalclearancerequests = res.data.clearance_requests.total;
-          _this6.numberOfPages = res.data.clearance_requests.last_page;
+          _this9.loading = false;
+          // this.semesters = res.data.semesters; 
+          // this.colleges = res.data.colleges; 
+          // this.programs = res.data.programs; 
+          _this9.clearancerequests = res.data.clearance_requests;
+          _this9.totalclearancerequests = res.data.clearance_requests.total;
+          _this9.numberOfPages = res.data.clearance_requests.last_page;
         })["catch"](function (err) {
           console.error(err);
         });
       }
     },
     initialize: function initialize() {
-      var _this7 = this;
+      var _this10 = this;
       axios.interceptors.request.use(function (config) {
-        _this7.loading = true;
+        _this10.loading = true;
         return config;
       }, function (error) {
-        _this7.loading = false;
+        _this10.loading = false;
         return Promise.reject(error);
       });
       axios.interceptors.response.use(function (response) {
-        _this7.loading = false;
+        _this10.loading = false;
         return response;
       }, function (error) {
-        _this7.loading = false;
+        _this10.loading = false;
         return Promise.reject(error);
       });
     },
@@ -12569,25 +12716,25 @@ __webpack_require__.r(__webpack_exports__);
       this.dialog = true;
     },
     deleteItem: function deleteItem(item) {
-      var _this8 = this;
+      var _this11 = this;
       var index = this.clearancerequests.data.indexOf(item);
       var decide = confirm("Are you sure you want to delete this item?");
       if (decide) {
         axios["delete"]("/api/v1/clearancerequests/" + item.id).then(function (res) {
-          _this8.text = "Record Deleted Successfully!";
-          _this8.snackbarColor = "primary darken-1";
-          _this8.snackbar = true;
-          _this8.clearancerequests.data.splice(index, 1);
+          _this11.text = "Record Deleted Successfully!";
+          _this11.snackbarColor = "primary darken-1";
+          _this11.snackbar = true;
+          _this11.clearancerequests.data.splice(index, 1);
         })["catch"](function (err) {
           console.log(err.response);
-          _this8.text = "Error Deleting Record";
-          _this8.snackbarColor = "error darken-1";
-          _this8.snackbar = true;
+          _this11.text = "Error Deleting Record";
+          _this11.snackbarColor = "error darken-1";
+          _this11.snackbar = true;
         });
       }
     },
     approve: function approve() {
-      var _this9 = this;
+      var _this12 = this;
       // console.log(this.clearanceRequest.id);
       axios.post("/api/v1/clearance-requests/approve", {
         'clearanceRequest': this.clearanceRequest,
@@ -12595,18 +12742,18 @@ __webpack_require__.r(__webpack_exports__);
         'college': this.college,
         'program': this.program
       }).then(function (res) {
-        _this9.text = "Successfully Approved!";
-        _this9.snackbarColor = "primary darken-1";
-        _this9.snackbar = true;
-        _this9.clearancerequests = res.data.clearance_requests;
-        _this9.totalclearancerequests = res.data.clearance_requests.total;
-        _this9.numberOfPages = res.data.clearance_requests.last_page;
-        _this9.dialog = false;
+        _this12.text = "Successfully Approved!";
+        _this12.snackbarColor = "primary darken-1";
+        _this12.snackbar = true;
+        _this12.clearancerequests = res.data.clearance_requests;
+        _this12.totalclearancerequests = res.data.clearance_requests.total;
+        _this12.numberOfPages = res.data.clearance_requests.last_page;
+        _this12.dialog = false;
       })["catch"](function (err) {
         console.log(err.response);
-        _this9.text = "Error Approving Request";
-        _this9.snackbarColor = "error darken-1";
-        _this9.snackbar = true;
+        _this12.text = "Error Approving Request";
+        _this12.snackbarColor = "error darken-1";
+        _this12.snackbar = true;
       });
       this.close();
     },
@@ -12617,7 +12764,7 @@ __webpack_require__.r(__webpack_exports__);
       this.deferDialog = true;
     },
     deferItem: function deferItem() {
-      var _this10 = this;
+      var _this13 = this;
       var index = this.editedIndex;
       axios.get("/api/v1/clearance-requests/disapprove", {
         params: {
@@ -12629,18 +12776,18 @@ __webpack_require__.r(__webpack_exports__);
           'program': this.program
         }
       }).then(function (res) {
-        _this10.text = "Record Updated Successfully!";
-        _this10.snackbarColor = "primary darken-1";
-        _this10.snackbar = true;
-        _this10.loading = false;
-        _this10.clearancerequests = res.data.clearance_requests;
-        _this10.totalclearancerequests = res.data.clearance_requests.total;
-        _this10.numberOfPages = res.data.clearance_requests.last_page;
+        _this13.text = "Record Updated Successfully!";
+        _this13.snackbarColor = "primary darken-1";
+        _this13.snackbar = true;
+        _this13.loading = false;
+        _this13.clearancerequests = res.data.clearance_requests;
+        _this13.totalclearancerequests = res.data.clearance_requests.total;
+        _this13.numberOfPages = res.data.clearance_requests.last_page;
       })["catch"](function (err) {
         console.log(err.response);
-        _this10.text = "Error Updating Record";
-        _this10.snackbarColor = "error darken-1";
-        _this10.snackbar = true;
+        _this13.text = "Error Updating Record";
+        _this13.snackbarColor = "error darken-1";
+        _this13.snackbar = true;
       });
       this.deferDialog = false;
     },
@@ -12650,33 +12797,33 @@ __webpack_require__.r(__webpack_exports__);
       this.editedIndex = -1;
     },
     save: function save() {
-      var _this11 = this;
+      var _this14 = this;
       console.log(this.editedItem);
       if (this.editedIndex > -1) {
         var index = this.editedIndex;
         axios.put("/api/v1/clearancerequests/" + this.editedItem.id, this.editedItem).then(function (res) {
-          _this11.text = "Record Updated Successfully!";
-          _this11.snackbarColor = "primary darken-1";
-          _this11.snackbar = true;
-          Object.assign(_this11.clearancerequests.data[index], res.data.clearancerequest);
+          _this14.text = "Record Updated Successfully!";
+          _this14.snackbarColor = "primary darken-1";
+          _this14.snackbar = true;
+          Object.assign(_this14.clearancerequests.data[index], res.data.clearancerequest);
         })["catch"](function (err) {
           console.log(err.response);
-          _this11.text = "Error Updating Record";
-          _this11.snackbarColor = "error darken-1";
-          _this11.snackbar = true;
+          _this14.text = "Error Updating Record";
+          _this14.snackbarColor = "error darken-1";
+          _this14.snackbar = true;
         });
       } else {
         axios.post("/api/v1/clearancerequests", this.editedItem).then(function (res) {
-          _this11.text = "Record Added Successfully!";
-          _this11.snackbarColor = "primary darken-1";
-          _this11.snackbar = true;
+          _this14.text = "Record Added Successfully!";
+          _this14.snackbarColor = "primary darken-1";
+          _this14.snackbar = true;
           // this.students.data.push(res.data.student); 
-          _this11.clearancerequests = res.data.clearancerequests;
+          _this14.clearancerequests = res.data.clearancerequests;
         })["catch"](function (err) {
           console.dir(err);
-          _this11.text = "Error Inserting Record";
-          _this11.snackbarColor = "error darken-1";
-          _this11.snackbar = true;
+          _this14.text = "Error Inserting Record";
+          _this14.snackbarColor = "error darken-1";
+          _this14.snackbar = true;
         });
       }
       this.close();
@@ -13848,6 +13995,9 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var lodash_debounce__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash/debounce */ "./node_modules/lodash/debounce.js");
+/* harmony import */ var lodash_debounce__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash_debounce__WEBPACK_IMPORTED_MODULE_0__);
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -13857,7 +14007,7 @@ __webpack_require__.r(__webpack_exports__);
       snackbar: false,
       selected: [],
       text: "",
-      searchItem: '',
+      search: '',
       success: "",
       error: "",
       snackbarColor: "",
@@ -13889,11 +14039,8 @@ __webpack_require__.r(__webpack_exports__);
       numberOfPages: 0,
       options: {},
       submittedclearances: [],
-      semesters: {
-        id: "",
-        semester: ""
-      },
-      semester_id: 0,
+      semesters: {},
+      semester: '',
       editedIndex: -1,
       editedItem: {
         id: "",
@@ -13915,14 +14062,61 @@ __webpack_require__.r(__webpack_exports__);
       }
     };
   },
-  computed: {},
+  mounted: function mounted() {
+    var _this = this;
+    axios.get("/api/v1/semesters").then(function (response) {
+      _this.semesters = response.data.semesters;
+    });
+  },
   watch: {
+    'semester': lodash_debounce__WEBPACK_IMPORTED_MODULE_0___default()(function (val) {
+      var _this2 = this;
+      console.log(val);
+      var _this$options = this.options,
+        page = _this$options.page,
+        itemsPerPage = _this$options.itemsPerPage;
+      var pageNumber = page;
+      axios.get("/api/v1/submittedclearances?page=" + pageNumber, {
+        params: {
+          'per_page': itemsPerPage,
+          'semester': val,
+          'search': this.search
+        }
+      }).then(function (response) {
+        _this2.loading = false;
+        _this2.page = response.data.submittedclearances.current_page;
+        _this2.submittedclearances = response.data.submittedclearances.data;
+        _this2.totalsubmittedclearances = response.data.submittedclearances.total;
+        _this2.numberOfPages = response.data.submittedclearances.total_pages;
+      });
+    }, 300),
+    'search': lodash_debounce__WEBPACK_IMPORTED_MODULE_0___default()(function (val) {
+      var _this3 = this;
+      console.log(val);
+      var _this$options2 = this.options,
+        page = _this$options2.page,
+        itemsPerPage = _this$options2.itemsPerPage;
+      var pageNumber = page;
+      axios.get("/api/v1/submittedclearances?page=" + pageNumber, {
+        params: {
+          'per_page': itemsPerPage,
+          'semester': this.semester,
+          'search': val
+        }
+      }).then(function (response) {
+        _this3.loading = false;
+        _this3.page = response.data.submittedclearances.current_page;
+        _this3.submittedclearances = response.data.submittedclearances.data;
+        _this3.totalsubmittedclearances = response.data.submittedclearances.total;
+        _this3.numberOfPages = response.data.submittedclearances.total_pages;
+      });
+    }, 300),
     dialog: function dialog(val) {
       val || this.close();
     },
     options: {
       handler: function handler() {
-        this.searchIt(this.searchItem);
+        this.readDataFromAPI();
       }
     },
     deep: true
@@ -13931,6 +14125,10 @@ __webpack_require__.r(__webpack_exports__);
     this.initialize();
   },
   methods: {
+    clearForms: function clearForms() {
+      this.semester = null;
+      this.search = '';
+    },
     generatePDF: function generatePDF(item) {
       axios.get('/api/v1/active-clearance/signatory/pdf', {
         responseType: 'blob',
@@ -13950,220 +14148,68 @@ __webpack_require__.r(__webpack_exports__);
         fileLink.click();
         // this.downloadLoading = false;
       });
-      //  this.editedIndex = this.submittedclearances.data.indexOf(item);
-      //   this.editedItem = Object.assign({}, item); 
-      // if(item.college == "School of Graduate Studies and Research")
-      // {
-      //    axios.get('/api/v1/pdf-createSGS',{responseType: 'blob'
-      //  ,params: { 'clearance': this.editedItem.clearance_id }
-
-      //  }).then((response) => {
-      //  var fileURL = window.URL.createObjectURL(new Blob([response.data], {type: 'application/pdf'}));
-      //  var fileLink = document.createElement('a');
-      //  fileLink.href = fileURL;
-      //  fileLink.setAttribute('download', this.editedItem.name+this.editedItem.clearance_id+'.pdf');
-      //  document.body.appendChild(fileLink);
-      //  fileLink.click();
-      //  });
-      // }
-
-      // else{
-      //    axios.get('/api/v1/pdf-create',{responseType: 'blob'
-      //  ,params: { 'clearance': this.editedItem.clearance_id }
-
-      //  }).then((response) => {
-      //  var fileURL = window.URL.createObjectURL(new Blob([response.data], {type: 'application/pdf'}));
-      //  var fileLink = document.createElement('a');
-      //  fileLink.href = fileURL;
-      //  fileLink.setAttribute('download', this.editedItem.name+this.editedItem.clearance_id+'.pdf');
-      //  document.body.appendChild(fileLink);
-      //  fileLink.click();
-      // });}
     },
     readDataFromAPI: function readDataFromAPI() {
-      var _this = this;
+      var _this4 = this;
       this.loading = true;
-      var _this$options = this.options,
-        page = _this$options.page,
-        itemsPerPage = _this$options.itemsPerPage;
+      var _this$options3 = this.options,
+        page = _this$options3.page,
+        itemsPerPage = _this$options3.itemsPerPage;
       var pageNumber = page;
       axios.get("/api/v1/submittedclearances?page=" + pageNumber, {
         params: {
-          'per_page': itemsPerPage
+          'per_page': itemsPerPage,
+          'semester': this.semester
         }
       }).then(function (response) {
-        //Then injecting the result to datatable parameters.
-        _this.loading = false;
-        _this.submittedclearances = response.data.submittedclearances;
-        _this.totalsubmittedclearances = response.data.submittedclearances.total;
-        _this.numberOfPages = response.data.submittedclearances.last_page;
-      });
-    },
-    semesterChange: function semesterChange(d) {
-      var _this2 = this;
-      if (d.length > 2) {
-        axios.get("/api/v1/submittedclearances/".concat(d, "?page=") + 1, {
-          params: {
-            'per_page': 10,
-            'id': d,
-            'semester_id': this.semester_id
-          }
-        }).then(function (res) {
-          _this2.loading = false;
-          _this2.page = res.data.submittedclearances.current_page;
-          _this2.submittedclearances = res.data.submittedclearances;
-          _this2.totalsubmittedclearances = res.data.submittedclearances.total;
-          _this2.numberOfPages = res.data.submittedclearances.total_pages;
-        })["catch"](function (err) {
-          console.error(err);
-        });
-      }
-      if (d.length <= 0) {
-        axios.get("/api/v1/submittedclearances?page=0", {
-          params: {
-            'per_page': 10,
-            'semester_id': this.semester_id
-          }
-        }).then(function (res) {
-          _this2.loading = false;
-          _this2.page = res.data.submittedclearances.current_page;
-          _this2.submittedclearances = res.data.submittedclearances;
-          _this2.totalsubmittedclearances = res.data.submittedclearances.total;
-          _this2.numberOfPages = res.data.submittedclearances.total_pages;
-        })["catch"](function (err) {
-          console.error(err);
-        });
-      }
-    },
-    searchIt: function searchIt(d) {
-      var _this3 = this;
-      if (d.length > 2) {
-        var _this$options2 = this.options,
-          page = _this$options2.page,
-          itemsPerPage = _this$options2.itemsPerPage;
-        var pageNumber = page;
-        axios.get("/api/v1/submittedclearances/".concat(d, "?page=") + pageNumber, {
-          params: {
-            'per_page': itemsPerPage,
-            'id': d,
-            'semester_id': this.semester_id
-          }
-        }).then(function (res) {
-          _this3.loading = false;
-          _this3.page = res.data.submittedclearances.current_page;
-          _this3.submittedclearances = res.data.submittedclearances;
-          _this3.totalsubmittedclearances = res.data.submittedclearances.total;
-          _this3.numberOfPages = res.data.submittedclearances.total_pages;
-        })["catch"](function (err) {
-          console.error(err);
-        });
-      }
-      if (d.length <= 0) {
-        var _this$options3 = this.options,
-          _page = _this$options3.page,
-          _itemsPerPage = _this$options3.itemsPerPage;
-        var _pageNumber = _page;
-        axios.get("/api/v1/submittedclearances?page=" + _pageNumber, {
-          params: {
-            'per_page': _itemsPerPage,
-            'semester_id': this.semester_id
-          }
-        }).then(function (res) {
-          _this3.loading = false;
-          _this3.page = res.data.submittedclearances.current_page;
-          _this3.submittedclearances = res.data.submittedclearances;
-          _this3.totalsubmittedclearances = res.data.submittedclearances.total;
-          _this3.numberOfPages = res.data.submittedclearances.total_pages;
-        })["catch"](function (err) {
-          console.error(err);
-        });
-      }
-    },
-    initialize: function initialize() {
-      var _this4 = this;
-      axios.interceptors.request.use(function (config) {
-        _this4.loading = true;
-        return config;
-      }, function (error) {
         _this4.loading = false;
-        return Promise.reject(error);
+        _this4.page = response.data.submittedclearances.current_page;
+        _this4.submittedclearances = response.data.submittedclearances.data;
+        _this4.totalsubmittedclearances = response.data.submittedclearances.total;
+        _this4.numberOfPages = response.data.submittedclearances.total_pages;
       });
-      axios.interceptors.response.use(function (response) {
-        _this4.loading = false;
-        return response;
-      }, function (error) {
-        _this4.loading = false;
-        return Promise.reject(error);
-      });
-      axios.get('/api/v1/semesters', {}).then(function (res) {
-        _this4.semesters = res.data.semesters;
-      })["catch"](function (err) {
-        console.error(err);
-      });
-    },
-    editItem: function editItem(item) {
-      this.editedIndex = this.submittedclearances.data.indexOf(item);
-      this.editedItem = Object.assign({}, item);
-      this.dialog = true;
-    },
-    deleteItem: function deleteItem(item) {
-      var _this5 = this;
-      var index = this.submittedclearances.data.indexOf(item);
-      var decide = confirm("Are you sure you want to delete this item?");
-      if (decide) {
-        axios["delete"]("/api/v1/submittedclearances/" + item.id).then(function (res) {
-          _this5.text = "Record Deleted Successfully!";
-          _this5.snackbarColor = "primary darken-1";
-          _this5.snackbar = true;
-          _this5.submittedclearances.data.splice(index, 1);
-        })["catch"](function (err) {
-          console.log(err.response);
-          _this5.text = "Error Deleting Record";
-          _this5.snackbarColor = "error darken-1";
-          _this5.snackbar = true;
-        });
-      }
-    },
-    close: function close() {
-      var _this6 = this;
-      this.dialog = false;
-      setTimeout(function () {
-        _this6.editedItem = Object.assign({}, _this6.defaultItem);
-        _this6.editedIndex = -1;
-      }, 300);
-    },
-    save: function save() {
-      var _this7 = this;
-      console.log(this.editedItem);
-      if (this.editedIndex > -1) {
-        var index = this.editedIndex;
-        axios.put("/api/v1/submittedclearances/" + this.editedItem.id, this.editedItem).then(function (res) {
-          _this7.text = "Record Updated Successfully!";
-          _this7.snackbarColor = "primary darken-1";
-          _this7.snackbar = true;
-          Object.assign(_this7.submittedclearances.data[index], res.data.submittedclearance);
-        })["catch"](function (err) {
-          console.log(err.response);
-          _this7.text = "Error Updating Record";
-          _this7.snackbarColor = "error darken-1";
-          _this7.snackbar = true;
-        });
-      } else {
-        axios.post("/api/v1/submittedclearances", this.editedItem).then(function (res) {
-          _this7.text = "Record Added Successfully!";
-          _this7.snackbarColor = "primary darken-1";
-          _this7.snackbar = true;
-          // this.students.data.push(res.data.student); 
-          _this7.submittedclearances = res.data.submittedclearances;
-        })["catch"](function (err) {
-          console.dir(err);
-          _this7.text = "Error Inserting Record";
-          _this7.snackbarColor = "error darken-1";
-          _this7.snackbar = true;
-        });
-      }
-      this.close();
-    }
+    } // searchIt(d) {
+    //   if (d.length > 2) {
+    //     const { page, itemsPerPage } = this.options;
+    //      let pageNumber = page;
+    //     axios
+    //       .get(`/api/v1/submittedclearances/${d}?page=` + pageNumber, {
+    //       params: { 'per_page': itemsPerPage,
+    //       'id' : d,
+    //       'semester_id' : this.semester_id,
+    //       },
+    //     })
+    //       .then((res) => {
+    //         this.loading = false;   
+    //         this.page = res.data.submittedclearances.current_page;
+    //         this.submittedclearances = res.data.submittedclearances; 
+    //         this.totalsubmittedclearances = res.data.submittedclearances.total;
+    //         this.numberOfPages = res.data.submittedclearances.total_pages;
+    //       })
+    //       .catch((err) => {
+    //         console.error(err);
+    //       });
+    //   }
+    //   if (d.length <= 0) {
+    //      const { page, itemsPerPage } = this.options;
+    //      let pageNumber = page;
+    //     axios
+    //       .get(`/api/v1/submittedclearances?page=` + pageNumber, {
+    //         params: { 'per_page': itemsPerPage,
+    //       'semester_id' : this.semester_id, },
+    //       })
+    //       .then((res) => {
+    //         this.loading = false;  
+    //         this.page = res.data.submittedclearances.current_page;
+    //         this.submittedclearances = res.data.submittedclearances;
+    //         this.totalsubmittedclearances = res.data.submittedclearances.total;
+    //         this.numberOfPages = res.data.submittedclearances.total_pages;
+    //       })
+    //       .catch((err) => {
+    //         console.error(err);
+    //       });
+    //   }
+    // },  
   }
 });
 
@@ -17382,6 +17428,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      timer: null,
       dialog: false,
       menu: false,
       drawer: null,
@@ -17401,10 +17448,24 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     openDrawer: function openDrawer() {
       this.drawer = !this.drawer;
-    }
+    } //   startTimer() {
+    //     // set the timer to navigate to the next route every 5 seconds
+    //     this.timer = setInterval(() => {
+    //       this.$router.push({ name: 'OSASG' })
+    //     }, 5000)
+    //   },
+    //   stopTimer() {
+    //     // stop the timer when the user interacts with the component
+    //     clearInterval(this.timer)
+    //   },
+    //   beforeDestroy() {
+    //   // clear the timer when the component is destroyed
+    //   clearInterval(this.timer)
+    // }
   },
   mounted: function mounted() {
     var _this = this;
+    // this.startTimer();
     axios.get('/api/v1/verify').then(function (res) {
       if (res.data.user_role.role.name == "cashier") {
         _this.navigationList = [{
@@ -33289,7 +33350,315 @@ __webpack_require__.r(__webpack_exports__);
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("v-container", [_vm.editedIndex > -1 ? _c("v-dialog", {
+  return _c("v-container", {
+    staticClass: "ma-0 pa-0",
+    attrs: {
+      fluid: ""
+    }
+  }, [_c("v-row", [_c("v-col", {
+    staticClass: "mt-2",
+    attrs: {
+      cols: "12",
+      lg: "5"
+    }
+  }, [_c("Breadcrumbs", {
+    staticClass: "mb-4"
+  })], 1)], 1), _vm._v(" "), _c("v-row", {
+    staticClass: "container-fluid ml-2 mt-0"
+  }, [_c("v-col", {
+    attrs: {
+      cols: "12",
+      lg: "3"
+    }
+  }, [_c("v-card", {
+    staticClass: "rounded-medium pt-1 px-2",
+    attrs: {
+      elevation: "2"
+    }
+  }, [_c("v-card-title", {
+    staticClass: "align-end pl-4 pa-2 mt-2 mb-3 rounded white--text elevation-1",
+    staticStyle: {
+      "margin-left": "-16px",
+      "margin-right": "-16px",
+      "max-height": "50px",
+      background: "linear-gradient(to right, #0d47a1, #0d47a1, #1A237E)"
+    }
+  }, [_c("span", {
+    staticClass: "font-semibold overline"
+  }, [_c("v-icon", {
+    attrs: {
+      dark: "",
+      left: ""
+    }
+  }, [_vm._v(_vm._s(_vm.formIcon))]), _vm._v(_vm._s(_vm.formName))], 1)]), _vm._v(" "), _c("v-card-text", [_c("v-form", {
+    ref: "entryForm",
+    attrs: {
+      method: "post",
+      "lazy-validation": ""
+    },
+    on: {
+      submit: function submit($event) {
+        $event.stopPropagation();
+        $event.preventDefault();
+        return _vm.save.apply(null, arguments);
+      }
+    }
+  }, [_c("label", {
+    staticClass: "black--text font-weight-medium",
+    attrs: {
+      "for": ""
+    }
+  }, [_vm._v("Semester")]), _vm._v(" "), _c("v-autocomplete", {
+    staticClass: "mb-2",
+    attrs: {
+      items: _vm.semesters,
+      "search-input": _vm.search,
+      chips: "",
+      clearable: "",
+      "item-text": "semester",
+      "item-value": "id",
+      "item-key": "id",
+      outlined: "",
+      dense: "",
+      "hide-details": "",
+      "offset-y": _vm.offSet
+    },
+    on: {
+      "update:searchInput": function updateSearchInput($event) {
+        _vm.search = $event;
+      },
+      "update:search-input": function updateSearchInput($event) {
+        _vm.search = $event;
+      }
+    },
+    scopedSlots: _vm._u([{
+      key: "no-data",
+      fn: function fn() {
+        return [_c("v-list-item", [_c("v-list-item-title", [_vm._v("\n                    Search Semester\n                  ")])], 1)];
+      },
+      proxy: true
+    }, {
+      key: "selection",
+      fn: function fn(_ref) {
+        var attr = _ref.attr,
+          on = _ref.on,
+          item = _ref.item,
+          selected = _ref.selected;
+        return [_c("v-chip", _vm._g(_vm._b({
+          staticClass: "blue darken-3 white--text rounded",
+          attrs: {
+            "input-value": selected
+          }
+        }, "v-chip", attr, false), on), [_c("span", {
+          staticClass: "text-truncate",
+          domProps: {
+            textContent: _vm._s(item.semester)
+          }
+        })])];
+      }
+    }, {
+      key: "item",
+      fn: function fn(_ref2) {
+        var item = _ref2.item;
+        return [_c("v-list-item-content", [_c("v-list-item-title", {
+          domProps: {
+            textContent: _vm._s(item.semester)
+          }
+        })], 1)];
+      }
+    }]),
+    model: {
+      value: _vm.forms.semester,
+      callback: function callback($$v) {
+        _vm.$set(_vm.forms, "semester", $$v);
+      },
+      expression: "forms.semester"
+    }
+  }), _vm._v(" "), _c("label", {
+    staticClass: "black--text font-weight-medium mt-2",
+    attrs: {
+      "for": ""
+    }
+  }, [_vm._v("College")]), _vm._v(" "), _c("v-autocomplete", {
+    staticClass: "mb-2",
+    attrs: {
+      items: _vm.colleges,
+      "search-input": _vm.search,
+      chips: "",
+      clearable: "",
+      "item-text": "name",
+      "item-value": "id",
+      "item-key": "id",
+      outlined: "",
+      dense: "",
+      "hide-details": "",
+      "offset-y": _vm.offSet
+    },
+    on: {
+      "update:searchInput": function updateSearchInput($event) {
+        _vm.search = $event;
+      },
+      "update:search-input": function updateSearchInput($event) {
+        _vm.search = $event;
+      }
+    },
+    scopedSlots: _vm._u([{
+      key: "no-data",
+      fn: function fn() {
+        return [_c("v-list-item", [_c("v-list-item-title", [_vm._v("\n                      Search College \n                    ")])], 1)];
+      },
+      proxy: true
+    }, {
+      key: "selection",
+      fn: function fn(_ref3) {
+        var attr = _ref3.attr,
+          on = _ref3.on,
+          item = _ref3.item,
+          selected = _ref3.selected;
+        return [_c("v-chip", _vm._g(_vm._b({
+          staticClass: "blue darken-3 white--text rounded",
+          attrs: {
+            "input-value": selected
+          }
+        }, "v-chip", attr, false), on), [_c("span", {
+          staticClass: "text-truncate",
+          domProps: {
+            textContent: _vm._s(item.name)
+          }
+        })])];
+      }
+    }, {
+      key: "item",
+      fn: function fn(_ref4) {
+        var item = _ref4.item;
+        return [_c("v-list-item-content", [_c("v-list-item-title", {
+          domProps: {
+            textContent: _vm._s(item.name)
+          }
+        })], 1)];
+      }
+    }]),
+    model: {
+      value: _vm.forms.college,
+      callback: function callback($$v) {
+        _vm.$set(_vm.forms, "college", $$v);
+      },
+      expression: "forms.college"
+    }
+  }), _vm._v(" "), _c("label", {
+    staticClass: "black--text font-weight-medium",
+    attrs: {
+      "for": ""
+    }
+  }, [_vm._v("Program")]), _vm._v(" "), _c("v-autocomplete", {
+    staticClass: "mb-2",
+    attrs: {
+      items: _vm.programs,
+      "search-input": _vm.search,
+      chips: "",
+      clearable: "",
+      "item-text": "short_name",
+      "item-value": "id",
+      "item-key": "id",
+      outlined: "",
+      dense: "",
+      "hide-details": "",
+      "offset-y": _vm.offSet
+    },
+    on: {
+      "update:searchInput": function updateSearchInput($event) {
+        _vm.search = $event;
+      },
+      "update:search-input": function updateSearchInput($event) {
+        _vm.search = $event;
+      }
+    },
+    scopedSlots: _vm._u([{
+      key: "no-data",
+      fn: function fn() {
+        return [_c("v-list-item", [_c("v-list-item-title", [_vm._v("\n                      Search Program \n                    ")])], 1)];
+      },
+      proxy: true
+    }, {
+      key: "selection",
+      fn: function fn(_ref5) {
+        var attr = _ref5.attr,
+          on = _ref5.on,
+          item = _ref5.item,
+          selected = _ref5.selected;
+        return [_c("v-chip", _vm._g(_vm._b({
+          staticClass: "blue darken-3 white--text rounded",
+          attrs: {
+            "input-value": selected
+          }
+        }, "v-chip", attr, false), on), [_c("span", {
+          staticClass: "text-truncate text-uppercase",
+          domProps: {
+            textContent: _vm._s(item.short_name)
+          }
+        })])];
+      }
+    }, {
+      key: "item",
+      fn: function fn(_ref6) {
+        var item = _ref6.item;
+        return [_c("v-list-item-content", [_c("v-list-item-title", {
+          staticClass: "text-uppercase",
+          domProps: {
+            textContent: _vm._s(item.short_name)
+          }
+        })], 1)];
+      }
+    }]),
+    model: {
+      value: _vm.forms.program,
+      callback: function callback($$v) {
+        _vm.$set(_vm.forms, "program", $$v);
+      },
+      expression: "forms.program"
+    }
+  }), _vm._v(" "), _c("label", {
+    staticClass: "black--text font-weight-medium",
+    attrs: {
+      "for": ""
+    }
+  }, [_vm._v("Student")]), _vm._v(" "), _c("v-text-field", {
+    staticClass: "mb-2 text-field-text-size",
+    attrs: {
+      label: "",
+      "auto-grow": "",
+      outlined: "",
+      dense: "",
+      placeholder: "ID No. or Name",
+      type: "text",
+      clearable: "",
+      "hide-details": ""
+    },
+    model: {
+      value: _vm.forms.student,
+      callback: function callback($$v) {
+        _vm.$set(_vm.forms, "student", $$v);
+      },
+      expression: "forms.student"
+    }
+  }), _vm._v(" "), _c("v-divider")], 1)], 1), _vm._v(" "), _c("v-card-actions", [_c("v-btn", {
+    staticClass: "elevation-0 mb-2",
+    attrs: {
+      dark: "",
+      outlined: "",
+      small: "",
+      color: "primary",
+      block: ""
+    },
+    on: {
+      click: _vm.clearForms
+    }
+  }, [_vm._v("\n                    Clear\n                  ")])], 1)], 1)], 1), _vm._v(" "), _c("v-col", {
+    attrs: {
+      cols: "12",
+      lg: "9"
+    }
+  }, [_vm.editedIndex > -1 ? _c("v-dialog", {
     attrs: {
       persistent: "",
       "max-width": "400"
@@ -33410,124 +33779,27 @@ var render = function render() {
         return _vm.deferItem();
       }
     }
-  }, [_vm._v("Save")])], 1)], 1)], 1), _vm._v(" "), _c("v-card", [_c("v-card-subtitle", {
-    staticClass: "white--text text-uppercase elevation-2 mb-0 pb-1",
+  }, [_vm._v("Save")])], 1)], 1)], 1), _vm._v(" "), _c("v-card", {
+    staticClass: "rounded-medium pt-1 pb-2 px-2",
+    attrs: {
+      elevation: "2"
+    }
+  }, [_c("v-card-title", {
+    staticClass: "align-end pl-4 pa-2 mt-2 mb-3 rounded white--text elevation-1",
     staticStyle: {
-      background: "linear-gradient(to left, #1A237E, #1A237E, #0D47A1)"
+      "margin-left": "-16px",
+      "margin-right": "-16px",
+      "max-height": "50px",
+      background: "linear-gradient(to right, #0d47a1, #0d47a1, #1A237E)"
     }
   }, [_c("span", {
-    staticClass: "text-h6"
-  }, [_vm._v(" Clearance Requests ")])]), _vm._v(" "), _c("v-card-title", {
-    staticClass: "white--text elevation-2 mb-0 pb-6 mt-0 pt-2",
-    staticStyle: {
-      background: "linear-gradient(to left, #1A237E, #1A237E, #0D47A1)"
-    }
-  }, [_c("v-row", [_c("v-col", {
-    staticClass: "mb-0 pb-0 mt-0 pt-0",
+    staticClass: "font-semibold"
+  }, [_c("v-icon", {
     attrs: {
-      cols: "12",
-      md: "3"
-    }
-  }, [_c("v-select", {
-    staticClass: "mb-0 pb-0 mt-2 pt-0",
-    attrs: {
-      label: "Select Semester",
-      "item-value": "id",
-      "item-text": "semester",
-      items: _vm.semesters,
-      "solo-inverted": "",
-      flat: "",
       dark: "",
-      dense: "",
-      "hide-details": ""
-    },
-    model: {
-      value: _vm.semester,
-      callback: function callback($$v) {
-        _vm.semester = $$v;
-      },
-      expression: "semester"
+      left: ""
     }
-  })], 1), _vm._v(" "), _c("v-col", {
-    staticClass: "mb-0 pb-0 mt-0 pt-0",
-    attrs: {
-      cols: "12",
-      md: "3"
-    }
-  }, [_c("v-select", {
-    staticClass: "mb-0 pb-0 mt-2 pt-0",
-    attrs: {
-      label: "Select College",
-      "item-value": "id",
-      "item-text": "name",
-      items: _vm.colleges,
-      "solo-inverted": "",
-      flat: "",
-      dark: "",
-      dense: "",
-      "hide-details": ""
-    },
-    model: {
-      value: _vm.college,
-      callback: function callback($$v) {
-        _vm.college = $$v;
-      },
-      expression: "college"
-    }
-  })], 1), _vm._v(" "), _c("v-col", {
-    staticClass: "mb-0 pb-0 mt-0 pt-0",
-    attrs: {
-      cols: "12",
-      md: "3"
-    }
-  }, [_c("v-select", {
-    staticClass: "mb-0 pb-0 mt-2 pt-0",
-    attrs: {
-      label: "Select Program",
-      "item-value": "id",
-      "item-text": "name",
-      items: _vm.programs,
-      "solo-inverted": "",
-      flat: "",
-      dark: "",
-      dense: "",
-      "hide-details": ""
-    },
-    model: {
-      value: _vm.program,
-      callback: function callback($$v) {
-        _vm.program = $$v;
-      },
-      expression: "program"
-    }
-  })], 1), _vm._v(" "), _c("v-col", {
-    staticClass: "mb-0 pb-0 mt-0 pt-0",
-    attrs: {
-      cols: "12",
-      md: "3"
-    }
-  }, [_c("v-text-field", {
-    staticClass: "mb-0 pb-0 mt-2 pt-0",
-    attrs: {
-      "append-icon": "mdi-magnify",
-      label: "Search",
-      "solo-inverted": "",
-      flat: "",
-      dark: "",
-      dense: "",
-      "hide-details": ""
-    },
-    on: {
-      input: _vm.searchIt
-    },
-    model: {
-      value: _vm.searchItem,
-      callback: function callback($$v) {
-        _vm.searchItem = $$v;
-      },
-      expression: "searchItem"
-    }
-  })], 1)], 1)], 1), _vm._v(" "), _c("v-data-table", {
+  }, [_vm._v("mdi-list-box")]), _vm._v("Clearance Requests")], 1)]), _vm._v(" "), _c("v-data-table", {
     staticClass: "px-6 pb-6 mt-2",
     attrs: {
       "item-key": "id",
@@ -33554,20 +33826,20 @@ var render = function render() {
     },
     scopedSlots: _vm._u([{
       key: "item.request_at",
-      fn: function fn(_ref) {
-        var item = _ref.item;
+      fn: function fn(_ref7) {
+        var item = _ref7.item;
         return [_c("v-chip", {
           attrs: {
             "text-color": "white",
             color: "success",
-            small: ""
+            "x-small": ""
           }
         }, [_vm._v("\n         \n          " + _vm._s(item.request_at) + "\n      ")])];
       }
     }, {
       key: "item.actions",
-      fn: function fn(_ref2) {
-        var item = _ref2.item;
+      fn: function fn(_ref8) {
+        var item = _ref8.item;
         return [[_c("v-btn", {
           staticClass: "ma-2 pr-5 pl-4 text-center",
           attrs: {
@@ -33616,8 +33888,8 @@ var render = function render() {
     },
     scopedSlots: _vm._u([{
       key: "action",
-      fn: function fn(_ref3) {
-        var attrs = _ref3.attrs;
+      fn: function fn(_ref9) {
+        var attrs = _ref9.attrs;
         return [_c("v-btn", _vm._b({
           attrs: {
             color: _vm.snackbarColor,
@@ -33647,7 +33919,7 @@ var render = function render() {
     attrs: {
       left: ""
     }
-  }, [_vm._v("\n        mdi-error\n      ")]), _vm._v(_vm._s(_vm.text) + "\n\n    ")], 1)], 1)], 1);
+  }, [_vm._v("\n        mdi-error\n      ")]), _vm._v(_vm._s(_vm.text) + "\n\n    ")], 1)], 1)], 1)], 1)], 1);
 };
 var staticRenderFns = [];
 render._withStripped = true;
@@ -34813,63 +35085,134 @@ __webpack_require__.r(__webpack_exports__);
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("v-container", [_c("v-card", [_c("v-card-subtitle", {
-    staticClass: "white--text text-uppercase elevation-2 mb-0 pb-1",
-    staticStyle: {
-      background: "linear-gradient(to left, #1A237E, #1A237E, #0D47A1)"
-    }
-  }, [_c("span", {
-    staticClass: "text-h6"
-  }, [_vm._v(" Submitted Clearances ")])]), _vm._v(" "), _c("v-card-title", {
-    staticClass: "white--text elevation-2 mb-0 pb-6 mt-0 pt-2",
-    staticStyle: {
-      background: "linear-gradient(to left, #1A237E, #1A237E, #0D47A1)"
+  return _c("v-container", {
+    staticClass: "ma-0 pa-0",
+    attrs: {
+      fluid: ""
     }
   }, [_c("v-row", [_c("v-col", {
-    staticClass: "mb-0 pb-0 mt-0 pt-0",
+    staticClass: "mt-2",
     attrs: {
       cols: "12",
-      md: "4"
+      lg: "5"
     }
-  }, [_c("v-select", {
-    staticClass: "mb-0 pb-0 mt-2 pt-0",
+  }, [_c("Breadcrumbs", {
+    staticClass: "mb-4"
+  })], 1)], 1), _vm._v(" "), _c("v-row", {
+    staticClass: "container-fluid ml-2 mt-0"
+  }, [_c("v-col", {
     attrs: {
-      label: "Select Semester",
-      "item-value": "id",
-      "item-text": "semester",
-      items: _vm.semesters,
-      "solo-inverted": "",
-      flat: "",
+      cols: "12",
+      lg: "3"
+    }
+  }, [_c("v-card", {
+    staticClass: "rounded-medium pt-1 pb-2 px-2",
+    attrs: {
+      elevation: "2"
+    }
+  }, [_c("v-card-title", {
+    staticClass: "align-end pl-4 pa-2 mt-2 mb-3 rounded white--text elevation-1",
+    staticStyle: {
+      "margin-left": "-16px",
+      "margin-right": "-16px",
+      "max-height": "50px",
+      background: "linear-gradient(to right, #0d47a1, #0d47a1, #1A237E)"
+    }
+  }, [_c("span", {
+    staticClass: "font-semibold overline"
+  }, [_c("v-icon", {
+    attrs: {
       dark: "",
-      dense: "",
-      "hide-details": ""
+      left: ""
+    }
+  }, [_vm._v("mdi-filter-variant")]), _vm._v("Filters")], 1)]), _vm._v(" "), _c("v-card-text", [_c("v-form", {
+    ref: "entryForm",
+    attrs: {
+      method: "post",
+      "lazy-validation": ""
     },
     on: {
-      change: function change($event) {
-        return _vm.semesterChange(_vm.searchItem);
+      submit: function submit($event) {
+        $event.stopPropagation();
+        $event.preventDefault();
+        return _vm.save.apply(null, arguments);
       }
-    },
-    model: {
-      value: _vm.semester_id,
-      callback: function callback($$v) {
-        _vm.semester_id = $$v;
-      },
-      expression: "semester_id"
     }
-  })], 1), _vm._v(" "), _c("v-col", {
-    staticClass: "mb-0 pb-0 mt-0 pt-0",
+  }, [_c("label", {
+    staticClass: "black--text font-weight-medium mt-2",
     attrs: {
-      cols: "12",
-      md: "4"
+      "for": ""
     }
-  }, [_c("v-text-field", {
+  }, [_vm._v("Purpose")]), _vm._v(" "), _c("v-autocomplete", {
+    staticClass: "mb-2",
+    attrs: {
+      items: _vm.semesters,
+      chips: "",
+      clearable: "",
+      "item-text": "semester",
+      "item-value": "id",
+      "item-key": "id",
+      outlined: "",
+      dense: "",
+      "hide-details": "",
+      "offset-y": _vm.offSet
+    },
+    scopedSlots: _vm._u([{
+      key: "no-data",
+      fn: function fn() {
+        return [_c("v-list-item", [_c("v-list-item-title", [_vm._v("\n                                Search Semester \n                              ")])], 1)];
+      },
+      proxy: true
+    }, {
+      key: "selection",
+      fn: function fn(_ref) {
+        var attr = _ref.attr,
+          on = _ref.on,
+          item = _ref.item,
+          selected = _ref.selected;
+        return [_c("v-chip", _vm._g(_vm._b({
+          staticClass: "blue darken-3 white--text rounded",
+          attrs: {
+            "input-value": selected
+          }
+        }, "v-chip", attr, false), on), [_c("span", {
+          staticClass: "text-truncate text-uppercase",
+          domProps: {
+            textContent: _vm._s(item.semester)
+          }
+        })])];
+      }
+    }, {
+      key: "item",
+      fn: function fn(_ref2) {
+        var item = _ref2.item;
+        return [_c("v-list-item-content", [_c("v-list-item-title", {
+          staticClass: "text-uppercase",
+          domProps: {
+            textContent: _vm._s(item.semester)
+          }
+        })], 1)];
+      }
+    }]),
+    model: {
+      value: _vm.semester,
+      callback: function callback($$v) {
+        _vm.semester = $$v;
+      },
+      expression: "semester"
+    }
+  }), _vm._v(" "), _c("label", {
+    staticClass: "black--text font-weight-medium mt-2",
+    attrs: {
+      "for": ""
+    }
+  }, [_vm._v("Search")]), _vm._v(" "), _c("v-text-field", {
     staticClass: "mb-0 pb-0 mt-2 pt-0",
     attrs: {
       "append-icon": "mdi-magnify",
       label: "Search",
-      "solo-inverted": "",
+      outlined: "",
       flat: "",
-      dark: "",
       dense: "",
       "hide-details": ""
     },
@@ -34877,13 +35220,73 @@ var render = function render() {
       input: _vm.searchIt
     },
     model: {
-      value: _vm.searchItem,
+      value: _vm.search,
       callback: function callback($$v) {
-        _vm.searchItem = $$v;
+        _vm.search = $$v;
       },
-      expression: "searchItem"
+      expression: "search"
     }
-  })], 1)], 1)], 1), _vm._v(" "), _c("v-data-table", {
+  }), _vm._v(" "), _c("v-divider")], 1)], 1), _vm._v(" "), _c("v-card-actions", [_c("v-btn", {
+    staticClass: "elevation-0",
+    attrs: {
+      dark: "",
+      outlined: "",
+      small: "",
+      block: "",
+      color: "primary"
+    },
+    on: {
+      click: _vm.clearForms
+    }
+  }, [_vm._v("\n                    Clear\n                  ")])], 1)], 1)], 1), _vm._v(" "), _c("v-col", {
+    attrs: {
+      cols: "12",
+      lg: "9"
+    }
+  }, [_c("v-card", {
+    staticClass: "rounded-medium pt-1 px-2",
+    attrs: {
+      elevation: "2"
+    }
+  }, [_c("v-card-title", {
+    staticClass: "align-end pl-4 pa-2 mt-2 mb-3 rounded white--text elevation-1",
+    staticStyle: {
+      "margin-left": "-16px",
+      "margin-right": "-16px",
+      "max-height": "50px",
+      background: "linear-gradient(to right, #0d47a1, #0d47a1, #1A237E)"
+    }
+  }, [_c("span", [_vm._v(" \n          Submitted Clearances\n          ")]), _vm._v(" "), _c("v-spacer"), _vm._v(" "), _c("span"), _vm._v(" "), _c("v-dialog", {
+    attrs: {
+      width: "390"
+    },
+    scopedSlots: _vm._u([{
+      key: "activator",
+      fn: function fn(_ref3) {
+        var on = _ref3.on,
+          attrs = _ref3.attrs;
+        return [_c("v-btn", _vm._g(_vm._b({
+          staticClass: "float-right info white--text",
+          attrs: {
+            dark: "",
+            small: "",
+            icon: ""
+          }
+        }, "v-btn", attrs, false), on), [_c("v-icon", {
+          attrs: {
+            small: ""
+          }
+        }, [_vm._v("mdi-download-multiple")])], 1)];
+      }
+    }]),
+    model: {
+      value: _vm.uploadDialog,
+      callback: function callback($$v) {
+        _vm.uploadDialog = $$v;
+      },
+      expression: "uploadDialog"
+    }
+  }, [_vm._v(" "), _c("v-card")], 1)], 1)], 1), _vm._v(" "), _c("v-data-table", {
     staticClass: "px-6 pb-6 mt-4",
     attrs: {
       "item-key": "id",
@@ -34892,7 +35295,7 @@ var render = function render() {
       headers: _vm.headers,
       page: _vm.page,
       pageCount: _vm.numberOfPages,
-      items: _vm.submittedclearances.data,
+      items: _vm.submittedclearances,
       options: _vm.options,
       "server-items-length": _vm.totalsubmittedclearances,
       "items-per-page": 10,
@@ -34910,20 +35313,20 @@ var render = function render() {
     },
     scopedSlots: _vm._u([{
       key: "item.datesubmitted",
-      fn: function fn(_ref) {
-        var item = _ref.item;
+      fn: function fn(_ref4) {
+        var item = _ref4.item;
         return [_c("v-chip", {
           attrs: {
             "text-color": "white",
             color: "success",
             small: ""
           }
-        }, [_vm._v("\n           \n            " + _vm._s(item.datesubmitted) + "\n        ")])];
+        }, [_vm._v("\n         \n          " + _vm._s(item.datesubmitted) + "\n      ")])];
       }
     }, {
       key: "item.actions",
-      fn: function fn(_ref2) {
-        var item = _ref2.item;
+      fn: function fn(_ref5) {
+        var item = _ref5.item;
         return [[_c("v-btn", {
           staticClass: "elevation-0 error lighten-1 ml-2",
           attrs: {
@@ -34940,7 +35343,7 @@ var render = function render() {
           attrs: {
             "x-small": ""
           }
-        }, [_vm._v("mdi-file-pdf")]), _vm._v("\n                  Download")], 1)]];
+        }, [_vm._v("mdi-file-pdf")]), _vm._v("\n                Download")], 1)]];
       }
     }])
   }), _vm._v(" "), _c("v-snackbar", {
@@ -34954,8 +35357,8 @@ var render = function render() {
     },
     scopedSlots: _vm._u([{
       key: "action",
-      fn: function fn(_ref3) {
-        var attrs = _ref3.attrs;
+      fn: function fn(_ref6) {
+        var attrs = _ref6.attrs;
         return [_c("v-btn", _vm._b({
           attrs: {
             color: _vm.snackbarColor,
@@ -34971,7 +35374,7 @@ var render = function render() {
             dark: "",
             left: ""
           }
-        }, [_vm._v("\n          mdi-close\n        ")]), _vm._v("close\n      ")], 1)];
+        }, [_vm._v("\n        mdi-close\n      ")]), _vm._v("close\n    ")], 1)];
       }
     }]),
     model: {
@@ -34985,7 +35388,7 @@ var render = function render() {
     attrs: {
       left: ""
     }
-  }, [_vm._v("\n          mdi-error\n        ")]), _vm._v(_vm._s(_vm.text) + "\n\n      ")], 1)], 1)], 1);
+  }, [_vm._v("\n        mdi-error\n      ")]), _vm._v(_vm._s(_vm.text) + "\n\n    ")], 1)], 1)], 1)], 1);
 };
 var staticRenderFns = [];
 render._withStripped = true;
@@ -39053,10 +39456,10 @@ render._withStripped = true;
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/shared/layout/SignatoryLayout.vue?vue&type=template&id=c576fe32&":
-/*!***************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/shared/layout/SignatoryLayout.vue?vue&type=template&id=c576fe32& ***!
-  \***************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/shared/layout/SignatoryLayout.vue?vue&type=template&id=c576fe32&scoped=true&":
+/*!***************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/shared/layout/SignatoryLayout.vue?vue&type=template&id=c576fe32&scoped=true& ***!
+  \***************************************************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -39589,6 +39992,44 @@ exports.push([module.i, "\n#logo {\r\n  font-family: \"Avenir\", Helvetica, Aria
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/programdirector/ClearanceRequestsComponent.vue?vue&type=style&index=0&id=927c2c32&lang=css&":
+/*!************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/programdirector/ClearanceRequestsComponent.vue?vue&type=style&index=0&id=927c2c32&lang=css& ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\nhtml body div#app div div#inspire.v-application.v-application--is-ltr.theme--light div.v-application--wrap main.v-main.grey.lighten-5 div.v-main__wrap div.container.container--fluid div.container div.row.container-fluid.ml-2.mt-0 div.col-lg-9.col-12 div.v-card.v-sheet.theme--light div.v-data-table.px-6.pb-6.mt-2.v-data-table--has-bottom.theme--light div.v-data-table__wrapper table tbody tr td{\n  font-size: 12px;\n  padding-bottom: 0px;\n  margin-bottom: 0px;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/programdirector/SubmittedClearancesComponent.vue?vue&type=style&index=0&id=e4d4f516&lang=css&":
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/programdirector/SubmittedClearancesComponent.vue?vue&type=style&index=0&id=e4d4f516&lang=css& ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\nhtml body div#app div div#inspire.v-application.v-application--is-ltr.theme--light div.v-application--wrap main.v-main.grey.lighten-5 div.v-main__wrap div.container.container--fluid div.container.ma-0.pa-0.container--fluid div.row.container-fluid.ml-2.mt-0 div.col-lg-9.col-12 div.v-data-table.px-6.pb-6.mt-4.v-data-table--has-bottom.theme--light div.v-data-table__wrapper table tbody tr td{\nfont-size: 12px;\n   padding-bottom: 0px;\n   margin-bottom: 0px;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/components/CreateSignatoryTable.vue?vue&type=style&index=0&id=9bb77838&scoped=true&lang=css&":
 /*!********************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/components/CreateSignatoryTable.vue?vue&type=style&index=0&id=9bb77838&scoped=true&lang=css& ***!
@@ -39741,6 +40182,25 @@ exports.push([module.i, "\n.v-text-field--outlined[data-v-537e8230] fieldset {\r
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/shared/layout/SignatoryLayout.vue?vue&type=style&index=0&id=c576fe32&scoped=true&lang=css&":
+/*!************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/shared/layout/SignatoryLayout.vue?vue&type=style&index=0&id=c576fe32&scoped=true&lang=css& ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.v-text-field--outlined[data-v-c576fe32] fieldset {\r\n  border-color: #212121 solid 1px;\n}\n.v-text-field[data-v-c576fe32] input {\r\n    height: 32px;\r\n    border-color: #212121 solid 1px;\n}\n.v-select--outlined[data-v-c576fe32] input {\r\n    height: 32px;\r\n    border-color: #212121 solid 1px;\n}\n.v-select[data-v-c576fe32] input {\r\n    height: 32px;\r\n    border-color: #212121 solid 1px;\n}\n.form-control[data-v-c576fe32]{\r\n    height: 36px;\n}\r\n", ""]);
+
+// exports
+
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/ProgramsComponent.vue?vue&type=style&index=0&id=8135ae1a&lang=css&":
 /*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/ProgramsComponent.vue?vue&type=style&index=0&id=8135ae1a&lang=css& ***!
@@ -39870,6 +40330,66 @@ if(false) {}
 
 
 var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./LoginComponent.vue?vue&type=style&index=0&id=c4ab7a36&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/login/LoginComponent.vue?vue&type=style&index=0&id=c4ab7a36&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/programdirector/ClearanceRequestsComponent.vue?vue&type=style&index=0&id=927c2c32&lang=css&":
+/*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/programdirector/ClearanceRequestsComponent.vue?vue&type=style&index=0&id=927c2c32&lang=css& ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./ClearanceRequestsComponent.vue?vue&type=style&index=0&id=927c2c32&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/programdirector/ClearanceRequestsComponent.vue?vue&type=style&index=0&id=927c2c32&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/programdirector/SubmittedClearancesComponent.vue?vue&type=style&index=0&id=e4d4f516&lang=css&":
+/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/programdirector/SubmittedClearancesComponent.vue?vue&type=style&index=0&id=e4d4f516&lang=css& ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./SubmittedClearancesComponent.vue?vue&type=style&index=0&id=e4d4f516&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/programdirector/SubmittedClearancesComponent.vue?vue&type=style&index=0&id=e4d4f516&lang=css&");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -40110,6 +40630,36 @@ if(false) {}
 
 
 var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./AdminLayout.vue?vue&type=style&index=1&id=537e8230&scoped=true&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/shared/layout/AdminLayout.vue?vue&type=style&index=1&id=537e8230&scoped=true&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/shared/layout/SignatoryLayout.vue?vue&type=style&index=0&id=c576fe32&scoped=true&lang=css&":
+/*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/shared/layout/SignatoryLayout.vue?vue&type=style&index=0&id=c576fe32&scoped=true&lang=css& ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./SignatoryLayout.vue?vue&type=style&index=0&id=c576fe32&scoped=true&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/shared/layout/SignatoryLayout.vue?vue&type=style&index=0&id=c576fe32&scoped=true&lang=css&");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -43901,7 +44451,9 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ClearanceRequestsComponent_vue_vue_type_template_id_927c2c32___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ClearanceRequestsComponent.vue?vue&type=template&id=927c2c32& */ "./resources/js/components/programdirector/ClearanceRequestsComponent.vue?vue&type=template&id=927c2c32&");
 /* harmony import */ var _ClearanceRequestsComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ClearanceRequestsComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/programdirector/ClearanceRequestsComponent.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _ClearanceRequestsComponent_vue_vue_type_style_index_0_id_927c2c32_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ClearanceRequestsComponent.vue?vue&type=style&index=0&id=927c2c32&lang=css& */ "./resources/js/components/programdirector/ClearanceRequestsComponent.vue?vue&type=style&index=0&id=927c2c32&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
 
 
 
@@ -43909,7 +44461,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
   _ClearanceRequestsComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _ClearanceRequestsComponent_vue_vue_type_template_id_927c2c32___WEBPACK_IMPORTED_MODULE_0__["render"],
   _ClearanceRequestsComponent_vue_vue_type_template_id_927c2c32___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
@@ -43938,6 +44490,22 @@ component.options.__file = "resources/js/components/programdirector/ClearanceReq
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ClearanceRequestsComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./ClearanceRequestsComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/programdirector/ClearanceRequestsComponent.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ClearanceRequestsComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/programdirector/ClearanceRequestsComponent.vue?vue&type=style&index=0&id=927c2c32&lang=css&":
+/*!*****************************************************************************************************************************!*\
+  !*** ./resources/js/components/programdirector/ClearanceRequestsComponent.vue?vue&type=style&index=0&id=927c2c32&lang=css& ***!
+  \*****************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ClearanceRequestsComponent_vue_vue_type_style_index_0_id_927c2c32_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./ClearanceRequestsComponent.vue?vue&type=style&index=0&id=927c2c32&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/programdirector/ClearanceRequestsComponent.vue?vue&type=style&index=0&id=927c2c32&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ClearanceRequestsComponent_vue_vue_type_style_index_0_id_927c2c32_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ClearanceRequestsComponent_vue_vue_type_style_index_0_id_927c2c32_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ClearanceRequestsComponent_vue_vue_type_style_index_0_id_927c2c32_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ClearanceRequestsComponent_vue_vue_type_style_index_0_id_927c2c32_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
 
 /***/ }),
 
@@ -44315,7 +44883,9 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _SubmittedClearancesComponent_vue_vue_type_template_id_e4d4f516___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SubmittedClearancesComponent.vue?vue&type=template&id=e4d4f516& */ "./resources/js/components/programdirector/SubmittedClearancesComponent.vue?vue&type=template&id=e4d4f516&");
 /* harmony import */ var _SubmittedClearancesComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SubmittedClearancesComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/programdirector/SubmittedClearancesComponent.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _SubmittedClearancesComponent_vue_vue_type_style_index_0_id_e4d4f516_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./SubmittedClearancesComponent.vue?vue&type=style&index=0&id=e4d4f516&lang=css& */ "./resources/js/components/programdirector/SubmittedClearancesComponent.vue?vue&type=style&index=0&id=e4d4f516&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
 
 
 
@@ -44323,7 +44893,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
   _SubmittedClearancesComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _SubmittedClearancesComponent_vue_vue_type_template_id_e4d4f516___WEBPACK_IMPORTED_MODULE_0__["render"],
   _SubmittedClearancesComponent_vue_vue_type_template_id_e4d4f516___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
@@ -44352,6 +44922,22 @@ component.options.__file = "resources/js/components/programdirector/SubmittedCle
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SubmittedClearancesComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./SubmittedClearancesComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/programdirector/SubmittedClearancesComponent.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SubmittedClearancesComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/programdirector/SubmittedClearancesComponent.vue?vue&type=style&index=0&id=e4d4f516&lang=css&":
+/*!*******************************************************************************************************************************!*\
+  !*** ./resources/js/components/programdirector/SubmittedClearancesComponent.vue?vue&type=style&index=0&id=e4d4f516&lang=css& ***!
+  \*******************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_SubmittedClearancesComponent_vue_vue_type_style_index_0_id_e4d4f516_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./SubmittedClearancesComponent.vue?vue&type=style&index=0&id=e4d4f516&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/programdirector/SubmittedClearancesComponent.vue?vue&type=style&index=0&id=e4d4f516&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_SubmittedClearancesComponent_vue_vue_type_style_index_0_id_e4d4f516_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_SubmittedClearancesComponent_vue_vue_type_style_index_0_id_e4d4f516_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_SubmittedClearancesComponent_vue_vue_type_style_index_0_id_e4d4f516_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_SubmittedClearancesComponent_vue_vue_type_style_index_0_id_e4d4f516_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
 
 /***/ }),
 
@@ -45786,7 +46372,7 @@ var routes = [{
 {
   path: '/stcouncil',
   component: _shared_layout_SignatoryLayout__WEBPACK_IMPORTED_MODULE_4__["default"],
-  name: 'STCOUNCIL',
+  name: 'Student Council',
   redirect: '/stcouncil/clearance/requests',
   children: [
   //PD Routes
@@ -45807,7 +46393,13 @@ var routes = [{
     path: 'clearance/requests',
     beforeEnter: isSTCOUNCIL,
     component: _components_programdirector_ClearanceRequestsComponent__WEBPACK_IMPORTED_MODULE_55__["default"],
-    name: 'Clearance Requests'
+    name: 'Clearance Requests',
+    meta: {
+      breadcrumb: {
+        label: 'Clearance Requests',
+        parent: 'Student Council'
+      }
+    }
   }, {
     path: 'cleared/clearances',
     beforeEnter: isSTCOUNCIL,
@@ -45817,7 +46409,12 @@ var routes = [{
     path: 'submitted/clearances',
     beforeEnter: isSTCOUNCIL,
     component: _components_programdirector_SubmittedClearancesComponent__WEBPACK_IMPORTED_MODULE_62__["default"],
-    name: 'Submitted Clearances'
+    name: 'Submitted Clearances',
+    meta: {
+      breadcrumb: {
+        label: 'Submitted Clearances'
+      }
+    }
   }, {
     path: 'clearance/list',
     beforeEnter: isSTCOUNCIL,
@@ -45846,7 +46443,7 @@ var routes = [{
 {
   path: '/cashier',
   component: _shared_layout_SignatoryLayout__WEBPACK_IMPORTED_MODULE_4__["default"],
-  name: 'CASHIER',
+  name: 'Cashier',
   redirect: '/cashier/clearance/requests',
   children: [
   //PD Routes
@@ -45866,7 +46463,13 @@ var routes = [{
     path: 'clearance/requests',
     beforeEnter: isCASHIER,
     component: _components_programdirector_ClearanceRequestsComponent__WEBPACK_IMPORTED_MODULE_55__["default"],
-    name: 'Clearance Requests'
+    name: 'Clearance Requests',
+    meta: {
+      breadcrumb: {
+        label: 'Clearance Requests',
+        parent: 'Cashier'
+      }
+    }
   }, {
     path: 'cleared/clearances',
     beforeEnter: isCASHIER,
@@ -45876,7 +46479,12 @@ var routes = [{
     path: 'submitted/clearances',
     beforeEnter: isCASHIER,
     component: _components_programdirector_SubmittedClearancesComponent__WEBPACK_IMPORTED_MODULE_62__["default"],
-    name: 'Submitted Clearances'
+    name: 'Submitted Clearances',
+    meta: {
+      breadcrumb: {
+        label: 'Submitted Clearances'
+      }
+    }
   }, {
     path: 'clearance/list',
     beforeEnter: isCASHIER,
@@ -45921,7 +46529,13 @@ var routes = [{
     path: 'clearance/requests',
     beforeEnter: isOSAS,
     component: _components_programdirector_ClearanceRequestsComponent__WEBPACK_IMPORTED_MODULE_55__["default"],
-    name: 'Clearance Requests'
+    name: 'Clearance Requests',
+    meta: {
+      breadcrumb: {
+        label: 'Clearance Requests'
+        // parent:'OSAS'
+      }
+    }
   }, {
     path: 'cleared/clearances',
     beforeEnter: isOSAS,
@@ -45931,7 +46545,12 @@ var routes = [{
     path: 'submitted/clearances',
     beforeEnter: isOSAS,
     component: _components_programdirector_SubmittedClearancesComponent__WEBPACK_IMPORTED_MODULE_62__["default"],
-    name: 'Submitted Clearances'
+    name: 'Submitted Clearances',
+    meta: {
+      breadcrumb: {
+        label: 'Submitted Clearances'
+      }
+    }
   }, {
     path: 'clearance/list',
     beforeEnter: isOSAS,
@@ -46011,7 +46630,12 @@ var routes = [{
     path: 'submitted/clearances',
     beforeEnter: isOSAS,
     component: _components_programdirector_SubmittedClearancesComponent__WEBPACK_IMPORTED_MODULE_62__["default"],
-    name: 'Submitted Clearances'
+    name: 'Submitted Clearances',
+    meta: {
+      breadcrumb: {
+        label: 'Submitted Clearances'
+      }
+    }
   }, {
     path: 'clearance/list',
     beforeEnter: isOSAS,
@@ -46040,7 +46664,7 @@ var routes = [{
 {
   path: '/registrarstaff',
   component: _shared_layout_SignatoryLayout__WEBPACK_IMPORTED_MODULE_4__["default"],
-  name: 'REGISTRARSTAFF',
+  name: 'Registrar Staff',
   redirect: '/registrarstaff/clearance/requests',
   children: [
   //PD Routes
@@ -46061,7 +46685,12 @@ var routes = [{
     path: 'clearance/requests',
     beforeEnter: isREGISTRARSTAFF,
     component: _components_programdirector_ClearanceRequestsComponent__WEBPACK_IMPORTED_MODULE_55__["default"],
-    name: 'Clearance Requests'
+    name: 'Clearance Requests',
+    meta: {
+      breadcrumb: {
+        label: 'Clearance Requests'
+      }
+    }
   }, {
     path: 'cleared/clearances',
     beforeEnter: isREGISTRARSTAFF,
@@ -46071,7 +46700,12 @@ var routes = [{
     path: 'submitted/clearances',
     beforeEnter: isREGISTRARSTAFF,
     component: _components_programdirector_SubmittedClearancesComponent__WEBPACK_IMPORTED_MODULE_62__["default"],
-    name: 'Submitted Clearances'
+    name: 'Submitted Clearances',
+    meta: {
+      breadcrumb: {
+        label: 'Submitted Clearances'
+      }
+    }
   }, {
     path: 'clearance/list',
     beforeEnter: isREGISTRARSTAFF,
@@ -46105,7 +46739,7 @@ var routes = [{
 {
   path: '/registrar',
   component: _shared_layout_SignatoryLayout__WEBPACK_IMPORTED_MODULE_4__["default"],
-  name: 'REGISTRAR',
+  name: 'Registrar',
   redirect: '/registrar/clearance/requests',
   children: [
   //PD Routes
@@ -46126,7 +46760,12 @@ var routes = [{
     path: 'clearance/requests',
     beforeEnter: isREGISTRAR,
     component: _components_programdirector_ClearanceRequestsComponent__WEBPACK_IMPORTED_MODULE_55__["default"],
-    name: 'Clearance Requests'
+    name: 'Clearance Requests',
+    meta: {
+      breadcrumb: {
+        label: 'Clearance Requests'
+      }
+    }
   }, {
     path: 'cleared/clearances',
     beforeEnter: isREGISTRAR,
@@ -46136,7 +46775,12 @@ var routes = [{
     path: 'submitted/clearances',
     beforeEnter: isREGISTRAR,
     component: _components_programdirector_SubmittedClearancesComponent__WEBPACK_IMPORTED_MODULE_62__["default"],
-    name: 'Submitted Clearances'
+    name: 'Submitted Clearances',
+    meta: {
+      breadcrumb: {
+        label: 'Submitted Clearances'
+      }
+    }
   }, {
     path: 'clearance/list',
     beforeEnter: isREGISTRAR,
@@ -46170,7 +46814,7 @@ var routes = [{
 {
   path: '/dean',
   component: _shared_layout_SignatoryLayout__WEBPACK_IMPORTED_MODULE_4__["default"],
-  name: 'DEAN',
+  name: 'Dean',
   redirect: '/dean/clearance/requests',
   children: [{
     path: 'dashboard',
@@ -46188,7 +46832,12 @@ var routes = [{
     path: 'clearance/requests',
     beforeEnter: isDEAN,
     component: _components_programdirector_ClearanceRequestsComponent__WEBPACK_IMPORTED_MODULE_55__["default"],
-    name: 'Clearance Requests'
+    name: 'Clearance Requests',
+    meta: {
+      breadcrumb: {
+        label: 'Clearance Requests'
+      }
+    }
   }, {
     path: 'cleared/clearances',
     beforeEnter: isDEAN,
@@ -46198,7 +46847,12 @@ var routes = [{
     path: 'submitted/clearances',
     beforeEnter: isDEAN,
     component: _components_programdirector_SubmittedClearancesComponent__WEBPACK_IMPORTED_MODULE_62__["default"],
-    name: 'Submitted Clearances'
+    name: 'Submitted Clearances',
+    meta: {
+      breadcrumb: {
+        label: 'Submitted Clearances'
+      }
+    }
   }, {
     path: 'clearance/list',
     beforeEnter: isDEAN,
@@ -46222,7 +46876,7 @@ var routes = [{
 {
   path: '/library',
   component: _shared_layout_SignatoryLayout__WEBPACK_IMPORTED_MODULE_4__["default"],
-  name: 'LIBRARY',
+  name: 'Library',
   redirect: '/library/clearance/requests',
   children: [{
     path: 'dashboard',
@@ -46240,7 +46894,13 @@ var routes = [{
     path: 'clearance/requests',
     beforeEnter: isLIBRARY,
     component: _components_programdirector_ClearanceRequestsComponent__WEBPACK_IMPORTED_MODULE_55__["default"],
-    name: 'Clearance Requests'
+    name: 'Clearance Requests',
+    meta: {
+      breadcrumb: {
+        label: 'Clearance Requests',
+        parent: 'Library'
+      }
+    }
   }, {
     path: 'cleared/clearances',
     beforeEnter: isLIBRARY,
@@ -46250,7 +46910,12 @@ var routes = [{
     path: 'submitted/clearances',
     beforeEnter: isLIBRARY,
     component: _components_programdirector_SubmittedClearancesComponent__WEBPACK_IMPORTED_MODULE_62__["default"],
-    name: 'Submitted Clearances'
+    name: 'Submitted Clearances',
+    meta: {
+      breadcrumb: {
+        label: 'Submitted Clearances'
+      }
+    }
   }, {
     path: 'clearance/list',
     beforeEnter: isLIBRARY,
@@ -46274,7 +46939,7 @@ var routes = [{
 {
   path: '/pd',
   component: _shared_layout_SignatoryLayout__WEBPACK_IMPORTED_MODULE_4__["default"],
-  name: 'pd',
+  name: 'Program Director',
   redirect: '/pd/clearance/requests',
   children: [
   //PD Routes
@@ -46295,7 +46960,13 @@ var routes = [{
     path: 'clearance/requests',
     beforeEnter: isPD,
     component: _components_programdirector_ClearanceRequestsComponent__WEBPACK_IMPORTED_MODULE_55__["default"],
-    name: 'Clearance Requests'
+    name: 'Clearance Requests',
+    meta: {
+      breadcrumb: {
+        label: 'Clearance Requests',
+        parent: 'Program Director'
+      }
+    }
   }, {
     path: 'cleared/clearances',
     beforeEnter: isPD,
@@ -46305,7 +46976,12 @@ var routes = [{
     path: 'submitted/clearances',
     beforeEnter: isPD,
     component: _components_programdirector_SubmittedClearancesComponent__WEBPACK_IMPORTED_MODULE_62__["default"],
-    name: 'Submitted Clearances'
+    name: 'Submitted Clearances',
+    meta: {
+      breadcrumb: {
+        label: 'Submitted Clearances'
+      }
+    }
   }, {
     path: 'clearance/list',
     beforeEnter: isPD,
@@ -46365,7 +47041,12 @@ var routes = [{
     path: 'submitted/clearances',
     beforeEnter: isADVISER,
     component: _components_programdirector_SubmittedClearancesComponent__WEBPACK_IMPORTED_MODULE_62__["default"],
-    name: 'Submitted Clearances'
+    name: 'Submitted Clearances',
+    meta: {
+      breadcrumb: {
+        label: 'Submitted Clearances'
+      }
+    }
   }, {
     path: 'clearance/list',
     beforeEnter: isADVISER,
@@ -46420,7 +47101,12 @@ var routes = [{
     path: 'submitted/clearances',
     beforeEnter: isPRINCIPAL,
     component: _components_programdirector_SubmittedClearancesComponent__WEBPACK_IMPORTED_MODULE_62__["default"],
-    name: 'Submitted Clearances'
+    name: 'Submitted Clearances',
+    meta: {
+      breadcrumb: {
+        label: 'Submitted Clearances'
+      }
+    }
   }, {
     path: 'clearance/list',
     beforeEnter: isPRINCIPAL,
@@ -47096,14 +47782,17 @@ __webpack_require__.r(__webpack_exports__);
 /*!********************************************************!*\
   !*** ./resources/js/shared/layout/SignatoryLayout.vue ***!
   \********************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _SignatoryLayout_vue_vue_type_template_id_c576fe32___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SignatoryLayout.vue?vue&type=template&id=c576fe32& */ "./resources/js/shared/layout/SignatoryLayout.vue?vue&type=template&id=c576fe32&");
+/* harmony import */ var _SignatoryLayout_vue_vue_type_template_id_c576fe32_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SignatoryLayout.vue?vue&type=template&id=c576fe32&scoped=true& */ "./resources/js/shared/layout/SignatoryLayout.vue?vue&type=template&id=c576fe32&scoped=true&");
 /* harmony import */ var _SignatoryLayout_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SignatoryLayout.vue?vue&type=script&lang=js& */ "./resources/js/shared/layout/SignatoryLayout.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _SignatoryLayout_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _SignatoryLayout_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _SignatoryLayout_vue_vue_type_style_index_0_id_c576fe32_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./SignatoryLayout.vue?vue&type=style&index=0&id=c576fe32&scoped=true&lang=css& */ "./resources/js/shared/layout/SignatoryLayout.vue?vue&type=style&index=0&id=c576fe32&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
 
 
 
@@ -47111,13 +47800,13 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
   _SignatoryLayout_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _SignatoryLayout_vue_vue_type_template_id_c576fe32___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _SignatoryLayout_vue_vue_type_template_id_c576fe32___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _SignatoryLayout_vue_vue_type_template_id_c576fe32_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _SignatoryLayout_vue_vue_type_template_id_c576fe32_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
-  null,
+  "c576fe32",
   null
   
 )
@@ -47133,7 +47822,7 @@ component.options.__file = "resources/js/shared/layout/SignatoryLayout.vue"
 /*!*********************************************************************************!*\
   !*** ./resources/js/shared/layout/SignatoryLayout.vue?vue&type=script&lang=js& ***!
   \*********************************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -47143,19 +47832,35 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/shared/layout/SignatoryLayout.vue?vue&type=template&id=c576fe32&":
-/*!***************************************************************************************!*\
-  !*** ./resources/js/shared/layout/SignatoryLayout.vue?vue&type=template&id=c576fe32& ***!
-  \***************************************************************************************/
+/***/ "./resources/js/shared/layout/SignatoryLayout.vue?vue&type=style&index=0&id=c576fe32&scoped=true&lang=css&":
+/*!*****************************************************************************************************************!*\
+  !*** ./resources/js/shared/layout/SignatoryLayout.vue?vue&type=style&index=0&id=c576fe32&scoped=true&lang=css& ***!
+  \*****************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_SignatoryLayout_vue_vue_type_style_index_0_id_c576fe32_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./SignatoryLayout.vue?vue&type=style&index=0&id=c576fe32&scoped=true&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/shared/layout/SignatoryLayout.vue?vue&type=style&index=0&id=c576fe32&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_SignatoryLayout_vue_vue_type_style_index_0_id_c576fe32_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_SignatoryLayout_vue_vue_type_style_index_0_id_c576fe32_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_SignatoryLayout_vue_vue_type_style_index_0_id_c576fe32_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_SignatoryLayout_vue_vue_type_style_index_0_id_c576fe32_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
+
+/***/ }),
+
+/***/ "./resources/js/shared/layout/SignatoryLayout.vue?vue&type=template&id=c576fe32&scoped=true&":
+/*!***************************************************************************************************!*\
+  !*** ./resources/js/shared/layout/SignatoryLayout.vue?vue&type=template&id=c576fe32&scoped=true& ***!
+  \***************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_SignatoryLayout_vue_vue_type_template_id_c576fe32___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!../../../../node_modules/vue-loader/lib??vue-loader-options!./SignatoryLayout.vue?vue&type=template&id=c576fe32& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/shared/layout/SignatoryLayout.vue?vue&type=template&id=c576fe32&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_SignatoryLayout_vue_vue_type_template_id_c576fe32___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_SignatoryLayout_vue_vue_type_template_id_c576fe32_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!../../../../node_modules/vue-loader/lib??vue-loader-options!./SignatoryLayout.vue?vue&type=template&id=c576fe32&scoped=true& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/shared/layout/SignatoryLayout.vue?vue&type=template&id=c576fe32&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_SignatoryLayout_vue_vue_type_template_id_c576fe32_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_SignatoryLayout_vue_vue_type_template_id_c576fe32___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_SignatoryLayout_vue_vue_type_template_id_c576fe32_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

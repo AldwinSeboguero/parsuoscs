@@ -71,18 +71,18 @@ class ClearanceRequestController extends Controller
         return response()->json([
             // 'signatory' => $signatory_ids->count(),
             'clearance_requests' => $clearance_requests,
-            'semester' => $request->semester,
-            'college' =>$request->college,
-            'program' =>$request->program,
+            // 'semester' => $request->semester,
+            // 'college' =>$request->college,
+            // 'program' =>$request->program,
 
-            'semesters' => Semester::orderByDesc('id')->get(),
-            'colleges' => College::orderBy('id')
-                                                        ->get(),
-            'programs' => $request->college ? Program::orderBy('id')
-                                                        ->when($request->college, function($inner) use($request){
-                                                            $inner->where('college_id',$request->college);
-                                                        }) 
-                                                        ->get() : [],
+            // 'semesters' => Semester::orderByDesc('id')->get(),
+            // 'colleges' => College::orderBy('id')
+            //                                             ->get(),
+            // 'programs' => $request->college ? Program::orderBy('id')
+            //                                             ->when($request->college, function($inner) use($request){
+            //                                                 $inner->where('college_id',$request->college);
+            //                                             }) 
+            //                                             ->get() : [],
         ]);
     }
 

@@ -8,13 +8,13 @@
     </v-row>
 
 
-      <v-row class="container-fluid ml-2 mt-0">
-        <v-col cols="12" lg="3">
+    <v-row class="container-fluid ml-2 mt-0">
+      <v-col cols="12" lg="3">
         <v-card class=" rounded-medium pt-1  px-2"
             elevation="2">
             
-              <v-card-title class="align-end pl-4 pa-2 mt-2 mb-3 rounded white--text elevation-1" style=" margin-left: -16px; margin-right: -16px; max-height: 50px; background: linear-gradient(to right, #0d47a1, #0d47a1, #1A237E);">
-                <span class="font-semibold overline"><v-icon dark left >{{formIcon}}</v-icon>{{formName}}</span>
+            <v-card-title class="align-end pl-4 pa-2 mt-2 mb-3 rounded white--text elevation-1" style=" margin-left: -16px; margin-right: -16px; max-height: 50px; background: linear-gradient(to right, #0d47a1, #0d47a1, #1A237E);">
+              <span class="font-semibold overline"><v-icon dark left >{{formIcon}}</v-icon>{{formName}}</span>
 
             </v-card-title>
 
@@ -25,7 +25,48 @@
                 v-on:submit.stop.prevent="save"
                 ref="entryForm"
               >
-              
+              <label class="black--text font-weight-medium mt-2" for="">Purpose</label>
+
+              <v-autocomplete
+                v-model="forms.purpose"
+                :items="purposes"
+                :search-input.sync="search"
+                chips
+                clearable
+                item-text="purpose"
+                item-value="id"
+                item-key="id" 
+                outlined
+                dense
+                hide-details
+              class="mb-2"
+                :offset-y="offSet"
+              >
+                <template v-slot:no-data>
+                  <v-list-item>
+                    <v-list-item-title>
+                      Search Purpose 
+                    </v-list-item-title>
+                  </v-list-item>
+                </template>
+                <template v-slot:selection="{ attr, on, item, selected }">
+                  <v-chip
+                    v-bind="attr"
+                    :input-value="selected"
+                    class="blue darken-3 white--text rounded"
+                    v-on="on"
+                  >
+                    
+                    <span class="text-truncate text-uppercase" v-text="item.purpose"></span>
+                  </v-chip>
+                </template>
+                <template v-slot:item="{ item }">
+                  
+                  <v-list-item-content>
+                    <v-list-item-title class="text-uppercase" v-text="item.purpose"></v-list-item-title> 
+                  </v-list-item-content> 
+                </template>
+              </v-autocomplete>
               <label class="black--text font-weight-medium" for="">Semester</label>
 
               <v-autocomplete
@@ -69,7 +110,47 @@
                 </template>
               </v-autocomplete>
               
-                
+                <label class="black--text font-weight-medium mt-2" for="">Designation</label>
+
+                <v-autocomplete
+                  v-model="forms.designation"
+                  :items="designations"
+                  chips
+                  clearable
+                  item-text="name"
+                  item-value="id"
+                  item-key="id" 
+                  outlined
+                  dense
+                  hide-details
+                  class="mb-2"
+                  :offset-y="offSet"
+                >
+                  <template v-slot:no-data>
+                    <v-list-item>
+                      <v-list-item-title>
+                        Search Designation 
+                      </v-list-item-title>
+                    </v-list-item>
+                  </template>
+                  <template v-slot:selection="{ attr, on, item, selected }">
+                    <v-chip
+                      v-bind="attr"
+                      :input-value="selected"
+                      class="blue darken-3 white--text rounded"
+                      v-on="on"
+                    >
+                       
+                      <span class="text-truncate" v-text="item.name"></span>
+                    </v-chip> 
+                  </template>
+                  <template v-slot:item="{ item }">
+                    
+                    <v-list-item-content>
+                      <v-list-item-title v-text="item.name"></v-list-item-title> 
+                    </v-list-item-content> 
+                  </template>
+                </v-autocomplete>
               <label class="black--text font-weight-medium mt-2" for="">College</label>
 
                 <v-autocomplete
@@ -90,7 +171,7 @@
                   <template v-slot:no-data>
                     <v-list-item>
                       <v-list-item-title>
-                        Search College 
+                        Search Campus 
                       </v-list-item-title>
                     </v-list-item>
                   </template>
@@ -155,21 +236,57 @@
                     </v-list-item-content> 
                   </template>
                 </v-autocomplete>
-                <label class="black--text font-weight-medium" for="">Student</label>
-                <v-text-field
-                      v-model="forms.student"
-                      label=""
-                      auto-grow
-                      outlined
-                      dense
-                      placeholder="ID No. or Name"
-                      type="text"
-
-                      clearable
-                      hide-details
-                      class="mb-2 text-field-text-size"
-
-                    />
+                <label class="black--text font-weight-medium" for="">Signatory</label>
+              <v-autocomplete
+                  v-model="forms.signatory"
+                  :items="signatories"
+                  chips
+                  clearable
+                  item-text="name"
+                  item-value="id"
+                  item-key="id" 
+                  
+                  dense
+                  hide-details
+                  outlined
+                  class="mb-2"
+                  :offset-y="offSet"
+                >
+                  <template v-slot:no-data>
+                    <v-list-item>
+                      <v-list-item-title>
+                        Search 
+                        <strong>Signatory</strong>
+                      </v-list-item-title>
+                    </v-list-item>
+                  </template>
+                  <template v-slot:selection="{ attr, on, item, selected }">
+                    <v-chip
+                      v-bind="attr"
+                      :input-value="selected"
+                      class="blue darken-3 white--text rounded"
+                      v-on="on"
+                    >
+                       
+                      <v-icon dark left>
+                        mdi-badge-account
+                      </v-icon>
+                      
+                      <span class="text-truncate"v-text="item.name"></span>
+                    </v-chip>
+                  </template>
+                  <template v-slot:item="{ item }">
+                    <v-list-item-avatar
+                      color="indigo"
+                      class="caption font-weight-light white--text"
+                    >
+                      {{ item.name[0]}}
+                    </v-list-item-avatar>
+                    <v-list-item-content>
+                      <v-list-item-title v-text="item.name"></v-list-item-title> 
+                    </v-list-item-content> 
+                  </template>
+                </v-autocomplete>
                     <v-divider />
                   
                    
@@ -177,19 +294,7 @@
               
             </v-card-text>
             <v-card-actions>
-              <!-- <v-spacer></v-spacer> -->
-            <v-btn
-                      dark
-                      outlined
-                      small
-                      @click="clearForms"
-                      class="elevation-0 mb-2"
-                      color="primary"
-                      block
-
-                    >
-                      Clear
-                    </v-btn>
+                  
             </v-card-actions>
         </v-card>
       </v-col>
@@ -388,7 +493,6 @@ export default {
     campuses: {},
     colleges:{},
     programs:{},
-    students: {},
     designations: {},
     semesters_prev: {},
     semesters_next: {},
@@ -399,7 +503,7 @@ export default {
       college:'',
       program: '',
       designation: '',
-      student: '',
+      signatory: '',
       purpose:'',
       order: '',
       isForAllInCollege: false,
@@ -411,7 +515,7 @@ export default {
       college:'',
       program: '',
       designation: '',
-      student: '',
+      signatory: '',
       purpose:'',
       order: '',
       isForAllInCollege: false,
@@ -423,7 +527,7 @@ export default {
       college:'',
       program: '',
       designation: '',
-      student: '',
+      signatory: '',
       purpose:'',
       order: '',
       isForAllInCollege: false,
@@ -462,9 +566,10 @@ export default {
     totalclearancerequests: 0,
     numberOfPages: 0,
     options: {},
-    clearancerequests: {}, 
-    semesters: {},
-    programs:{},
+    clearancerequests: [], 
+    semesters: [],
+    colleges: [],
+    programs:[],
     semester: '',
     college: '',
     program:'',
@@ -507,193 +612,111 @@ export default {
   computed: {
    
   },
-  mounted(){
-    axios.get(`/api/v1/programs`,{
-              params: { 
-                'signatoryProgram': true,
-              },
-            }).then((response) => {
-              this.programs = response.data.programs;
-            });
-     axios.get(`/api/v1/campuses`).then((response) => {
-          this.campuses = response.data.campuses;
-    });
-     axios.get(`/api/v1/semesters`).then((response) => {
-          this.semesters = response.data.semesters;
-    });
-     axios.get(`/api/v1/designations`).then((response) => {
-          this.designations = response.data.designations;
-    });
-     axios.get(`/api/v1/students`).then((response) => {
-          this.students = response.data.students.data;
-    });
-     axios.get(`/api/v1/purposes`).then((response) => {
-          this.purposes = response.data.purposes;
-    });
-   axios.get(`/api/v1/colleges`,{
-              params: { 
-                'signatoryCollege': true,
-              },
-            }).then((response) => {
-          this.colleges = response.data.colleges;
-    });
-  },
+
   watch: {
-    'forms.student': debounce(function (val) {
-          console.log(val)
-          const { page, itemsPerPage } = this.options;
-          let pageNumber = page;
-           axios
-           .get(`/api/v1/clearance-requests?page=` + pageNumber, {
-              params: { 
-                'per_page': itemsPerPage,
-                'semester': this.forms.semester,
-                'program': this.forms.program,
-                'college': this.forms.college,
-                'purpose': this.forms.purpose,
-                'designation': this.forms.designation,
-                'student': this.clean(val),
-               },
-            })
-            .then((response) => {
-              // this.semester = response.data.semester.semester;
-              this.clearancerequests = response.data.clearance_requests; 
-              this.totalclearancerequests = response.data.clearance_requests.total;
-              this.numberOfPages = response.data.clearance_requests.last_page;
-              this.loading = false;
-            });
+    searchItem: debounce(function (val) {
+      this.loading = true;
+      
+      const { page, itemsPerPage } = this.options;
+      let pageNumber = page;
+      axios
+      .get(`/api/v1/clearance-requests?page=` + pageNumber, {
+        params: { 'per_page': itemsPerPage,
+          'search': val,
+          'semester': this.semester,
+          'college': this.college,
+          'program': this.program,  },
+      })
+      .then((response) => {
+        //Then injecting the result to datatable parameters.
+        this.clearancerequests = response.data.clearance_requests; 
+        this.totalclearancerequests = response.data.clearance_requests.total;
+        this.numberOfPages = response.data.clearance_requests.last_page;
+        this.loading = false;
 
-        }, 300),
-        'forms.purpose': debounce(function (val) {
-          // console.log(val)
-          console.log(val)
-          const { page, itemsPerPage } = this.options;
-          let pageNumber = page;
-           axios
-           .get(`/api/v1/clearance-requests?page=` + pageNumber, {
-              params: { 
-                'per_page': itemsPerPage,
-                'semester': this.forms.semester,
-                'program': this.forms.program,
-                'college': this.forms.college,
-                'purpose': val,
-                'designation': this.forms.designation,
-                'student': this.forms.student,
-               },
-            })
-            .then((response) => {
-              // this.semester = response.data.semester.semester;
-              this.clearancerequests = response.data.clearance_requests; 
-              this.totalclearancerequests = response.data.clearance_requests.total;
-              this.numberOfPages = response.data.clearance_requests.last_page;
-              this.loading = false;
-            });
-          
-        }, 300),
-        'forms.designation': debounce(function (val) {
-          // console.log(val)
-          if(this.forms.program || this.forms.college || this.forms.signatory){
+      });
+      
+    }, 300),
 
-          const { page, itemsPerPage } = this.options;
-          let pageNumber = page;
-           axios
-            .get(`/api/v1/getStaff?page=` + pageNumber,{
-              params: { 
-                'per_page': itemsPerPage,
-                'semester': this.forms.semester,
-                'program': this.forms.program,
-                'college': this.forms.college,
-                    'purpose': this.forms.purpose,
+    semester: debounce(function (val) {
+      this.college = '';
+      this.program = '';
+      this.loading = true;
+      
+      const { page, itemsPerPage } = this.options;
+      let pageNumber = page;
+      axios
+      .get(`/api/v1/clearance-requests?page=` + pageNumber, {
+        params: { 'per_page': itemsPerPage,
+          'semester': val,
+          'search': this.searchItem,
+          'college': this.college,
+          'program': this.program, },
+      })
+      .then((response) => {
+        //Then injecting the result to datatable parameters.
+        
+        this.colleges = response.data.colleges; 
 
-                'designation': val,
-                'signatory': this.forms.signatory,
-              },
-            })
-            .then((response) => {
-              // this.semester = response.data.semester.semester;
-                this.headers = response.data.headers;
-                this.table_data = response.data.table_data.data ;
-                this.current_page= response.data.table_data.current_page;
-                this.total_pages= response.data.table_data.total_pages;
-                this.total= response.data.table_data.total;
-            });}
-        }, 300),
+        this.clearancerequests = response.data.clearance_requests; 
+        this.totalclearancerequests = response.data.clearance_requests.total;
+        this.numberOfPages = response.data.clearance_requests.last_page;
+        this.loading = false;
 
-        'forms.college': debounce(function (val) {
-          console.log(val)
-          const { page, itemsPerPage } = this.options;
-          let pageNumber = page;
-           axios
-           .get(`/api/v1/clearance-requests?page=` + pageNumber, {
-              params: { 
-                'per_page': itemsPerPage,
-                'semester': this.forms.semester,
-                'program': this.forms.program,
-                'college': val,
-                'purpose': this.forms.purpose,
-                'designation': this.forms.designation,
-                'student': this.forms.student,
-               },
-            })
-            .then((response) => {
-              // this.semester = response.data.semester.semester;
-              this.clearancerequests = response.data.clearance_requests; 
-              this.totalclearancerequests = response.data.clearance_requests.total;
-              this.numberOfPages = response.data.clearance_requests.last_page;
-              this.loading = false;
-            });
-        }, 300),
+      });
+      
+    }, 300),
+    college: debounce(function (val) {
+      this.loading = true;
+      this.program = '';
+      
+      const { page, itemsPerPage } = this.options;
+      let pageNumber = page;
+      axios
+      .get(`/api/v1/clearance-requests?page=` + pageNumber, {
+        params: { 'per_page': itemsPerPage,
+          'semester': this.semester,
+          'program': this.program,
+          'search': this.searchItem,
+          'college': val },
+      })
+      .then((response) => {
+        //ThhIten injecting the result to datatable parameters.
+        this.programs = response.data.programs; 
 
-        'forms.semester': debounce(function (val) {
-          console.log(val)
-          const { page, itemsPerPage } = this.options;
-          let pageNumber = page;
-           axios
-           .get(`/api/v1/clearance-requests?page=` + pageNumber, {
-              params: { 
-                'per_page': itemsPerPage,
-                'semester': val,
-                'program': this.forms.program,
-                'college': this.forms.college,
-                'purpose': this.forms.purpose,
-                'designation': this.forms.designation,
-                'student': this.forms.student,
-               },
-            })
-            .then((response) => {
-              // this.semester = response.data.semester.semester;
-              this.clearancerequests = response.data.clearance_requests; 
-              this.totalclearancerequests = response.data.clearance_requests.total;
-              this.numberOfPages = response.data.clearance_requests.last_page;
-              this.loading = false;
-            });
-        }, 300),
+        this.clearancerequests = response.data.clearance_requests; 
+        this.totalclearancerequests = response.data.clearance_requests.total;
+        this.numberOfPages = response.data.clearance_requests.last_page;
+        this.loading = false;
 
-        'forms.program': debounce(function (val) {
-          console.log(val)
-          const { page, itemsPerPage } = this.options;
-          let pageNumber = page;
-           axios
-           .get(`/api/v1/clearance-requests?page=` + pageNumber, {
-              params: { 
-                'per_page': itemsPerPage,
-                'semester': this.forms.semester,
-                'program': val,
-                'college': this.forms.college,
-                'purpose': this.forms.purpose,
-                'designation': this.forms.designation,
-                'student': this.forms.student,
-               },
-            })
-            .then((response) => {
-              // this.semester = response.data.semester.semester;
-              this.clearancerequests = response.data.clearance_requests; 
-              this.totalclearancerequests = response.data.clearance_requests.total;
-              this.numberOfPages = response.data.clearance_requests.last_page;
-              this.loading = false;
-            });
-        }, 300),
-    
+      });
+      
+    }, 300),
+    program: debounce(function (val) {
+      this.loading = true;
+      
+      const { page, itemsPerPage } = this.options;
+      let pageNumber = page;
+      axios
+      .get(`/api/v1/clearance-requests?page=` + pageNumber, {
+        params: { 'per_page': itemsPerPage,
+          'semester': this.semester,
+          'search': this.searchItem,
+          'program': val,
+          'college': this.college },
+      })
+      .then((response) => {
+        //Then injecting the result to datatable parameters.
+        // this.programs = response.data.programs; 
+
+        this.clearancerequests = response.data.clearance_requests; 
+        this.totalclearancerequests = response.data.clearance_requests.total;
+        this.numberOfPages = response.data.clearance_requests.last_page;
+        this.loading = false;
+
+      });
+      
+    }, 300),
 
 
     dialog(val) {
@@ -712,17 +735,6 @@ export default {
   },
 
   methods: {
-    clearForms(){
-      // this.editedForms = Object.assign({}, this.defaultForms);
-
-      this.isEditMode = false;
-      this.forms = Object.assign({}, this.defaultForms);
-
-      // // this.$refs.childComponent.editRowReset();
-      // this.formName = 'Create Signatory';
-      // this.formIcon = 'mdi-file-plus';
-
-    },
     clean($val) {
       if($val){$val = $val.replace(/ +(?= )/g, "");
       $val = $val.replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, " "); // Replaces all spaces with hyphens.
@@ -743,9 +755,9 @@ export default {
         .then((response) => {
           //Then injecting the result to datatable parameters.
           this.loading = false;
-          // this.semesters = response.data.semesters; 
-          // this.colleges = response.data.colleges; 
-          // this.programs = response.data.programs; 
+          this.semesters = response.data.semesters; 
+          this.colleges = response.data.colleges; 
+          this.programs = response.data.programs; 
         
          this.clearancerequests = response.data.clearance_requests; 
           this.totalclearancerequests = response.data.clearance_requests.total;
@@ -768,9 +780,9 @@ export default {
         })
           .then((res) => {
             this.loading = false;  
-            // this.semesters = res.data.semesters; 
-            // this.colleges = res.data.colleges; 
-            // this.programs = res.data.programs; 
+            this.semesters = res.data.semesters; 
+            this.colleges = res.data.colleges; 
+            this.programs = res.data.programs; 
             this.clearancerequests = res.data.clearance_requests; 
             this.totalclearancerequests = res.data.clearance_requests.total;
             this.numberOfPages = res.data.clearance_requests.last_page;
@@ -790,9 +802,9 @@ export default {
           })
           .then((res) => {
             this.loading = false;  
-            // this.semesters = res.data.semesters; 
-            // this.colleges = res.data.colleges; 
-            // this.programs = res.data.programs; 
+            this.semesters = res.data.semesters; 
+            this.colleges = res.data.colleges; 
+            this.programs = res.data.programs; 
             this.clearancerequests = res.data.clearance_requests;
             this.totalclearancerequests = res.data.clearance_requests.total;
             this.numberOfPages = res.data.clearance_requests.last_page;

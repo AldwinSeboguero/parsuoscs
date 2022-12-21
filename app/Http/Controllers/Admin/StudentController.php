@@ -88,9 +88,9 @@ class StudentController extends Controller
             $q->where('id', Staff::where('user_id',Auth::user()->id)->first()->campus_id);
         }) 
         ->paginate($per_page)),
-        'campuses' => Campus::orderBy('name')->where('id', Staff::where('user_id',Auth::user()->id)->first()->campus_id)->get(),
-        'programs' => Program::orderBy('name')->get(),
-        'sections' => Section::orderBy('name')->get(),
+        // 'campuses' => Campus::orderBy('name')->where('id', Staff::where('user_id',Auth::user()->id)->first()->campus_id)->get(),
+        // 'programs' => Program::orderBy('name')->get(),
+        // 'sections' => Section::orderBy('name')->get(),
         ],200);
         }
     }

@@ -1,57 +1,140 @@
 <template>
-  <v-container>
-   <v-card>
-   <v-card-subtitle class="white--text text-uppercase elevation-2 mb-0 pb-1"   style="background: linear-gradient(to left, #1A237E, #1A237E, #0D47A1);">
-          <span class="text-h6"> Submitted Clearances </span>
+  <v-container fluid class="ma-0 pa-0">
+  <v-row >
+      <v-col cols="12" lg="5" class="mt-2">
+       <Breadcrumbs class="mb-4"/>
 
-    </v-card-subtitle>
-     <v-card-title class="white--text elevation-2 mb-0 pb-6 mt-0 pt-2"  style="background: linear-gradient(to left, #1A237E, #1A237E, #0D47A1);">
-     <v-row>
-        <v-col
-           class="mb-0 pb-0 mt-0 pt-0"
+      </v-col>
+    </v-row>  
+    <v-row class="container-fluid ml-2 mt-0">
+    <v-col cols="12" lg="3">
+        <v-card class=" rounded-medium pt-1 pb-2 px-2"
+            elevation="2">
+            
+            <v-card-title class="align-end pl-4 pa-2 mt-2 mb-3 rounded white--text elevation-1" style=" margin-left: -16px; margin-right: -16px; max-height: 50px; background: linear-gradient(to right, #0d47a1, #0d47a1, #1A237E);">
+              <span class="font-semibold overline"><v-icon dark left >mdi-filter-variant</v-icon>Filters</span>
 
-          cols="12"
-          md="4"
-        >
-                          <v-select 
-                            label="Select Semester"
-                            class="mb-0 pb-0 mt-2 pt-0"
+            </v-card-title>
 
-                             item-value="id"
-                              item-text="semester" 
+            <v-card-text>
+            <v-form 
+                method="post"
+                lazy-validation
+                v-on:submit.stop.prevent="save"
+                ref="entryForm"
+              >
+              <label class="black--text font-weight-medium mt-2" for="">Purpose</label>
+           
+                         
+                          <v-autocomplete
+                            v-model="semester"
                             :items="semesters"
-                            v-model="semester_id"
-                            @change="semesterChange(searchItem)"
-                            solo-inverted
-                            flat
-                            dark
+                            chips
+                            clearable
+                            item-text="semester"
+                            item-value="id"
+                            item-key="id" 
+                            outlined
                             dense
                             hide-details
-                          ></v-select>
-                          </v-col>
+                          class="mb-2"
+                            :offset-y="offSet"
+                          >
+                            <template v-slot:no-data>
+                              <v-list-item>
+                                <v-list-item-title>
+                                  Search Semester 
+                                </v-list-item-title>
+                              </v-list-item>
+                            </template>
+                            <template v-slot:selection="{ attr, on, item, selected }">
+                              <v-chip
+                                v-bind="attr"
+                                :input-value="selected"
+                                class="blue darken-3 white--text rounded"
+                                v-on="on"
+                              >
+                                
+                                <span class="text-truncate text-uppercase" v-text="item.semester"></span>
+                              </v-chip>
+                            </template>
+                            <template v-slot:item="{ item }">
+                              
+                              <v-list-item-content>
+                                <v-list-item-title class="text-uppercase" v-text="item.semester"></v-list-item-title> 
+                              </v-list-item-content> 
+                            </template>
+                          </v-autocomplete>
+                          <label class="black--text font-weight-medium mt-2" for="">Search</label>
 
-<v-col
-  cols="12"
-  md="4"
-  class="mb-0 pb-0 mt-0 pt-0"
+                                <v-text-field 
+                                      append-icon="mdi-magnify"
+                                      label="Search"
+                                      class="mb-0 pb-0 mt-2 pt-0"
+                                      v-model="search"
+                                      @input="searchIt"
+                                      outlined
+                                      flat
+                                      
+                                      dense
+                                      hide-details
+                                    ></v-text-field>
+                    <v-divider />
+                  
+                   
+              </v-form>
+              
+            </v-card-text>
+            <v-card-actions>
+                   
+                    <v-btn
+                      dark
+                      outlined
+                      small
+                      block
+                      @click="clearForms"
+                      class="elevation-0"
+                      color="primary"
+                    >
+                      Clear
+                    </v-btn>
+            </v-card-actions>
+        </v-card>
+      </v-col>
+      <v-col cols="12" lg="9">
+      <v-card class=" rounded-medium pt-1  px-2"
+            elevation="2">
+  
+            <v-card-title class="align-end pl-4 pa-2 mt-2 mb-3 rounded white--text elevation-1" style=" margin-left: -16px; margin-right: -16px; max-height: 50px; background: linear-gradient(to right, #0d47a1, #0d47a1, #1A237E);">
+               <span> 
+            Submitted Clearances
+            </span>
+                 
+                  <v-spacer></v-spacer>
+                  <span></span>
+                 
 
-> 
-      <v-text-field 
-            append-icon="mdi-magnify"
-            label="Search"
-            class="mb-0 pb-0 mt-2 pt-0"
-             v-model="searchItem"
-            @input="searchIt"
-            solo-inverted
-            flat
-            dark
-            dense
-            hide-details
-          ></v-text-field>
-          </v-col>
-      </v-row>
-           
-    </v-card-title>
+                  <v-dialog v-model="uploadDialog" width="390">
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-btn
+                        dark
+                        v-bind="attrs"
+                        small
+                        v-on="on"
+                        icon
+                        class="float-right info white--text"
+                      >
+                        <v-icon small>mdi-download-multiple</v-icon>
+                      </v-btn>
+                    </template>
+                    <v-card>
+                      
+                    </v-card>
+                  </v-dialog>
+                
+          </v-card-title>
+          </v-card>
+    
      <v-data-table
         item-key="id"
         class="px-6 pb-6  mt-4"
@@ -60,7 +143,7 @@
         :headers="headers"
         :page="page" 
         :pageCount="numberOfPages"
-        :items="submittedclearances.data"
+        :items="submittedclearances"
         :options.sync="options"
         :server-items-length="totalsubmittedclearances"
         :items-per-page="10"  
@@ -123,10 +206,13 @@
       </v-btn>
       </template>
     </v-snackbar> 
-    </v-card>
+      </v-col>
+      </v-row>
   </v-container>
 </template>
 <script>
+import debounce from "lodash/debounce";
+
 export default {
   data: () => ({
     valid: true,
@@ -136,7 +222,7 @@ export default {
     selected: [],
     text: "",
     
-    searchItem: '',
+    search: '',
     success: "",
     error: "", 
     snackbarColor:"",
@@ -159,10 +245,9 @@ export default {
     options: {},
      submittedclearances: [],
      semesters:{
-         id: "", 
-      semester: "",
      },
-     semester_id:0, 
+
+     semester:'', 
     editedIndex: -1,
     editedItem: {
       id: "",
@@ -184,17 +269,60 @@ export default {
     }, 
   }),
 
-  computed: {
-   
+  mounted() {
+    axios.get(`/api/v1/semesters`).then((response) => {
+          this.semesters = response.data.semesters;
+    });
   },
 
   watch: {
+    'semester': debounce(function (val) {
+          console.log(val)
+          const { page, itemsPerPage } = this.options;
+          let pageNumber = page;
+          axios
+        .get(`/api/v1/submittedclearances?page=` + pageNumber, {
+            params: { 
+          'per_page': itemsPerPage,
+          'semester' : val,
+          'search' : this.search,
+         },
+        })
+        .then((response) => {
+          this.loading = false;  
+            this.page = response.data.submittedclearances.current_page;
+            this.submittedclearances = response.data.submittedclearances.data;
+            this.totalsubmittedclearances = response.data.submittedclearances.total;
+            this.numberOfPages = response.data.submittedclearances.total_pages;
+        });
+        }, 300),
+
+        'search': debounce(function (val) {
+          console.log(val)
+          const { page, itemsPerPage } = this.options;
+          let pageNumber = page;
+          axios
+        .get(`/api/v1/submittedclearances?page=` + pageNumber, {
+            params: { 
+          'per_page': itemsPerPage,
+          'semester' : this.semester,
+          'search' : val, },
+        })
+        .then((response) => {
+          this.loading = false;  
+            this.page = response.data.submittedclearances.current_page;
+            this.submittedclearances = response.data.submittedclearances.data;
+            this.totalsubmittedclearances = response.data.submittedclearances.total;
+            this.numberOfPages = response.data.submittedclearances.total_pages;
+        });
+        }, 300),
+
     dialog(val) {
       val || this.close();
     },
      options: {
       handler() {
-        this.searchIt(this.searchItem);
+        this.readDataFromAPI();
       },
     },
     deep: true,
@@ -205,6 +333,10 @@ export default {
   },
 
   methods: {
+    clearForms(){
+      this.semester = null;
+      this.search = '';
+    },
     generatePDF(item) { 
       axios.get('/api/v1/active-clearance/signatory/pdf',{responseType: 'blob'
             ,params: { 'clearance_id': item.clearance_id }
@@ -221,35 +353,6 @@ export default {
                 fileLink.click();
                 // this.downloadLoading = false;
               });
-    //  this.editedIndex = this.submittedclearances.data.indexOf(item);
-    //   this.editedItem = Object.assign({}, item); 
-    // if(item.college == "School of Graduate Studies and Research")
-    // {
-    //    axios.get('/api/v1/pdf-createSGS',{responseType: 'blob'
-    //  ,params: { 'clearance': this.editedItem.clearance_id }
-
-    //  }).then((response) => {
-    //  var fileURL = window.URL.createObjectURL(new Blob([response.data], {type: 'application/pdf'}));
-    //  var fileLink = document.createElement('a');
-    //  fileLink.href = fileURL;
-    //  fileLink.setAttribute('download', this.editedItem.name+this.editedItem.clearance_id+'.pdf');
-    //  document.body.appendChild(fileLink);
-    //  fileLink.click();
-    //  });
-    // }
-    
-    // else{
-    //    axios.get('/api/v1/pdf-create',{responseType: 'blob'
-    //  ,params: { 'clearance': this.editedItem.clearance_id }
-
-    //  }).then((response) => {
-    //  var fileURL = window.URL.createObjectURL(new Blob([response.data], {type: 'application/pdf'}));
-    //  var fileLink = document.createElement('a');
-    //  fileLink.href = fileURL;
-    //  fileLink.setAttribute('download', this.editedItem.name+this.editedItem.clearance_id+'.pdf');
-    //  document.body.appendChild(fileLink);
-    //  fileLink.click();
-    // });}
     },
      readDataFromAPI() {
       this.loading = true;
@@ -257,206 +360,71 @@ export default {
       let pageNumber = page;
       axios
         .get(`/api/v1/submittedclearances?page=` + pageNumber, {
-          params: { 'per_page': itemsPerPage },
+            params: { 
+          'per_page': itemsPerPage,
+          'semester' : this.semester, },
         })
         .then((response) => {
-          //Then injecting the result to datatable parameters.
-          this.loading = false;
-         this.submittedclearances = response.data.submittedclearances; 
-          this.totalsubmittedclearances = response.data.submittedclearances.total;
-          this.numberOfPages = response.data.submittedclearances.last_page;
+          this.loading = false;  
+            this.page = response.data.submittedclearances.current_page;
+            this.submittedclearances = response.data.submittedclearances.data;
+            this.totalsubmittedclearances = response.data.submittedclearances.total;
+            this.numberOfPages = response.data.submittedclearances.total_pages;
         });
     },
 
 
-    semesterChange(d) {
+    // searchIt(d) {
       
-      if (d.length > 2) {
-     
-        axios
-          .get(`/api/v1/submittedclearances/${d}?page=` + 1, {
-          params: { 'per_page': 10,
-          'id' : d,
-          'semester_id' : this.semester_id,
-          },
-        })
-          .then((res) => {
-            this.loading = false;   
-            this.page = res.data.submittedclearances.current_page;
-            this.submittedclearances = res.data.submittedclearances; 
-            this.totalsubmittedclearances = res.data.submittedclearances.total;
-            this.numberOfPages = res.data.submittedclearances.total_pages;
-          })
-          .catch((err) => {
-            console.error(err);
-          });
-      }
-      if (d.length <= 0) {
-     
-        axios
-          .get(`/api/v1/submittedclearances?page=0`, {
-            params: { 'per_page': 10,
-          'semester_id' : this.semester_id, },
-          })
-          .then((res) => {
-            this.loading = false;  
-          this.page = res.data.submittedclearances.current_page;
-            this.submittedclearances = res.data.submittedclearances;
-            this.totalsubmittedclearances = res.data.submittedclearances.total;
-            this.numberOfPages = res.data.submittedclearances.total_pages;
-          })
-          .catch((err) => {
-            console.error(err);
-          });
-      }
-    }, 
-    searchIt(d) {
-      
-      if (d.length > 2) {
-        const { page, itemsPerPage } = this.options;
-         let pageNumber = page;
-        axios
-          .get(`/api/v1/submittedclearances/${d}?page=` + pageNumber, {
-          params: { 'per_page': itemsPerPage,
-          'id' : d,
-          'semester_id' : this.semester_id,
-          },
-        })
-          .then((res) => {
-            this.loading = false;   
-            this.page = res.data.submittedclearances.current_page;
-            this.submittedclearances = res.data.submittedclearances; 
-            this.totalsubmittedclearances = res.data.submittedclearances.total;
-            this.numberOfPages = res.data.submittedclearances.total_pages;
-          })
-          .catch((err) => {
-            console.error(err);
-          });
-      }
-      if (d.length <= 0) {
-         const { page, itemsPerPage } = this.options;
-         let pageNumber = page;
-        axios
-          .get(`/api/v1/submittedclearances?page=` + pageNumber, {
-            params: { 'per_page': itemsPerPage,
-          'semester_id' : this.semester_id, },
-          })
-          .then((res) => {
-            this.loading = false;  
-            this.page = res.data.submittedclearances.current_page;
-            this.submittedclearances = res.data.submittedclearances;
-            this.totalsubmittedclearances = res.data.submittedclearances.total;
-            this.numberOfPages = res.data.submittedclearances.total_pages;
-          })
-          .catch((err) => {
-            console.error(err);
-          });
-      }
-    },  
-    initialize() {
-      axios.interceptors.request.use(
-        (config) => {
-          this.loading = true;
-          return config;
-        },
-        (error) => {
-          this.loading = false;
-          return Promise.reject(error);
-        }
-      );
-
-      axios.interceptors.response.use(
-        (response) => {
-          this.loading = false;
-          return response;
-        },
-        (error) => {
-          this.loading = false;
-          return Promise.reject(error);
-        }
-      );
-       axios.get('/api/v1/semesters',{})
-      .then(res => {
-        this.semesters = res.data.semesters
-      })
-      .catch(err => {
-        console.error(err); 
-      });
-    },
-
-    editItem(item) {
-      this.editedIndex = this.submittedclearances.data.indexOf(item);
-      this.editedItem = Object.assign({}, item); 
-      this.dialog = true;
-    },    
-    deleteItem(item) {
-      const index = this.submittedclearances.data.indexOf(item);
-      let decide = confirm("Are you sure you want to delete this item?");
-      if (decide) {
-        axios
-          .delete("/api/v1/submittedclearances/" + item.id)
-          .then((res) => {
-            this.text = "Record Deleted Successfully!"; 
-            this.snackbarColor ="primary darken-1";
-            this.snackbar = true;
-            this.submittedclearances.data.splice(index, 1);
-          })
-          .catch((err) => {
-            console.log(err.response);
-            this.text = "Error Deleting Record";
-            this.snackbarColor ="error darken-1";
-            this.snackbar = true;
-
-          });
-      }
-    },
-
-    close() {
-      this.dialog = false;
-      setTimeout(() => {
-        this.editedItem = Object.assign({}, this.defaultItem);
-        this.editedIndex = -1;
-      }, 300);
-    }, 
-    save() {
-      console.log(this.editedItem);
-      if (this.editedIndex > -1) {
-        const index = this.editedIndex;
-        axios
-          .put("/api/v1/submittedclearances/" + this.editedItem.id, this.editedItem)
-          .then((res) => {
-            this.text = "Record Updated Successfully!";
-            this.snackbarColor ="primary darken-1";
-            this.snackbar = true;
-            Object.assign(this.submittedclearances.data[index], res.data.submittedclearance); 
-          })
-          .catch((err) => {
-            console.log(err.response);
-            this.text = "Error Updating Record";
-            this.snackbarColor ="error darken-1";
-            this.snackbar = true;
-          });
-      } else {
-        axios
-          .post("/api/v1/submittedclearances", this.editedItem)
-          .then((res) => {
-            this.text = "Record Added Successfully!";
-            this.snackbarColor ="primary darken-1";
-            this.snackbar = true;
-            // this.students.data.push(res.data.student); 
-            this.submittedclearances = res.data.submittedclearances
-          })
-          .catch((err) => {
-            console.dir(err);
-            this.text = "Error Inserting Record";
-            this.snackbarColor ="error darken-1";
-            this.snackbar = true;
-          });
-          
-      } 
-        this.close();
-     
-    },
+    //   if (d.length > 2) {
+    //     const { page, itemsPerPage } = this.options;
+    //      let pageNumber = page;
+    //     axios
+    //       .get(`/api/v1/submittedclearances/${d}?page=` + pageNumber, {
+    //       params: { 'per_page': itemsPerPage,
+    //       'id' : d,
+    //       'semester_id' : this.semester_id,
+    //       },
+    //     })
+    //       .then((res) => {
+    //         this.loading = false;   
+    //         this.page = res.data.submittedclearances.current_page;
+    //         this.submittedclearances = res.data.submittedclearances; 
+    //         this.totalsubmittedclearances = res.data.submittedclearances.total;
+    //         this.numberOfPages = res.data.submittedclearances.total_pages;
+    //       })
+    //       .catch((err) => {
+    //         console.error(err);
+    //       });
+    //   }
+    //   if (d.length <= 0) {
+    //      const { page, itemsPerPage } = this.options;
+    //      let pageNumber = page;
+    //     axios
+    //       .get(`/api/v1/submittedclearances?page=` + pageNumber, {
+    //         params: { 'per_page': itemsPerPage,
+    //       'semester_id' : this.semester_id, },
+    //       })
+    //       .then((res) => {
+    //         this.loading = false;  
+    //         this.page = res.data.submittedclearances.current_page;
+    //         this.submittedclearances = res.data.submittedclearances;
+    //         this.totalsubmittedclearances = res.data.submittedclearances.total;
+    //         this.numberOfPages = res.data.submittedclearances.total_pages;
+    //       })
+    //       .catch((err) => {
+    //         console.error(err);
+    //       });
+    //   }
+    // },  
+   
   },
 };
 </script>
+<style>
+ html body div#app div div#inspire.v-application.v-application--is-ltr.theme--light div.v-application--wrap main.v-main.grey.lighten-5 div.v-main__wrap div.container.container--fluid div.container.ma-0.pa-0.container--fluid div.row.container-fluid.ml-2.mt-0 div.col-lg-9.col-12 div.v-data-table.px-6.pb-6.mt-4.v-data-table--has-bottom.theme--light div.v-data-table__wrapper table tbody tr td{
+ font-size: 12px;
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+  }
+</style>

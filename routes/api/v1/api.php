@@ -205,6 +205,7 @@ Route::resources([
     'purposes' => 'Admin\PurposeController',
 
     'signatories' => 'Admin\StaffController',
+    'students' => 'Admin\StudentController',
 
 ]);
 

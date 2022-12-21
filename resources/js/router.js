@@ -379,7 +379,7 @@ const routes =[
     {
         path: '/stcouncil',
         component: SignatoryComponent,
-        name: 'STCOUNCIL', 
+        name: 'Student Council', 
         redirect: '/stcouncil/clearance/requests',
         children: [
             //PD Routes
@@ -404,7 +404,13 @@ const routes =[
                     path: 'clearance/requests',
                     beforeEnter: isSTCOUNCIL,
                     component: PDClearanceRequestsComponent,
-                    name: 'Clearance Requests'
+                    name: 'Clearance Requests',
+                    meta: {
+                        breadcrumb: {
+                            label: 'Clearance Requests',
+                            parent:'Student Council'
+                          }
+                      }
                 },
                 {
                     path: 'cleared/clearances',
@@ -416,7 +422,12 @@ const routes =[
                     path: 'submitted/clearances',
                     beforeEnter: isSTCOUNCIL,
                     component: PDSubmittedClearancesComponent,
-                    name: 'Submitted Clearances'
+                    name: 'Submitted Clearances',
+                    meta: {
+                        breadcrumb: {
+                            label: 'Submitted Clearances',
+                          }
+                      }
                 }, 
                 {
                     path: 'clearance/list',
@@ -451,7 +462,7 @@ const routes =[
     {
         path: '/cashier',
         component: SignatoryComponent,
-        name: 'CASHIER', 
+        name: 'Cashier', 
         redirect: '/cashier/clearance/requests',
         children: [
             //PD Routes
@@ -475,7 +486,13 @@ const routes =[
                     path: 'clearance/requests',
                     beforeEnter: isCASHIER,
                     component: PDClearanceRequestsComponent,
-                    name: 'Clearance Requests'
+                    name: 'Clearance Requests',
+                    meta: {
+                        breadcrumb: {
+                            label: 'Clearance Requests',
+                            parent:'Cashier'
+                          }
+                      }
                 },
                 {
                     path: 'cleared/clearances',
@@ -487,7 +504,12 @@ const routes =[
                     path: 'submitted/clearances',
                     beforeEnter: isCASHIER,
                     component: PDSubmittedClearancesComponent,
-                    name: 'Submitted Clearances'
+                    name: 'Submitted Clearances',
+                    meta: {
+                        breadcrumb: {
+                            label: 'Submitted Clearances',
+                          }
+                      }
                 }, 
                 {
                     path: 'clearance/list',
@@ -541,7 +563,13 @@ const routes =[
                     path: 'clearance/requests',
                     beforeEnter: isOSAS,
                     component: PDClearanceRequestsComponent,
-                    name: 'Clearance Requests'
+                    name: 'Clearance Requests',
+                    meta: {
+                        breadcrumb: {
+                            label: 'Clearance Requests',
+                            // parent:'OSAS'
+                          }
+                      }
                 },
                 {
                     path: 'cleared/clearances',
@@ -553,7 +581,12 @@ const routes =[
                     path: 'submitted/clearances',
                     beforeEnter: isOSAS,
                     component: PDSubmittedClearancesComponent,
-                    name: 'Submitted Clearances'
+                    name: 'Submitted Clearances',
+                    meta: {
+                        breadcrumb: {
+                            label: 'Submitted Clearances',
+                          }
+                      }
                 }, 
                 {
                     path: 'clearance/list',
@@ -649,7 +682,12 @@ const routes =[
                     path: 'submitted/clearances',
                     beforeEnter: isOSAS,
                     component: PDSubmittedClearancesComponent,
-                    name: 'Submitted Clearances'
+                    name: 'Submitted Clearances',
+                    meta: {
+                        breadcrumb: {
+                            label: 'Submitted Clearances',
+                          }
+                      }
                 }, 
                 {
                     path: 'clearance/list',
@@ -684,7 +722,7 @@ const routes =[
     {
         path: '/registrarstaff',
         component: SignatoryComponent,
-        name: 'REGISTRARSTAFF', 
+        name: 'Registrar Staff', 
         redirect: '/registrarstaff/clearance/requests',
         children: [
             //PD Routes
@@ -709,7 +747,12 @@ const routes =[
                     path: 'clearance/requests',
                     beforeEnter: isREGISTRARSTAFF,
                     component: PDClearanceRequestsComponent,
-                    name: 'Clearance Requests'
+                    name: 'Clearance Requests',
+                    meta: {
+                        breadcrumb: {
+                            label: 'Clearance Requests',
+                          }
+                      }
                 },
                 {
                     path: 'cleared/clearances',
@@ -721,7 +764,12 @@ const routes =[
                     path: 'submitted/clearances',
                     beforeEnter: isREGISTRARSTAFF,
                     component: PDSubmittedClearancesComponent,
-                    name: 'Submitted Clearances'
+                    name: 'Submitted Clearances',
+                    meta: {
+                        breadcrumb: {
+                            label: 'Submitted Clearances',
+                          }
+                      }
                 }, 
                 {
                     path: 'clearance/list',
@@ -762,7 +810,7 @@ const routes =[
      {
         path: '/registrar',
         component: SignatoryComponent,
-        name: 'REGISTRAR', 
+        name: 'Registrar', 
         redirect: '/registrar/clearance/requests',
         children: [
             //PD Routes
@@ -787,7 +835,12 @@ const routes =[
                     path: 'clearance/requests',
                     beforeEnter: isREGISTRAR,
                     component: PDClearanceRequestsComponent,
-                    name: 'Clearance Requests'
+                    name: 'Clearance Requests',
+                    meta: {
+                        breadcrumb: {
+                            label: 'Clearance Requests',
+                          }
+                      }
                 },
                 {
                     path: 'cleared/clearances',
@@ -799,7 +852,12 @@ const routes =[
                     path: 'submitted/clearances',
                     beforeEnter: isREGISTRAR,
                     component: PDSubmittedClearancesComponent,
-                    name: 'Submitted Clearances'
+                    name: 'Submitted Clearances',
+                    meta: {
+                        breadcrumb: {
+                            label: 'Submitted Clearances',
+                          }
+                      }
                 }, 
                 {
                     path: 'clearance/list',
@@ -840,7 +898,7 @@ const routes =[
      {
         path: '/dean',
         component: SignatoryComponent,
-        name: 'DEAN', 
+        name: 'Dean', 
         redirect: '/dean/clearance/requests',
         children: [
              
@@ -865,7 +923,12 @@ const routes =[
                     path: 'clearance/requests',
                     beforeEnter: isDEAN,
                     component: PDClearanceRequestsComponent,
-                    name: 'Clearance Requests'
+                    name: 'Clearance Requests',
+                    meta: {
+                        breadcrumb: {
+                            label: 'Clearance Requests',
+                          }
+                      }
                 },
                 {
                     path: 'cleared/clearances',
@@ -877,7 +940,12 @@ const routes =[
                     path: 'submitted/clearances',
                     beforeEnter: isDEAN,
                     component: PDSubmittedClearancesComponent,
-                    name: 'Submitted Clearances'
+                    name: 'Submitted Clearances',
+                    meta: {
+                        breadcrumb: {
+                            label: 'Submitted Clearances',
+                          }
+                      }
                 }, 
                 {
                     path: 'clearance/list',
@@ -906,7 +974,7 @@ const routes =[
     {
         path: '/library',
         component: SignatoryComponent,
-        name: 'LIBRARY', 
+        name: 'Library', 
         redirect: '/library/clearance/requests',
         children: [
              
@@ -931,7 +999,13 @@ const routes =[
                     path: 'clearance/requests',
                     beforeEnter: isLIBRARY,
                     component: PDClearanceRequestsComponent,
-                    name: 'Clearance Requests'
+                    name: 'Clearance Requests',
+                    meta: {
+                        breadcrumb: {
+                            label: 'Clearance Requests',
+                            parent:'Library'
+                          }
+                      }
                 },
                 {
                     path: 'cleared/clearances',
@@ -943,7 +1017,12 @@ const routes =[
                     path: 'submitted/clearances',
                     beforeEnter: isLIBRARY,
                     component: PDSubmittedClearancesComponent,
-                    name: 'Submitted Clearances'
+                    name: 'Submitted Clearances',
+                    meta: {
+                        breadcrumb: {
+                            label: 'Submitted Clearances',
+                          }
+                      }
                 }, 
                 {
                     path: 'clearance/list',
@@ -972,7 +1051,7 @@ const routes =[
     {
         path: '/pd',
         component: SignatoryComponent,
-        name: 'pd', 
+        name: 'Program Director', 
         redirect: '/pd/clearance/requests',
         children: [
             //PD Routes
@@ -997,7 +1076,12 @@ const routes =[
                     path: 'clearance/requests',
                     beforeEnter: isPD,
                     component: PDClearanceRequestsComponent,
-                    name: 'Clearance Requests'
+                    name: 'Clearance Requests',meta: {
+                        breadcrumb: {
+                            label: 'Clearance Requests',
+                            parent:'Program Director'
+                          }
+                      }
                 },
                 {
                     path: 'cleared/clearances',
@@ -1009,7 +1093,12 @@ const routes =[
                     path: 'submitted/clearances',
                     beforeEnter: isPD,
                     component: PDSubmittedClearancesComponent,
-                    name: 'Submitted Clearances'
+                    name: 'Submitted Clearances',
+                    meta: {
+                        breadcrumb: {
+                            label: 'Submitted Clearances',
+                          }
+                      }
                 }, 
                 {
                     path: 'clearance/list',
@@ -1081,7 +1170,12 @@ const routes =[
                     path: 'submitted/clearances',
                     beforeEnter: isADVISER,
                     component: PDSubmittedClearancesComponent,
-                    name: 'Submitted Clearances'
+                    name: 'Submitted Clearances',
+                    meta: {
+                        breadcrumb: {
+                            label: 'Submitted Clearances',
+                          }
+                      }
                 }, 
                 {
                     path: 'clearance/list',
@@ -1147,7 +1241,12 @@ const routes =[
                     path: 'submitted/clearances',
                     beforeEnter: isPRINCIPAL,
                     component: PDSubmittedClearancesComponent,
-                    name: 'Submitted Clearances'
+                    name: 'Submitted Clearances',
+                    meta: {
+                        breadcrumb: {
+                            label: 'Submitted Clearances',
+                          }
+                      }
                 }, 
                 {
                     path: 'clearance/list',
