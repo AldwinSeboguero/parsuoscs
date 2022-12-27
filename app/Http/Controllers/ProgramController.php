@@ -23,7 +23,7 @@ class ProgramController extends Controller
             ->when($request->college, function($q) use($request){
                 $q->where('college_id',$request->college);
             })
-            ->when($request->signatoryProgram, function($q) use($request){
+            ->when(!Auth::user()->hasRole("admin"), function($q) use($request){
                 $q->whereIn('id',SignatoryV2::where('user_id',Auth::user()->id)->where('semester_id','>=',8)->distinct('program_id')->get('program_id'));
             })
             ->get()->map(function($inner){

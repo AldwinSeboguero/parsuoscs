@@ -23,7 +23,7 @@
                 v-on:submit.stop.prevent="save"
                 ref="entryForm"
               >
-              <label class="black--text font-weight-medium mt-2" for="">Purpose</label>
+              <label class="black--text font-weight-medium mt-2" for="">Semester</label>
            
                          
                           <v-autocomplete
@@ -69,7 +69,7 @@
 
                                 <v-text-field 
                                       append-icon="mdi-magnify"
-                                      label="Search"
+                                      placeholder="ID No. or Name"
                                       class="mb-0 pb-0 mt-2 pt-0"
                                       v-model="search"
                                       @input="searchIt"
@@ -79,7 +79,6 @@
                                       dense
                                       hide-details
                                     ></v-text-field>
-                    <v-divider />
                   
                    
               </v-form>
@@ -167,10 +166,10 @@
         <!-- <v-btn class="ma-2" color="error" text depressed small @click="generatePDF(item)"
           ><v-icon>mdi-file-pdf</v-icon></v-btn
         >   -->
-        <v-btn :loading="downloadLoading" @click="generatePDF(item)" class="elevation-0 error lighten-1 ml-2"  small dark  
+        <v-btn :loading="downloadLoading" @click="generatePDF(item)" class="elevation-0 error lighten-1" icon  small dark  text 
                  >
-                  <v-icon x-small>mdi-file-pdf</v-icon>
-                  Download</v-btn>
+                  <v-icon small>mdi-file-download</v-icon>
+                  </v-btn>
           </template>
       </template>
     </v-data-table>

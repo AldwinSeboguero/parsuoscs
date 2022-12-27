@@ -42,39 +42,123 @@ class CompletedClearanceController extends Controller
 
             $clearance_requests =new ClearanceRequestCollection( ClearanceRequestV2::orderByDesc('approved_at')
                                                     ->where('status', true)
+                                                    ->when($request->student, function($inner) use($request){
+                                                        $inner->whereHas('student', function($q) use ($request){
+                                                            $q->where('name', 'ILIKE', '%' . $request->student . '%')
+                                                            ->orWhere('student_number', 'ILIKE', '%' . $request->student . '%');
+                                                        });
+                                                    })
+                                                    ->when($request->semester, function($inner) use($request){
+                                                        $inner->whereHas('purpose',function($q) use($request){
+                                                            $q->where('semester_id',$request->semester);
+                                                        });
+                                                    }) 
+                                                    ->when($request->purpose, function($inner) use($request){
+                                                        $inner->whereHas('purpose',function($q) use($request){
+                                                            $q->where('',$request->purpose);
+                                                        });
+                                                    }) 
+                                                    ->when($request->college, function($inner) use($request){
+                                                        $inner->whereHas('student.program',function($q) use($request){
+                                                            $q->where('college_id',$request->college);
+                                                        });
+                                                    }) 
+                                                    ->when($request->program, function($inner) use($request){
+                                                        $inner->whereHas('student',function($q) use($request){
+                                                            $q->where('program_id',$request->program);
+                                                        });
+                                                    }) 
                                                     ->paginate($per_page));
 
             return response()->json([
                 // 'signatory' => $signatory_ids->count(),
-                'clearancerequests' => $clearance_requests,
+                'clearance_requests' => $clearance_requests,
             ]);
         }
          else if(Auth::user()->hasRole("pd")){
             $per_page =$request->per_page ? $request->per_page : 10; 
             $signatory_ids = SignatoryV2::where('user_id',Auth::user()->id)->get('id');
+            $programs = SignatoryV2::where('user_id', Auth::user()->id)->distinct('campus_id')->get('campus_id');
 
             $clearance_requests =new ClearanceRequestCollection( ClearanceRequestV2::orderByDesc('approved_at')
-                                                    ->whereIn('signatory_id', $signatory_ids)
-                                                    ->where('status', true)
-                                                    ->paginate($per_page));
+            ->where('status', true)
+            ->when($request->student, function($inner) use($request){
+                $inner->whereHas('student', function($q) use ($request){
+                    $q->where('name', 'ILIKE', '%' . $request->student . '%')
+                    ->orWhere('student_number', 'ILIKE', '%' . $request->student . '%');
+                });
+            })
+            ->when($request->semester, function($inner) use($request){
+                $inner->whereHas('purpose',function($q) use($request){
+                    $q->where('semester_id',$request->semester);
+                });
+            }) 
+            ->when($request->purpose, function($inner) use($request){
+                $inner->whereHas('purpose',function($q) use($request){
+                    $q->where('',$request->purpose);
+                });
+            }) 
+            ->when($request->college, function($inner) use($request){
+                $inner->whereHas('student.program',function($q) use($request){
+                    $q->where('college_id',$request->college);
+                });
+            }) 
+            ->when($request->program, function($inner) use($request){
+                $inner->whereHas('student',function($q) use($request){
+                    $q->where('program_id',$request->program);
+                });
+            }) 
+            ->whereHas('student.program', function($q) use($programs){
+                $q->whereIn('campus_id', $programs);
+            })  
+            ->paginate($per_page));
 
             return response()->json([
-                'signatory' => $signatory_ids->count(),
-                'clearancerequests' => $clearance_requests,
+            // 'signatory' => $signatory_ids->count(),
+            'clearance_requests' => $clearance_requests,
             ]);
         }
         else{
             $per_page =$request->per_page ? $request->per_page : 10; 
             $signatory_ids = SignatoryV2::where('user_id',Auth::user()->id)->get('id');
+            $programs = SignatoryV2::where('user_id', Auth::user()->id)->distinct('campus_id')->get('campus_id');
 
             $clearance_requests =new ClearanceRequestCollection( ClearanceRequestV2::orderByDesc('approved_at')
-                                                    ->whereIn('signatory_id', $signatory_ids)
-                                                    ->where('status', true)
-                                                    ->paginate($per_page));
+            ->where('status', true)
+            ->when($request->student, function($inner) use($request){
+                $inner->whereHas('student', function($q) use ($request){
+                    $q->where('name', 'ILIKE', '%' . $request->student . '%')
+                    ->orWhere('student_number', 'ILIKE', '%' . $request->student . '%');
+                });
+            })
+            ->when($request->semester, function($inner) use($request){
+                $inner->whereHas('purpose',function($q) use($request){
+                    $q->where('semester_id',$request->semester);
+                });
+            }) 
+            ->when($request->purpose, function($inner) use($request){
+                $inner->whereHas('purpose',function($q) use($request){
+                    $q->where('',$request->purpose);
+                });
+            }) 
+            ->when($request->college, function($inner) use($request){
+                $inner->whereHas('student.program',function($q) use($request){
+                    $q->where('college_id',$request->college);
+                });
+            }) 
+            ->when($request->program, function($inner) use($request){
+                $inner->whereHas('student',function($q) use($request){
+                    $q->where('program_id',$request->program);
+                });
+            }) 
+            ->whereHas('student.program', function($q) use($programs){
+                $q->whereIn('campus_id', $programs);
+            })  
+            ->paginate($per_page));
 
             return response()->json([
-                'signatory' => $signatory_ids->count(),
-                'clearancerequests' => $clearance_requests,
+            // 'signatory' => $signatory_ids->count(),
+            'clearance_requests' => $clearance_requests,
             ]);
         }
     }

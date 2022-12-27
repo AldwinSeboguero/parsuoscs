@@ -24,7 +24,7 @@ class CollegeController extends Controller
                 'colleges'=> College::when($request->campus, function($q) use($request){
                     $q->where('campus_id',$request->campus);
                 })
-                ->when($request->signatoryCollege, function($q) use($request){
+                ->when(!Auth::user()->hasRole("admin"), function($q) use($request){
                     $q->whereIn('id',SignatoryV2::where('user_id',Auth::user()->id)->where('semester_id','>=',8)->distinct('college_id')->get('college_id'));
                 })
                 ->get(),

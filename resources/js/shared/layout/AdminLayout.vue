@@ -37,11 +37,11 @@ export default {
                       height:'100%',  
                   },
     navigationList: [
-      // {
-      //   icon: "mdi-view-dashboard",
-      //   text: "Dashboard",
-      //   link: "/admin/dashboard",
-      // },
+      {
+        icon: "mdi-view-dashboard",
+        text: "Dashboard",
+        link: "/admin/dashboard",
+      },
       {
         icon: "mdi-account-multiple-plus",
         text: "Student List",

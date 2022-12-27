@@ -1,57 +1,278 @@
 <template>
-  <v-container>
-   <v-card>
-   <v-card-subtitle class="white--text text-uppercase elevation-2 mb-0 pb-1"   style="background: linear-gradient(to left, #1A237E, #1A237E, #0D47A1);">
-          <span class="text-h6"> Submitted Clearances </span>
+  <v-container fluid class="ma-0 pa-0">
+ 
+  <v-row >
+      <v-col cols="12" lg="5" class="mt-2">
+       <Breadcrumbs class="mb-4"/>
 
-    </v-card-subtitle>
-     <v-card-title class="white--text elevation-2 mb-0 pb-6 mt-0 pt-2"  style="background: linear-gradient(to left, #1A237E, #1A237E, #0D47A1);">
-     <v-row>
-        <v-col
-           class="mb-0 pb-0 mt-0 pt-0"
+      </v-col>
+    </v-row>  
+    <v-row class="container-fluid ml-2 mt-0">
+    <v-col cols="12" lg="3">
+        <v-card class=" rounded-medium pt-1 pb-2 px-2"
+            elevation="2">
+            
+            <v-card-title class="align-end pl-4 pa-2 mt-2 mb-3 rounded white--text elevation-1" style=" margin-left: -16px; margin-right: -16px; max-height: 50px; background: linear-gradient(to right, #0d47a1, #0d47a1, #1A237E);">
+              <span class="font-semibold overline"><v-icon dark left >mdi-filter-variant</v-icon>Filters</span>
 
-          cols="12"
-          md="4"
-        >
-                          <v-select 
-                            label="Select Semester"
-                            class="mb-0 pb-0 mt-2 pt-0"
+            </v-card-title>
 
-                             item-value="id"
-                              item-text="semester" 
+            <v-card-text>
+            <v-form 
+                method="post"
+                lazy-validation
+                v-on:submit.stop.prevent="save"
+                ref="entryForm"
+              >
+              <label class="black--text font-weight-medium mt-2" for="">Semester</label>
+           
+                         
+                          <v-autocomplete
+                            v-model="semester"
                             :items="semesters"
-                            v-model="semester_id"
-                            @change="semesterChange(searchItem)"
-                            solo-inverted
-                            flat
-                            dark
+                            chips
+                            clearable
+                            item-text="semester"
+                            item-value="id"
+                            item-key="id" 
+                            outlined
                             dense
                             hide-details
-                          ></v-select>
-                          </v-col>
+                          class="mb-2"
+                            :offset-y="offSet"
+                          >
+                            <template v-slot:no-data>
+                              <v-list-item>
+                                <v-list-item-title>
+                                  Search Semester 
+                                </v-list-item-title>
+                              </v-list-item>
+                            </template>
+                            <template v-slot:selection="{ attr, on, item, selected }">
+                              <v-chip
+                                v-bind="attr"
+                                :input-value="selected"
+                                class="blue darken-3 white--text rounded"
+                                v-on="on"
+                              >
+                                
+                                <span class="text-truncate text-uppercase" v-text="item.semester"></span>
+                              </v-chip>
+                            </template>
+                            <template v-slot:item="{ item }">
+                              
+                              <v-list-item-content>
+                                <v-list-item-title class="text-uppercase" v-text="item.semester"></v-list-item-title> 
+                              </v-list-item-content> 
+                            </template>
+                          </v-autocomplete>
+                          <label class="black--text font-weight-medium mt-2" for="">College</label>
 
-<v-col
-  cols="12"
-  md="4"
-  class="mb-0 pb-0 mt-0 pt-0"
+                            <v-autocomplete
+                              v-model="college"
+                              :items="colleges"
+                              
+                              chips
+                              clearable
+                              item-text="name"
+                              item-value="id"
+                              item-key="id" 
+                              outlined
+                              dense
+                              hide-details
+                              class="mb-2"
+                              :offset-y="offSet"
+                            >
+                              <template v-slot:no-data>
+                                <v-list-item>
+                                  <v-list-item-title>
+                                    Search College 
+                                  </v-list-item-title>
+                                </v-list-item>
+                              </template>
+                              <template v-slot:selection="{ attr, on, item, selected }">
+                                <v-chip
+                                  v-bind="attr"
+                                  :input-value="selected"
+                                  class="blue darken-3 white--text rounded"
+                                  v-on="on"
+                                >
+                                  
+                                  <span class="text-truncate" v-text="item.name"></span>
+                                </v-chip>
+                              </template>
+                              <template v-slot:item="{ item }">
+                                
+                                <v-list-item-content>
+                                  <v-list-item-title v-text="item.name"></v-list-item-title> 
+                                </v-list-item-content> 
+                              </template>
+                            </v-autocomplete>
+                            <label class="black--text font-weight-medium " for="" 
+                            >Program</label>
 
-> 
-      <v-text-field 
-            append-icon="mdi-magnify"
-            label="Search"
-            class="mb-0 pb-0 mt-2 pt-0"
-             v-model="searchItem"
-            @input="searchIt"
-            solo-inverted
-            flat
-            dark
-            dense
-            hide-details
-          ></v-text-field>
-          </v-col>
-      </v-row>
-           
-    </v-card-title>
+                            <v-autocomplete
+                              v-model="program"
+                              :items="programs"
+                              
+                              chips
+                              clearable
+                              item-text="short_name"
+                              item-value="id"
+                              item-key="id" 
+                              outlined
+                              dense
+                              hide-details
+                            class="mb-2"
+                              :offset-y="offSet"
+                            >
+                              <template v-slot:no-data>
+                                <v-list-item>
+                                  <v-list-item-title>
+                                    Search Program 
+                                  </v-list-item-title>
+                                </v-list-item>
+                              </template>
+                              <template v-slot:selection="{ attr, on, item, selected }">
+                                <v-chip
+                                  v-bind="attr"
+                                  :input-value="selected"
+                                  class="blue darken-3 white--text rounded"
+                                  v-on="on"
+                                >
+                                  
+                                  <span class="text-truncate text-uppercase" v-text="item.short_name"></span>
+                                </v-chip>
+                              </template>
+                              <template v-slot:item="{ item }">
+                                
+                                <v-list-item-content>
+                                  <v-list-item-title class="text-uppercase" v-text="item.short_name"></v-list-item-title> 
+                                </v-list-item-content> 
+                              </template>
+                            </v-autocomplete>
+                          <label class="black--text font-weight-medium mt-2" for="">Search</label>
+
+                                <v-text-field 
+                                      append-icon="mdi-magnify"
+                                      placeholder="ID No. or Name"
+                                      class="mb-0 pb-0 mt-2 pt-0"
+                                      v-model="search"
+                                      outlined
+                                      flat
+                                      clearable
+                                      dense
+                                      hide-details
+                                    ></v-text-field>
+                  
+                   
+              </v-form>
+              
+            </v-card-text>
+            <v-card-actions>
+                   
+                    <v-btn
+                      dark
+                      outlined
+                      small
+                      block
+                      @click="clearForms"
+                      class="elevation-0"
+                      color="primary"
+                    >
+                      Clear
+                    </v-btn>
+            </v-card-actions>
+        </v-card>
+      </v-col>
+      <v-col cols="12" lg="9">
+      <v-card class=" rounded-medium pt-1  px-2"
+            elevation="2">
+  
+            <v-card-title class="align-end pl-4 pa-2 mt-2 mb-3 rounded white--text elevation-1" style=" margin-left: -16px; margin-right: -16px; max-height: 50px; background: linear-gradient(to right, #0d47a1, #0d47a1, #1A237E);">
+               <span> 
+            Submitted Clearances
+            </span>
+                 
+                  <v-spacer></v-spacer>
+                  <span></span>
+                
+                  <v-dialog v-model="exportExcelDialog" width="390">
+                    <template v-slot:activator="{ on, attrs }">
+                  
+                      <v-btn
+                        dark
+                        v-bind="attrs"
+                        small
+                        v-on="on"
+                        icon
+                        class="float-right success white--text mr-2"
+                      >
+                        <v-icon small>mdi-file-excel</v-icon>
+                      </v-btn>
+                    </template>
+                    <v-card>
+                     <v-card-title class="align-center ma-2 mt-0 pa-2 rounded white--red elevation-0 black--text text--lighten-1 subtitle-1 text-uppercase"  >
+                      <v-icon left class="grey--text text--darken-1">mdi-download</v-icon> Export Submiited Clearance
+
+                      <v-spacer/>
+                        <v-btn elevation-0 color="black" small  @click=" exportExcelDialog = false" icon> <v-icon>mdi-close</v-icon></v-btn>
+                      </v-card-title>
+                      <v-card-text >
+                        <i class="caption mb-2">* Please use filters to specify exported data.</i>
+                      <downloadexcel
+                        class            = "btn"
+                        :fetch           = "fetchData"
+                        :fields          = "json_fields"
+                        type="csv"
+                        :name="excelFilename"
+                        :before-generate = "startDownload"
+                        :before-finish   = "finishDownload">
+                      <v-list-item
+                      link
+                      dark
+                      class="success"
+                      active-class="orange--text text--accent-4 font-weight-bold "
+                      >
+                    
+                        
+                      <v-icon small class="mr-2 ">mdi-file-excel</v-icon>
+                      <span class="font-semibold ">CSV</span>
+                    
+                      </v-list-item>
+                      </downloadexcel>
+                      <br/>
+                      <span>{{ downloadProgress }}%</span>
+
+                      <v-progress-linear v-if="downloadLoading" :value="downloadProgress" color="primary" class="" >
+                      </v-progress-linear>
+                        
+                      </v-card-text>
+                   
+                    </v-card>
+                  </v-dialog>
+
+                  <v-dialog v-model="uploadDialog" width="390">
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-btn
+                        dark
+                        v-bind="attrs"
+                        small
+                        v-on="on"
+                        icon
+                        class="float-right info white--text"
+                      >
+                        <v-icon small>mdi-download-multiple</v-icon>
+                      </v-btn>
+                    </template>
+                    <v-card>
+                      
+                    </v-card>
+                  </v-dialog>
+                
+          </v-card-title>
+          </v-card>
+    
      <v-data-table
         item-key="id"
         class="px-6 pb-6  mt-4"
@@ -60,7 +281,7 @@
         :headers="headers"
         :page="page" 
         :pageCount="numberOfPages"
-        :items="submittedclearances.data"
+        :items="submittedclearances"
         :options.sync="options"
         :server-items-length="totalsubmittedclearances"
         :items-per-page="10"  
@@ -84,10 +305,10 @@
         <!-- <v-btn class="ma-2" color="error" text depressed small @click="generatePDF(item)"
           ><v-icon>mdi-file-pdf</v-icon></v-btn
         >   -->
-        <v-btn :loading="downloadLoading" @click="generatePDF(item)" class="elevation-0 error lighten-1 ml-2"  small dark  
+        <v-btn @click="generatePDF(item)" class="elevation-0 error lighten-1" icon  small dark  text 
                  >
-                  <v-icon x-small>mdi-file-pdf</v-icon>
-                  Download</v-btn>
+                  <v-icon small>mdi-file-download</v-icon>
+                  </v-btn>
           </template>
       </template>
     </v-data-table>
@@ -123,20 +344,46 @@
       </v-btn>
       </template>
     </v-snackbar> 
-    </v-card>
+      </v-col>
+      </v-row>
   </v-container>
 </template>
 <script>
+import debounce from "lodash/debounce";
+import downloadexcel from "vue-json-excel";
+
 export default {
+  components: {
+            downloadexcel
+
+        },
   data: () => ({
+    excelData: [],
+    downloadLoading: false,
+    exportExcelDialog: false,
+    json_fields: {
+                  'Student ID' : 'student_number',
+                  'Name': 'name',
+                  'College/Campus': 'college',
+                  'Program' : 'program',
+                  'Purpose' : 'purpose',
+                  'Date Submitted' : 'datesubmitted',
+                  'Clearance ID' : 'clearance_id',
+                },
+    excelFilename:'',
     valid: true,
     dialog: false,
     loading: false,
+    downloadProgress:0,
+    offSet:true,
+    totalPageDownloadExcel: 0,
+    currentPageDownloadExcel: 0,
+    uploadDialog:false,
     snackbar: false,
     selected: [],
     text: "",
     
-    searchItem: '',
+    search: '',
     success: "",
     error: "", 
     snackbarColor:"",
@@ -159,10 +406,11 @@ export default {
     options: {},
      submittedclearances: [],
      semesters:{
-         id: "", 
-      semester: "",
      },
-     semester_id:0, 
+
+     semester:'', 
+     program: '',
+     college: '',
     editedIndex: -1,
     editedItem: {
       id: "",
@@ -184,17 +432,141 @@ export default {
     }, 
   }),
 
-  computed: {
-   
+  mounted() {
+    axios.get(`/api/v1/semesters`).then((response) => {
+          this.semesters = response.data.semesters;
+    });
+    axios.get(`/api/v1/programs`,{
+              params: { 
+                'signatoryProgram': true,
+              },
+            }).then((response) => {
+              this.programs = response.data.programs;
+            });
+     axios.get(`/api/v1/campuses`).then((response) => {
+          this.campuses = response.data.campuses;
+    });
+     axios.get(`/api/v1/semesters`).then((response) => {
+          this.semesters = response.data.semesters;
+    });
+     axios.get(`/api/v1/designations`).then((response) => {
+          this.designations = response.data.designations;
+    });
+     axios.get(`/api/v1/students`).then((response) => {
+          this.students = response.data.students.data;
+    });
+     axios.get(`/api/v1/purposes`).then((response) => {
+          this.purposes = response.data.purposes;
+    });
+   axios.get(`/api/v1/colleges`,{
+              params: { 
+                'signatoryCollege': true,
+              },
+            }).then((response) => {
+          this.colleges = response.data.colleges;
+    });
   },
 
   watch: {
+    'college': debounce(function (val) {
+          console.log(val)
+          const { page, itemsPerPage } = this.options;
+          let pageNumber = page;
+           axios
+           .get(`/api/v1/submittedclearances?page=` + pageNumber, {
+              params: { 
+                'per_page': itemsPerPage,
+                'semester': this.semester,
+                'program': this.program,
+                'college': val,
+                'purpose': this.purpose,
+                'designation': this.designation,
+                'student': this.student,
+               },
+            })
+            .then((response) => {
+              // this.semester = response.data.semester.semester;
+              this.page = response.data.submittedclearances.current_page;
+            this.submittedclearances = response.data.submittedclearances.data;
+            this.totalsubmittedclearances = response.data.submittedclearances.total;
+            this.numberOfPages = response.data.submittedclearances.total_pages;
+              this.loading = false;
+            });
+        }, 300),
+        'program': debounce(function (val) {
+          console.log(val)
+          const { page, itemsPerPage } = this.options;
+          let pageNumber = page;
+           axios
+           .get(`/api/v1/submittedclearances?page=` + pageNumber, {
+              params: { 
+                'per_page': itemsPerPage,
+                'semester' : this.semester,
+                'program' : val,
+                'college' : this.college,
+                'search' : this.search,
+               },
+            })
+            .then((response) => {
+              // this.semester = response.data.semester.semester;
+              this.page = response.data.submittedclearances.current_page;
+            this.submittedclearances = response.data.submittedclearances.data;
+            this.totalsubmittedclearances = response.data.submittedclearances.total;
+            this.numberOfPages = response.data.submittedclearances.total_pages;
+              this.loading = false;
+            });
+        }, 300),
+    'semester': debounce(function (val) {
+          console.log(val)
+          const { page, itemsPerPage } = this.options;
+          let pageNumber = page;
+          axios
+        .get(`/api/v1/submittedclearances?page=` + pageNumber, {
+            params: { 
+          'per_page': itemsPerPage,
+          'semester' : val,
+          'program' : this.program,
+          'college' : this.college,
+          'search' : this.search,
+         },
+        })
+        .then((response) => {
+          this.loading = false;  
+          this.page = response.data.submittedclearances.current_page;
+            this.submittedclearances = response.data.submittedclearances.data;
+            this.totalsubmittedclearances = response.data.submittedclearances.total;
+            this.numberOfPages = response.data.submittedclearances.total_pages;
+        });
+        }, 300),
+
+        'search': debounce(function (val) {
+          console.log(val)
+          const { page, itemsPerPage } = this.options;
+          let pageNumber = page;
+          axios
+        .get(`/api/v1/submittedclearances?page=` + pageNumber, {
+            params: { 
+          'per_page': itemsPerPage,
+          'semester' : this.semester,
+          'program' : this.program,
+          'college' : this.college,
+          'search' : val, },
+        })
+        .then((response) => {
+          this.loading = false;  
+            this.page = response.data.submittedclearances.current_page;
+            this.submittedclearances = response.data.submittedclearances.data;
+            this.totalsubmittedclearances = response.data.submittedclearances.total;
+            this.numberOfPages = response.data.submittedclearances.total_pages;
+        });
+        }, 300),
+
     dialog(val) {
       val || this.close();
     },
      options: {
       handler() {
-        this.searchIt(this.searchItem);
+        this.readDataFromAPI();
       },
     },
     deep: true,
@@ -205,6 +577,10 @@ export default {
   },
 
   methods: {
+    clearForms(){
+      this.semester = null;
+      this.search = '';
+    },
     generatePDF(item) { 
       axios.get('/api/v1/active-clearance/signatory/pdf',{responseType: 'blob'
             ,params: { 'clearance_id': item.clearance_id }
@@ -221,35 +597,6 @@ export default {
                 fileLink.click();
                 // this.downloadLoading = false;
               });
-    //  this.editedIndex = this.submittedclearances.data.indexOf(item);
-    //   this.editedItem = Object.assign({}, item); 
-    // if(item.college == "School of Graduate Studies and Research")
-    // {
-    //    axios.get('/api/v1/pdf-createSGS',{responseType: 'blob'
-    //  ,params: { 'clearance': this.editedItem.clearance_id }
-
-    //  }).then((response) => {
-    //  var fileURL = window.URL.createObjectURL(new Blob([response.data], {type: 'application/pdf'}));
-    //  var fileLink = document.createElement('a');
-    //  fileLink.href = fileURL;
-    //  fileLink.setAttribute('download', this.editedItem.name+this.editedItem.clearance_id+'.pdf');
-    //  document.body.appendChild(fileLink);
-    //  fileLink.click();
-    //  });
-    // }
-    
-    // else{
-    //    axios.get('/api/v1/pdf-create',{responseType: 'blob'
-    //  ,params: { 'clearance': this.editedItem.clearance_id }
-
-    //  }).then((response) => {
-    //  var fileURL = window.URL.createObjectURL(new Blob([response.data], {type: 'application/pdf'}));
-    //  var fileLink = document.createElement('a');
-    //  fileLink.href = fileURL;
-    //  fileLink.setAttribute('download', this.editedItem.name+this.editedItem.clearance_id+'.pdf');
-    //  document.body.appendChild(fileLink);
-    //  fileLink.click();
-    // });}
     },
      readDataFromAPI() {
       this.loading = true;
@@ -257,206 +604,94 @@ export default {
       let pageNumber = page;
       axios
         .get(`/api/v1/submittedclearances?page=` + pageNumber, {
-          params: { 'per_page': itemsPerPage },
+            params: { 
+          'per_page': itemsPerPage,
+          'semester' : this.semester, },
         })
         .then((response) => {
-          //Then injecting the result to datatable parameters.
-          this.loading = false;
-         this.submittedclearances = response.data.submittedclearances; 
-          this.totalsubmittedclearances = response.data.submittedclearances.total;
-          this.numberOfPages = response.data.submittedclearances.last_page;
+          this.loading = false;  
+            this.page = response.data.submittedclearances.current_page;
+            this.submittedclearances = response.data.submittedclearances.data;
+            this.totalsubmittedclearances = response.data.submittedclearances.total;
+            this.numberOfPages = response.data.submittedclearances.total_pages;
         });
     },
-
-
-    semesterChange(d) {
-      
-      if (d.length > 2) {
-     
-        axios
-          .get(`/api/v1/submittedclearances/${d}?page=` + 1, {
-          params: { 'per_page': 10,
-          'id' : d,
-          'semester_id' : this.semester_id,
+    startDownload(){
+            this.downloadLoading = true;
           },
+    finishDownload(){
+      this.downloadLoading = false;
+    },
+    async fetchData() {
+      this.downloadLoading = true
+      this.downloadProgress =0;
+      this.excelData = [];
+
+       await  axios
+        .get(`/api/v1/submittedclearances?page=` + 1, {
+          params: { 
+            'per_page': 100,
+            'semester': this.semester,
+            'program': this.program,
+            'college': this.college,
+            'purpose': this.purpose,
+            'designation': this.designation,
+            'student': this.student,
+            },
         })
-          .then((res) => {
-            this.loading = false;   
-            this.page = res.data.submittedclearances.current_page;
-            this.submittedclearances = res.data.submittedclearances; 
-            this.totalsubmittedclearances = res.data.submittedclearances.total;
-            this.numberOfPages = res.data.submittedclearances.total_pages;
-          })
-          .catch((err) => {
-            console.error(err);
-          });
-      }
-      if (d.length <= 0) {
-     
-        axios
-          .get(`/api/v1/submittedclearances?page=0`, {
-            params: { 'per_page': 10,
-          'semester_id' : this.semester_id, },
-          })
-          .then((res) => {
-            this.loading = false;  
-          this.page = res.data.submittedclearances.current_page;
-            this.submittedclearances = res.data.submittedclearances;
-            this.totalsubmittedclearances = res.data.submittedclearances.total;
-            this.numberOfPages = res.data.submittedclearances.total_pages;
-          })
-          .catch((err) => {
-            console.error(err);
-          });
-      }
-    }, 
-    searchIt(d) {
-      
-      if (d.length > 2) {
-        const { page, itemsPerPage } = this.options;
-         let pageNumber = page;
-        axios
-          .get(`/api/v1/submittedclearances/${d}?page=` + pageNumber, {
-          params: { 'per_page': itemsPerPage,
-          'id' : d,
-          'semester_id' : this.semester_id,
-          },
-        })
-          .then((res) => {
-            this.loading = false;   
-            this.page = res.data.submittedclearances.current_page;
-            this.submittedclearances = res.data.submittedclearances; 
-            this.totalsubmittedclearances = res.data.submittedclearances.total;
-            this.numberOfPages = res.data.submittedclearances.total_pages;
-          })
-          .catch((err) => {
-            console.error(err);
-          });
-      }
-      if (d.length <= 0) {
-         const { page, itemsPerPage } = this.options;
-         let pageNumber = page;
-        axios
-          .get(`/api/v1/submittedclearances?page=` + pageNumber, {
-            params: { 'per_page': itemsPerPage,
-          'semester_id' : this.semester_id, },
-          })
-          .then((res) => {
-            this.loading = false;  
-            this.page = res.data.submittedclearances.current_page;
-            this.submittedclearances = res.data.submittedclearances;
-            this.totalsubmittedclearances = res.data.submittedclearances.total;
-            this.numberOfPages = res.data.submittedclearances.total_pages;
-          })
-          .catch((err) => {
-            console.error(err);
-          });
-      }
-    },  
-    initialize() {
-      axios.interceptors.request.use(
-        (config) => {
-          this.loading = true;
-          return config;
-        },
-        (error) => {
-          this.loading = false;
-          return Promise.reject(error);
+        .then(async (response) => {
+
+          // this.semester = response.data.semester.semester;
+        this.currentPageDownloadExcel = response.data.submittedclearances.current_page;
+        this.totalPageDownloadExcel = response.data.submittedclearances.total_pages;
+        
+        for (let i = 1; i <= this.totalPageDownloadExcel; i++) {
+         await axios
+            .get(`/api/v1/submittedclearances?page=` + i, {
+              params: { 
+                'per_page': 100,
+                'semester': this.semester,
+                'program': this.program,
+                'college': this.college,
+                'purpose': this.purpose,
+                'designation': this.designation,
+                'student': this.student,
+                },
+            })
+            .then((response) => {
+
+              this.excelData =[].concat(this.excelData,response.data.submittedclearances.data);
+              
+            });
+            this.downloadProgress = (i/this.totalPageDownloadExcel*100).toFixed(2);
+         
+
         }
-      );
+        // this.loading = false
+        console.log(this.excelData)
+        this.excelFilename = response.data.file_name;
+        });
+       
+      // simulate download with setInterval
+      // const interval = setInterval(() => {
+      //   this.downloadProgress += 1
+      //   if (this.downloadProgress >= 100) {
+      //     clearInterval(interval)
+      //     this.loading = false
 
-      axios.interceptors.response.use(
-        (response) => {
-          this.loading = false;
-          return response;
-        },
-        (error) => {
-          this.loading = false;
-          return Promise.reject(error);
-        }
-      );
-       axios.get('/api/v1/semesters',{})
-      .then(res => {
-        this.semesters = res.data.semesters
-      })
-      .catch(err => {
-        console.error(err); 
-      });
-    },
+      //   }
+      // }, 1000)
+      return this.excelData;
 
-    editItem(item) {
-      this.editedIndex = this.submittedclearances.data.indexOf(item);
-      this.editedItem = Object.assign({}, item); 
-      this.dialog = true;
-    },    
-    deleteItem(item) {
-      const index = this.submittedclearances.data.indexOf(item);
-      let decide = confirm("Are you sure you want to delete this item?");
-      if (decide) {
-        axios
-          .delete("/api/v1/submittedclearances/" + item.id)
-          .then((res) => {
-            this.text = "Record Deleted Successfully!"; 
-            this.snackbarColor ="primary darken-1";
-            this.snackbar = true;
-            this.submittedclearances.data.splice(index, 1);
-          })
-          .catch((err) => {
-            console.log(err.response);
-            this.text = "Error Deleting Record";
-            this.snackbarColor ="error darken-1";
-            this.snackbar = true;
-
-          });
-      }
-    },
-
-    close() {
-      this.dialog = false;
-      setTimeout(() => {
-        this.editedItem = Object.assign({}, this.defaultItem);
-        this.editedIndex = -1;
-      }, 300);
-    }, 
-    save() {
-      console.log(this.editedItem);
-      if (this.editedIndex > -1) {
-        const index = this.editedIndex;
-        axios
-          .put("/api/v1/submittedclearances/" + this.editedItem.id, this.editedItem)
-          .then((res) => {
-            this.text = "Record Updated Successfully!";
-            this.snackbarColor ="primary darken-1";
-            this.snackbar = true;
-            Object.assign(this.submittedclearances.data[index], res.data.submittedclearance); 
-          })
-          .catch((err) => {
-            console.log(err.response);
-            this.text = "Error Updating Record";
-            this.snackbarColor ="error darken-1";
-            this.snackbar = true;
-          });
-      } else {
-        axios
-          .post("/api/v1/submittedclearances", this.editedItem)
-          .then((res) => {
-            this.text = "Record Added Successfully!";
-            this.snackbarColor ="primary darken-1";
-            this.snackbar = true;
-            // this.students.data.push(res.data.student); 
-            this.submittedclearances = res.data.submittedclearances
-          })
-          .catch((err) => {
-            console.dir(err);
-            this.text = "Error Inserting Record";
-            this.snackbarColor ="error darken-1";
-            this.snackbar = true;
-          });
-          
-      } 
-        this.close();
-     
-    },
+    }
+   
   },
 };
 </script>
+<style>
+ html body div#app div div#inspire.v-application.v-application--is-ltr.theme--light div.v-application--wrap main.v-main.grey.lighten-5 div.v-main__wrap div.container.container--fluid div.container.ma-0.pa-0.container--fluid div.row.container-fluid.ml-2.mt-0 div.col-lg-9.col-12 div.v-data-table.px-6.pb-6.mt-4.v-data-table--has-bottom.theme--light div.v-data-table__wrapper table tbody tr td{
+ font-size: 12px;
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+  }
+</style>

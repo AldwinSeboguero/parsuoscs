@@ -75,8 +75,8 @@ import PDCBMClearanceRequestsComponent from './components/programdirector/Cleara
 import PDCETClearanceRequestsComponent from './components/programdirector/ClearanceCETRequestsComponent';
 import PDCOEDClearanceRequestsComponent from './components/programdirector/ClearanceCOEDRequestsComponent';
 import PDSGSClearanceRequestsComponent from './components/programdirector/ClearanceSGSRequestsComponent';
-import PDClearedClearancesComponent from './components/programdirector/ClearedClearancesComponent';
-import PDSubmittedClearancesComponent from './components/programdirector/SubmittedClearancesComponent';
+import PDClearedClearancesComponent from './components/ClearedClearancesComponent';
+import PDSubmittedClearancesComponent from './components/SubmittedClearancesComponent';
 import PDClearanceListComponent from './components/programdirector/ClearanceListComponent';
 import PDDeficiencyListComponent from './components/programdirector/DeficiencyListComponent';  
 
@@ -152,6 +152,11 @@ const routes =[
                     beforeEnter: isADMIN,
                     component: AdminDashboardComponent, 
                     name: 'Dashboard',
+                    meta: {
+                        breadcrumb: {
+                            label: 'Dashboard',
+                          }
+                      }
                     
 
                     
@@ -316,19 +321,34 @@ const routes =[
                     path: 'clearance/requests',
                     beforeEnter: isADMIN,
                     component: AdminClearanceRequestsComponent,
-                    name: 'Clearance Requests'
+                    name: 'Clearance Requests',
+                    meta: {
+                        breadcrumb: {
+                            label: 'Clearance Requests',
+                          }
+                      }
                 },
                 {
                     path: 'cleared/clearances',
                     beforeEnter: isADMIN,
                     component: AdminClearedClearancesComponent,
-                    name: 'Cleared Clearances'
+                    name: 'Approved Requests',
+                    meta: {
+                        breadcrumb: {
+                            label: 'Approved Requests',
+                          }
+                      }
                 },
                 {
                     path: 'submitted/clearances',
                     beforeEnter: isADMIN,
                     component: AdminSubmittedClearancesComponent,
-                    name: 'Submitted Clearances'
+                    name: 'Submitted Clearances', 
+                    meta: {
+                        breadcrumb: {
+                            label: 'Submitted Clearances',
+                          }
+                      }
                 },
                 {
                     path: 'sias/account',
@@ -396,7 +416,13 @@ const routes =[
                     path: 'student/list',
                     beforeEnter: isSTCOUNCIL,
                     component: PDStudentListComponent,
-                    name: 'Student List'
+                    name: 'Student List',
+                    meta: {
+                        breadcrumb: {
+                            label: 'Student List',
+                          }
+                      }
+                    
                 },
                 
                 //Signatories Routes
@@ -408,7 +434,6 @@ const routes =[
                     meta: {
                         breadcrumb: {
                             label: 'Clearance Requests',
-                            parent:'Student Council'
                           }
                       }
                 },
@@ -416,7 +441,12 @@ const routes =[
                     path: 'cleared/clearances',
                     beforeEnter: isSTCOUNCIL,
                     component: PDClearedClearancesComponent,
-                    name: 'Cleared Clearances'
+                     name: 'Approved Requests',
+                    meta: {
+                        breadcrumb: {
+                            label: 'Approved Requests',
+                          }
+                      }
                 },
                 {
                     path: 'submitted/clearances',
@@ -478,7 +508,12 @@ const routes =[
                     path: 'student/list',
                     beforeEnter: isCASHIER,
                     component: PDStudentListComponent,
-                    name: 'Student List'
+                    name: 'Student List',
+                    meta: {
+                        breadcrumb: {
+                            label: 'Student List',
+                          }
+                      }
                 },
                 
                 //Signatories Routes
@@ -490,7 +525,6 @@ const routes =[
                     meta: {
                         breadcrumb: {
                             label: 'Clearance Requests',
-                            parent:'Cashier'
                           }
                       }
                 },
@@ -498,7 +532,12 @@ const routes =[
                     path: 'cleared/clearances',
                     beforeEnter: isCASHIER,
                     component: PDClearedClearancesComponent,
-                    name: 'Cleared Clearances'
+                     name: 'Approved Requests',
+                    meta: {
+                        breadcrumb: {
+                            label: 'Approved Requests',
+                          }
+                      }
                 },
                 {
                     path: 'submitted/clearances',
@@ -555,7 +594,12 @@ const routes =[
                     path: 'student/list',
                     beforeEnter: isOSAS,
                     component: PDStudentListComponent,
-                    name: 'Student List'
+                    name: 'Student List',
+                    meta: {
+                        breadcrumb: {
+                            label: 'Student List',
+                          }
+                      }
                 },
                 
                 //Signatories Routes
@@ -575,7 +619,12 @@ const routes =[
                     path: 'cleared/clearances',
                     beforeEnter: isOSAS,
                     component: PDClearedClearancesComponent,
-                    name: 'Cleared Clearances'
+                     name: 'Approved Requests',
+                    meta: {
+                        breadcrumb: {
+                            label: 'Approved Requests',
+                          }
+                      }
                 },
                 {
                     path: 'submitted/clearances',
@@ -638,7 +687,12 @@ const routes =[
                     path: 'student/list',
                     beforeEnter: isOSAS,
                     component: PDStudentListComponent,
-                    name: 'Student List'
+                    name: 'Student List',
+                    meta: {
+                        breadcrumb: {
+                            label: 'Student List',
+                          }
+                      }
                 },
                 
                 //Signatories Routes
@@ -676,7 +730,12 @@ const routes =[
                     path: 'cleared/clearances',
                     beforeEnter: isOSAS,
                     component: PDClearedClearancesComponent,
-                    name: 'Cleared Clearances'
+                     name: 'Approved Requests',
+                    meta: {
+                        breadcrumb: {
+                            label: 'Approved Requests',
+                          }
+                      }
                 },
                 {
                     path: 'submitted/clearances',
@@ -739,7 +798,12 @@ const routes =[
                     path: 'student/list',
                     beforeEnter: isREGISTRARSTAFF,
                     component: PDStudentListComponent,
-                    name: 'Student List'
+                    name: 'Student List',
+                    meta: {
+                        breadcrumb: {
+                            label: 'Student List',
+                          }
+                      }
                 },
                 
                 //Signatories Routes
@@ -758,7 +822,12 @@ const routes =[
                     path: 'cleared/clearances',
                     beforeEnter: isREGISTRARSTAFF,
                     component: PDClearedClearancesComponent,
-                    name: 'Cleared Clearances'
+                     name: 'Approved Requests',
+                    meta: {
+                        breadcrumb: {
+                            label: 'Approved Requests',
+                          }
+                      }
                 },
                 {
                     path: 'submitted/clearances',
@@ -827,7 +896,12 @@ const routes =[
                     path: 'student/list',
                     beforeEnter: isREGISTRAR,
                     component: PDStudentListComponent,
-                    name: 'Student List'
+                    name: 'Student List',
+                    meta: {
+                        breadcrumb: {
+                            label: 'Student List',
+                          }
+                      }
                 },
                 
                 //Signatories Routes
@@ -846,7 +920,12 @@ const routes =[
                     path: 'cleared/clearances',
                     beforeEnter: isREGISTRAR,
                     component: PDClearedClearancesComponent,
-                    name: 'Cleared Clearances'
+                     name: 'Approved Requests',
+                    meta: {
+                        breadcrumb: {
+                            label: 'Approved Requests',
+                          }
+                      }
                 },
                 {
                     path: 'submitted/clearances',
@@ -915,7 +994,12 @@ const routes =[
                     path: 'student/list',
                     beforeEnter: isDEAN,
                     component: PDStudentListComponent,
-                    name: 'Student List'
+                    name: 'Student List',
+                    meta: {
+                        breadcrumb: {
+                            label: 'Student List',
+                          }
+                      }
                 },
                 
                 //Signatories Routes
@@ -934,7 +1018,12 @@ const routes =[
                     path: 'cleared/clearances',
                     beforeEnter: isDEAN,
                     component: PDClearedClearancesComponent,
-                    name: 'Cleared Clearances'
+                     name: 'Approved Requests',
+                    meta: {
+                        breadcrumb: {
+                            label: 'Approved Requests',
+                          }
+                      }
                 },
                 {
                     path: 'submitted/clearances',
@@ -991,7 +1080,12 @@ const routes =[
                     path: 'student/list',
                     beforeEnter: isLIBRARY,
                     component: PDStudentListComponent,
-                    name: 'Student List'
+                    name: 'Student List',
+                    meta: {
+                        breadcrumb: {
+                            label: 'Student List',
+                          }
+                      }
                 },
                 
                 //Signatories Routes
@@ -1003,7 +1097,6 @@ const routes =[
                     meta: {
                         breadcrumb: {
                             label: 'Clearance Requests',
-                            parent:'Library'
                           }
                       }
                 },
@@ -1011,7 +1104,12 @@ const routes =[
                     path: 'cleared/clearances',
                     beforeEnter: isLIBRARY,
                     component: PDClearedClearancesComponent,
-                    name: 'Cleared Clearances'
+                     name: 'Approved Requests',
+                    meta: {
+                        breadcrumb: {
+                            label: 'Approved Requests',
+                          }
+                      }
                 },
                 {
                     path: 'submitted/clearances',
@@ -1068,7 +1166,12 @@ const routes =[
                     path: 'student/list',
                     beforeEnter: isPD,
                     component: PDStudentListComponent,
-                    name: 'Student List'
+                    name: 'Student List',
+                    meta: {
+                        breadcrumb: {
+                            label: 'Student List',
+                          }
+                      }
                 },
                 
                 //Signatories Routes
@@ -1079,7 +1182,6 @@ const routes =[
                     name: 'Clearance Requests',meta: {
                         breadcrumb: {
                             label: 'Clearance Requests',
-                            parent:'Program Director'
                           }
                       }
                 },
@@ -1087,7 +1189,12 @@ const routes =[
                     path: 'cleared/clearances',
                     beforeEnter: isPD,
                     component: PDClearedClearancesComponent,
-                    name: 'Cleared Clearances'
+                     name: 'Approved Requests',
+                    meta: {
+                        breadcrumb: {
+                            label: 'Approved Requests',
+                          }
+                      }
                 },
                 {
                     path: 'submitted/clearances',
@@ -1150,7 +1257,12 @@ const routes =[
                     path: 'student/list',
                     beforeEnter: isADVISER,
                     component: PDStudentListComponent,
-                    name: 'Student List'
+                    name: 'Student List',
+                    meta: {
+                        breadcrumb: {
+                            label: 'Student List',
+                          }
+                      }
                 },
                 
                 //Signatories Routes
@@ -1164,7 +1276,12 @@ const routes =[
                     path: 'cleared/clearances',
                     beforeEnter: isADVISER,
                     component: PDClearedClearancesComponent,
-                    name: 'Cleared Clearances'
+                     name: 'Approved Requests',
+                    meta: {
+                        breadcrumb: {
+                            label: 'Approved Requests',
+                          }
+                      }
                 },
                 {
                     path: 'submitted/clearances',
@@ -1221,7 +1338,12 @@ const routes =[
                     path: 'student/list',
                     beforeEnter: isPRINCIPAL,
                     component: PDStudentListComponent,
-                    name: 'Student List'
+                    name: 'Student List',
+                    meta: {
+                        breadcrumb: {
+                            label: 'Student List',
+                          }
+                      }
                 },
                 
                 //Signatories Routes
@@ -1235,7 +1357,12 @@ const routes =[
                     path: 'cleared/clearances',
                     beforeEnter: isPRINCIPAL,
                     component: PDClearedClearancesComponent,
-                    name: 'Cleared Clearances'
+                     name: 'Approved Requests',
+                    meta: {
+                        breadcrumb: {
+                            label: 'Approved Requests',
+                          }
+                      }
                 },
                 {
                     path: 'submitted/clearances',

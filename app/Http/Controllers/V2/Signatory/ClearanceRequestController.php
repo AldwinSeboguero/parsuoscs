@@ -70,6 +70,8 @@ class ClearanceRequestController extends Controller
             return response()->json([
                 'signatory' => $signatory_ids,
                 'clearance_requests' => $clearance_requests,
+            
+            
                 // 'semester' => $request->semester,
                 // 'college' =>$request->college,
                 // 'program' =>$request->program,
