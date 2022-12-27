@@ -454,7 +454,7 @@ export default {
       { text: "Name", value: "name" },
       { text: "Program", value: "program" },
        { text: "Purpose", value: "purpose" },
-      //  { text: "Signatory", value: "staff" },
+       { text: "Signatory", value: "staff" },
        { text: "Date Requested", value: "request_at" },
       { text: "Action", value: "actions" },
     ], 

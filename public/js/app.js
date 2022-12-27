@@ -12559,9 +12559,10 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       }, {
         text: "Purpose",
         value: "purpose"
-      },
-      //  { text: "Signatory", value: "staff" },
-      {
+      }, {
+        text: "Signatory",
+        value: "staff"
+      }, {
         text: "Date Requested",
         value: "request_at"
       }, {

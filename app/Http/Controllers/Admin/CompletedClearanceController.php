@@ -121,9 +121,9 @@ class CompletedClearanceController extends Controller
         else{
             $per_page =$request->per_page ? $request->per_page : 10; 
             $signatory_ids = SignatoryV2::where('user_id',Auth::user()->id)->get('id');
-            $programs = SignatoryV2::where('user_id', Auth::user()->id)->distinct('campus_id')->get('campus_id');
-
+            
             $clearance_requests =new ClearanceRequestCollection( ClearanceRequestV2::orderByDesc('approved_at')
+            ->whereIn('signatory_id', $signatory_ids)
             ->where('status', true)
             ->when($request->student, function($inner) use($request){
                 $inner->whereHas('student', function($q) use ($request){
@@ -151,9 +151,6 @@ class CompletedClearanceController extends Controller
                     $q->where('program_id',$request->program);
                 });
             }) 
-            ->whereHas('student.program', function($q) use($programs){
-                $q->whereIn('campus_id', $programs);
-            })  
             ->paginate($per_page));
 
             return response()->json([
