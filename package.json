@@ -27,10 +27,12 @@
   "dependencies": {
     "@vue/composition-api": "^1.6.2",
     "apexcharts": "^3.35.3",
+    "file-saver": "^2.0.5",
     "generate-password": "^1.7.0",
     "gulp": "^4.0.2",
     "jspdf": "^2.4.0",
     "jspdf-autotable": "^3.5.13",
+    "jszip": "^3.10.1",
     "particles-bg-vue": "^1.3.5",
     "pdf-merger-js": "^4.2.0",
     "v-clipboard": "^2.2.3",

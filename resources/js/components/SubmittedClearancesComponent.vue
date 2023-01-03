@@ -383,6 +383,8 @@ import debounce from "lodash/debounce";
 import downloadexcel from "vue-json-excel";
 import PDFMerger from 'pdf-merger-js';
 
+import JSZip from 'jszip';
+    import { saveAs } from 'file-saver';
 export default {
   components: {
             downloadexcel
@@ -610,6 +612,15 @@ export default {
   },
 
   methods: {
+    clean($val) {
+          if($val){$val = $val.replace(/ +(?= )/g, "");
+          $val = $val.replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, "_"); // Replaces all spaces with hyphens.
+          $val = $val.replace(/ +(?= )/g, "_");
+          
+          return $val;
+          }
+          // Removes special chars.
+        },
     clearForms(){
       this.semester = null;
       this.search = '';
@@ -617,7 +628,8 @@ export default {
     async generateMultiplePDF(){
       this.downloadMultipleLoading = true;
 
-      var merger = new PDFMerger();
+              var zip = new JSZip();
+              var merger = new PDFMerger();
               var option = {};
               var i;
 
@@ -663,17 +675,18 @@ export default {
 
                       }).then((response) => {
                         fileURL  = window.URL.createObjectURL(new Blob([response.data], {type: 'application/pdf'}));
-
+                        zip.file(this.clean(sc.name)+".pdf", fileURL);
                         });
                     // fileURL  = new Blob([response.data], {type: 'application/pdf'});
-                   await merger.add(fileURL);
-   
-                    }
-                  });
+                  //  await merger.add(fileURL);
+                  
+                  
                   this.downloadProgress = (i/this.totalPageDownloadExcel*100).toFixed(2);
 
                  
 
+                }
+                  });
               
 
               }
@@ -684,7 +697,13 @@ export default {
 
                this.downloadMultipleLoading = false;
 
-              await merger.save("Submitted Clearance"+'_'+((Math.floor(Date.now() / 1))));
+              // await merger.save("Submitted Clearance"+'_'+((Math.floor(Date.now() / 1))));
+              await zip.generateAsync({type:"blob"})
+                    .then(function(content) {
+                    // see FileSaver.js
+                    saveAs(content, "Submitted Clearances"+'_'+((Math.floor(Date.now() / 1)))+".zip");
+                    });
+
  
             
     },
