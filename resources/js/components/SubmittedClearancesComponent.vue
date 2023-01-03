@@ -667,7 +667,7 @@ export default {
                         });
                     // fileURL  = new Blob([response.data], {type: 'application/pdf'});
                    await merger.add(fileURL);
-
+   
                     }
                   });
                   this.downloadProgress = (i/this.totalPageDownloadExcel*100).toFixed(2);
