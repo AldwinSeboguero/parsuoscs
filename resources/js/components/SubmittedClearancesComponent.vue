@@ -674,12 +674,12 @@ export default {
                       ,params: { 'clearance_id': sc.clearance_id }
 
                       }).then((response) => {
-                        fileURL  = window.URL.createObjectURL(new Blob([response.data], {type: 'application/pdf'}));
-                        zip.file(this.clean(sc.name)+".pdf", fileURL);
+                        fileURL  = new Blob([response.data], {type: 'application/pdf'});
                         });
                     // fileURL  = new Blob([response.data], {type: 'application/pdf'});
                   //  await merger.add(fileURL);
                   
+                  await zip.file(this.clean(sc.name)+".pdf", fileURL);
                   
                   this.downloadProgress = (i/this.totalPageDownloadExcel*100).toFixed(2);
 

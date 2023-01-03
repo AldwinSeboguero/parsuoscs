@@ -3480,7 +3480,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                                                   _iterator.s();
                                                 case 3:
                                                   if ((_step = _iterator.n()).done) {
-                                                    _context.next = 10;
+                                                    _context.next = 12;
                                                     break;
                                                   }
                                                   sc = _step.value;
@@ -3491,36 +3491,35 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                                                       'clearance_id': sc.clearance_id
                                                     }
                                                   }).then(function (response) {
-                                                    fileURL = window.URL.createObjectURL(new Blob([response.data], {
+                                                    fileURL = new Blob([response.data], {
                                                       type: 'application/pdf'
-                                                    }));
-                                                    zip.file(_this6.clean(sc.name) + ".pdf", fileURL);
+                                                    });
                                                   });
                                                 case 7:
-                                                  // fileURL  = new Blob([response.data], {type: 'application/pdf'});
-                                                  //  await merger.add(fileURL);
-
+                                                  _context.next = 9;
+                                                  return zip.file(_this6.clean(sc.name) + ".pdf", fileURL);
+                                                case 9:
                                                   _this6.downloadProgress = (_i / _this6.totalPageDownloadExcel * 100).toFixed(2);
-                                                case 8:
+                                                case 10:
                                                   _context.next = 3;
                                                   break;
-                                                case 10:
-                                                  _context.next = 15;
-                                                  break;
                                                 case 12:
-                                                  _context.prev = 12;
+                                                  _context.next = 17;
+                                                  break;
+                                                case 14:
+                                                  _context.prev = 14;
                                                   _context.t0 = _context["catch"](1);
                                                   _iterator.e(_context.t0);
-                                                case 15:
-                                                  _context.prev = 15;
+                                                case 17:
+                                                  _context.prev = 17;
                                                   _iterator.f();
-                                                  return _context.finish(15);
-                                                case 18:
+                                                  return _context.finish(17);
+                                                case 20:
                                                 case "end":
                                                   return _context.stop();
                                               }
                                             }
-                                          }, _callee, null, [[1, 12, 15, 18]]);
+                                          }, _callee, null, [[1, 14, 17, 20]]);
                                         }));
                                         return function (_x2) {
                                           return _ref2.apply(this, arguments);
