@@ -211,6 +211,7 @@
 </template>
 <script>
 import debounce from "lodash/debounce";
+import PDFMerger from 'pdf-merger-js';
 
 export default {
   data: () => ({
@@ -335,6 +336,84 @@ export default {
     clearForms(){
       this.semester = null;
       this.search = '';
+    },
+    generateMultiplePDF(){
+              var merger = new PDFMerger();
+              var option = {};
+              var i;
+              var br = this.barangay ? this.barangay : this.barangays;
+              var sit = this.sitio;
+              console.log(this.barangay);
+
+              for(i of this.barangays){
+                var fileURL ='' ;
+                // this.downloadStatus = 'Downloading '+i.name+'....';
+                console.log(i);
+                var senior_count = 0;
+                // this.downloadStatus = 'Downloading '+i.name+'....';
+                await axios.get('/pensioners-senior-count',{
+                    params: { 
+                    'barangay': i.id,
+                    'sitio': this.sitio,
+                    'min' : this.range[0],
+                    'max' : this.range[1],
+                    'sx': this.sx,
+                    'birthday':this.birthdate,
+                    'pension':this.pension,
+                    'annualincome': this.annualincome,
+                    'search': this.clean(this.search),
+                    },
+                    })
+                .then((response) => {
+                    senior_count  = response.data.senior_count;
+                });
+                console.log('senior_count');
+
+                console.log(senior_count);
+                if(senior_count > 0){
+                  await axios.get('/pensioners-senior',{responseType: 'blob',
+                      params: { 
+                      'barangay': i.id,
+                      'sitio': this.sitio,
+                      'min' : this.range[0],
+                      'max' : this.range[1],
+                      'sx': this.sx,
+                      'birthday':this.birthdate,
+                      'pension':this.pension,
+                      'annualincome': this.annualincome,
+                      'search': this.clean(this.search),
+                      },
+                      })
+                  .then((response) => {
+                      fileURL  = new Blob([response.data], {type: 'application/pdf'});
+                  });
+                  await axios.get('/getBarangayName',{
+                      params: { 
+                      'barangay': i.id,
+                      },
+                      })
+                  .then((response) => {
+                      console.log(response.data.barangay[0].name);
+                      // zip.file(response.data.barangay[0].name+".pdf", fileURL);
+                      merger.add(fileURL);
+
+                  });
+                }
+               
+              }
+              await merger.save("List-of-Pensioner-Senior-Citizen"+'_'+((Math.floor(Date.now() / 1))));
+
+              // zip.generateAsync({type:"blob"})
+              // .then(function(content) {
+              // // see FileSaver.js
+              // saveAs(content, "List-of-Constituents-Aged-59-and-Above-per-Barangay"+'_'+((Math.floor(Date.now() / 1)))+".zip");
+              // });
+
+              this.loading = false;
+              // this.downloadStatus23 = 'Download Complete!!';
+
+              console.log('finish download');      
+            
     },
     generatePDF(item) { 
       axios.get('/api/v1/active-clearance/signatory/pdf',{responseType: 'blob'

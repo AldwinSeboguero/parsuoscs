@@ -266,7 +266,37 @@
                       </v-btn>
                     </template>
                     <v-card>
-                      
+                    <v-card-title class="align-center ma-2 mt-0 pa-2 rounded white--red elevation-0 black--text text--lighten-1 subtitle-1 text-uppercase"  >
+                      <v-icon left class="grey--text text--darken-1">mdi-download</v-icon> Export Multiple PDF
+
+                      <v-spacer/>
+                        <v-btn elevation-0 color="black" small  @click=" uploadDialog = false" icon> <v-icon>mdi-close</v-icon></v-btn>
+                      </v-card-title>
+                      <v-card-text >
+                        <i class="caption mb-2">* Please use filters to specify exported data.</i>
+                     
+                      <v-list-item
+                      link
+                      dark
+                      class="red"
+                      active-class="orange--text text--accent-4 font-weight-bold "
+                      :loading="downloadMultipleLoading"
+                      @click="generateMultiplePDF"
+                      >
+                    
+                        
+                      <v-icon small class="mr-2 ">mdi-download</v-icon>
+                      <span class="font-semibold ">Multiple PDF</span>
+                    
+                      </v-list-item>
+                      <br/>
+                      <span>{{ downloadProgress }}%</span>
+
+                      <v-progress-linear v-if="downloadMultipleLoading" :value="downloadProgress" color="primary" class="" >
+                      </v-progress-linear>
+                        
+                      </v-card-text>
+                   
                     </v-card>
                   </v-dialog>
                 
@@ -351,6 +381,7 @@
 <script>
 import debounce from "lodash/debounce";
 import downloadexcel from "vue-json-excel";
+import PDFMerger from 'pdf-merger-js';
 
 export default {
   components: {
@@ -360,6 +391,8 @@ export default {
   data: () => ({
     excelData: [],
     downloadLoading: false,
+    downloadMultipleLoading: false,
+
     exportExcelDialog: false,
     json_fields: {
                   'Student ID' : 'student_number',
@@ -573,13 +606,86 @@ export default {
   },
 
   created() {
-    this.initialize();
+    // this.initialize();
   },
 
   methods: {
     clearForms(){
       this.semester = null;
       this.search = '';
+    },
+    async generateMultiplePDF(){
+      this.downloadMultipleLoading = true;
+
+      var merger = new PDFMerger();
+              var option = {};
+              var i;
+
+              await  axios
+              .get(`/api/v1/submittedclearances?page=` + 1, {
+                params: { 
+                  'per_page': 1,
+                  'semester': this.semester,
+                  'program': this.program,
+                  'college': this.college,
+                  'purpose': this.purpose,
+                  'designation': this.designation,
+                  'student': this.student,
+                  },
+              })
+              .then(async (response) => {
+
+                // this.semester = response.data.semester.semester;
+              this.currentPageDownloadExcel = response.data.submittedclearances.current_page;
+              this.totalPageDownloadExcel = response.data.submittedclearances.total_pages;
+              
+              for (let i = 1; i <= this.totalPageDownloadExcel; i++) {
+                var fileURL ='' ;
+
+              await axios
+                  .get(`/api/v1/submittedclearances?page=` + i, {
+                    params: { 
+                      'per_page': 1,
+                      'semester': this.semester,
+                      'program': this.program,
+                      'college': this.college,
+                      'purpose': this.purpose,
+                      'designation': this.designation,
+                      'student': this.student,
+                      },
+                  })
+                  .then(async (response) => {
+                    var sc;
+                  
+                      await axios.get('/api/v1/active-clearance/signatory/pdf',{responseType: 'blob'
+                      ,params: { 'clearance_id': response.data.submittedclearances.data.clearance_id }
+
+                      }).then((response) => {
+                        fileURL  = window.URL.createObjectURL(new Blob([response.data], {type: 'application/pdf'}));
+
+                        });
+                    // fileURL  = new Blob([response.data], {type: 'application/pdf'});
+                   await merger.add(fileURL);
+
+                    
+                  });
+                  this.downloadProgress = (i/this.totalPageDownloadExcel*100).toFixed(2);
+
+                 
+
+              
+
+              }
+              // this.loading = false
+              // console.log(this.excelData)
+              this.excelFilename = response.data.file_name;
+              });
+
+               this.downloadMultipleLoading = false;
+
+              await merger.save("Submitted Clearance"+'_'+((Math.floor(Date.now() / 1))));
+ 
+            
     },
     generatePDF(item) { 
       axios.get('/api/v1/active-clearance/signatory/pdf',{responseType: 'blob'
