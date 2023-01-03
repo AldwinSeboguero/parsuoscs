@@ -129,7 +129,7 @@ class StudentController extends Controller
         })
         ->when($campus_id, function ($q) use ($campus_id){
             $q->whereHas('program',function($q) use($campus_id){
-                $q->where('campus_id',$campus_id);
+                $q->where('campus_id',$campus_id);  
             });
         })
         ->when($college_id, function ($q) use ($college_id){

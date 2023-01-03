@@ -32,7 +32,7 @@
       dismissible
       dense
       elevation="0"
-      v-if="(countApproved == countSignatory) && (countApproved != 0) && (countSignatory != 0) && !isSubmitted"
+      v-if="(countApproved == countSignatory) && (countApproved != 0) && (countSignatory != 0) && !isSubmitted && isOpen"
 
     >
      <span class="font-weight-bold">Note:</span> To complete the proccess. Please click the submit button to send your clearance to the Office of the Registrar.
@@ -85,7 +85,7 @@
                   Download</v-btn>
                    
                  <v-btn :loading="submitLoading" @click="submitClearance" class="elevation-8 blue ml-2" rounded x-small dark  
-                v-if="(countApproved == countSignatory) && (countApproved != 0) && (countSignatory != 0) && !isSubmitted">
+                v-if="(countApproved == countSignatory) && (countApproved != 0) && (countSignatory != 0) && !isSubmitted && isOpen">
                   <v-icon x-small>mdi-file-send</v-icon>
                   Submit</v-btn>
     </v-card-title>

@@ -1,31 +1,6 @@
 <template>
   <div>
-  <!-- <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 text-right bg-title-right">
-  <div id="clients-table_filter" class="dataTables_filter">
-   
-    <v-row class="grey lighten-4"
-     justify="start">
-        <v-col
-          cols="12"
-          md="4"
-          class="pull-left ml-0 pl-4"
-        >
-          <v-text-field
-            v-model="search"
-            prepend-inner-icon="mdi-magnify"
-          
-            class="rounded-lg"
-            dense
-            label="Search"
-            outlined
-            hide-details
-            required
-            background-color="white"
-          ></v-text-field>
-        </v-col>
-    </v-row>
-    </div>
-  </div> -->
+
   <v-card class="pt-1">
         <v-card-title class="align-end pl-4 pa-2 mt-2 mb-3 rounded white--text elevation-1" style=" margin-left: -8px; margin-right: -8px; max-height: 50px; background: linear-gradient(to right, #0d47a1, #0d47a1, #1A237E);">
                 <span class="font-semibold"><v-icon  dark left>mdi-list-box</v-icon>Students</span>

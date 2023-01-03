@@ -606,7 +606,10 @@ export default {
         .get(`/api/v1/submittedclearances?page=` + pageNumber, {
             params: { 
           'per_page': itemsPerPage,
-          'semester' : this.semester, },
+          'semester' : this.semester,
+          'program' : this.program,
+          'college' : this.college,
+          'search' : this.search },
         })
         .then((response) => {
           this.loading = false;  

@@ -3426,7 +3426,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       axios.get("/api/v1/submittedclearances?page=" + pageNumber, {
         params: {
           'per_page': itemsPerPage,
-          'semester': this.semester
+          'semester': this.semester,
+          'program': this.program,
+          'college': this.college,
+          'search': this.search
         }
       }).then(function (response) {
         _this6.loading = false;
@@ -39378,7 +39381,7 @@ var render = function render() {
       href: "/#/student/settings",
       elevation: "0"
     }
-  }, [_vm._v("Redirect to Settings")])], 1)], 1)], 1)], 1)], 1) : _vm.isPurposeSetup && _vm.isPurposeSetup != null ? _c("v-container", [_vm.countApproved == _vm.countSignatory && _vm.countApproved != 0 && _vm.countSignatory != 0 && !_vm.isSubmitted ? _c("v-alert", {
+  }, [_vm._v("Redirect to Settings")])], 1)], 1)], 1)], 1)], 1) : _vm.isPurposeSetup && _vm.isPurposeSetup != null ? _c("v-container", [_vm.countApproved == _vm.countSignatory && _vm.countApproved != 0 && _vm.countSignatory != 0 && !_vm.isSubmitted && _vm.isOpen ? _c("v-alert", {
     staticStyle: {
       "border-color": "linear-gradient(to left, #1A237E, #1A237E, #0D47A1) !important"
     },
@@ -39451,7 +39454,7 @@ var render = function render() {
     attrs: {
       "x-small": ""
     }
-  }, [_vm._v("mdi-file-pdf")]), _vm._v("\n                  Download")], 1) : _vm._e(), _vm._v(" "), _vm.countApproved == _vm.countSignatory && _vm.countApproved != 0 && _vm.countSignatory != 0 && !_vm.isSubmitted ? _c("v-btn", {
+  }, [_vm._v("mdi-file-pdf")]), _vm._v("\n                  Download")], 1) : _vm._e(), _vm._v(" "), _vm.countApproved == _vm.countSignatory && _vm.countApproved != 0 && _vm.countSignatory != 0 && !_vm.isSubmitted && _vm.isOpen ? _c("v-btn", {
     staticClass: "elevation-8 blue ml-2",
     attrs: {
       loading: _vm.submitLoading,
