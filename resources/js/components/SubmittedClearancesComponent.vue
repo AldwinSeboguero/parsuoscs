@@ -656,9 +656,10 @@ export default {
                   })
                   .then(async (response) => {
                     var sc;
-                  
+                    for(sc of response.data.submittedclearances.data){
+
                       await axios.get('/api/v1/active-clearance/signatory/pdf',{responseType: 'blob'
-                      ,params: { 'clearance_id': response.data.submittedclearances.data.clearance_id }
+                      ,params: { 'clearance_id': sc.clearance_id }
 
                       }).then((response) => {
                         fileURL  = window.URL.createObjectURL(new Blob([response.data], {type: 'application/pdf'}));
@@ -667,7 +668,7 @@ export default {
                     // fileURL  = new Blob([response.data], {type: 'application/pdf'});
                    await merger.add(fileURL);
 
-                    
+                    }
                   });
                   this.downloadProgress = (i/this.totalPageDownloadExcel*100).toFixed(2);
 
