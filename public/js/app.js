@@ -1609,6 +1609,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         // 'College/Campus': 'college',
         'Program': 'program',
         'Purpose': 'purpose',
+        'Signatory': 'staff',
         'Date Requested': 'request_at',
         'Date Approved': 'approved_at'
         // 'Time Interval' : 'interval',

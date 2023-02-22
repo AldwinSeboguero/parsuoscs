@@ -444,6 +444,7 @@ export default {
                   // 'College/Campus': 'college',
                   'Program' : 'program',
                   'Purpose' : 'purpose',
+                  'Signatory' : 'staff',
                   'Date Requested' : 'request_at',
                   'Date Approved' : 'approved_at',
                   // 'Time Interval' : 'interval',
