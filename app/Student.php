@@ -43,8 +43,18 @@ class Student extends Model
     {
         return $this->belongsToMany('App\Deficiency','deficiency_student','student_id','deficiency_id')->withTimestamps();
 	}
-	public function clearanceRequest(){
-        return $this->hasMany('App\ClearanceRequestV2'::class,'student_id','id');
+	public function clearancerequest(){
+        return $this->hasMany('App\ClearanceRequestV2'::class,'student_id','id')
+		->whereHas('purpose',function($q){
+			$q->where('semester_id',8);
+		})->where('status',1);
+ 
+    }
+	public function clearances(){
+        return $this->hasMany('App\Clearance'::class,'student_id','id')
+		->whereHas('purpose',function($q){
+			$q->where('semester_id',8);
+		});
  
     }
 	// public function deficienciesCount(){

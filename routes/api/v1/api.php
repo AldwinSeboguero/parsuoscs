@@ -206,6 +206,8 @@ Route::resources([
 
     'signatories' => 'Admin\StaffController',
     'students' => 'Admin\StudentController',
+    'completedclearance' => 'CompletedClearance',
+
 
 ]);
 

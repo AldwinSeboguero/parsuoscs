@@ -196,7 +196,60 @@
                  
                   <v-spacer></v-spacer>
                   <span></span>
-                
+                  <v-dialog v-model="exportCompletedExcelDialog" width="390">
+                    <template v-slot:activator="{ on, attrs }">
+                  
+                      <v-btn
+                        dark
+                        v-bind="attrs"
+                        small
+                        v-on="on"
+                        icon
+                        class="float-right red white--text mr-2"
+                      >
+                      <v-icon small>mdi-file-clock</v-icon> 
+                      </v-btn>
+                    </template>
+                    <v-card>
+                     <v-card-title class="align-center ma-2 mt-0 pa-2 rounded white--red elevation-0 black--text text--lighten-1 subtitle-1 text-uppercase"  >
+                      <v-icon left class="grey--text text--darken-1">mdi-download</v-icon> Export Completed Clearance
+
+                      <v-spacer/>
+                        <v-btn elevation-0 color="black" small  @click=" exportCompletedExcelDialog = false" icon> <v-icon>mdi-close</v-icon></v-btn>
+                      </v-card-title>
+                      <v-card-text >
+                        <i class="caption mb-2">* Please use filters to specify exported data.</i>
+                      <downloadexcel
+                        class            = "btn"
+                        :fetch           = "fetchClearanceData"
+                        :fields          = "completedClearanceheaders"
+                        type="csv"
+                        :name="excelFilename"
+                        :before-generate = "startDownload"
+                        :before-finish   = "finishDownload">
+                      <v-list-item
+                      link
+                      dark
+                      class="red"
+                      active-class="orange--text text--accent-4 font-weight-bold "
+                      >
+                    
+                        
+                      <v-icon small class="mr-2 ">mdi-file-excel</v-icon>
+                      <span class="font-semibold ">CSV</span>
+                    
+                      </v-list-item>
+                      </downloadexcel>
+                      <br/>
+                      <span>{{ downloadProgress }}%</span>
+
+                      <v-progress-linear v-if="downloadLoading" :value="downloadProgress" color="primary" class="" >
+                      </v-progress-linear>
+                        
+                      </v-card-text>
+                   
+                    </v-card>
+                  </v-dialog>
                   <v-dialog v-model="exportExcelDialog" width="390">
                     <template v-slot:activator="{ on, attrs }">
                   
@@ -394,7 +447,7 @@ export default {
     excelData: [],
     downloadLoading: false,
     downloadMultipleLoading: false,
-
+    exportCompletedExcelDialog: false,
     exportExcelDialog: false,
     json_fields: {
                   'Student ID' : 'student_number',
@@ -402,6 +455,7 @@ export default {
                   'College/Campus': 'college',
                   'Program' : 'program',
                   'Purpose' : 'purpose',
+                  'Date Requested' : 'created_at',
                   'Date Submitted' : 'datesubmitted',
                   'Clearance ID' : 'clearance_id',
                 },
@@ -434,7 +488,17 @@ export default {
       { text: "Purpose", value: "purpose" }, 
       { text: "Date Submitted", value: "datesubmitted" }, 
       { text: "Action", value: "actions" },
-    ], 
+    ],
+    completedClearanceheaders:  {
+                  'Student ID' : 'student_number',
+                  'Name': 'name',
+                  'College/Campus': 'college',
+                  'Program' : 'program',
+                  'Purpose' : 'purpose',
+                  'Date Requested' : 'created_at',
+                  'Date Completed' : 'requestCompleted',
+                  'Status' : 'isSubmitted',
+                },
     page: 0,
     totalsubmittedclearances: 0,
     numberOfPages: 0,
@@ -790,6 +854,69 @@ export default {
             .then((response) => {
 
               this.excelData =[].concat(this.excelData,response.data.submittedclearances.data);
+              
+            });
+            this.downloadProgress = (i/this.totalPageDownloadExcel*100).toFixed(2);
+         
+
+        }
+        // this.loading = false
+        console.log(this.excelData)
+        this.excelFilename = response.data.file_name;
+        });
+       
+      // simulate download with setInterval
+      // const interval = setInterval(() => {
+      //   this.downloadProgress += 1
+      //   if (this.downloadProgress >= 100) {
+      //     clearInterval(interval)
+      //     this.loading = false
+
+      //   }
+      // }, 1000)
+      return this.excelData;
+
+    },
+
+    async fetchClearanceData() {
+      this.downloadLoading = true
+      this.downloadProgress =0;
+      this.excelData = [];
+
+       await  axios
+        .get(`/api/v1/completedclearance?page=` + 1, {
+          params: { 
+            'per_page': 1000,
+            'semester': this.semester,
+            'program': this.program,
+            'college': this.college,
+            'purpose': this.purpose,
+            'designation': this.designation,
+            'student': this.student,
+            },
+        })
+        .then(async (response) => {
+
+          // this.semester = response.data.semester.semester;
+        this.currentPageDownloadExcel = response.data.clearances.current_page;
+        this.totalPageDownloadExcel = response.data.clearances.total_pages;
+        
+        for (let i = 1; i <= this.totalPageDownloadExcel; i++) {
+         await axios
+            .get(`/api/v1/completedclearance?page=` + i, {
+              params: { 
+                'per_page': 1000,
+                'semester': this.semester,
+                'program': this.program,
+                'college': this.college,
+                'purpose': this.purpose,
+                'designation': this.designation,
+                'student': this.student,
+                },
+            })
+            .then((response) => {
+
+              this.excelData =[].concat(this.excelData,response.data.clearances.data);
               
             });
             this.downloadProgress = (i/this.totalPageDownloadExcel*100).toFixed(2);

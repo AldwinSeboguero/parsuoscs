@@ -23,6 +23,7 @@ class SubmittedClearance extends JsonResource
             'college' => $this->clearance->student->program->college->name,
             'purpose' => json_decode(json_decode($this->clearance->purpose)->purpose)->name.' '.
             json_decode(json_decode($this->clearance->purpose)->purpose)->description,
+            'created_at' => $this->clearance->created_at ? $this->clearance->created_at->format('M d, Y g:i A') : '',
             'datesubmitted' => $this->created_at ?  $this->created_at->format('M d, Y g:i A') : '', 
             
         ];

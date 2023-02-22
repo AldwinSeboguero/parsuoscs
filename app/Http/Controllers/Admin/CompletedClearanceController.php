@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request; 
-use App\ClearanceRequest; 
+use App\ClearanceRequest;
+use App\Semester; 
 use App\Role; 
 use App\User; 
 use App\Student; 
@@ -36,10 +37,11 @@ class CompletedClearanceController extends Controller
     public function index(Request $request)
     {
         $per_page =$request->per_page ? $request->per_page : 10; 
+        $semester = $request->semester;
         if(Auth::user()->hasRole("admin")){
             $per_page =$request->per_page ? $request->per_page : 10; 
             // $signatory_ids = SignatoryV2::where('user_id',Auth::user()->id)->get('id');
-
+            
             $clearance_requests =new ClearanceRequestCollection( ClearanceRequestV2::orderByDesc('approved_at')
                                                     ->where('status', true)
                                                     ->when($request->student, function($inner) use($request){
@@ -73,6 +75,10 @@ class CompletedClearanceController extends Controller
             return response()->json([
                 // 'signatory' => $signatory_ids->count(),
                 'clearance_requests' => $clearance_requests,
+                'file_name' => $semester ? Semester::when($semester , function($q) use($semester){
+                    $q->where('id', $semester);
+                    
+                })->first()->semester.'_'.'Aprroved Clearances'.'_'.time().'.csv' : 'Approved Clearances'.'_'.time().'.csv',
             ]);
         }
          else if(Auth::user()->hasRole("pd")){

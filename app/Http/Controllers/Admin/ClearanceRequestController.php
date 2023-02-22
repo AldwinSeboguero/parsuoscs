@@ -17,7 +17,11 @@ use App\Staff_PD;
 use Illuminate\Support\Facades\Hash; 
 use Illuminate\Pagination\Paginator;
 use App\Http\Resources\ClearanceRequest as ClearanceRequestResource;
+use App\Http\Resources\StudentCompletedClearance as StudentCompletedClearance;
+
 use App\Http\Resources\ClearanceRequestCollection; 
+use App\Http\Resources\StudentCompletedClearanceCollection; 
+
 use Illuminate\Pagination\LengthAwarePaginator;
 use App\Support\Collection;
 use App\StudentPurposeSetup;
@@ -71,120 +75,140 @@ class ClearanceRequestController extends Controller
         return response()->json([
             // 'signatory' => $signatory_ids->count(),
             'clearance_requests' => $clearance_requests,
-            // 'completed_but_submitted' => Student::
-            //     select('students.*', 'crequests_count') 
-            //     ->withCount('crequests')
-            //     ->having('crequests_count', '>=', 4)
-            //     ->paginate(5),
-            'Student With Ongoing Request CAS' => ClearanceRequestV2::whereHas('purpose',function($q) use($request){
+            // 'student_with_completed_request' => new StudentCompletedClearanceCollection(ClearanceRequestV2::whereHas('purpose',function($q) use($request){
+            //             $q->where('semester_id',8);
+            //         })
+            //         ->distinct('student_id')
+            //         ->paginate(5)),
+            'completed_but_submitted' => Student::
+                // select('students.*', 'clearances_count') 
+                withCount('clearancerequest')
+                ->with('clearances')
+            
+                ->has('clearancerequest')
+                ->paginate(5),
+            'clearances' => new StudentCompletedClearanceCollection(Clearance::whereHas('purpose',function($q) use($request){
                 $q->where('semester_id',8);
             })
-            ->whereHas('student.program',function($q) use($request){
-                    $q->where('college_id',1);
-                })
-            ->where('status', false)
+            ->with('clearancerequest')
+            // ->with('issubmitted')
+            // ->submitted()
+
+            ->has('clearancerequest')
+            // ->has('issubmitted')
+
+
             ->distinct('student_id')
-            ->paginate(5)->total(),
-            'Student With Request Ongoing CBM' => ClearanceRequestV2::whereHas('purpose',function($q) use($request){
-                $q->where('semester_id',8);
-            })
-            ->whereHas('student.program',function($q) use($request){
-                    $q->where('college_id',2);
-                })
-            ->where('status', false)
-            ->distinct('student_id')
-            ->paginate(5)->total(),
-            'Student With Request Ongoing COED' => ClearanceRequestV2::whereHas('purpose',function($q) use($request){
-                $q->where('semester_id',8);
-            })
-           ->whereHas('student.program',function($q) use($request){
-                    $q->where('college_id',3);
-                })
-            ->where('status', false)
-            ->distinct('student_id')
-            ->paginate(5)->total(),
-            'Student With Request Ongoing CET' => ClearanceRequestV2::whereHas('purpose',function($q) use($request){
-                $q->where('semester_id',8);
-            })
-            ->whereHas('student.program',function($q) use($request){
-                    $q->where('college_id',4);
-                })
-            ->where('status', false)
-            ->distinct('student_id')
-            ->paginate(5)->total(),
-            'Student With Request Ongoing SANJOSE' => ClearanceRequestV2::whereHas('purpose',function($q) use($request){
-                $q->where('semester_id',8);
-            })
-            ->whereHas('student.program',function($q) use($request){
-                    $q->where('college_id',5);
-                })
-            ->where('status', false)
-            ->distinct('student_id')
-            ->paginate(5)->total(),
-            'Student With Request Ongoing LAGONOY' => ClearanceRequestV2::whereHas('purpose',function($q) use($request){
-                $q->where('semester_id',8);
-            })
-            ->whereHas('student.program',function($q) use($request){
-                    $q->where('college_id',6);
-                })
-            ->where('status', false)
-            ->distinct('student_id')
-            ->paginate(5)->total(),
-            'Student With Request Ongoing Salogon' => ClearanceRequestV2::whereHas('purpose',function($q) use($request){
-                $q->where('semester_id',8);
-            })
-            ->whereHas('student.program',function($q) use($request){
-                    $q->where('college_id',7);
-                })
-            ->where('status', false)
-            ->distinct('student_id')
-            ->paginate(5)->total(),
-            'Student With Request Ongoing SAGNAY' => ClearanceRequestV2::whereHas('purpose',function($q) use($request){
-                $q->where('semester_id',8);
-            })
-            ->whereHas('student.program',function($q) use($request){
-                    $q->where('college_id',8);
-                })
-            ->where('status', false)
-            ->distinct('student_id')
-            ->paginate(5)->total(),
-            'Student With Request Ongoing TINAMBAC' => ClearanceRequestV2::whereHas('purpose',function($q) use($request){
-                $q->where('semester_id',8);
-            })
-            ->whereHas('student.program',function($q) use($request){
-                    $q->where('college_id',9);
-                })
-            ->where('status', false)
-            ->distinct('student_id')
-            ->paginate(5)->total(),
-            'Student With Request Ongoing CARAMOAN' => ClearanceRequestV2::whereHas('purpose',function($q) use($request){
-                $q->where('semester_id',8);
-            })
-            ->whereHas('student.program',function($q) use($request){
-                    $q->where('college_id',10);
-                })
-            ->where('status', false)
-            ->distinct('student_id')
-            ->paginate(5)->total(),
-            'Student With Request Ongoing SGS' => ClearanceRequestV2::whereHas('purpose',function($q) use($request){
-                $q->where('semester_id',8);
-            })
-            ->whereHas('student.program',function($q) use($request){
-                    $q->where('college_id',11);
-                })
-            ->where('status', false)
-            ->distinct('student_id')
-            ->paginate(5)->total(),
-            'Student With Request Ongoing HIGHSCHOOL' => ClearanceRequestV2::whereHas('purpose',function($q) use($request){
-                $q->where('semester_id',8);
-            })
-            ->whereHas('student.program',function($q) use($request){
-                    $q->where('college_id',12);
-                })
-            ->where('status', false)
+            ->paginate(5)),
+        //     'Student With Ongoing Request CAS' => ClearanceRequestV2::whereHas('purpose',function($q) use($request){
+        //         $q->where('semester_id',8);
+        //     })
+        //     ->whereHas('student.program',function($q) use($request){
+        //             $q->where('college_id',1);
+        //         })
+        //     ->where('status', false)
+        //     ->distinct('student_id')
+        //     ->paginate(5)->total(),
+        //     'Student With Request Ongoing CBM' => ClearanceRequestV2::whereHas('purpose',function($q) use($request){
+        //         $q->where('semester_id',8);
+        //     })
+        //     ->whereHas('student.program',function($q) use($request){
+        //             $q->where('college_id',2);
+        //         })
+        //     ->where('status', false)
+        //     ->distinct('student_id')
+        //     ->paginate(5)->total(),
+        //     'Student With Request Ongoing COED' => ClearanceRequestV2::whereHas('purpose',function($q) use($request){
+        //         $q->where('semester_id',8);
+        //     })
+        //    ->whereHas('student.program',function($q) use($request){
+        //             $q->where('college_id',3);
+        //         })
+        //     ->where('status', false)
+        //     ->distinct('student_id')
+        //     ->paginate(5)->total(),
+        //     'Student With Request Ongoing CET' => ClearanceRequestV2::whereHas('purpose',function($q) use($request){
+        //         $q->where('semester_id',8);
+        //     })
+        //     ->whereHas('student.program',function($q) use($request){
+        //             $q->where('college_id',4);
+        //         })
+        //     ->where('status', false)
+        //     ->distinct('student_id')
+        //     ->paginate(5)->total(),
+        //     'Student With Request Ongoing SANJOSE' => ClearanceRequestV2::whereHas('purpose',function($q) use($request){
+        //         $q->where('semester_id',8);
+        //     })
+        //     ->whereHas('student.program',function($q) use($request){
+        //             $q->where('college_id',5);
+        //         })
+        //     ->where('status', false)
+        //     ->distinct('student_id')
+        //     ->paginate(5)->total(),
+        //     'Student With Request Ongoing LAGONOY' => ClearanceRequestV2::whereHas('purpose',function($q) use($request){
+        //         $q->where('semester_id',8);
+        //     })
+        //     ->whereHas('student.program',function($q) use($request){
+        //             $q->where('college_id',6);
+        //         })
+        //     ->where('status', false)
+        //     ->distinct('student_id')
+        //     ->paginate(5)->total(),
+        //     'Student With Request Ongoing Salogon' => ClearanceRequestV2::whereHas('purpose',function($q) use($request){
+        //         $q->where('semester_id',8);
+        //     })
+        //     ->whereHas('student.program',function($q) use($request){
+        //             $q->where('college_id',7);
+        //         })
+        //     ->where('status', false)
+        //     ->distinct('student_id')
+        //     ->paginate(5)->total(),
+        //     'Student With Request Ongoing SAGNAY' => ClearanceRequestV2::whereHas('purpose',function($q) use($request){
+        //         $q->where('semester_id',8);
+        //     })
+        //     ->whereHas('student.program',function($q) use($request){
+        //             $q->where('college_id',8);
+        //         })
+        //     ->where('status', false)
+        //     ->distinct('student_id')
+        //     ->paginate(5)->total(),
+        //     'Student With Request Ongoing TINAMBAC' => ClearanceRequestV2::whereHas('purpose',function($q) use($request){
+        //         $q->where('semester_id',8);
+        //     })
+        //     ->whereHas('student.program',function($q) use($request){
+        //             $q->where('college_id',9);
+        //         })
+        //     ->where('status', false)
+        //     ->distinct('student_id')
+        //     ->paginate(5)->total(),
+        //     'Student With Request Ongoing CARAMOAN' => ClearanceRequestV2::whereHas('purpose',function($q) use($request){
+        //         $q->where('semester_id',8);
+        //     })
+        //     ->whereHas('student.program',function($q) use($request){
+        //             $q->where('college_id',10);
+        //         })
+        //     ->where('status', false)
+        //     ->distinct('student_id')
+        //     ->paginate(5)->total(),
+        //     'Student With Request Ongoing SGS' => ClearanceRequestV2::whereHas('purpose',function($q) use($request){
+        //         $q->where('semester_id',8);
+        //     })
+        //     ->whereHas('student.program',function($q) use($request){
+        //             $q->where('college_id',11);
+        //         })
+        //     ->where('status', false)
+        //     ->distinct('student_id')
+        //     ->paginate(5)->total(),
+        //     'Student With Request Ongoing HIGHSCHOOL' => ClearanceRequestV2::whereHas('purpose',function($q) use($request){
+        //         $q->where('semester_id',8);
+        //     })
+        //     ->whereHas('student.program',function($q) use($request){
+        //             $q->where('college_id',12);
+        //         })
+        //     ->where('status', false)
         
-            ->distinct('student_id')
-            ->paginate(5)->total(),
+        //     ->distinct('student_id')
+        //     ->paginate(5)->total(),
 
 
 
@@ -192,103 +216,103 @@ class ClearanceRequestController extends Controller
 
 
 
-            'Student With Request CAS' => ClearanceRequestV2::whereHas('purpose',function($q) use($request){
-                $q->where('semester_id',8);
-            })
-            ->whereHas('student.program',function($q) use($request){
-                    $q->where('college_id',1);
-                })
-            ->distinct('student_id')
-            ->paginate(5)->total(),
-            'Student With Request CBM' => ClearanceRequestV2::whereHas('purpose',function($q) use($request){
-                $q->where('semester_id',8);
-            })
-            ->whereHas('student.program',function($q) use($request){
-                    $q->where('college_id',2);
-                })
-            ->distinct('student_id')
-            ->paginate(5)->total(),
-            'Student With Request COED' => ClearanceRequestV2::whereHas('purpose',function($q) use($request){
-                $q->where('semester_id',8);
-            })
-           ->whereHas('student.program',function($q) use($request){
-                    $q->where('college_id',3);
-                })
-            ->distinct('student_id')
-            ->paginate(5)->total(),
-            'Student With Request CET' => ClearanceRequestV2::whereHas('purpose',function($q) use($request){
-                $q->where('semester_id',8);
-            })
-            ->whereHas('student.program',function($q) use($request){
-                    $q->where('college_id',4);
-                })
-            ->distinct('student_id')
-            ->paginate(5)->total(),
-            'Student With Request SANJOSE' => ClearanceRequestV2::whereHas('purpose',function($q) use($request){
-                $q->where('semester_id',8);
-            })
-            ->whereHas('student.program',function($q) use($request){
-                    $q->where('college_id',5);
-                })
-            ->distinct('student_id')
-            ->paginate(5)->total(),
-            'Student With Request LAGONOY' => ClearanceRequestV2::whereHas('purpose',function($q) use($request){
-                $q->where('semester_id',8);
-            })
-            ->whereHas('student.program',function($q) use($request){
-                    $q->where('college_id',6);
-                })
-            ->distinct('student_id')
-            ->paginate(5)->total(),
-            'Student With Request Salogon' => ClearanceRequestV2::whereHas('purpose',function($q) use($request){
-                $q->where('semester_id',8);
-            })
-            ->whereHas('student.program',function($q) use($request){
-                    $q->where('college_id',7);
-                })
-            ->distinct('student_id')
-            ->paginate(5)->total(),
-            'Student With Request SAGNAY' => ClearanceRequestV2::whereHas('purpose',function($q) use($request){
-                $q->where('semester_id',8);
-            })
-            ->whereHas('student.program',function($q) use($request){
-                    $q->where('college_id',8);
-                })
-            ->distinct('student_id')
-            ->paginate(5)->total(),
-            'Student With Request TINAMBAC' => ClearanceRequestV2::whereHas('purpose',function($q) use($request){
-                $q->where('semester_id',8);
-            })
-            ->whereHas('student.program',function($q) use($request){
-                    $q->where('college_id',9);
-                })
-            ->distinct('student_id')
-            ->paginate(5)->total(),
-            'Student With Request CARAMOAN' => ClearanceRequestV2::whereHas('purpose',function($q) use($request){
-                $q->where('semester_id',8);
-            })
-            ->whereHas('student.program',function($q) use($request){
-                    $q->where('college_id',10);
-                })
-            ->distinct('student_id')
-            ->paginate(5)->total(),
-            'Student With Request SGS' => ClearanceRequestV2::whereHas('purpose',function($q) use($request){
-                $q->where('semester_id',8);
-            })
-            ->whereHas('student.program',function($q) use($request){
-                    $q->where('college_id',11);
-                })
-            ->distinct('student_id')
-            ->paginate(5)->total(),
-            'Student With Request HIGHSCHOOL' => ClearanceRequestV2::whereHas('purpose',function($q) use($request){
-                $q->where('semester_id',8);
-            })
-            ->whereHas('student.program',function($q) use($request){
-                    $q->where('college_id',12);
-                })
+        //     'Student With Request CAS' => ClearanceRequestV2::whereHas('purpose',function($q) use($request){
+        //         $q->where('semester_id',8);
+        //     })
+        //     ->whereHas('student.program',function($q) use($request){
+        //             $q->where('college_id',1);
+        //         })
+        //     ->distinct('student_id')
+        //     ->paginate(5)->total(),
+        //     'Student With Request CBM' => ClearanceRequestV2::whereHas('purpose',function($q) use($request){
+        //         $q->where('semester_id',8);
+        //     })
+        //     ->whereHas('student.program',function($q) use($request){
+        //             $q->where('college_id',2);
+        //         })
+        //     ->distinct('student_id')
+        //     ->paginate(5)->total(),
+        //     'Student With Request COED' => ClearanceRequestV2::whereHas('purpose',function($q) use($request){
+        //         $q->where('semester_id',8);
+        //     })
+        //    ->whereHas('student.program',function($q) use($request){
+        //             $q->where('college_id',3);
+        //         })
+        //     ->distinct('student_id')
+        //     ->paginate(5)->total(),
+        //     'Student With Request CET' => ClearanceRequestV2::whereHas('purpose',function($q) use($request){
+        //         $q->where('semester_id',8);
+        //     })
+        //     ->whereHas('student.program',function($q) use($request){
+        //             $q->where('college_id',4);
+        //         })
+        //     ->distinct('student_id')
+        //     ->paginate(5)->total(),
+        //     'Student With Request SANJOSE' => ClearanceRequestV2::whereHas('purpose',function($q) use($request){
+        //         $q->where('semester_id',8);
+        //     })
+        //     ->whereHas('student.program',function($q) use($request){
+        //             $q->where('college_id',5);
+        //         })
+        //     ->distinct('student_id')
+        //     ->paginate(5)->total(),
+        //     'Student With Request LAGONOY' => ClearanceRequestV2::whereHas('purpose',function($q) use($request){
+        //         $q->where('semester_id',8);
+        //     })
+        //     ->whereHas('student.program',function($q) use($request){
+        //             $q->where('college_id',6);
+        //         })
+        //     ->distinct('student_id')
+        //     ->paginate(5)->total(),
+        //     'Student With Request Salogon' => ClearanceRequestV2::whereHas('purpose',function($q) use($request){
+        //         $q->where('semester_id',8);
+        //     })
+        //     ->whereHas('student.program',function($q) use($request){
+        //             $q->where('college_id',7);
+        //         })
+        //     ->distinct('student_id')
+        //     ->paginate(5)->total(),
+        //     'Student With Request SAGNAY' => ClearanceRequestV2::whereHas('purpose',function($q) use($request){
+        //         $q->where('semester_id',8);
+        //     })
+        //     ->whereHas('student.program',function($q) use($request){
+        //             $q->where('college_id',8);
+        //         })
+        //     ->distinct('student_id')
+        //     ->paginate(5)->total(),
+        //     'Student With Request TINAMBAC' => ClearanceRequestV2::whereHas('purpose',function($q) use($request){
+        //         $q->where('semester_id',8);
+        //     })
+        //     ->whereHas('student.program',function($q) use($request){
+        //             $q->where('college_id',9);
+        //         })
+        //     ->distinct('student_id')
+        //     ->paginate(5)->total(),
+        //     'Student With Request CARAMOAN' => ClearanceRequestV2::whereHas('purpose',function($q) use($request){
+        //         $q->where('semester_id',8);
+        //     })
+        //     ->whereHas('student.program',function($q) use($request){
+        //             $q->where('college_id',10);
+        //         })
+        //     ->distinct('student_id')
+        //     ->paginate(5)->total(),
+        //     'Student With Request SGS' => ClearanceRequestV2::whereHas('purpose',function($q) use($request){
+        //         $q->where('semester_id',8);
+        //     })
+        //     ->whereHas('student.program',function($q) use($request){
+        //             $q->where('college_id',11);
+        //         })
+        //     ->distinct('student_id')
+        //     ->paginate(5)->total(),
+        //     'Student With Request HIGHSCHOOL' => ClearanceRequestV2::whereHas('purpose',function($q) use($request){
+        //         $q->where('semester_id',8);
+        //     })
+        //     ->whereHas('student.program',function($q) use($request){
+        //             $q->where('college_id',12);
+        //         })
         
-            ->distinct('student_id')
-            ->paginate(5)->total(),
+        //     ->distinct('student_id')
+        //     ->paginate(5)->total(),
             // 'semester' => $request->semester,
             // 'college' =>$request->college,
             // 'program' =>$request->program,

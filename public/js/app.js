@@ -1572,15 +1572,57 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var lodash_debounce__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash/debounce */ "./node_modules/lodash/debounce.js");
 /* harmony import */ var lodash_debounce__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash_debounce__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vue_json_excel__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-json-excel */ "./node_modules/vue-json-excel/dist/vue-json-excel.esm.js");
+/* harmony import */ var pdf_merger_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! pdf-merger-js */ "./node_modules/pdf-merger-js/browser.js");
+/* harmony import */ var pdf_merger_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(pdf_merger_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var jszip__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! jszip */ "./node_modules/jszip/dist/jszip.min.js");
+/* harmony import */ var jszip__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(jszip__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var file_saver__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! file-saver */ "./node_modules/file-saver/dist/FileSaver.min.js");
+/* harmony import */ var file_saver__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(file_saver__WEBPACK_IMPORTED_MODULE_4__);
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return exports; }; var exports = {}, Op = Object.prototype, hasOwn = Op.hasOwnProperty, defineProperty = Object.defineProperty || function (obj, key, desc) { obj[key] = desc.value; }, $Symbol = "function" == typeof Symbol ? Symbol : {}, iteratorSymbol = $Symbol.iterator || "@@iterator", asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator", toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag"; function define(obj, key, value) { return Object.defineProperty(obj, key, { value: value, enumerable: !0, configurable: !0, writable: !0 }), obj[key]; } try { define({}, ""); } catch (err) { define = function define(obj, key, value) { return obj[key] = value; }; } function wrap(innerFn, outerFn, self, tryLocsList) { var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator, generator = Object.create(protoGenerator.prototype), context = new Context(tryLocsList || []); return defineProperty(generator, "_invoke", { value: makeInvokeMethod(innerFn, self, context) }), generator; } function tryCatch(fn, obj, arg) { try { return { type: "normal", arg: fn.call(obj, arg) }; } catch (err) { return { type: "throw", arg: err }; } } exports.wrap = wrap; var ContinueSentinel = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var IteratorPrototype = {}; define(IteratorPrototype, iteratorSymbol, function () { return this; }); var getProto = Object.getPrototypeOf, NativeIteratorPrototype = getProto && getProto(getProto(values([]))); NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype); var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(IteratorPrototype); function defineIteratorMethods(prototype) { ["next", "throw", "return"].forEach(function (method) { define(prototype, method, function (arg) { return this._invoke(method, arg); }); }); } function AsyncIterator(generator, PromiseImpl) { function invoke(method, arg, resolve, reject) { var record = tryCatch(generator[method], generator, arg); if ("throw" !== record.type) { var result = record.arg, value = result.value; return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) { invoke("next", value, resolve, reject); }, function (err) { invoke("throw", err, resolve, reject); }) : PromiseImpl.resolve(value).then(function (unwrapped) { result.value = unwrapped, resolve(result); }, function (error) { return invoke("throw", error, resolve, reject); }); } reject(record.arg); } var previousPromise; defineProperty(this, "_invoke", { value: function value(method, arg) { function callInvokeWithMethodAndArg() { return new PromiseImpl(function (resolve, reject) { invoke(method, arg, resolve, reject); }); } return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(innerFn, self, context) { var state = "suspendedStart"; return function (method, arg) { if ("executing" === state) throw new Error("Generator is already running"); if ("completed" === state) { if ("throw" === method) throw arg; return doneResult(); } for (context.method = method, context.arg = arg;;) { var delegate = context.delegate; if (delegate) { var delegateResult = maybeInvokeDelegate(delegate, context); if (delegateResult) { if (delegateResult === ContinueSentinel) continue; return delegateResult; } } if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) { if ("suspendedStart" === state) throw state = "completed", context.arg; context.dispatchException(context.arg); } else "return" === context.method && context.abrupt("return", context.arg); state = "executing"; var record = tryCatch(innerFn, self, context); if ("normal" === record.type) { if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue; return { value: record.arg, done: context.done }; } "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg); } }; } function maybeInvokeDelegate(delegate, context) { var methodName = context.method, method = delegate.iterator[methodName]; if (undefined === method) return context.delegate = null, "throw" === methodName && delegate.iterator["return"] && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method) || "return" !== methodName && (context.method = "throw", context.arg = new TypeError("The iterator does not provide a '" + methodName + "' method")), ContinueSentinel; var record = tryCatch(method, delegate.iterator, context.arg); if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel; var info = record.arg; return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel); } function pushTryEntry(locs) { var entry = { tryLoc: locs[0] }; 1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry); } function resetTryEntry(entry) { var record = entry.completion || {}; record.type = "normal", delete record.arg, entry.completion = record; } function Context(tryLocsList) { this.tryEntries = [{ tryLoc: "root" }], tryLocsList.forEach(pushTryEntry, this), this.reset(!0); } function values(iterable) { if (iterable) { var iteratorMethod = iterable[iteratorSymbol]; if (iteratorMethod) return iteratorMethod.call(iterable); if ("function" == typeof iterable.next) return iterable; if (!isNaN(iterable.length)) { var i = -1, next = function next() { for (; ++i < iterable.length;) { if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next; } return next.value = undefined, next.done = !0, next; }; return next.next = next; } } return { next: doneResult }; } function doneResult() { return { value: undefined, done: !0 }; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, defineProperty(Gp, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), defineProperty(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) { var ctor = "function" == typeof genFun && genFun.constructor; return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name)); }, exports.mark = function (genFun) { return Object.setPrototypeOf ? Object.setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = Object.create(Gp), genFun; }, exports.awrap = function (arg) { return { __await: arg }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () { return this; }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) { void 0 === PromiseImpl && (PromiseImpl = Promise); var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl); return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) { return result.done ? result.value : iter.next(); }); }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () { return this; }), define(Gp, "toString", function () { return "[object Generator]"; }), exports.keys = function (val) { var object = Object(val), keys = []; for (var key in object) { keys.push(key); } return keys.reverse(), function next() { for (; keys.length;) { var key = keys.pop(); if (key in object) return next.value = key, next.done = !1, next; } return next.done = !0, next; }; }, exports.values = values, Context.prototype = { constructor: Context, reset: function reset(skipTempReset) { if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, this.tryEntries.forEach(resetTryEntry), !skipTempReset) for (var name in this) { "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined); } }, stop: function stop() { this.done = !0; var rootRecord = this.tryEntries[0].completion; if ("throw" === rootRecord.type) throw rootRecord.arg; return this.rval; }, dispatchException: function dispatchException(exception) { if (this.done) throw exception; var context = this; function handle(loc, caught) { return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught; } for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i], record = entry.completion; if ("root" === entry.tryLoc) return handle("end"); if (entry.tryLoc <= this.prev) { var hasCatch = hasOwn.call(entry, "catchLoc"), hasFinally = hasOwn.call(entry, "finallyLoc"); if (hasCatch && hasFinally) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } else if (hasCatch) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); } else { if (!hasFinally) throw new Error("try statement without catch or finally"); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } } } }, abrupt: function abrupt(type, arg) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) { var finallyEntry = entry; break; } } finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null); var record = finallyEntry ? finallyEntry.completion : {}; return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record); }, complete: function complete(record, afterLoc) { if ("throw" === record.type) throw record.arg; return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel; }, finish: function finish(finallyLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel; } }, "catch": function _catch(tryLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc === tryLoc) { var record = entry.completion; if ("throw" === record.type) { var thrown = record.arg; resetTryEntry(entry); } return thrown; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(iterable, resultName, nextLoc) { return this.delegate = { iterator: values(iterable), resultName: resultName, nextLoc: nextLoc }, "next" === this.method && (this.arg = undefined), ContinueSentinel; } }, exports; }
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
 function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
 
+
+
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    downloadexcel: vue_json_excel__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
   data: function data() {
     var _ref;
     return _ref = {
+      excelData: [],
+      downloadLoading: false,
+      downloadMultipleLoading: false,
+      exportCompletedExcelDialog: false,
+      exportExcelDialog: false,
+      json_fields: {
+        'Student ID': 'student_number',
+        'Name': 'name',
+        // 'College/Campus': 'college',
+        'Program': 'program',
+        'Purpose': 'purpose',
+        'Date Requested': 'request_at',
+        'Date Approved': 'approved_at'
+        // 'Time Interval' : 'interval',
+        // 'Clearance ID' : 'clearance_id',
+      },
+
+      excelFilename: '',
+      valid: true,
+      dialog: false,
+      loading: false,
+      downloadProgress: 0,
+      offSet: true,
+      totalPageDownloadExcel: 0,
+      currentPageDownloadExcel: 0,
       showDeleteDialog: false,
       itemToDelete: null,
       formName: 'Filters',
@@ -1593,99 +1635,66 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       showErrorDialog: false,
       errorMessage: '',
       result: ' ',
-      generateLoading: false,
-      offSet: true,
-      campus: {},
-      options: {},
-      staffs: {},
-      campuses: {},
-      colleges: {},
-      programs: {},
-      students: {},
-      designations: {},
-      semesters_prev: {},
-      semesters_next: {},
-      isProgramDisable: true,
-      signatories: {},
-      forms: {
-        semester: '',
-        college: '',
-        program: '',
-        designation: '',
-        student: '',
-        purpose: '',
-        order: '',
-        isForAllInCollege: false
-      },
-      editedItem: {
-        semester: '',
-        college: '',
-        program: '',
-        designation: '',
-        student: '',
-        purpose: '',
-        order: '',
-        isForAllInCollege: false
-      },
-      defaultItem: {
-        semester: '',
-        college: '',
-        program: '',
-        designation: '',
-        student: '',
-        purpose: '',
-        order: '',
-        isForAllInCollege: false
-      },
-      purposes: {},
-      valid: true,
-      dialog: false,
-      deferDialog: false,
-      loading: false,
-      snackbar: false,
-      selected: [],
-      text: "",
-      success: "",
-      error: "",
-      searchItem: '',
-      snackbarColor: "",
-      headers: [
-      // {
-      //   text: "#",
-      //   align: "left",
-      //   value: "id",
-      // }, 
+      generateLoading: false
+    }, _defineProperty(_ref, "offSet", true), _defineProperty(_ref, "campus", {}), _defineProperty(_ref, "options", {}), _defineProperty(_ref, "staffs", {}), _defineProperty(_ref, "campuses", {}), _defineProperty(_ref, "colleges", {}), _defineProperty(_ref, "programs", {}), _defineProperty(_ref, "students", {}), _defineProperty(_ref, "designations", {}), _defineProperty(_ref, "semesters_prev", {}), _defineProperty(_ref, "semesters_next", {}), _defineProperty(_ref, "isProgramDisable", true), _defineProperty(_ref, "signatories", {}), _defineProperty(_ref, "forms", {
+      semester: '',
+      college: '',
+      program: '',
+      designation: '',
+      student: '',
+      purpose: '',
+      order: '',
+      isForAllInCollege: false
+    }), _defineProperty(_ref, "editedItem", {
+      semester: '',
+      college: '',
+      program: '',
+      designation: '',
+      student: '',
+      purpose: '',
+      order: '',
+      isForAllInCollege: false
+    }), _defineProperty(_ref, "defaultItem", {
+      semester: '',
+      college: '',
+      program: '',
+      designation: '',
+      student: '',
+      purpose: '',
+      order: '',
+      isForAllInCollege: false
+    }), _defineProperty(_ref, "purposes", {}), _defineProperty(_ref, "valid", true), _defineProperty(_ref, "dialog", false), _defineProperty(_ref, "deferDialog", false), _defineProperty(_ref, "loading", false), _defineProperty(_ref, "snackbar", false), _defineProperty(_ref, "selected", []), _defineProperty(_ref, "text", ""), _defineProperty(_ref, "success", ""), _defineProperty(_ref, "error", ""), _defineProperty(_ref, "searchItem", ''), _defineProperty(_ref, "snackbarColor", ""), _defineProperty(_ref, "headers", [
+    // {
+    //   text: "#",
+    //   align: "left",
+    //   value: "id",
+    // }, 
 
-      {
-        text: "Student Number",
-        value: "student_number"
-      }, {
-        text: "Name",
-        value: "name"
-      }, {
-        text: "Program",
-        value: "program"
-      }, {
-        text: "Purpose",
-        value: "purpose"
-      }, {
-        text: "Signatory",
-        value: "staff"
-      }, {
-        text: "Date Approved",
-        value: "approved_at"
-      }, {
-        text: "Date Requested",
-        value: "request_at"
-      }
+    {
+      text: "Student Number",
+      value: "student_number"
+    }, {
+      text: "Name",
+      value: "name"
+    }, {
+      text: "Program",
+      value: "program"
+    }, {
+      text: "Purpose",
+      value: "purpose"
+    }, {
+      text: "Signatory",
+      value: "staff"
+    }, {
+      text: "Date Approved",
+      value: "approved_at"
+    }, {
+      text: "Date Requested",
+      value: "request_at"
+    }
 
-      // { text: "Action", value: "actions" },
-      ],
-
-      page: 0,
-      totalclearancerequests: 0,
-      numberOfPages: 0
-    }, _defineProperty(_ref, "options", {}), _defineProperty(_ref, "clearancerequests", {}), _defineProperty(_ref, "semesters", {}), _defineProperty(_ref, "programs", {}), _defineProperty(_ref, "semester", ''), _defineProperty(_ref, "college", ''), _defineProperty(_ref, "program", ''), _defineProperty(_ref, "editedIndex", -1), _defineProperty(_ref, "itemIndex", 0), _defineProperty(_ref, "deficiency", {
+    // { text: "Action", value: "actions" },
+    ]), _defineProperty(_ref, "page", 0), _defineProperty(_ref, "totalclearancerequests", 0), _defineProperty(_ref, "numberOfPages", 0), _defineProperty(_ref, "options", {}), _defineProperty(_ref, "clearancerequests", {}), _defineProperty(_ref, "semesters", {}), _defineProperty(_ref, "programs", {}), _defineProperty(_ref, "semester", ''), _defineProperty(_ref, "college", ''), _defineProperty(_ref, "program", ''), _defineProperty(_ref, "editedIndex", -1), _defineProperty(_ref, "itemIndex", 0), _defineProperty(_ref, "deficiency", {
       title: '',
       note: ''
     }), _defineProperty(_ref, "studentName", ''), _defineProperty(_ref, "clearanceRequest", {
@@ -2153,6 +2162,172 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         });
       }
       this.close();
+    },
+    startDownload: function startDownload() {
+      this.downloadLoading = true;
+    },
+    finishDownload: function finishDownload() {
+      this.downloadLoading = false;
+    },
+    fetchData: function fetchData() {
+      var _this15 = this;
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _this15.downloadLoading = true;
+                _this15.downloadProgress = 0;
+                _this15.excelData = [];
+                _context2.next = 5;
+                return axios.get("/api/v1/clearedclearancerequests?page=" + 1, {
+                  params: {
+                    'per_page': 100,
+                    'semester': _this15.forms.semester,
+                    'program': _this15.forms.program,
+                    'college': _this15.forms.college,
+                    'designation': _this15.forms.designation,
+                    'student': _this15.forms.student
+                  }
+                }).then( /*#__PURE__*/function () {
+                  var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(response) {
+                    var i;
+                    return _regeneratorRuntime().wrap(function _callee$(_context) {
+                      while (1) {
+                        switch (_context.prev = _context.next) {
+                          case 0:
+                            // this.semester = response.data.semester.semester;
+                            _this15.currentPageDownloadExcel = response.data.clearance_requests.current_page;
+                            _this15.totalPageDownloadExcel = response.data.clearance_requests.total_pages;
+                            i = 1;
+                          case 3:
+                            if (!(i <= _this15.totalPageDownloadExcel)) {
+                              _context.next = 10;
+                              break;
+                            }
+                            _context.next = 6;
+                            return axios.get("/api/v1/clearedclearancerequests?page=" + i, {
+                              params: {
+                                'per_page': 100,
+                                'semester': _this15.forms.semester,
+                                'program': _this15.forms.program,
+                                'college': _this15.forms.college,
+                                'designation': _this15.forms.designation,
+                                'student': _this15.forms.student
+                              }
+                            }).then(function (response) {
+                              _this15.excelData = [].concat(_this15.excelData, response.data.clearance_requests.data);
+                            });
+                          case 6:
+                            _this15.downloadProgress = (i / _this15.totalPageDownloadExcel * 100).toFixed(2);
+                          case 7:
+                            i++;
+                            _context.next = 3;
+                            break;
+                          case 10:
+                            // this.loading = false
+                            console.log(_this15.excelData);
+                            _this15.excelFilename = response.data.file_name;
+                          case 12:
+                          case "end":
+                            return _context.stop();
+                        }
+                      }
+                    }, _callee);
+                  }));
+                  return function (_x) {
+                    return _ref2.apply(this, arguments);
+                  };
+                }());
+              case 5:
+                return _context2.abrupt("return", _this15.excelData);
+              case 6:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    },
+    fetchClearanceData: function fetchClearanceData() {
+      var _this16 = this;
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
+        return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _this16.downloadLoading = true;
+                _this16.downloadProgress = 0;
+                _this16.excelData = [];
+                _context4.next = 5;
+                return axios.get("/api/v1/clearedclearancerequests?page=" + 1, {
+                  params: {
+                    'per_page': 1000,
+                    'semester': _this16.forms.semester,
+                    'program': _this16.forms.program,
+                    'college': _this16.forms.college,
+                    'designation': _this16.forms.designation,
+                    'student': _this16.forms.student
+                  }
+                }).then( /*#__PURE__*/function () {
+                  var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(response) {
+                    var i;
+                    return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+                      while (1) {
+                        switch (_context3.prev = _context3.next) {
+                          case 0:
+                            // this.semester = response.data.semester.semester;
+                            _this16.currentPageDownloadExcel = response.data.clearances.current_page;
+                            _this16.totalPageDownloadExcel = response.data.clearances.total_pages;
+                            i = 1;
+                          case 3:
+                            if (!(i <= _this16.totalPageDownloadExcel)) {
+                              _context3.next = 10;
+                              break;
+                            }
+                            _context3.next = 6;
+                            return axios.get("/api/v1/clearedclearancerequests?page=" + i, {
+                              params: {
+                                'per_page': 1000,
+                                'semester': _this16.forms.semester,
+                                'program': _this16.forms.program,
+                                'college': _this16.forms.college,
+                                'designation': _this16.forms.designation,
+                                'student': _this16.forms.student
+                              }
+                            }).then(function (response) {
+                              _this16.excelData = [].concat(_this16.excelData, response.data.clearances.data);
+                            });
+                          case 6:
+                            _this16.downloadProgress = (i / _this16.totalPageDownloadExcel * 100).toFixed(2);
+                          case 7:
+                            i++;
+                            _context3.next = 3;
+                            break;
+                          case 10:
+                            // this.loading = false
+                            console.log(_this16.excelData);
+                            _this16.excelFilename = response.data.file_name;
+                          case 12:
+                          case "end":
+                            return _context3.stop();
+                        }
+                      }
+                    }, _callee3);
+                  }));
+                  return function (_x2) {
+                    return _ref3.apply(this, arguments);
+                  };
+                }());
+              case 5:
+                return _context4.abrupt("return", _this16.excelData);
+              case 6:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }))();
     }
   }
 });
@@ -3180,6 +3355,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       excelData: [],
       downloadLoading: false,
       downloadMultipleLoading: false,
+      exportCompletedExcelDialog: false,
       exportExcelDialog: false,
       json_fields: {
         'Student ID': 'student_number',
@@ -3187,6 +3363,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         'College/Campus': 'college',
         'Program': 'program',
         'Purpose': 'purpose',
+        'Date Requested': 'created_at',
         'Date Submitted': 'datesubmitted',
         'Clearance ID': 'clearance_id'
       },
@@ -3229,6 +3406,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         text: "Action",
         value: "actions"
       }],
+      completedClearanceheaders: {
+        'Student ID': 'student_number',
+        'Name': 'name',
+        'College/Campus': 'college',
+        'Program': 'program',
+        'Purpose': 'purpose',
+        'Date Requested': 'created_at',
+        'Date Completed': 'requestCompleted',
+        'Status': 'isSubmitted'
+      },
       page: 0,
       totalsubmittedclearances: 0,
       numberOfPages: 0,
@@ -3706,6 +3893,88 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee5);
+      }))();
+    },
+    fetchClearanceData: function fetchClearanceData() {
+      var _this9 = this;
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee7() {
+        return _regeneratorRuntime().wrap(function _callee7$(_context8) {
+          while (1) {
+            switch (_context8.prev = _context8.next) {
+              case 0:
+                _this9.downloadLoading = true;
+                _this9.downloadProgress = 0;
+                _this9.excelData = [];
+                _context8.next = 5;
+                return axios.get("/api/v1/completedclearance?page=" + 1, {
+                  params: {
+                    'per_page': 1000,
+                    'semester': _this9.semester,
+                    'program': _this9.program,
+                    'college': _this9.college,
+                    'purpose': _this9.purpose,
+                    'designation': _this9.designation,
+                    'student': _this9.student
+                  }
+                }).then( /*#__PURE__*/function () {
+                  var _ref4 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee6(response) {
+                    var i;
+                    return _regeneratorRuntime().wrap(function _callee6$(_context7) {
+                      while (1) {
+                        switch (_context7.prev = _context7.next) {
+                          case 0:
+                            // this.semester = response.data.semester.semester;
+                            _this9.currentPageDownloadExcel = response.data.clearances.current_page;
+                            _this9.totalPageDownloadExcel = response.data.clearances.total_pages;
+                            i = 1;
+                          case 3:
+                            if (!(i <= _this9.totalPageDownloadExcel)) {
+                              _context7.next = 10;
+                              break;
+                            }
+                            _context7.next = 6;
+                            return axios.get("/api/v1/completedclearance?page=" + i, {
+                              params: {
+                                'per_page': 1000,
+                                'semester': _this9.semester,
+                                'program': _this9.program,
+                                'college': _this9.college,
+                                'purpose': _this9.purpose,
+                                'designation': _this9.designation,
+                                'student': _this9.student
+                              }
+                            }).then(function (response) {
+                              _this9.excelData = [].concat(_this9.excelData, response.data.clearances.data);
+                            });
+                          case 6:
+                            _this9.downloadProgress = (i / _this9.totalPageDownloadExcel * 100).toFixed(2);
+                          case 7:
+                            i++;
+                            _context7.next = 3;
+                            break;
+                          case 10:
+                            // this.loading = false
+                            console.log(_this9.excelData);
+                            _this9.excelFilename = response.data.file_name;
+                          case 12:
+                          case "end":
+                            return _context7.stop();
+                        }
+                      }
+                    }, _callee6);
+                  }));
+                  return function (_x4) {
+                    return _ref4.apply(this, arguments);
+                  };
+                }());
+              case 5:
+                return _context8.abrupt("return", _this9.excelData);
+              case 6:
+              case "end":
+                return _context8.stop();
+            }
+          }
+        }, _callee7);
       }))();
     }
   }
@@ -19641,7 +19910,87 @@ var render = function render() {
       dark: "",
       left: ""
     }
-  }, [_vm._v("mdi-list-box")]), _vm._v("Approved Requests")], 1)]), _vm._v(" "), _c("v-data-table", {
+  }, [_vm._v("mdi-list-box")]), _vm._v("Approved Requests")], 1), _vm._v(" "), _c("v-spacer"), _vm._v(" "), _c("v-dialog", {
+    attrs: {
+      width: "490"
+    },
+    scopedSlots: _vm._u([{
+      key: "activator",
+      fn: function fn(_ref7) {
+        var on = _ref7.on,
+          attrs = _ref7.attrs;
+        return [_c("v-btn", _vm._g(_vm._b({
+          staticClass: "float-right success white--text mr-2",
+          attrs: {
+            dark: "",
+            small: "",
+            icon: ""
+          }
+        }, "v-btn", attrs, false), on), [_c("v-icon", {
+          attrs: {
+            small: ""
+          }
+        }, [_vm._v("mdi-file-excel")])], 1)];
+      }
+    }]),
+    model: {
+      value: _vm.exportExcelDialog,
+      callback: function callback($$v) {
+        _vm.exportExcelDialog = $$v;
+      },
+      expression: "exportExcelDialog"
+    }
+  }, [_vm._v(" "), _c("v-card", [_c("v-card-title", {
+    staticClass: "align-center ma-2 mt-0 pa-2 rounded white--red elevation-0 black--text text--lighten-1 subtitle-1 text-uppercase"
+  }, [_c("v-icon", {
+    staticClass: "grey--text text--darken-1",
+    attrs: {
+      left: ""
+    }
+  }, [_vm._v("mdi-download")]), _vm._v(" Export Approved Clearance Requests\n\n                    "), _c("v-spacer"), _vm._v(" "), _c("v-btn", {
+    attrs: {
+      "elevation-0": "",
+      color: "black",
+      small: "",
+      icon: ""
+    },
+    on: {
+      click: function click($event) {
+        _vm.exportExcelDialog = false;
+      }
+    }
+  }, [_c("v-icon", [_vm._v("mdi-close")])], 1)], 1), _vm._v(" "), _c("v-card-text", [_c("i", {
+    staticClass: "caption mb-2"
+  }, [_vm._v("* Please use filters to specify exported data.")]), _vm._v(" "), _c("downloadexcel", {
+    staticClass: "btn",
+    attrs: {
+      fetch: _vm.fetchData,
+      fields: _vm.json_fields,
+      type: "csv",
+      name: _vm.excelFilename,
+      "before-generate": _vm.startDownload,
+      "before-finish": _vm.finishDownload
+    }
+  }, [_c("v-list-item", {
+    staticClass: "success",
+    attrs: {
+      link: "",
+      dark: "",
+      "active-class": "orange--text text--accent-4 font-weight-bold "
+    }
+  }, [_c("v-icon", {
+    staticClass: "mr-2",
+    attrs: {
+      small: ""
+    }
+  }, [_vm._v("mdi-file-excel")]), _vm._v(" "), _c("span", {
+    staticClass: "font-semibold"
+  }, [_vm._v("CSV")])], 1)], 1), _vm._v(" "), _c("br"), _vm._v(" "), _c("span", [_vm._v(_vm._s(_vm.downloadProgress) + "%")]), _vm._v(" "), _vm.downloadLoading ? _c("v-progress-linear", {
+    attrs: {
+      value: _vm.downloadProgress,
+      color: "primary"
+    }
+  }) : _vm._e()], 1)], 1)], 1)], 1), _vm._v(" "), _c("v-data-table", {
     staticClass: "px-6 pb-6 mt-2",
     attrs: {
       "item-key": "id",
@@ -19668,8 +20017,8 @@ var render = function render() {
     },
     scopedSlots: _vm._u([{
       key: "item.actions",
-      fn: function fn(_ref7) {
-        var item = _ref7.item;
+      fn: function fn(_ref8) {
+        var item = _ref8.item;
         return [void 0];
       }
     }])
@@ -19684,8 +20033,8 @@ var render = function render() {
     },
     scopedSlots: _vm._u([{
       key: "action",
-      fn: function fn(_ref8) {
-        var attrs = _ref8.attrs;
+      fn: function fn(_ref9) {
+        var attrs = _ref9.attrs;
         return [_c("v-btn", _vm._b({
           attrs: {
             color: _vm.snackbarColor,
@@ -20968,6 +21317,86 @@ var render = function render() {
         var on = _ref7.on,
           attrs = _ref7.attrs;
         return [_c("v-btn", _vm._g(_vm._b({
+          staticClass: "float-right red white--text mr-2",
+          attrs: {
+            dark: "",
+            small: "",
+            icon: ""
+          }
+        }, "v-btn", attrs, false), on), [_c("v-icon", {
+          attrs: {
+            small: ""
+          }
+        }, [_vm._v("mdi-file-clock")])], 1)];
+      }
+    }]),
+    model: {
+      value: _vm.exportCompletedExcelDialog,
+      callback: function callback($$v) {
+        _vm.exportCompletedExcelDialog = $$v;
+      },
+      expression: "exportCompletedExcelDialog"
+    }
+  }, [_vm._v(" "), _c("v-card", [_c("v-card-title", {
+    staticClass: "align-center ma-2 mt-0 pa-2 rounded white--red elevation-0 black--text text--lighten-1 subtitle-1 text-uppercase"
+  }, [_c("v-icon", {
+    staticClass: "grey--text text--darken-1",
+    attrs: {
+      left: ""
+    }
+  }, [_vm._v("mdi-download")]), _vm._v(" Export Completed Clearance\n\n                    "), _c("v-spacer"), _vm._v(" "), _c("v-btn", {
+    attrs: {
+      "elevation-0": "",
+      color: "black",
+      small: "",
+      icon: ""
+    },
+    on: {
+      click: function click($event) {
+        _vm.exportCompletedExcelDialog = false;
+      }
+    }
+  }, [_c("v-icon", [_vm._v("mdi-close")])], 1)], 1), _vm._v(" "), _c("v-card-text", [_c("i", {
+    staticClass: "caption mb-2"
+  }, [_vm._v("* Please use filters to specify exported data.")]), _vm._v(" "), _c("downloadexcel", {
+    staticClass: "btn",
+    attrs: {
+      fetch: _vm.fetchClearanceData,
+      fields: _vm.completedClearanceheaders,
+      type: "csv",
+      name: _vm.excelFilename,
+      "before-generate": _vm.startDownload,
+      "before-finish": _vm.finishDownload
+    }
+  }, [_c("v-list-item", {
+    staticClass: "red",
+    attrs: {
+      link: "",
+      dark: "",
+      "active-class": "orange--text text--accent-4 font-weight-bold "
+    }
+  }, [_c("v-icon", {
+    staticClass: "mr-2",
+    attrs: {
+      small: ""
+    }
+  }, [_vm._v("mdi-file-excel")]), _vm._v(" "), _c("span", {
+    staticClass: "font-semibold"
+  }, [_vm._v("CSV")])], 1)], 1), _vm._v(" "), _c("br"), _vm._v(" "), _c("span", [_vm._v(_vm._s(_vm.downloadProgress) + "%")]), _vm._v(" "), _vm.downloadLoading ? _c("v-progress-linear", {
+    attrs: {
+      value: _vm.downloadProgress,
+      color: "primary"
+    }
+  }) : _vm._e()], 1)], 1)], 1), _vm._v(" "), _c("v-dialog", {
+    attrs: {
+      width: "390"
+    },
+    scopedSlots: _vm._u([{
+      key: "activator",
+      fn: function fn(_ref8) {
+        var on = _ref8.on,
+          attrs = _ref8.attrs;
+        return [_c("v-btn", _vm._g(_vm._b({
           staticClass: "float-right success white--text mr-2",
           attrs: {
             dark: "",
@@ -21044,9 +21473,9 @@ var render = function render() {
     },
     scopedSlots: _vm._u([{
       key: "activator",
-      fn: function fn(_ref8) {
-        var on = _ref8.on,
-          attrs = _ref8.attrs;
+      fn: function fn(_ref9) {
+        var on = _ref9.on,
+          attrs = _ref9.attrs;
         return [_c("v-btn", _vm._g(_vm._b({
           staticClass: "float-right info white--text",
           attrs: {
@@ -21139,8 +21568,8 @@ var render = function render() {
     },
     scopedSlots: _vm._u([{
       key: "item.datesubmitted",
-      fn: function fn(_ref9) {
-        var item = _ref9.item;
+      fn: function fn(_ref10) {
+        var item = _ref10.item;
         return [_c("v-chip", {
           attrs: {
             "text-color": "white",
@@ -21151,8 +21580,8 @@ var render = function render() {
       }
     }, {
       key: "item.actions",
-      fn: function fn(_ref10) {
-        var item = _ref10.item;
+      fn: function fn(_ref11) {
+        var item = _ref11.item;
         return [[_c("v-btn", {
           staticClass: "elevation-0 error lighten-1",
           attrs: {
@@ -21184,8 +21613,8 @@ var render = function render() {
     },
     scopedSlots: _vm._u([{
       key: "action",
-      fn: function fn(_ref11) {
-        var attrs = _ref11.attrs;
+      fn: function fn(_ref12) {
+        var attrs = _ref12.attrs;
         return [_c("v-btn", _vm._b({
           attrs: {
             color: _vm.snackbarColor,

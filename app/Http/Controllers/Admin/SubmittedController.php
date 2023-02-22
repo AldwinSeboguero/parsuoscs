@@ -29,6 +29,10 @@ class SubmittedController extends Controller
         $programs = SignatoryV2::where('user_id', Auth::user()->id)->distinct('campus_id')->get('campus_id');
         if(Auth::user()->hasRole("admin")){
             return response()->json([
+                'file_name' => $semester ? Semester::when($semester , function($q) use($semester){
+                    $q->where('id', $semester);
+                    
+                })->first()->semester.'_'.'Submitted Clearances'.'_'.time().'.csv' : 'Submitted Clearances'.'_'.time().'.csv',
                 'submittedclearances' => new SubmittedClearanceCollection(
                 SubmitClearance::orderByDesc('updated_at')
                 ->when($semester , function($q) use($semester){

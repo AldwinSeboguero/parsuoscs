@@ -265,6 +265,63 @@
             elevation="2">
    <v-card-title class="align-end pl-4 pa-2 mt-2 mb-3 rounded white--text elevation-1" style=" margin-left: -16px; margin-right: -16px; max-height: 50px; background: linear-gradient(to right, #0d47a1, #0d47a1, #1A237E);">
                 <span class="font-semibold"><v-icon  dark left>mdi-list-box</v-icon>Approved Requests</span>
+                <v-spacer></v-spacer>
+                <v-dialog v-model="exportExcelDialog" width="490">
+                    <template v-slot:activator="{ on, attrs }">
+                  
+                      <v-btn
+                        dark
+                        v-bind="attrs"
+                        small
+                        v-on="on"
+                        icon
+                        class="float-right success white--text mr-2"
+                      >
+                        <v-icon small>mdi-file-excel</v-icon>
+                      </v-btn>
+                    </template>
+                    <v-card>
+                     <v-card-title class="align-center ma-2 mt-0 pa-2 rounded white--red elevation-0 black--text text--lighten-1 subtitle-1 text-uppercase"  >
+                      <v-icon left class="grey--text text--darken-1">mdi-download</v-icon> Export Approved Clearance Requests
+
+                      <v-spacer/>
+                        <v-btn elevation-0 color="black" small  @click=" exportExcelDialog = false" icon> <v-icon>mdi-close</v-icon></v-btn>
+                      </v-card-title>
+                      <v-card-text >
+                        <i class="caption mb-2">* Please use filters to specify exported data.</i>
+                      <downloadexcel
+                        class            = "btn"
+                        :fetch           = "fetchData"
+                        :fields          = "json_fields"
+                        type="csv"
+                        :name="excelFilename"
+                        :before-generate = "startDownload"
+                        :before-finish   = "finishDownload">
+                      <v-list-item
+                      link
+                      dark
+                      class="success"
+                      active-class="orange--text text--accent-4 font-weight-bold "
+                      >
+                    
+                        
+                      <v-icon small class="mr-2 ">mdi-file-excel</v-icon>
+                      <span class="font-semibold ">CSV</span>
+                    
+                      </v-list-item>
+                      </downloadexcel>
+                      <br/>
+                      <span>{{ downloadProgress }}%</span>
+
+                      <v-progress-linear v-if="downloadLoading" :value="downloadProgress" color="primary" class="" >
+                      </v-progress-linear>
+                        
+                      </v-card-text>
+                   
+                    </v-card>
+                  </v-dialog>
+
+
             </v-card-title>
     
 
@@ -365,9 +422,41 @@
 </template>
 <script>
 import debounce from "lodash/debounce";
+import downloadexcel from "vue-json-excel";
+import PDFMerger from 'pdf-merger-js';
 
+import JSZip from 'jszip';
+    import { saveAs } from 'file-saver';
 export default {
+  components: {
+            downloadexcel
+
+        },
   data: () => ({
+    excelData: [],
+    downloadLoading: false,
+    downloadMultipleLoading: false,
+    exportCompletedExcelDialog: false,
+    exportExcelDialog: false,
+    json_fields: {
+                  'Student ID' : 'student_number',
+                  'Name': 'name',
+                  // 'College/Campus': 'college',
+                  'Program' : 'program',
+                  'Purpose' : 'purpose',
+                  'Date Requested' : 'request_at',
+                  'Date Approved' : 'approved_at',
+                  // 'Time Interval' : 'interval',
+                  // 'Clearance ID' : 'clearance_id',
+                },
+    excelFilename:'',
+    valid: true,
+    dialog: false,
+    loading: false,
+    downloadProgress:0,
+    offSet:true,
+    totalPageDownloadExcel: 0,
+    currentPageDownloadExcel: 0,
     showDeleteDialog: false,
         itemToDelete: null,
       formName:'Filters',
@@ -976,6 +1065,137 @@ export default {
         this.close();
      
     },
+    startDownload(){
+            this.downloadLoading = true;
+          },
+    finishDownload(){
+      this.downloadLoading = false;
+    },
+    async fetchData() {
+      this.downloadLoading = true
+      this.downloadProgress =0;
+      this.excelData = [];
+
+       await  axios
+        .get(`/api/v1/clearedclearancerequests?page=` + 1, {
+          params: { 
+            'per_page': 100,
+            'semester': this.forms.semester,
+                'program': this.forms.program,
+                'college': this.forms.college,
+                
+                'designation': this.forms.designation,
+                'student': this.forms.student,
+            },
+        })
+        .then(async (response) => {
+
+          // this.semester = response.data.semester.semester;
+        this.currentPageDownloadExcel = response.data.clearance_requests.current_page;
+        this.totalPageDownloadExcel = response.data.clearance_requests.total_pages;
+        
+        for (let i = 1; i <= this.totalPageDownloadExcel; i++) {
+         await axios
+            .get(`/api/v1/clearedclearancerequests?page=` + i, {
+              params: { 
+                'per_page': 100,
+                'semester': this.forms.semester,
+                'program': this.forms.program,
+                'college': this.forms.college,
+                
+                'designation': this.forms.designation,
+                'student': this.forms.student,
+                },
+            })
+            .then((response) => {
+
+              this.excelData =[].concat(this.excelData,response.data.clearance_requests.data);
+              
+            });
+            this.downloadProgress = (i/this.totalPageDownloadExcel*100).toFixed(2);
+         
+
+        }
+        // this.loading = false
+        console.log(this.excelData)
+        this.excelFilename = response.data.file_name;
+        });
+       
+      // simulate download with setInterval
+      // const interval = setInterval(() => {
+      //   this.downloadProgress += 1
+      //   if (this.downloadProgress >= 100) {
+      //     clearInterval(interval)
+      //     this.loading = false
+
+      //   }
+      // }, 1000)
+      return this.excelData;
+
+    },
+
+    async fetchClearanceData() {
+      this.downloadLoading = true
+      this.downloadProgress =0;
+      this.excelData = [];
+
+       await  axios
+        .get(`/api/v1/clearedclearancerequests?page=` + 1, {
+          params: { 
+            'per_page': 1000,
+            'semester': this.forms.semester,
+                'program': this.forms.program,
+                'college': this.forms.college,
+                
+                'designation': this.forms.designation,
+                'student': this.forms.student,
+            },
+        })
+        .then(async (response) => {
+
+          // this.semester = response.data.semester.semester;
+        this.currentPageDownloadExcel = response.data.clearances.current_page;
+        this.totalPageDownloadExcel = response.data.clearances.total_pages;
+        
+        for (let i = 1; i <= this.totalPageDownloadExcel; i++) {
+         await axios
+            .get(`/api/v1/clearedclearancerequests?page=` + i, {
+              params: { 
+                'per_page': 1000,
+                'semester': this.forms.semester,
+                'program': this.forms.program,
+                'college': this.forms.college,
+                
+                'designation': this.forms.designation,
+                'student': this.forms.student,
+                },
+            })
+            .then((response) => {
+
+              this.excelData =[].concat(this.excelData,response.data.clearances.data);
+              
+            });
+            this.downloadProgress = (i/this.totalPageDownloadExcel*100).toFixed(2);
+         
+
+        }
+        // this.loading = false
+        console.log(this.excelData)
+        this.excelFilename = response.data.file_name;
+        });
+       
+      // simulate download with setInterval
+      // const interval = setInterval(() => {
+      //   this.downloadProgress += 1
+      //   if (this.downloadProgress >= 100) {
+      //     clearInterval(interval)
+      //     this.loading = false
+
+      //   }
+      // }, 1000)
+      return this.excelData;
+
+    }
   },
 };
 </script>
