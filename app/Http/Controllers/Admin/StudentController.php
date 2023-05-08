@@ -28,6 +28,8 @@ use App\Http\Resources\ProgramCollection;
 
 use App\Role;
 use App\UserRole;
+use App\SignatoryV2;
+
 
 class StudentController extends Controller
 {
@@ -80,12 +82,24 @@ class StudentController extends Controller
 
         // }
         else{
-          
         $per_page =$request->per_page ? $request->per_page : 10; 
+        $semester = Semester::orderByDesc('id')->first();
+        $latest_signatory_ids = SignatoryV2::where('user_id', Auth::user()->id)
+            ->where('semester_id', $semester->id)
+            ->get('campus_id');
+        // dd(SignatoryV2::where('user_id', Auth::user()->id)
+        // ->where('semester_id', $semester->id)
+        // ->get(['program_id', 'designee_id', 'semester_id','campus_id']));
+        // $program_ids = array_column($latest_signatory_ids, 'program_id');
+        // $designee_ids = array_column($latest_signatory_ids, 'designee_id');
+        // $campus_ids = array_column($latest_signatory_ids, 'campus_id');
+        // $purpose_ids = array_column($latest_signatory_ids, 'purpose_id');
+
+
         return response()->json([
-        'students'=> new StudentCollection(Student::orderByDesc('created_at')->with('section')->with('deficiencies')->with('program')->with('program.campus')
-        ->whereHas('program.campus', function($q){
-            $q->where('id', Staff::where('user_id',Auth::user()->id)->first()->campus_id);
+        'students'=> new StudentCollection(Student::orderByDesc('created_at')->with('section')->with('program')
+        ->whereHas('program.campus', function($q) use($latest_signatory_ids){
+            $q->whereIn('id', $latest_signatory_ids);
         }) 
         ->paginate($per_page)),
         // 'campuses' => Campus::orderBy('name')->where('id', Staff::where('user_id',Auth::user()->id)->first()->campus_id)->get(),
@@ -216,6 +230,7 @@ class StudentController extends Controller
         $email = $request->email;
 
 
+        // dd('isNotAdmin');
 
         $students =  new StudentCollection(Student::orderByDesc('updated_at')
         ->when($student_id, function ($q) use ($student_id){
@@ -225,9 +240,38 @@ class StudentController extends Controller
             $q->where('name','ilike','%'.$name.'%');
         })
         ->when($campus_id, function ($q) use ($campus_id){
-            $q->whereHas('program',function($q) use($campus_id){
-                $q->where('campus_id',$campus_id);
-            });
+            if(!Auth::user()->hasRole("admin")){
+                $semester = Semester::orderByDesc('id')->first();
+                $latest_signatory_ids = SignatoryV2::where('user_id', Auth::user()->id)
+                    ->where('semester_id', $semester->id)
+                    ->get('campus_id');
+                $q->whereHas('program',function($q) use($latest_signatory_ids){
+                    $q->whereIn('campus_id',$latest_signatory_ids);
+                });
+            }
+            else{
+                $q->whereHas('program',function($q) use($campus_id){
+                    $q->where('campus_id',$campus_id);
+                });
+            }
+           
+        })
+        ->when(!$campus_id, function ($q) use ($campus_id){
+            if(!Auth::user()->hasRole("admin")){
+                $semester = Semester::orderByDesc('id')->first();
+                $latest_signatory_ids = SignatoryV2::where('user_id', Auth::user()->id)
+                    ->where('semester_id', $semester->id)
+                    ->get('campus_id');
+                $q->whereHas('program',function($q) use($latest_signatory_ids){
+                    $q->whereIn('campus_id',$latest_signatory_ids);
+                });
+            }
+            else{
+                $q->whereHas('program',function($q) use($campus_id){
+                    $q->where('campus_id',$campus_id);
+                });
+            }
+           
         })
         ->when($college_id, function ($q) use ($college_id){
             $q->whereHas('program',function($q) use($college_id){

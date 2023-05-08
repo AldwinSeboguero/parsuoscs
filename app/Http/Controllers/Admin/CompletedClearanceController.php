@@ -126,7 +126,23 @@ class CompletedClearanceController extends Controller
         }
         else{
             $per_page =$request->per_page ? $request->per_page : 10; 
-            $signatory_ids = SignatoryV2::where('user_id',Auth::user()->id)->get('id');
+            $semester = Semester::orderByDesc('id')->first();
+            $latest_signatory_ids = SignatoryV2::where('user_id', Auth::user()->id)
+                ->where('semester_id', $semester->id)
+                ->get(['program_id', 'designee_id', 'semester_id','campus_id','purpose_id'])
+                ->toArray();
+            // dd(SignatoryV2::where('user_id', Auth::user()->id)
+            // ->where('semester_id', $semester->id)
+            // ->get(['program_id', 'designee_id', 'semester_id','campus_id']));
+            $program_ids = array_column($latest_signatory_ids, 'program_id');
+            $designee_ids = array_column($latest_signatory_ids, 'designee_id');
+            $campus_ids = array_column($latest_signatory_ids, 'campus_id');
+            $purpose_ids = array_column($latest_signatory_ids, 'purpose_id');
+
+
+            $signatory_ids = SignatoryV2::whereIn('program_id', $program_ids)->whereIn('designee_id', $designee_ids)->whereIn('campus_id', $campus_ids)
+            // ->whereIn('purpose_id', $purpose_ids)
+                ->get(['id']);
             
             $clearance_requests =new ClearanceRequestCollection( ClearanceRequestV2::orderByDesc('approved_at')
             ->whereIn('signatory_id', $signatory_ids)

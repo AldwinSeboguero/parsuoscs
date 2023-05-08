@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Staff_PD;
 use App\User;
 use App\UserV2;
-
+use App\College;
 use App\UserRole;
 use App\Designee;
 use App\Staff;
@@ -90,7 +90,7 @@ class StaffController extends Controller
         $purpose = $request->purpose;
         $semester = $request->semester;
 
-        $staffs =  new StaffCollection(SignatoryV2::orderByDesc('semester_id')->orderBy('purpose_id')->orderBy('order')
+        $staffs =  new StaffCollection(SignatoryV2::orderByDesc('id')->orderByDesc('semester_id')->orderBy('purpose_id')->orderBy('order')
         ->orderBy('designee_id')
         ->when($signatory, function($q) use($signatory){
             $q->where('user_id', $signatory);
@@ -272,7 +272,7 @@ class StaffController extends Controller
         $per_page =$request->per_page ? $request->per_page : 10;
         return response()->json([
             'staffs' => new StaffCollection(
-                SignatoryV2::with('user')->with('semester')->with('campus')
+                SignatoryV2::orderByDesc('id')->with('user')->with('semester')->with('campus')
                 ->whereHas('user', function($q) use ($id){
                     $q->where('name', 'ILIKE', '%' . $id . '%');
                 }) 
@@ -302,13 +302,14 @@ class StaffController extends Controller
     public function store(Request $request)
     { 
         $designation = $request->designation;
-        $campus = $request->campus;
         $program = $request->program;
         $signatory = $request->signatory;
         $purpose = $request->purpose;
         $semester = $request->semester;
         $order = $request->order;
         $college = $request->college;
+        $campus = $college ? College::where('id', $college)->get()->first()->campus_id : null;
+
         $isForAllInCollege = $request->isForAllInCollege;
 
 
@@ -338,8 +339,9 @@ class StaffController extends Controller
             $program_id = Program::find($program);
             $user = User::find($signatory);
             $designee = Designee::find($designation);
-            if(!$hasSignatory){
-                
+            // dd($hasSignatory);
+            if($hasSignatory==0){
+                 
                 SignatoryV2::create(
                     [
                     'program_id' => $program_id->id,

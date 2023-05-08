@@ -290,46 +290,79 @@
               </v-form>
               
             </v-card-text>
-            <v-card-actions>
-            <div class="text-center pb-4 ml-3">
-                    <v-btn
-                      type="submit" 
+            <div v-if="isEdit===true">
+              <v-row class="ml-4 mr-10 mb-1 mt-2 pb-4 ml-3">
+                <v-col cols="6" class="ma-0 pa-0 pr-1">
+                <v-btn block type="submit" 
+                      class="elevation-0 success"
+                      dark
+                      width="100%"
+                      @click="submit"
+                      :loading="formActionLoading"
+                      small> <v-icon left>mdi-content-save-edit</v-icon>Save </v-btn>
+                </v-col>
+                <v-col cols="6" class="ma-0 pa-0 pr-1">
+                <v-btn  
+                      
+                      block
+                      elevation="0"
+                      outlined
+                      color="primary"
+                      small
+                      width="130%"
+                      @click="cancelEdit"
+                      > <v-icon left>mdi-cancel</v-icon>Cancel</v-btn>
+                </v-col>
+              </v-row>
+            </div>
+            <v-card-actions v-else>
+            <v-row class=" mr-10 mb-1 mt-0 pt-0 pb-4 ml-3">
+                <v-col cols="5" class=" pa-0 mr-6">
+                <v-btn
+                  
                       @click="$router.push('signatories/create-update')"
                       dark
                       success
                       small
-                      min-width="40%"
+                      min-width="100%"
                       class="elevation-0 success"
                     >
                     <v-icon left>mdi-account-plus</v-icon>  Create
                     </v-btn>
-                    <v-btn
-                      type="submit" 
+                </v-col>
+                <v-col cols="5" class="ma-0 pa-0 pr-1">
+                <v-btn
+                    
                       
                       dark
                       small
-                      min-width="40%"
+                      min-width="100%"
                       @click="$router.push('signatories/copy-prev')"
                       class="elevation-0 default"
                     >
                      <v-icon left>mdi-content-copy</v-icon> Copy Prev
                     </v-btn>
-              </div>
+                </v-col>
+              </v-row>
+           
+              
             </v-card-actions>
         </v-card>
       </v-col>
       <v-col cols="12" lg="9">
        
-           <Table :forms="forms" ></Table>
+           <Table :forms="forms" :isEditMode="isEditMode" @childEvent="setEditedItem"  ref="childComponent"  ></Table>
            <!-- <v-textarea v-model="query" label="Results" rows="1" auto-grow disabled></v-textarea> -->
-
+    
       </v-col>
     </v-row>
+
   </div>
 </template>
 
 <script>
   import Table from "../../../pages/components/Table";
+  
 export default {
   name: 'ParsuoscsV2StaffComponent',
   components:{
@@ -337,10 +370,13 @@ export default {
   },
   data() {
     return {
+      formActionLoading:false,
+      isEditMode:'',
       query:' ',
       offSet: true,
       search: null,
     page: 0,
+    isEdit:false,
     totalStaffs: 0,
     numberOfPages: 0,
     options: {},
@@ -352,16 +388,27 @@ export default {
     semesters: {},
     signatories:{},
     forms: {
+      
+      id: "", 
       semester: '',
       campus:'',
       program: '',
       designation: '',
       signatory: '',
-      purpose:'',
+      campus_id: "",
+      designee_id: "",
+      semester_id: "", 
+      user_id:'',
+      new_semester_id:'',
     },
     
 
     editedItem: {
+      semester: '',
+      campus:'',
+      program: '',
+      designation: '',
+      signatory: '',
       id: "", 
       campus_id: "",
       designee_id: "",
@@ -370,12 +417,17 @@ export default {
       new_semester_id:'',
     },
     defaultItem: {
-       id: "", 
+      semester: '',
+      campus:'',
+      program: '',
+      designation: '',
+      signatory: '',
+      id: "", 
       campus_id: "",
       designee_id: "",
       semester_id: "", 
       user_id:'',
-       new_semester_id:'',
+      new_semester_id:'',
     },
     };
     
@@ -403,7 +455,67 @@ export default {
   },
 
   methods: {
-    
+    async cancelEdit(){
+      this.isEdit = false;
+      this.editedForms = this.defaultForms;
+      // this.isEditMode = false;
+      this.forms = { ...this.defaultForms };
+      this.$refs.childComponent.editRowReset();
+    },
+     setEditedItem(val, isEditedMode){
+      this.editedForms = val;
+      this.isEditMode = isEditedMode;
+
+      
+      this.forms =  { ...this.editedForms };
+      // console.log("Edit Mode : "+this.isEditMode)
+      this.isEdit = true;
+      // this.forms.signatory.id = this.editedForms.id;
+      this.forms.signatory = this.signatories.find(signatory => signatory.id === this.editedForms.user_id);
+      this.forms.designation = this.designations.find(signatory => signatory.id === this.editedForms.designee_id);
+      this.forms.campus = this.campuses.find(signatory => signatory.id === this.editedForms.campus_id);
+      this.forms.program = this.programs.find(signatory => signatory.id === this.editedForms.program_id);
+      this.forms.purpose = this.purposes.find(signatory => signatory.id === this.editedForms.purpose_id);
+      this.forms.semester = this.semesters.find(signatory => signatory.id === this.editedForms.semester_id);
+
+    },
+    async clearForms(){
+      this.editedForms = this.defaultForms;
+      this.isEditMode = false;
+      this.forms = this.defaultForms;
+      this.$refs.childComponent.editRowReset();
+
+    },
+    async submit() {
+      console.log("Submit Click")
+     
+        this.formActionLoading = true;
+        const data = {
+          // code: this.forms.code,
+          description: this.forms.description,
+          schedules: this.forms.schedules,
+
+        };
+        
+          try {
+            const response = await axios.put('/api/v1/staffs/'+ this.editedForms.id, data);
+            this.editedForms = this.defaultForms;
+            
+            this.forms = this.defaultForms;
+
+            this.isEditMode = false;
+            this.formActionLoading = false;
+            this.$refs.childComponent.nextPage();
+            this.$refs.childComponent.editRowReset();
+            // handle success
+          } catch (error) {
+            this.formActionLoading = false;
+
+            // handle error
+          }
+       
+      
+    },
   },
 };
 </script>

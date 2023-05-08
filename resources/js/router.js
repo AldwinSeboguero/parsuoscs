@@ -228,7 +228,13 @@ const routes =[
                     path: 'graduations',
                     beforeEnter: isADMIN,
                     component: GraduationsComponent,
-                    name: 'Graduations'
+                    name: 'Graduations',
+                    meta: {
+                        breadcrumb: {
+                            label: 'Graduations',
+                            parent:'admin'
+                          }
+                      }
                 },
                 {
                     path: 'purposes',

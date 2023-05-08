@@ -36,6 +36,12 @@ class ClearanceRequestV2 extends Model
     {
         return $this->belongsTo('App\ClearancePurpose','purpose_id');
     }
+    public function signatories()
+    {
+        return $this->belongsToMany('App\SignatoryV2', 'signatory_id')
+            // ->withPivot('status')
+            ->withTimestamps();
+    }
     protected $dates = ['requested_at','approved_at'];
 
 }

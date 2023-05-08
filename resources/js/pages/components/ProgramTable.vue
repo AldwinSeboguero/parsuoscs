@@ -46,8 +46,8 @@
     </template>
    
     <template v-slot:item="{ item, index }">
-      <tr :class="{ 'blue darken-3 white--text': editingRow === item }" @click="editRow(index)">
-        <td v-for="header in headers" :key="header.text">
+      <tr :class="{ 'blue darken-3 white--text elevation-11 flex px-4': editingRow === item } " >
+        <td v-for="header in headers" :key="header.text" style="font-size:12px">
         <v-menu
            transition="slide-y-transition"
            v-if="header.value === 'actions'"

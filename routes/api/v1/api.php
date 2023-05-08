@@ -191,6 +191,8 @@ Route::post('/deficeincy/edit', 'Admin\DeficiencyController@update');
 Route::get('/getStudents', 'Admin\StudentController@getStudents');
 Route::get('/getStaff', 'Admin\StaffController@getStaff');
 Route::get('/getSemesters', 'Admin\SemesterController@getSemesters');
+Route::get('/getGraduations', 'Admin\GraduationController@getGraduations');
+
 Route::get('/getPrograms', 'Admin\ProgramController@getPrograms');
 
 

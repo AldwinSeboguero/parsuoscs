@@ -75,6 +75,17 @@ class SubmittedController extends Controller
                     ->orWhere('student_number', 'ILIKE', '%' . $search . '%');
                     });
                 })
+                ->when(!Auth::user()->hasRole("admin"), function ($q){
+                    
+                        $semester = Semester::orderByDesc('id')->first();
+                        $latest_signatory_ids = SignatoryV2::where('user_id', Auth::user()->id)
+                            ->where('semester_id', $semester->id)
+                            ->get('campus_id');
+                        $q->whereHas('clearance.student.program',function($q) use($latest_signatory_ids){
+                            $q->whereIn('campus_id',$latest_signatory_ids);
+                        });
+                   
+                })
                 ->when($request->college, function($inner) use($request){
                     $inner->whereHas('clearance.student.program',function($q) use($request){
                         $q->where('college_id',$request->college);

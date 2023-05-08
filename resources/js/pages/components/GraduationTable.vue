@@ -28,7 +28,7 @@
   </div> -->
   <v-card class="pt-1">
         <v-card-title class="align-end pl-4 pa-2 mt-2 mb-3 rounded white--text elevation-1" style=" margin-left: -8px; margin-right: -8px; max-height: 50px; background: linear-gradient(to right, #0d47a1, #0d47a1, #1A237E);">
-                <span class="font-semibold"><v-icon  dark left>mdi-account-details</v-icon>SIGNATORIES <i class="overline">({{semester_name}})</i></span>
+                <span class="font-semibold"><v-icon  dark left>mdi-list-box</v-icon>GRADUATIONS</span>
             </v-card-title>
     <v-data-table
         :headers="headers"
@@ -39,9 +39,12 @@
         :server-items-length="total"
         :options.sync="options"
         dense
-        class="elevation-0  mt-1 font-light pa-0 font-sans text-uppercase mx-4"
+        class=" elevation-0  mt-1 font-light pa-0 font-sans text-uppercase mx-4"
     >
-    
+    <template v-slot:item.id="{ item }">
+     <span class="font-weight-bold">{{item.prefix}}{{pad(item.id,5)}}</span>
+    </template>
+   
     <template v-slot:item="{ item, index }">
       <tr :class="{ 'blue darken-3 white--text elevation-11 flex px-4': editingRow === item } " >
         <td v-for="header in headers" :key="header.text" style="font-size:12px">
@@ -75,7 +78,7 @@
                <v-list width="180" nav> 
                <v-list-item
                link
-               @click="editData(item,index)"
+               @click="editData(item)"
 
                class="blue--text"
                active-class="blue--text text--accent-4 font-weight-bold"
@@ -84,7 +87,7 @@
                </v-list-item>
                <v-list-item
                link
-               @click="confirmDelete(item,index)"
+               @click="confirmDelete(item)"
                class="red--text"
                active-class="orange--text text--accent-4 font-weight-bold"
                >
@@ -99,18 +102,37 @@
       </tr>
       
     </template>
+    
     </v-data-table>
+    <v-dialog v-model="showDeleteDialog" persistent width="400">
+      <v-card class="pt-1">
+      <v-card-title class="align-center ma-2 mt-0 pa-2 rounded white--red elevation-0" >
+
+         <v-icon left class="red--text text--lighten-1">mdi-delete-circle</v-icon> Delete Item
+        </v-card-title>
+        <v-card-text>
+          Are you sure you want to delete this item?<br/>
+          (<i>{{itemToDelete ? 'Description: '+itemToDelete.description : ''}}</i>)
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer/>
+          <v-btn elevation-0 color="primary" outlined  @click="showDeleteDialog = false">Cancel</v-btn>
+          <v-btn elevation-0 color="red" dark @click="deleteData">Delete</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
     </v-card-text>
-</v-card>
+        </v-card>
 </div>
 </template>
 
 
 <script>
+  
   import debounce from "lodash/debounce";
     export default {
-      
       props:{
+
         barangay: Array,
         sitio:Array,
         min_age: 0,
@@ -119,9 +141,8 @@
         birthday:Array,
         pension:Array,
         annualincome: 0,
-        isEditMode:'',
         forms: {
-          semester: '',
+          graduation: '',
           campus:'',
           program: '',
           designation: '',
@@ -141,10 +162,10 @@
           const { page, itemsPerPage } = this.options;
           let pageNumber = page;
            axios
-            .get(`/api/v1/getStaff?page=` + pageNumber,{
+            .get(`/api/v1/getGraduations?page=` + pageNumber,{
               params: { 
                 'per_page': itemsPerPage,
-                'semester': this.forms.semester,
+                'graduation': this.forms.graduation,
                 'program': this.forms.program,
                 'campus': this.forms.campus,
                 'designation': this.forms.designation,
@@ -152,7 +173,7 @@
               },
             })
             .then((response) => {
-              // this.semester = response.data.semester.semester;
+              // this.graduation = response.data.graduation.graduation;
                 this.headers = response.data.headers;
                 this.table_data = response.data.table_data.data ;
                 this.current_page= response.data.table_data.current_page;
@@ -167,10 +188,10 @@
           const { page, itemsPerPage } = this.options;
           let pageNumber = page;
            axios
-            .get(`/api/v1/getStaff?page=` + pageNumber,{
+            .get(`/api/v1/getGraduations?page=` + pageNumber,{
               params: { 
                 'per_page': itemsPerPage,
-                'semester': this.forms.semester,
+                'graduation': this.forms.graduation,
                 'program': this.forms.program,
                 'campus': this.forms.campus,
                 'designation': val,
@@ -178,7 +199,7 @@
               },
             })
             .then((response) => {
-              // this.semester = response.data.semester.semester;
+              // this.graduation = response.data.graduation.graduation;
                 this.headers = response.data.headers;
                 this.table_data = response.data.table_data.data ;
                 this.current_page= response.data.table_data.current_page;
@@ -192,10 +213,10 @@
           const { page, itemsPerPage } = this.options;
           let pageNumber = page;
            axios
-            .get(`/api/v1/getStaff?page=` + pageNumber,{
+            .get(`/api/v1/getGraduations?page=` + pageNumber,{
               params: { 
                 'per_page': itemsPerPage,
-                'semester': this.forms.semester,
+                'graduation': this.forms.graduation,
                 'program': this.forms.program,
                 'campus': val,
                 'designation': this.forms.designation,
@@ -203,8 +224,8 @@
               },
             })
             .then((response) => {
-              // this.semester = response.data.semester.semester;
-              // this.semester_name = response.data.semester_name;
+              // this.graduation = response.data.graduation.graduation;
+              // this.graduation_name = response.data.graduation_name;
 
                 this.headers = response.data.headers;
                 this.table_data = response.data.table_data.data ;
@@ -214,15 +235,15 @@
             });
         }, 300),
 
-        'forms.semester': debounce(function (val) {
+        'forms.graduation': debounce(function (val) {
           console.log(val)
           const { page, itemsPerPage } = this.options;
           let pageNumber = page;
            axios
-            .get(`/api/v1/getStaff?page=` + pageNumber,{
+            .get(`/api/v1/getGraduations?page=` + pageNumber,{
               params: { 
                 'per_page': itemsPerPage,
-                'semester': val,
+                'graduation': val,
                 'program': this.forms.program,
                 'campus': this.forms.campus,
                 'designation': this.forms.designation,
@@ -230,8 +251,8 @@
               },
             })
             .then((response) => {
-              // this.semester = response.data.semester.semester;
-              this.semester_name = response.data.semester_name;
+              // this.graduation = response.data.graduation.graduation;
+              this.graduation_name = response.data.graduation_name;
 
                 this.headers = response.data.headers;
                 this.table_data = response.data.table_data.data ;
@@ -246,10 +267,10 @@
           const { page, itemsPerPage } = this.options;
           let pageNumber = page;
            axios
-            .get(`/api/v1/getStaff?page=` + pageNumber,{
+            .get(`/api/v1/getGraduations?page=` + pageNumber,{
               params: { 
                 'per_page': itemsPerPage,
-                'semester': this.forms.semester,
+                'graduation': this.forms.graduation,
                 'program': val,
                 'campus': this.forms.campus,
                 'designation': this.forms.designation,
@@ -257,8 +278,8 @@
               },
             })
             .then((response) => {
-              // this.semester = response.data.semester.semester;
-              this.semester_name = response.data.semester_name;
+              // this.graduation = response.data.graduation.graduation;
+              this.graduation_name = response.data.graduation_name;
                 this.headers = response.data.headers;
                 this.table_data = response.data.table_data.data ;
                 this.current_page= response.data.table_data.current_page;
@@ -269,40 +290,25 @@
 
       },
       methods: {
-        
         editRow(item) {
           this.editingRow = item
         },
         editRowReset() {
           this.editingRow = null
         },
-        async editData(val,index) {
-
+        async editData(val) {
           this.editingRow = val;
-          console.log(val.semester);
           console.log(this.editingRow == val );
 
-          this.isEditMode = true;
-          this.$emit('childEvent', val,this.isEditMode) // Emit the childEvent event with the value
+          this.$emit('childEvent', val) // Emit the childEvent event with the value
         },
-        pad(num, size) {
-            num = num.toString();
-            while (num.length < size) num = "0" + num;
-            return num;
-        },
-       
-        clean($val) {
-          if($val){$val = $val.replace(/ +(?= )/g, "");
-          $val = $val.replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, " "); // Replaces all spaces with hyphens.
-          $val = $val.replace(/ +(?= )/g, "");
-          
-          return $val;
-          }
-          // Removes special chars.
+        confirmDelete(item) {
+          this.showDeleteDialog = true;
+          this.itemToDelete = item;
         },
         async deleteData(val) {
           try {
-            await axios.delete('/api/v1/staffs/'+ val, {
+            await axios.delete('/api/v1/graduations/'+ this.itemToDelete.id, {
               // Optional config object
 
             });
@@ -314,14 +320,53 @@
             // Handle the error
           }
         },
+        pad(num, size) {
+            num = num.toString();
+            while (num.length < size) num = "0" + num;
+            return num;
+        },
+        view($val){
+          // console.log($item);
+          Inertia.get(
+            "/senior_citizens/view",
+            { senior: $val },
+            {
+              preserveState: true,
+              preserveScroll: true,
+              replace: true,
+            }
+          );
+        },
+        register($val){
+          // console.log($item);
+          Inertia.get(
+            "/senior_citizens/register",
+            { senior: $val },
+            {
+              preserveState: true,
+              preserveScroll: true,
+              replace: true,
+            }
+          );
+        },
+        clean($val) {
+          if($val){$val = $val.replace(/ +(?= )/g, "");
+          $val = $val.replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, " "); // Replaces all spaces with hyphens.
+          $val = $val.replace(/ +(?= )/g, "");
+          
+          return $val;
+          }
+          // Removes special chars.
+        },
+       
          async nextPage() {
           const { page, itemsPerPage } = this.options;
           let pageNumber = page;
            await axios
-            .get(`/api/v1/getStaff?page=` + pageNumber,{
+            .get(`/api/v1/getGraduations?page=` + pageNumber,{
               params: { 
                 'per_page': itemsPerPage,
-                'semester': this.forms.semester,
+                'graduation': this.forms.graduation,
                 'program': this.forms.program,
                 'campus': this.forms.campus,
                 'designation': this.forms.designation,
@@ -329,7 +374,7 @@
               },
             })
             .then((response) => {
-                this.semester_name = response.data.semester_name;
+                this.graduation_name = response.data.graduation_name;
                 this.headers = response.data.headers;
                 this.table_data = response.data.table_data.data ;
                 this.current_page= response.data.table_data.current_page;
@@ -341,16 +386,15 @@
 
       data () {
       return {
-       
-        page: 1,
-        semester:'',
-        semester_name:'',
+        showDeleteDialog: false,
+        itemToDelete: null,
+        editingRow: null,
+        graduation:'',
+        graduation_name:'',
         forms_data : this.forms,
         table_data: [],
         options: {},
         search: '',
-        editingRow: null,
-
         // barangay: this.barangay,
         offSet: true,
         constituents: Array,
@@ -393,7 +437,7 @@
 .form-control{
     height: 36px;
 }
-.v-pagination.v-pagination--flat .v-pagination__item {
-  box-shadow: none;
+.edited-row {
+  background-color: #eeeeee;
 }
 </style>

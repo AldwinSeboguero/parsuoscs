@@ -1,287 +1,260 @@
 <template>
-<v-sheet >
-   <v-card elevation="0">
-    <v-container class="grey lighten-5" fluid>
-     <v-row wrap>
-       <v-col cols="12" lg="4">
-           <v-card >
-         <v-card-text style="padding-bottom:10">
-                      <h1
-                        class="title desplay-2 black--text text--accent3"
-                       
-                      >
-                      <v-icon class="ma-1 mb-2">mdi-account-plus-outline</v-icon>
-                        Add Graduation
-      
-                      </h1> 
-                      
-        </v-card-text>
-        <v-list-item three-line>
-          <v-list-item-content> 
-            <div class="text-center pb-3 ">
-              <v-form 
-                method="post"
-                lazy-validation
-                v-on:submit.stop.prevent="save"
-                ref="entryForm"
+  <div>
+    <v-row >
+      <v-col cols="12" lg="5" class="mt-2">
+       <Breadcrumbs class="mb-4"/>
+
+      </v-col>
+    </v-row>
+
+
+    <v-row class="container-fluid ml-2 mt-0">
+      <v-col cols="12" lg="3">
+        <v-card class=" rounded-medium pt-1 pb-2 px-2"
+            elevation="2">
+            
+            <v-card-title class="align-end pl-4 pa-2 mt-2 mb-3 rounded white--text elevation-1" style=" margin-left: -16px; margin-right: -16px; max-height: 50px; background: linear-gradient(to right, #0d47a1, #0d47a1, #1A237E);">
+                <span class="font-semibold overline"><v-icon dark left >{{formIcon}}</v-icon>{{formName}}</span>
+            </v-card-title>
+
+            <v-card-text>
+            <v-form 
+                v-model="valid" 
+                ref="form"
               >
-                <v-text-field 
-                  label="Graduation Name" 
-                  name="graduation" 
-                  v-model="editedItem.graduation"
-                  type="text"
-                  color="teal accent-4" 
-                  dense  
-                  class="text-sm-h6 mr-2 ml-2 mb-2 mb-1"
-                
-                /> 
-                
-                
+                <label class="black--text font-weight-medium mt-2" for="">Description</label>
+
+                <v-text-field
+                      v-model="forms.description"
+                      label=""
+                      
+                      outlined
+                      dense
+                      v-on="on"
+                      clearable
+                      hide-details
+                      class="mb-2 text-field-text-size"
+
+                    />
+              <label class="black--text font-weight-medium mt-2" for="">Schedule</label>
+                <v-menu
+                  ref="menu"
+                  :close-on-content-click="false"
+                  v-model="menuOpen"
+                  offset-y
+                  clearable
+                >
+                  <template v-slot:activator="{ on }">
+                    <v-text-field
+                      v-model="forms.schedules"
+                      label=""
+                      
+                      outlined
+                      dense
+                      v-on="on"
+                      clearable
+                      hide-details
+                      class="mb-2 text-field-text-size"
+                      prepend-inner-icon="mdi-calendar"
+                    />
+                  </template>
+                  <v-date-picker
+                    v-model="forms.schedules"
+                    range
+                    no-title
+                    outlined
+                    color="primary"
+                    clearable
+                  />
+                </v-menu>
+                            
 
                     <v-divider />
                   
-                    <v-row class="ma-2 float-right">
-                    <!-- <v-btn color="blue darken-1" text @click="close">
-                      Cancel
-                    </v-btn> -->
-                    <v-btn
-                      color="blue darken-1"
-                      text
-                      type="submit" 
-                      :disabled="editedItem.name == '' || editedItem.short_name == ''  ? true : false"
-                      @click.prevent="save"
-                    >
-                      Save
-                    </v-btn>
-                  </v-row>
+                   
               </v-form>
               
-            </div>
-          </v-list-item-content>
-        </v-list-item>
-          
-     
-      </v-card>
-       </v-col>
-       <v-col cols="12" lg="8" >
-           <v-data-table
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer/>
+                    <v-btn
+                      type="submit" 
+                      @click="submit"
+                      :loading="formActionLoading"
+                      dark
+                      success
+                      small
+                      class="elevation-0 success"
+                    >
+                    <v-icon left>{{formActionIcon}}</v-icon> {{ isEditMode ? 'Save Changes' : 'Save' }}
+                    </v-btn>
+                    <v-btn
+                      type="submit" 
+                      dark
+                      outlined
+                      small
+                      @click="clearForms"
+                      class="elevation-0"
+                      color="primary"
+                    >
+                      Cancel
+                    </v-btn>
               
-              item-key="id"
-              class="elevation-1 pa-6"
-              :loading = "loading"
-              loading-text="Loading... Please wait"
-              :headers="headers"
-              :items="graduations" 
-               :items-per-page="5" 
-              color="error"
-            > 
-    <template v-slot:item.actions="{ item }">
-        <v-icon small class="mr-2 warning--text" @click="editItem(item)"> mdi-pencil </v-icon>
-              <v-icon small class="mr-2 red--text" @click="deleteItem(item)">
-                mdi-delete-forever
-              </v-icon>
-    </template>
-   
-  </v-data-table>
-       </v-col>
-     </v-row>
-     <v-snackbar
-      v-model="snackbar" 
-      :color="snackbarColor" 
-      right
-      timeout="5000" 
-      outlined
-     top
-     width="50" 
-    >
-       <v-icon 
-          left
-        >
-          mdi-error
-        </v-icon>{{ text }}
+            </v-card-actions>
+        </v-card>
+      </v-col>
+      <v-col cols="12" lg="9">
+       
+           <Table :forms="forms"  ref="childComponent" @childEvent="setEditedItem"></Table>
+           <!-- <v-textarea v-model="query" label="Results" rows="1" auto-grow disabled></v-textarea> -->
 
-      <template v-slot:action="{ attrs }">
-        
-          <v-btn
-        :color="snackbarColor"
-          text
-          v-bind="attrs"
-          @click="snackbar = false"
-      >
-        <v-icon
-          dark
-          left
-        >
-          mdi-close
-        </v-icon>close
-      </v-btn>
-      </template>
-    </v-snackbar>
-    </v-container>
-   </v-card>
-</v-sheet>
-
-
+      </v-col>
+    </v-row>
+  </div>
 </template>
+
 <script>
-  export default {
-    data: () => ({
-      dialog: false,
-      loading: false,
-      headers: [ 
-        { text: 'Name', value: 'graduation' },  
-        { text: 'Action', align: 'right',  value: 'actions' },
-      ],
-      graduations: [],
-      editedIndex: -1,
-       text: "",
-      success: "",
-      error: "", 
-      snackbarColor:"",
-      editedItem: {
-        id:'',
-        graduation: '',
-       
-      },
-      defaultItem: {
-        id:'',
-        graduation: '',
+  import Table from "../../pages/components/GraduationTable";
+export default {
+  name: 'ParsuoscsV2StaffComponent',
+  components:{
+    Table,
+  },
+  data() {
+    return {
+    valid: true,
 
-      },
-    }),
-
-    computed: {
-      formTitle () {
-        return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
-      },
+      formName:'Add',
+      formIcon : 'mdi-file-plus',
+      formAction : 'Save',
+      formActionIcon : 'mdi-content-save',
+      formActionColor : 'success',
+      formActionLoading: false,
+      isEditMode: false,
+      startDate:'',
+      endDate:'',
+      menuOpen: false,
+      schedules: [],
+      query:' ',
+      offSet: true,
+      search: null,
+    page: 0,
+    totalStaffs: 0,
+    numberOfPages: 0,
+    options: {},
+    staffs: {},
+    campuses: {},
+    programs:{},
+    purposes:{},
+    designations: {},
+    semesters: {},
+    signatories:{},
+    forms: {
+      code: '',
+      description:'',
+      schedules: [],
     },
-
-    watch: {
-      dialog (val) {
-        val || this.close()
-      },
+    editedForms: {
+      id: '',
+      code: '',
+      description:'',
+      schedules: [],
     },
-
-    created () {
-      this.initialize()
+    defaultForms: {
+      id: '',
+      code: '',
+      description:'',
+      schedules: [],
     },
+    };
+  },
 
-      methods: {
-      initialize () {
-        
-        axios.interceptors.request.use(config => {
-        this.loading = true;
-        return config;
-        },error => {
-        this.loading = false;
-        return Promise.reject(error);
-        });
-        
-        axios.interceptors.response.use(response => {
-        this.loading = false;
-        return response;
-        },error => {
-        this.loading = false;
-        return Promise.reject(error);
-        });
-      axios.get('/api/v1/graduations',{})
-      .then(res => {
-        this.graduations = res.data.graduations
-      })
-      .catch(err => {
-        console.error(err); 
-      })
+  async mounted() {
+    await axios.get(`/api/v1/programs`).then((response) => {
+              this.programs = response.data.programs;
+            });
+    await axios.get(`/api/v1/campuses`).then((response) => {
+          this.campuses = response.data.campuses;
+    });
+    await axios.get(`/api/v1/graduations`).then((response) => {
+          this.semesters = response.data.semesters;
+    });
+    await axios.get(`/api/v1/designations`).then((response) => {
+          this.designations = response.data.designations;
+    });
+    await axios.get(`/api/v1/signatories`).then((response) => {
+          this.signatories = response.data.signatories.data;
+    });
+    await axios.get(`/api/v1/purposes`).then((response) => {
+          this.purposes = response.data.purposes;
+    });
+  },
 
-      },
-     
-      editItem (item) {
-        this.editedIndex = this.graduations.indexOf(item)
-        this.editedItem = Object.assign({}, item)
-        this.dialog = true
-      },
+  methods: {
+    async setEditedItem(val){
+      this.editedForms = val;
+      this.isEditMode = true;
+      this.forms = this.editedForms;
+    },
+    async clearForms(){
+      this.editedForms = this.defaultForms;
+      this.isEditMode = false;
+      this.forms = this.defaultForms;
+      this.$refs.childComponent.editRowReset();
 
-      deleteItem (item) {
-        const index = this.graduations.indexOf(item)
-        console.log(index)
-         let decide = confirm("Are you sure you want to delete this item?");
-        if (decide) {
-        axios
-          .delete("/api/v1/graduations/" + item.id)
-          .then(res => {
-            this.text = "Record Deleted Successfully!"; 
-            this.snackbarColor ="primary darken-1";
-            this.snackbar = true;
-            console.log(this.graduations.splice(index,1))
-          })
-          .catch((err) => {
-            // console.log("err.response");
-            this.text = "Error Deleting Record!";
-            this.snackbarColor ="error darken-1";
-            this.snackbar = true;
+    },
+    async submit() {
+      if (this.$refs.form.validate()) {
+        this.formActionLoading = true;
+        const data = {
+          code: this.forms.code,
+          description: this.forms.description,
+          schedules: this.forms.schedules,
 
-          });
+        };
+        if (this.isEditMode) {
+          // save changes
+          try {
+            const response = await axios.put('/api/v1/graduations/'+ this.editedForms.id, data);
+            this.editedForms = this.defaultForms;
+            
+            this.forms = this.defaultForms;
+
+            this.isEditMode = false;
+            this.formActionLoading = false;
+            this.$refs.childComponent.nextPage();
+            this.$refs.childComponent.editRowReset();
+            // handle success
+          } catch (error) {
+            this.formActionLoading = false;
+
+            // handle error
+          }
+        } else {
+          // add item
+          try {
+            const response = await axios.post('/api/v1/graduations', data);
+            this.$refs.childComponent.nextPage();
+            this.$refs.childComponent.editRowReset();
+
+            this.forms = this.defaultForms;
+            this.formActionLoading = false;
+
+            // handle success
+          } catch (error) {
+            this.formActionLoading = false;
+
+            // handle error
+          }
+        }
       }
-      this.close();
-      },
-
-      close () {
-        this.dialog = false
-        this.$nextTick(() => {
-          this.editedItem = Object.assign({}, this.defaultItem)
-          this.editedIndex = -1
-        })
-      },
-
-      save () {
-       if (this.editedIndex > -1) {
-        const index = this.editedIndex;
-        console.log("Temp Data "+ this.tempItem)
-        
-           axios
-          .put("/api/v1/graduations/" + this.editedItem.id, this.editedItem)
-          .then((res) => {
-            this.text = "Record Updated Successfully!";
-            this.snackbarColor ="primary darken-1";
-            this.snackbar = true;
-            Object.assign(this.graduations[index], res.data.graduation);
-            console.log(this.editedItem);
-            this.close();
-          })
-          .catch((err) => {
-            console.log(err.response);
-            this.text = "Error Updating Record";
-            this.snackbarColor ="error darken-1";
-            this.snackbar = true;
-          });
-       
-          
-      } else {
-        console.log(this.editedItem)
-
-        axios
-          .post("/api/v1/graduations", this.editedItem)
-          .then((res) => {
-            this.text = "Record Added Successfully!";
-            this.snackbarColor ="primary darken-1";
-            this.snackbar = true;
-            // this.students.data.push(res.data.student); 
-            console.log("Graduation")
-            console.log( res.data.graduations.data)
-            this.graduations = res.data.graduations.data
-            this.close();
-          })
-          .catch((err) => {
-            console.dir(err);
-            this.text = "Error Inserting Record";
-            this.snackbarColor ="error darken-1";
-            this.snackbar = true;
-          });
-          
-      } 
-       
-      
-      
-      },
     },
-  }
+  },
+};
 </script>
+
+<style>
+.text-field-text-size {
+  font-size: 14px;
+}
+</style>

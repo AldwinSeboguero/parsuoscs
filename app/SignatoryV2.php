@@ -47,4 +47,9 @@ class SignatoryV2 extends Model
     {
         return $this->belongsTo('App\Purpose','purpose_id');
     }
+    public function clearance_requests()
+{
+    return $this->hasMany(ClearanceRequestV2::class,'signatory_id');
+   
+}
 }

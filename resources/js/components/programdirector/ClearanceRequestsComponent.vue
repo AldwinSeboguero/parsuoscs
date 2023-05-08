@@ -552,7 +552,7 @@ export default {
                 'college': this.forms.college,
                 'purpose': this.forms.purpose,
                 'designation': this.forms.designation,
-                'student': this.clean(val),
+                'student': val,
                },
             })
             .then((response) => {
@@ -745,7 +745,7 @@ export default {
           this.loading = false;
           // this.semesters = response.data.semesters; 
           // this.colleges = response.data.colleges; 
-          // this.programs = response.data.programs; 
+          // this.thi.clea = response.data.programs; 
         
          this.clearancerequests = response.data.clearance_requests; 
           this.totalclearancerequests = response.data.clearance_requests.total;

@@ -4532,140 +4532,218 @@ var _this = undefined;
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _pages_components_GraduationTable__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../pages/components/GraduationTable */ "./resources/js/pages/components/GraduationTable.vue");
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return exports; }; var exports = {}, Op = Object.prototype, hasOwn = Op.hasOwnProperty, defineProperty = Object.defineProperty || function (obj, key, desc) { obj[key] = desc.value; }, $Symbol = "function" == typeof Symbol ? Symbol : {}, iteratorSymbol = $Symbol.iterator || "@@iterator", asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator", toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag"; function define(obj, key, value) { return Object.defineProperty(obj, key, { value: value, enumerable: !0, configurable: !0, writable: !0 }), obj[key]; } try { define({}, ""); } catch (err) { define = function define(obj, key, value) { return obj[key] = value; }; } function wrap(innerFn, outerFn, self, tryLocsList) { var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator, generator = Object.create(protoGenerator.prototype), context = new Context(tryLocsList || []); return defineProperty(generator, "_invoke", { value: makeInvokeMethod(innerFn, self, context) }), generator; } function tryCatch(fn, obj, arg) { try { return { type: "normal", arg: fn.call(obj, arg) }; } catch (err) { return { type: "throw", arg: err }; } } exports.wrap = wrap; var ContinueSentinel = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var IteratorPrototype = {}; define(IteratorPrototype, iteratorSymbol, function () { return this; }); var getProto = Object.getPrototypeOf, NativeIteratorPrototype = getProto && getProto(getProto(values([]))); NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype); var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(IteratorPrototype); function defineIteratorMethods(prototype) { ["next", "throw", "return"].forEach(function (method) { define(prototype, method, function (arg) { return this._invoke(method, arg); }); }); } function AsyncIterator(generator, PromiseImpl) { function invoke(method, arg, resolve, reject) { var record = tryCatch(generator[method], generator, arg); if ("throw" !== record.type) { var result = record.arg, value = result.value; return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) { invoke("next", value, resolve, reject); }, function (err) { invoke("throw", err, resolve, reject); }) : PromiseImpl.resolve(value).then(function (unwrapped) { result.value = unwrapped, resolve(result); }, function (error) { return invoke("throw", error, resolve, reject); }); } reject(record.arg); } var previousPromise; defineProperty(this, "_invoke", { value: function value(method, arg) { function callInvokeWithMethodAndArg() { return new PromiseImpl(function (resolve, reject) { invoke(method, arg, resolve, reject); }); } return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(innerFn, self, context) { var state = "suspendedStart"; return function (method, arg) { if ("executing" === state) throw new Error("Generator is already running"); if ("completed" === state) { if ("throw" === method) throw arg; return doneResult(); } for (context.method = method, context.arg = arg;;) { var delegate = context.delegate; if (delegate) { var delegateResult = maybeInvokeDelegate(delegate, context); if (delegateResult) { if (delegateResult === ContinueSentinel) continue; return delegateResult; } } if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) { if ("suspendedStart" === state) throw state = "completed", context.arg; context.dispatchException(context.arg); } else "return" === context.method && context.abrupt("return", context.arg); state = "executing"; var record = tryCatch(innerFn, self, context); if ("normal" === record.type) { if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue; return { value: record.arg, done: context.done }; } "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg); } }; } function maybeInvokeDelegate(delegate, context) { var methodName = context.method, method = delegate.iterator[methodName]; if (undefined === method) return context.delegate = null, "throw" === methodName && delegate.iterator["return"] && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method) || "return" !== methodName && (context.method = "throw", context.arg = new TypeError("The iterator does not provide a '" + methodName + "' method")), ContinueSentinel; var record = tryCatch(method, delegate.iterator, context.arg); if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel; var info = record.arg; return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel); } function pushTryEntry(locs) { var entry = { tryLoc: locs[0] }; 1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry); } function resetTryEntry(entry) { var record = entry.completion || {}; record.type = "normal", delete record.arg, entry.completion = record; } function Context(tryLocsList) { this.tryEntries = [{ tryLoc: "root" }], tryLocsList.forEach(pushTryEntry, this), this.reset(!0); } function values(iterable) { if (iterable) { var iteratorMethod = iterable[iteratorSymbol]; if (iteratorMethod) return iteratorMethod.call(iterable); if ("function" == typeof iterable.next) return iterable; if (!isNaN(iterable.length)) { var i = -1, next = function next() { for (; ++i < iterable.length;) { if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next; } return next.value = undefined, next.done = !0, next; }; return next.next = next; } } return { next: doneResult }; } function doneResult() { return { value: undefined, done: !0 }; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, defineProperty(Gp, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), defineProperty(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) { var ctor = "function" == typeof genFun && genFun.constructor; return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name)); }, exports.mark = function (genFun) { return Object.setPrototypeOf ? Object.setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = Object.create(Gp), genFun; }, exports.awrap = function (arg) { return { __await: arg }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () { return this; }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) { void 0 === PromiseImpl && (PromiseImpl = Promise); var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl); return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) { return result.done ? result.value : iter.next(); }); }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () { return this; }), define(Gp, "toString", function () { return "[object Generator]"; }), exports.keys = function (val) { var object = Object(val), keys = []; for (var key in object) { keys.push(key); } return keys.reverse(), function next() { for (; keys.length;) { var key = keys.pop(); if (key in object) return next.value = key, next.done = !1, next; } return next.done = !0, next; }; }, exports.values = values, Context.prototype = { constructor: Context, reset: function reset(skipTempReset) { if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, this.tryEntries.forEach(resetTryEntry), !skipTempReset) for (var name in this) { "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined); } }, stop: function stop() { this.done = !0; var rootRecord = this.tryEntries[0].completion; if ("throw" === rootRecord.type) throw rootRecord.arg; return this.rval; }, dispatchException: function dispatchException(exception) { if (this.done) throw exception; var context = this; function handle(loc, caught) { return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught; } for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i], record = entry.completion; if ("root" === entry.tryLoc) return handle("end"); if (entry.tryLoc <= this.prev) { var hasCatch = hasOwn.call(entry, "catchLoc"), hasFinally = hasOwn.call(entry, "finallyLoc"); if (hasCatch && hasFinally) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } else if (hasCatch) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); } else { if (!hasFinally) throw new Error("try statement without catch or finally"); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } } } }, abrupt: function abrupt(type, arg) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) { var finallyEntry = entry; break; } } finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null); var record = finallyEntry ? finallyEntry.completion : {}; return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record); }, complete: function complete(record, afterLoc) { if ("throw" === record.type) throw record.arg; return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel; }, finish: function finish(finallyLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel; } }, "catch": function _catch(tryLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc === tryLoc) { var record = entry.completion; if ("throw" === record.type) { var thrown = record.arg; resetTryEntry(entry); } return thrown; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(iterable, resultName, nextLoc) { return this.delegate = { iterator: values(iterable), resultName: resultName, nextLoc: nextLoc }, "next" === this.method && (this.arg = undefined), ContinueSentinel; } }, exports; }
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'ParsuoscsV2StaffComponent',
+  components: {
+    Table: _pages_components_GraduationTable__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
   data: function data() {
     return {
-      dialog: false,
-      loading: false,
-      headers: [{
-        text: 'Name',
-        value: 'graduation'
-      }, {
-        text: 'Action',
-        align: 'right',
-        value: 'actions'
-      }],
-      graduations: [],
-      editedIndex: -1,
-      text: "",
-      success: "",
-      error: "",
-      snackbarColor: "",
-      editedItem: {
-        id: '',
-        graduation: ''
+      valid: true,
+      formName: 'Add',
+      formIcon: 'mdi-file-plus',
+      formAction: 'Save',
+      formActionIcon: 'mdi-content-save',
+      formActionColor: 'success',
+      formActionLoading: false,
+      isEditMode: false,
+      startDate: '',
+      endDate: '',
+      menuOpen: false,
+      schedules: [],
+      query: ' ',
+      offSet: true,
+      search: null,
+      page: 0,
+      totalStaffs: 0,
+      numberOfPages: 0,
+      options: {},
+      staffs: {},
+      campuses: {},
+      programs: {},
+      purposes: {},
+      designations: {},
+      semesters: {},
+      signatories: {},
+      forms: {
+        code: '',
+        description: '',
+        schedules: []
       },
-      defaultItem: {
+      editedForms: {
         id: '',
-        graduation: ''
+        code: '',
+        description: '',
+        schedules: []
+      },
+      defaultForms: {
+        id: '',
+        code: '',
+        description: '',
+        schedules: []
       }
     };
   },
-  computed: {
-    formTitle: function formTitle() {
-      return this.editedIndex === -1 ? 'New Item' : 'Edit Item';
-    }
-  },
-  watch: {
-    dialog: function dialog(val) {
-      val || this.close();
-    }
-  },
-  created: function created() {
-    this.initialize();
+  mounted: function mounted() {
+    var _this = this;
+    return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+      return _regeneratorRuntime().wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.next = 2;
+              return axios.get("/api/v1/programs").then(function (response) {
+                _this.programs = response.data.programs;
+              });
+            case 2:
+              _context.next = 4;
+              return axios.get("/api/v1/campuses").then(function (response) {
+                _this.campuses = response.data.campuses;
+              });
+            case 4:
+              _context.next = 6;
+              return axios.get("/api/v1/graduations").then(function (response) {
+                _this.semesters = response.data.semesters;
+              });
+            case 6:
+              _context.next = 8;
+              return axios.get("/api/v1/designations").then(function (response) {
+                _this.designations = response.data.designations;
+              });
+            case 8:
+              _context.next = 10;
+              return axios.get("/api/v1/signatories").then(function (response) {
+                _this.signatories = response.data.signatories.data;
+              });
+            case 10:
+              _context.next = 12;
+              return axios.get("/api/v1/purposes").then(function (response) {
+                _this.purposes = response.data.purposes;
+              });
+            case 12:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }))();
   },
   methods: {
-    initialize: function initialize() {
-      var _this = this;
-      axios.interceptors.request.use(function (config) {
-        _this.loading = true;
-        return config;
-      }, function (error) {
-        _this.loading = false;
-        return Promise.reject(error);
-      });
-      axios.interceptors.response.use(function (response) {
-        _this.loading = false;
-        return response;
-      }, function (error) {
-        _this.loading = false;
-        return Promise.reject(error);
-      });
-      axios.get('/api/v1/graduations', {}).then(function (res) {
-        _this.graduations = res.data.graduations;
-      })["catch"](function (err) {
-        console.error(err);
-      });
-    },
-    editItem: function editItem(item) {
-      this.editedIndex = this.graduations.indexOf(item);
-      this.editedItem = Object.assign({}, item);
-      this.dialog = true;
-    },
-    deleteItem: function deleteItem(item) {
+    setEditedItem: function setEditedItem(val) {
       var _this2 = this;
-      var index = this.graduations.indexOf(item);
-      console.log(index);
-      var decide = confirm("Are you sure you want to delete this item?");
-      if (decide) {
-        axios["delete"]("/api/v1/graduations/" + item.id).then(function (res) {
-          _this2.text = "Record Deleted Successfully!";
-          _this2.snackbarColor = "primary darken-1";
-          _this2.snackbar = true;
-          console.log(_this2.graduations.splice(index, 1));
-        })["catch"](function (err) {
-          // console.log("err.response");
-          _this2.text = "Error Deleting Record!";
-          _this2.snackbarColor = "error darken-1";
-          _this2.snackbar = true;
-        });
-      }
-      this.close();
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _this2.editedForms = val;
+                _this2.isEditMode = true;
+                _this2.forms = _this2.editedForms;
+              case 3:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
     },
-    close: function close() {
+    clearForms: function clearForms() {
       var _this3 = this;
-      this.dialog = false;
-      this.$nextTick(function () {
-        _this3.editedItem = Object.assign({}, _this3.defaultItem);
-        _this3.editedIndex = -1;
-      });
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
+        return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _this3.editedForms = _this3.defaultForms;
+                _this3.isEditMode = false;
+                _this3.forms = _this3.defaultForms;
+                _this3.$refs.childComponent.editRowReset();
+              case 4:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }))();
     },
-    save: function save() {
+    submit: function submit() {
       var _this4 = this;
-      if (this.editedIndex > -1) {
-        var index = this.editedIndex;
-        console.log("Temp Data " + this.tempItem);
-        axios.put("/api/v1/graduations/" + this.editedItem.id, this.editedItem).then(function (res) {
-          _this4.text = "Record Updated Successfully!";
-          _this4.snackbarColor = "primary darken-1";
-          _this4.snackbar = true;
-          Object.assign(_this4.graduations[index], res.data.graduation);
-          console.log(_this4.editedItem);
-          _this4.close();
-        })["catch"](function (err) {
-          console.log(err.response);
-          _this4.text = "Error Updating Record";
-          _this4.snackbarColor = "error darken-1";
-          _this4.snackbar = true;
-        });
-      } else {
-        console.log(this.editedItem);
-        axios.post("/api/v1/graduations", this.editedItem).then(function (res) {
-          _this4.text = "Record Added Successfully!";
-          _this4.snackbarColor = "primary darken-1";
-          _this4.snackbar = true;
-          // this.students.data.push(res.data.student); 
-          console.log("Graduation");
-          console.log(res.data.graduations.data);
-          _this4.graduations = res.data.graduations.data;
-          _this4.close();
-        })["catch"](function (err) {
-          console.dir(err);
-          _this4.text = "Error Inserting Record";
-          _this4.snackbarColor = "error darken-1";
-          _this4.snackbar = true;
-        });
-      }
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
+        var data, response, _response;
+        return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                if (!_this4.$refs.form.validate()) {
+                  _context4.next = 34;
+                  break;
+                }
+                _this4.formActionLoading = true;
+                data = {
+                  code: _this4.forms.code,
+                  description: _this4.forms.description,
+                  schedules: _this4.forms.schedules
+                };
+                if (!_this4.isEditMode) {
+                  _context4.next = 21;
+                  break;
+                }
+                _context4.prev = 4;
+                _context4.next = 7;
+                return axios.put('/api/v1/graduations/' + _this4.editedForms.id, data);
+              case 7:
+                response = _context4.sent;
+                _this4.editedForms = _this4.defaultForms;
+                _this4.forms = _this4.defaultForms;
+                _this4.isEditMode = false;
+                _this4.formActionLoading = false;
+                _this4.$refs.childComponent.nextPage();
+                _this4.$refs.childComponent.editRowReset();
+                // handle success
+                _context4.next = 19;
+                break;
+              case 16:
+                _context4.prev = 16;
+                _context4.t0 = _context4["catch"](4);
+                _this4.formActionLoading = false;
+
+                // handle error
+              case 19:
+                _context4.next = 34;
+                break;
+              case 21:
+                _context4.prev = 21;
+                _context4.next = 24;
+                return axios.post('/api/v1/graduations', data);
+              case 24:
+                _response = _context4.sent;
+                _this4.$refs.childComponent.nextPage();
+                _this4.$refs.childComponent.editRowReset();
+                _this4.forms = _this4.defaultForms;
+                _this4.formActionLoading = false;
+
+                // handle success
+                _context4.next = 34;
+                break;
+              case 31:
+                _context4.prev = 31;
+                _context4.t1 = _context4["catch"](21);
+                _this4.formActionLoading = false;
+
+                // handle error
+              case 34:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, null, [[4, 16], [21, 31]]);
+      }))();
     }
   }
 });
@@ -5774,6 +5852,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var lodash_debounce__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lodash/debounce */ "./node_modules/lodash/debounce.js");
 /* harmony import */ var lodash_debounce__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash_debounce__WEBPACK_IMPORTED_MODULE_1__);
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return exports; }; var exports = {}, Op = Object.prototype, hasOwn = Op.hasOwnProperty, defineProperty = Object.defineProperty || function (obj, key, desc) { obj[key] = desc.value; }, $Symbol = "function" == typeof Symbol ? Symbol : {}, iteratorSymbol = $Symbol.iterator || "@@iterator", asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator", toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag"; function define(obj, key, value) { return Object.defineProperty(obj, key, { value: value, enumerable: !0, configurable: !0, writable: !0 }), obj[key]; } try { define({}, ""); } catch (err) { define = function define(obj, key, value) { return obj[key] = value; }; } function wrap(innerFn, outerFn, self, tryLocsList) { var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator, generator = Object.create(protoGenerator.prototype), context = new Context(tryLocsList || []); return defineProperty(generator, "_invoke", { value: makeInvokeMethod(innerFn, self, context) }), generator; } function tryCatch(fn, obj, arg) { try { return { type: "normal", arg: fn.call(obj, arg) }; } catch (err) { return { type: "throw", arg: err }; } } exports.wrap = wrap; var ContinueSentinel = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var IteratorPrototype = {}; define(IteratorPrototype, iteratorSymbol, function () { return this; }); var getProto = Object.getPrototypeOf, NativeIteratorPrototype = getProto && getProto(getProto(values([]))); NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype); var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(IteratorPrototype); function defineIteratorMethods(prototype) { ["next", "throw", "return"].forEach(function (method) { define(prototype, method, function (arg) { return this._invoke(method, arg); }); }); } function AsyncIterator(generator, PromiseImpl) { function invoke(method, arg, resolve, reject) { var record = tryCatch(generator[method], generator, arg); if ("throw" !== record.type) { var result = record.arg, value = result.value; return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) { invoke("next", value, resolve, reject); }, function (err) { invoke("throw", err, resolve, reject); }) : PromiseImpl.resolve(value).then(function (unwrapped) { result.value = unwrapped, resolve(result); }, function (error) { return invoke("throw", error, resolve, reject); }); } reject(record.arg); } var previousPromise; defineProperty(this, "_invoke", { value: function value(method, arg) { function callInvokeWithMethodAndArg() { return new PromiseImpl(function (resolve, reject) { invoke(method, arg, resolve, reject); }); } return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(innerFn, self, context) { var state = "suspendedStart"; return function (method, arg) { if ("executing" === state) throw new Error("Generator is already running"); if ("completed" === state) { if ("throw" === method) throw arg; return doneResult(); } for (context.method = method, context.arg = arg;;) { var delegate = context.delegate; if (delegate) { var delegateResult = maybeInvokeDelegate(delegate, context); if (delegateResult) { if (delegateResult === ContinueSentinel) continue; return delegateResult; } } if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) { if ("suspendedStart" === state) throw state = "completed", context.arg; context.dispatchException(context.arg); } else "return" === context.method && context.abrupt("return", context.arg); state = "executing"; var record = tryCatch(innerFn, self, context); if ("normal" === record.type) { if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue; return { value: record.arg, done: context.done }; } "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg); } }; } function maybeInvokeDelegate(delegate, context) { var methodName = context.method, method = delegate.iterator[methodName]; if (undefined === method) return context.delegate = null, "throw" === methodName && delegate.iterator["return"] && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method) || "return" !== methodName && (context.method = "throw", context.arg = new TypeError("The iterator does not provide a '" + methodName + "' method")), ContinueSentinel; var record = tryCatch(method, delegate.iterator, context.arg); if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel; var info = record.arg; return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel); } function pushTryEntry(locs) { var entry = { tryLoc: locs[0] }; 1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry); } function resetTryEntry(entry) { var record = entry.completion || {}; record.type = "normal", delete record.arg, entry.completion = record; } function Context(tryLocsList) { this.tryEntries = [{ tryLoc: "root" }], tryLocsList.forEach(pushTryEntry, this), this.reset(!0); } function values(iterable) { if (iterable) { var iteratorMethod = iterable[iteratorSymbol]; if (iteratorMethod) return iteratorMethod.call(iterable); if ("function" == typeof iterable.next) return iterable; if (!isNaN(iterable.length)) { var i = -1, next = function next() { for (; ++i < iterable.length;) { if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next; } return next.value = undefined, next.done = !0, next; }; return next.next = next; } } return { next: doneResult }; } function doneResult() { return { value: undefined, done: !0 }; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, defineProperty(Gp, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), defineProperty(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) { var ctor = "function" == typeof genFun && genFun.constructor; return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name)); }, exports.mark = function (genFun) { return Object.setPrototypeOf ? Object.setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = Object.create(Gp), genFun; }, exports.awrap = function (arg) { return { __await: arg }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () { return this; }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) { void 0 === PromiseImpl && (PromiseImpl = Promise); var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl); return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) { return result.done ? result.value : iter.next(); }); }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () { return this; }), define(Gp, "toString", function () { return "[object Generator]"; }), exports.keys = function (val) { var object = Object(val), keys = []; for (var key in object) { keys.push(key); } return keys.reverse(), function next() { for (; keys.length;) { var key = keys.pop(); if (key in object) return next.value = key, next.done = !1, next; } return next.done = !0, next; }; }, exports.values = values, Context.prototype = { constructor: Context, reset: function reset(skipTempReset) { if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, this.tryEntries.forEach(resetTryEntry), !skipTempReset) for (var name in this) { "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined); } }, stop: function stop() { this.done = !0; var rootRecord = this.tryEntries[0].completion; if ("throw" === rootRecord.type) throw rootRecord.arg; return this.rval; }, dispatchException: function dispatchException(exception) { if (this.done) throw exception; var context = this; function handle(loc, caught) { return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught; } for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i], record = entry.completion; if ("root" === entry.tryLoc) return handle("end"); if (entry.tryLoc <= this.prev) { var hasCatch = hasOwn.call(entry, "catchLoc"), hasFinally = hasOwn.call(entry, "finallyLoc"); if (hasCatch && hasFinally) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } else if (hasCatch) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); } else { if (!hasFinally) throw new Error("try statement without catch or finally"); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } } } }, abrupt: function abrupt(type, arg) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) { var finallyEntry = entry; break; } } finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null); var record = finallyEntry ? finallyEntry.completion : {}; return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record); }, complete: function complete(record, afterLoc) { if ("throw" === record.type) throw record.arg; return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel; }, finish: function finish(finallyLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel; } }, "catch": function _catch(tryLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc === tryLoc) { var record = entry.completion; if ("throw" === record.type) { var thrown = record.arg; resetTryEntry(entry); } return thrown; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(iterable, resultName, nextLoc) { return this.delegate = { iterator: values(iterable), resultName: resultName, nextLoc: nextLoc }, "next" === this.method && (this.arg = undefined), ContinueSentinel; } }, exports; }
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
@@ -5922,7 +6005,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       };
       axios.get("/api/v1/colleges", {
         params: {
-          'campus': val
+          'campus': val,
+          'byPass': true
         }
       }).then(function (response) {
         _this2.colleges = response.data.colleges;
@@ -6035,10 +6119,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       // Removes special chars.
     },
     setEditedItem: function setEditedItem(val) {
+      var _this5 = this;
       console.log(val);
       this.editedForms = val;
       this.isEditMode = true;
-      this.forms = this.editedForms;
+      this.forms = _objectSpread({}, this.editedForms);
+      this.forms.college_id = this.colleges.find(function (signatory) {
+        return signatory.id === _this5.editedForms.college_id;
+      });
+      this.forms.campus_id = this.campuses.find(function (signatory) {
+        return signatory.id === _this5.editedForms.campus_id;
+      });
+      this.forms.program_id = this.programs.find(function (signatory) {
+        return signatory.id === _this5.editedForms.program_id;
+      });
       this.formName = 'Update';
       this.formIcon = 'mdi-file-edit';
     },
@@ -6051,50 +6145,50 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.formIcon = 'mdi-file-plus';
     },
     submit: function submit() {
-      var _this5 = this;
+      var _this6 = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
         var data, response, _response;
         return _regeneratorRuntime().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                if (!_this5.$refs.form.validate()) {
+                if (!_this6.$refs.form.validate()) {
                   _context2.next = 38;
                   break;
                 }
-                _this5.formActionLoading = true;
+                _this6.formActionLoading = true;
                 data = {
-                  student_id: _this5.clean(_this5.forms.student_id),
-                  name: _this5.clean(_this5.forms.name),
-                  email: _this5.forms.email,
-                  college_id: _this5.forms.college_id,
-                  campus_id: _this5.forms.campus_id,
-                  program_id: _this5.forms.program_id
+                  student_id: _this6.clean(_this6.forms.student_id),
+                  name: _this6.clean(_this6.forms.name),
+                  email: _this6.forms.email,
+                  college_id: _this6.forms.college_id,
+                  campus_id: _this6.forms.campus_id,
+                  program_id: _this6.forms.program_id
                 };
-                if (!_this5.isEditMode) {
+                if (!_this6.isEditMode) {
                   _context2.next = 23;
                   break;
                 }
                 _context2.prev = 4;
                 _context2.next = 7;
-                return axios.put('/api/v1/adminstudents/' + _this5.editedForms.id, data);
+                return axios.put('/api/v1/adminstudents/' + _this6.editedForms.id, data);
               case 7:
                 response = _context2.sent;
-                _this5.editedForms = _this5.defaultForms;
-                _this5.forms = _this5.defaultForms;
-                _this5.formName = 'Add';
-                _this5.formIcon = 'mdi-file-plus';
-                _this5.isEditMode = false;
-                _this5.formActionLoading = false;
-                _this5.$refs.childComponent.nextPage();
-                _this5.$refs.childComponent.editRowReset();
+                _this6.editedForms = _this6.defaultForms;
+                _this6.forms = _this6.defaultForms;
+                _this6.formName = 'Add';
+                _this6.formIcon = 'mdi-file-plus';
+                _this6.isEditMode = false;
+                _this6.formActionLoading = false;
+                _this6.$refs.childComponent.nextPage();
+                _this6.$refs.childComponent.editRowReset();
                 // handle success
                 _context2.next = 21;
                 break;
               case 18:
                 _context2.prev = 18;
                 _context2.t0 = _context2["catch"](4);
-                _this5.formActionLoading = false;
+                _this6.formActionLoading = false;
 
                 // handle error
               case 21:
@@ -6106,19 +6200,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return axios.post('/api/v1/adminstudents', data);
               case 26:
                 _response = _context2.sent;
-                _this5.$refs.childComponent.nextPage();
-                _this5.$refs.childComponent.editRowReset();
-                _this5.forms = _this5.defaultForms;
-                _this5.formActionLoading = false;
-                _this5.formName = 'Add';
-                _this5.formIcon = 'mdi-file-plus';
+                _this6.$refs.childComponent.nextPage();
+                _this6.$refs.childComponent.editRowReset();
+                _this6.forms = _this6.defaultForms;
+                _this6.formActionLoading = false;
+                _this6.formName = 'Add';
+                _this6.formIcon = 'mdi-file-plus';
                 // handle success
                 _context2.next = 38;
                 break;
               case 35:
                 _context2.prev = 35;
                 _context2.t1 = _context2["catch"](23);
-                _this5.formActionLoading = false;
+                _this6.formActionLoading = false;
 
                 // handle error
               case 38:
@@ -8281,6 +8375,11 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _pages_components_Table__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../pages/components/Table */ "./resources/js/pages/components/Table.vue");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return exports; }; var exports = {}, Op = Object.prototype, hasOwn = Op.hasOwnProperty, defineProperty = Object.defineProperty || function (obj, key, desc) { obj[key] = desc.value; }, $Symbol = "function" == typeof Symbol ? Symbol : {}, iteratorSymbol = $Symbol.iterator || "@@iterator", asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator", toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag"; function define(obj, key, value) { return Object.defineProperty(obj, key, { value: value, enumerable: !0, configurable: !0, writable: !0 }), obj[key]; } try { define({}, ""); } catch (err) { define = function define(obj, key, value) { return obj[key] = value; }; } function wrap(innerFn, outerFn, self, tryLocsList) { var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator, generator = Object.create(protoGenerator.prototype), context = new Context(tryLocsList || []); return defineProperty(generator, "_invoke", { value: makeInvokeMethod(innerFn, self, context) }), generator; } function tryCatch(fn, obj, arg) { try { return { type: "normal", arg: fn.call(obj, arg) }; } catch (err) { return { type: "throw", arg: err }; } } exports.wrap = wrap; var ContinueSentinel = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var IteratorPrototype = {}; define(IteratorPrototype, iteratorSymbol, function () { return this; }); var getProto = Object.getPrototypeOf, NativeIteratorPrototype = getProto && getProto(getProto(values([]))); NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype); var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(IteratorPrototype); function defineIteratorMethods(prototype) { ["next", "throw", "return"].forEach(function (method) { define(prototype, method, function (arg) { return this._invoke(method, arg); }); }); } function AsyncIterator(generator, PromiseImpl) { function invoke(method, arg, resolve, reject) { var record = tryCatch(generator[method], generator, arg); if ("throw" !== record.type) { var result = record.arg, value = result.value; return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) { invoke("next", value, resolve, reject); }, function (err) { invoke("throw", err, resolve, reject); }) : PromiseImpl.resolve(value).then(function (unwrapped) { result.value = unwrapped, resolve(result); }, function (error) { return invoke("throw", error, resolve, reject); }); } reject(record.arg); } var previousPromise; defineProperty(this, "_invoke", { value: function value(method, arg) { function callInvokeWithMethodAndArg() { return new PromiseImpl(function (resolve, reject) { invoke(method, arg, resolve, reject); }); } return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(innerFn, self, context) { var state = "suspendedStart"; return function (method, arg) { if ("executing" === state) throw new Error("Generator is already running"); if ("completed" === state) { if ("throw" === method) throw arg; return doneResult(); } for (context.method = method, context.arg = arg;;) { var delegate = context.delegate; if (delegate) { var delegateResult = maybeInvokeDelegate(delegate, context); if (delegateResult) { if (delegateResult === ContinueSentinel) continue; return delegateResult; } } if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) { if ("suspendedStart" === state) throw state = "completed", context.arg; context.dispatchException(context.arg); } else "return" === context.method && context.abrupt("return", context.arg); state = "executing"; var record = tryCatch(innerFn, self, context); if ("normal" === record.type) { if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue; return { value: record.arg, done: context.done }; } "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg); } }; } function maybeInvokeDelegate(delegate, context) { var methodName = context.method, method = delegate.iterator[methodName]; if (undefined === method) return context.delegate = null, "throw" === methodName && delegate.iterator["return"] && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method) || "return" !== methodName && (context.method = "throw", context.arg = new TypeError("The iterator does not provide a '" + methodName + "' method")), ContinueSentinel; var record = tryCatch(method, delegate.iterator, context.arg); if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel; var info = record.arg; return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel); } function pushTryEntry(locs) { var entry = { tryLoc: locs[0] }; 1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry); } function resetTryEntry(entry) { var record = entry.completion || {}; record.type = "normal", delete record.arg, entry.completion = record; } function Context(tryLocsList) { this.tryEntries = [{ tryLoc: "root" }], tryLocsList.forEach(pushTryEntry, this), this.reset(!0); } function values(iterable) { if (iterable) { var iteratorMethod = iterable[iteratorSymbol]; if (iteratorMethod) return iteratorMethod.call(iterable); if ("function" == typeof iterable.next) return iterable; if (!isNaN(iterable.length)) { var i = -1, next = function next() { for (; ++i < iterable.length;) { if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next; } return next.value = undefined, next.done = !0, next; }; return next.next = next; } } return { next: doneResult }; } function doneResult() { return { value: undefined, done: !0 }; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, defineProperty(Gp, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), defineProperty(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) { var ctor = "function" == typeof genFun && genFun.constructor; return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name)); }, exports.mark = function (genFun) { return Object.setPrototypeOf ? Object.setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = Object.create(Gp), genFun; }, exports.awrap = function (arg) { return { __await: arg }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () { return this; }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) { void 0 === PromiseImpl && (PromiseImpl = Promise); var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl); return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) { return result.done ? result.value : iter.next(); }); }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () { return this; }), define(Gp, "toString", function () { return "[object Generator]"; }), exports.keys = function (val) { var object = Object(val), keys = []; for (var key in object) { keys.push(key); } return keys.reverse(), function next() { for (; keys.length;) { var key = keys.pop(); if (key in object) return next.value = key, next.done = !1, next; } return next.done = !0, next; }; }, exports.values = values, Context.prototype = { constructor: Context, reset: function reset(skipTempReset) { if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, this.tryEntries.forEach(resetTryEntry), !skipTempReset) for (var name in this) { "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined); } }, stop: function stop() { this.done = !0; var rootRecord = this.tryEntries[0].completion; if ("throw" === rootRecord.type) throw rootRecord.arg; return this.rval; }, dispatchException: function dispatchException(exception) { if (this.done) throw exception; var context = this; function handle(loc, caught) { return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught; } for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i], record = entry.completion; if ("root" === entry.tryLoc) return handle("end"); if (entry.tryLoc <= this.prev) { var hasCatch = hasOwn.call(entry, "catchLoc"), hasFinally = hasOwn.call(entry, "finallyLoc"); if (hasCatch && hasFinally) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } else if (hasCatch) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); } else { if (!hasFinally) throw new Error("try statement without catch or finally"); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } } } }, abrupt: function abrupt(type, arg) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) { var finallyEntry = entry; break; } } finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null); var record = finallyEntry ? finallyEntry.completion : {}; return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record); }, complete: function complete(record, afterLoc) { if ("throw" === record.type) throw record.arg; return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel; }, finish: function finish(finallyLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel; } }, "catch": function _catch(tryLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc === tryLoc) { var record = entry.completion; if ("throw" === record.type) { var thrown = record.arg; resetTryEntry(entry); } return thrown; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(iterable, resultName, nextLoc) { return this.delegate = { iterator: values(iterable), resultName: resultName, nextLoc: nextLoc }, "next" === this.method && (this.arg = undefined), ContinueSentinel; } }, exports; }
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
@@ -8292,10 +8391,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   data: function data() {
     return {
+      formActionLoading: false,
+      isEditMode: '',
       query: ' ',
       offSet: true,
       search: null,
       page: 0,
+      isEdit: false,
       totalStaffs: 0,
       numberOfPages: 0,
       options: {},
@@ -8307,14 +8409,24 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       semesters: {},
       signatories: {},
       forms: {
+        id: "",
         semester: '',
         campus: '',
         program: '',
         designation: '',
         signatory: '',
-        purpose: ''
+        campus_id: "",
+        designee_id: "",
+        semester_id: "",
+        user_id: '',
+        new_semester_id: ''
       },
       editedItem: {
+        semester: '',
+        campus: '',
+        program: '',
+        designation: '',
+        signatory: '',
         id: "",
         campus_id: "",
         designee_id: "",
@@ -8323,6 +8435,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         new_semester_id: ''
       },
       defaultItem: {
+        semester: '',
+        campus: '',
+        program: '',
+        designation: '',
+        signatory: '',
         id: "",
         campus_id: "",
         designee_id: "",
@@ -8376,7 +8493,117 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }, _callee);
     }))();
   },
-  methods: {}
+  methods: {
+    cancelEdit: function cancelEdit() {
+      var _this2 = this;
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _this2.isEdit = false;
+                _this2.editedForms = _this2.defaultForms;
+                // this.isEditMode = false;
+                _this2.forms = _objectSpread({}, _this2.defaultForms);
+                _this2.$refs.childComponent.editRowReset();
+              case 4:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    },
+    setEditedItem: function setEditedItem(val, isEditedMode) {
+      var _this3 = this;
+      this.editedForms = val;
+      this.isEditMode = isEditedMode;
+      this.forms = _objectSpread({}, this.editedForms);
+      // console.log("Edit Mode : "+this.isEditMode)
+      this.isEdit = true;
+      // this.forms.signatory.id = this.editedForms.id;
+      this.forms.signatory = this.signatories.find(function (signatory) {
+        return signatory.id === _this3.editedForms.user_id;
+      });
+      this.forms.designation = this.designations.find(function (signatory) {
+        return signatory.id === _this3.editedForms.designee_id;
+      });
+      this.forms.campus = this.campuses.find(function (signatory) {
+        return signatory.id === _this3.editedForms.campus_id;
+      });
+      this.forms.program = this.programs.find(function (signatory) {
+        return signatory.id === _this3.editedForms.program_id;
+      });
+      this.forms.purpose = this.purposes.find(function (signatory) {
+        return signatory.id === _this3.editedForms.purpose_id;
+      });
+      this.forms.semester = this.semesters.find(function (signatory) {
+        return signatory.id === _this3.editedForms.semester_id;
+      });
+    },
+    clearForms: function clearForms() {
+      var _this4 = this;
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
+        return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _this4.editedForms = _this4.defaultForms;
+                _this4.isEditMode = false;
+                _this4.forms = _this4.defaultForms;
+                _this4.$refs.childComponent.editRowReset();
+              case 4:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }))();
+    },
+    submit: function submit() {
+      var _this5 = this;
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
+        var data, response;
+        return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                console.log("Submit Click");
+                _this5.formActionLoading = true;
+                data = {
+                  // code: this.forms.code,
+                  description: _this5.forms.description,
+                  schedules: _this5.forms.schedules
+                };
+                _context4.prev = 3;
+                _context4.next = 6;
+                return axios.put('/api/v1/staffs/' + _this5.editedForms.id, data);
+              case 6:
+                response = _context4.sent;
+                _this5.editedForms = _this5.defaultForms;
+                _this5.forms = _this5.defaultForms;
+                _this5.isEditMode = false;
+                _this5.formActionLoading = false;
+                _this5.$refs.childComponent.nextPage();
+                _this5.$refs.childComponent.editRowReset();
+                // handle success
+                _context4.next = 18;
+                break;
+              case 15:
+                _context4.prev = 15;
+                _context4.t0 = _context4["catch"](3);
+                _this5.formActionLoading = false;
+
+                // handle error
+              case 18:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, null, [[3, 15]]);
+      }))();
+    }
+  }
 });
 
 /***/ }),
@@ -13104,7 +13331,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
           'college': this.forms.college,
           'purpose': this.forms.purpose,
           'designation': this.forms.designation,
-          'student': this.clean(val)
+          'student': val
         }
       }).then(function (response) {
         // this.semester = response.data.semester.semester;
@@ -13292,7 +13519,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         _this8.loading = false;
         // this.semesters = response.data.semesters; 
         // this.colleges = response.data.colleges; 
-        // this.programs = response.data.programs; 
+        // this.thi.clea = response.data.programs; 
 
         _this8.clearancerequests = response.data.clearance_requests;
         _this8.totalclearancerequests = response.data.clearance_requests.total;
@@ -15955,6 +16182,344 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/components/GraduationTable.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/components/GraduationTable.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var lodash_debounce__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash/debounce */ "./node_modules/lodash/debounce.js");
+/* harmony import */ var lodash_debounce__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash_debounce__WEBPACK_IMPORTED_MODULE_0__);
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return exports; }; var exports = {}, Op = Object.prototype, hasOwn = Op.hasOwnProperty, defineProperty = Object.defineProperty || function (obj, key, desc) { obj[key] = desc.value; }, $Symbol = "function" == typeof Symbol ? Symbol : {}, iteratorSymbol = $Symbol.iterator || "@@iterator", asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator", toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag"; function define(obj, key, value) { return Object.defineProperty(obj, key, { value: value, enumerable: !0, configurable: !0, writable: !0 }), obj[key]; } try { define({}, ""); } catch (err) { define = function define(obj, key, value) { return obj[key] = value; }; } function wrap(innerFn, outerFn, self, tryLocsList) { var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator, generator = Object.create(protoGenerator.prototype), context = new Context(tryLocsList || []); return defineProperty(generator, "_invoke", { value: makeInvokeMethod(innerFn, self, context) }), generator; } function tryCatch(fn, obj, arg) { try { return { type: "normal", arg: fn.call(obj, arg) }; } catch (err) { return { type: "throw", arg: err }; } } exports.wrap = wrap; var ContinueSentinel = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var IteratorPrototype = {}; define(IteratorPrototype, iteratorSymbol, function () { return this; }); var getProto = Object.getPrototypeOf, NativeIteratorPrototype = getProto && getProto(getProto(values([]))); NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype); var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(IteratorPrototype); function defineIteratorMethods(prototype) { ["next", "throw", "return"].forEach(function (method) { define(prototype, method, function (arg) { return this._invoke(method, arg); }); }); } function AsyncIterator(generator, PromiseImpl) { function invoke(method, arg, resolve, reject) { var record = tryCatch(generator[method], generator, arg); if ("throw" !== record.type) { var result = record.arg, value = result.value; return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) { invoke("next", value, resolve, reject); }, function (err) { invoke("throw", err, resolve, reject); }) : PromiseImpl.resolve(value).then(function (unwrapped) { result.value = unwrapped, resolve(result); }, function (error) { return invoke("throw", error, resolve, reject); }); } reject(record.arg); } var previousPromise; defineProperty(this, "_invoke", { value: function value(method, arg) { function callInvokeWithMethodAndArg() { return new PromiseImpl(function (resolve, reject) { invoke(method, arg, resolve, reject); }); } return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(innerFn, self, context) { var state = "suspendedStart"; return function (method, arg) { if ("executing" === state) throw new Error("Generator is already running"); if ("completed" === state) { if ("throw" === method) throw arg; return doneResult(); } for (context.method = method, context.arg = arg;;) { var delegate = context.delegate; if (delegate) { var delegateResult = maybeInvokeDelegate(delegate, context); if (delegateResult) { if (delegateResult === ContinueSentinel) continue; return delegateResult; } } if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) { if ("suspendedStart" === state) throw state = "completed", context.arg; context.dispatchException(context.arg); } else "return" === context.method && context.abrupt("return", context.arg); state = "executing"; var record = tryCatch(innerFn, self, context); if ("normal" === record.type) { if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue; return { value: record.arg, done: context.done }; } "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg); } }; } function maybeInvokeDelegate(delegate, context) { var methodName = context.method, method = delegate.iterator[methodName]; if (undefined === method) return context.delegate = null, "throw" === methodName && delegate.iterator["return"] && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method) || "return" !== methodName && (context.method = "throw", context.arg = new TypeError("The iterator does not provide a '" + methodName + "' method")), ContinueSentinel; var record = tryCatch(method, delegate.iterator, context.arg); if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel; var info = record.arg; return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel); } function pushTryEntry(locs) { var entry = { tryLoc: locs[0] }; 1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry); } function resetTryEntry(entry) { var record = entry.completion || {}; record.type = "normal", delete record.arg, entry.completion = record; } function Context(tryLocsList) { this.tryEntries = [{ tryLoc: "root" }], tryLocsList.forEach(pushTryEntry, this), this.reset(!0); } function values(iterable) { if (iterable) { var iteratorMethod = iterable[iteratorSymbol]; if (iteratorMethod) return iteratorMethod.call(iterable); if ("function" == typeof iterable.next) return iterable; if (!isNaN(iterable.length)) { var i = -1, next = function next() { for (; ++i < iterable.length;) { if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next; } return next.value = undefined, next.done = !0, next; }; return next.next = next; } } return { next: doneResult }; } function doneResult() { return { value: undefined, done: !0 }; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, defineProperty(Gp, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), defineProperty(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) { var ctor = "function" == typeof genFun && genFun.constructor; return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name)); }, exports.mark = function (genFun) { return Object.setPrototypeOf ? Object.setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = Object.create(Gp), genFun; }, exports.awrap = function (arg) { return { __await: arg }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () { return this; }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) { void 0 === PromiseImpl && (PromiseImpl = Promise); var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl); return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) { return result.done ? result.value : iter.next(); }); }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () { return this; }), define(Gp, "toString", function () { return "[object Generator]"; }), exports.keys = function (val) { var object = Object(val), keys = []; for (var key in object) { keys.push(key); } return keys.reverse(), function next() { for (; keys.length;) { var key = keys.pop(); if (key in object) return next.value = key, next.done = !1, next; } return next.done = !0, next; }; }, exports.values = values, Context.prototype = { constructor: Context, reset: function reset(skipTempReset) { if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, this.tryEntries.forEach(resetTryEntry), !skipTempReset) for (var name in this) { "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined); } }, stop: function stop() { this.done = !0; var rootRecord = this.tryEntries[0].completion; if ("throw" === rootRecord.type) throw rootRecord.arg; return this.rval; }, dispatchException: function dispatchException(exception) { if (this.done) throw exception; var context = this; function handle(loc, caught) { return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught; } for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i], record = entry.completion; if ("root" === entry.tryLoc) return handle("end"); if (entry.tryLoc <= this.prev) { var hasCatch = hasOwn.call(entry, "catchLoc"), hasFinally = hasOwn.call(entry, "finallyLoc"); if (hasCatch && hasFinally) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } else if (hasCatch) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); } else { if (!hasFinally) throw new Error("try statement without catch or finally"); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } } } }, abrupt: function abrupt(type, arg) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) { var finallyEntry = entry; break; } } finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null); var record = finallyEntry ? finallyEntry.completion : {}; return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record); }, complete: function complete(record, afterLoc) { if ("throw" === record.type) throw record.arg; return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel; }, finish: function finish(finallyLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel; } }, "catch": function _catch(tryLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc === tryLoc) { var record = entry.completion; if ("throw" === record.type) { var thrown = record.arg; resetTryEntry(entry); } return thrown; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(iterable, resultName, nextLoc) { return this.delegate = { iterator: values(iterable), resultName: resultName, nextLoc: nextLoc }, "next" === this.method && (this.arg = undefined), ContinueSentinel; } }, exports; }
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    barangay: Array,
+    sitio: Array,
+    min_age: 0,
+    max_age: 0,
+    sx: String,
+    birthday: Array,
+    pension: Array,
+    annualincome: 0,
+    forms: {
+      graduation: '',
+      campus: '',
+      program: '',
+      designation: '',
+      signatory: ''
+    }
+  },
+  watch: {
+    options: {
+      handler: function handler() {
+        this.nextPage();
+      },
+      deep: true
+    },
+    'forms.signatory': lodash_debounce__WEBPACK_IMPORTED_MODULE_0___default()(function (val) {
+      var _this = this;
+      console.log(val);
+      var _this$options = this.options,
+        page = _this$options.page,
+        itemsPerPage = _this$options.itemsPerPage;
+      var pageNumber = page;
+      axios.get("/api/v1/getGraduations?page=" + pageNumber, {
+        params: {
+          'per_page': itemsPerPage,
+          'graduation': this.forms.graduation,
+          'program': this.forms.program,
+          'campus': this.forms.campus,
+          'designation': this.forms.designation,
+          'signatory': val
+        }
+      }).then(function (response) {
+        // this.graduation = response.data.graduation.graduation;
+        _this.headers = response.data.headers;
+        _this.table_data = response.data.table_data.data;
+        _this.current_page = response.data.table_data.current_page;
+        _this.total_pages = response.data.table_data.total_pages;
+        _this.total = response.data.table_data.total;
+      });
+    }, 300),
+    'forms.designation': lodash_debounce__WEBPACK_IMPORTED_MODULE_0___default()(function (val) {
+      var _this2 = this;
+      console.log(val);
+      var _this$options2 = this.options,
+        page = _this$options2.page,
+        itemsPerPage = _this$options2.itemsPerPage;
+      var pageNumber = page;
+      axios.get("/api/v1/getGraduations?page=" + pageNumber, {
+        params: {
+          'per_page': itemsPerPage,
+          'graduation': this.forms.graduation,
+          'program': this.forms.program,
+          'campus': this.forms.campus,
+          'designation': val,
+          'signatory': this.forms.signatory
+        }
+      }).then(function (response) {
+        // this.graduation = response.data.graduation.graduation;
+        _this2.headers = response.data.headers;
+        _this2.table_data = response.data.table_data.data;
+        _this2.current_page = response.data.table_data.current_page;
+        _this2.total_pages = response.data.table_data.total_pages;
+        _this2.total = response.data.table_data.total;
+      });
+    }, 300),
+    'forms.campus': lodash_debounce__WEBPACK_IMPORTED_MODULE_0___default()(function (val) {
+      var _this3 = this;
+      console.log(val);
+      var _this$options3 = this.options,
+        page = _this$options3.page,
+        itemsPerPage = _this$options3.itemsPerPage;
+      var pageNumber = page;
+      axios.get("/api/v1/getGraduations?page=" + pageNumber, {
+        params: {
+          'per_page': itemsPerPage,
+          'graduation': this.forms.graduation,
+          'program': this.forms.program,
+          'campus': val,
+          'designation': this.forms.designation,
+          'signatory': this.forms.signatory
+        }
+      }).then(function (response) {
+        // this.graduation = response.data.graduation.graduation;
+        // this.graduation_name = response.data.graduation_name;
+
+        _this3.headers = response.data.headers;
+        _this3.table_data = response.data.table_data.data;
+        _this3.current_page = response.data.table_data.current_page;
+        _this3.total_pages = response.data.table_data.total_pages;
+        _this3.total = response.data.table_data.total;
+      });
+    }, 300),
+    'forms.graduation': lodash_debounce__WEBPACK_IMPORTED_MODULE_0___default()(function (val) {
+      var _this4 = this;
+      console.log(val);
+      var _this$options4 = this.options,
+        page = _this$options4.page,
+        itemsPerPage = _this$options4.itemsPerPage;
+      var pageNumber = page;
+      axios.get("/api/v1/getGraduations?page=" + pageNumber, {
+        params: {
+          'per_page': itemsPerPage,
+          'graduation': val,
+          'program': this.forms.program,
+          'campus': this.forms.campus,
+          'designation': this.forms.designation,
+          'signatory': this.forms.signatory
+        }
+      }).then(function (response) {
+        // this.graduation = response.data.graduation.graduation;
+        _this4.graduation_name = response.data.graduation_name;
+        _this4.headers = response.data.headers;
+        _this4.table_data = response.data.table_data.data;
+        _this4.current_page = response.data.table_data.current_page;
+        _this4.total_pages = response.data.table_data.total_pages;
+        _this4.total = response.data.table_data.total;
+      });
+    }, 300),
+    'forms.program': lodash_debounce__WEBPACK_IMPORTED_MODULE_0___default()(function (val) {
+      var _this5 = this;
+      console.log(val);
+      var _this$options5 = this.options,
+        page = _this$options5.page,
+        itemsPerPage = _this$options5.itemsPerPage;
+      var pageNumber = page;
+      axios.get("/api/v1/getGraduations?page=" + pageNumber, {
+        params: {
+          'per_page': itemsPerPage,
+          'graduation': this.forms.graduation,
+          'program': val,
+          'campus': this.forms.campus,
+          'designation': this.forms.designation,
+          'signatory': this.forms.signatory
+        }
+      }).then(function (response) {
+        // this.graduation = response.data.graduation.graduation;
+        _this5.graduation_name = response.data.graduation_name;
+        _this5.headers = response.data.headers;
+        _this5.table_data = response.data.table_data.data;
+        _this5.current_page = response.data.table_data.current_page;
+        _this5.total_pages = response.data.table_data.total_pages;
+        _this5.total = response.data.table_data.total;
+      });
+    }, 300)
+  },
+  methods: {
+    editRow: function editRow(item) {
+      this.editingRow = item;
+    },
+    editRowReset: function editRowReset() {
+      this.editingRow = null;
+    },
+    editData: function editData(val) {
+      var _this6 = this;
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _this6.editingRow = val;
+                console.log(_this6.editingRow == val);
+                _this6.$emit('childEvent', val); // Emit the childEvent event with the value
+              case 3:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+    confirmDelete: function confirmDelete(item) {
+      this.showDeleteDialog = true;
+      this.itemToDelete = item;
+    },
+    deleteData: function deleteData(val) {
+      var _this7 = this;
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.prev = 0;
+                _context2.next = 3;
+                return axios["delete"]('/api/v1/graduations/' + _this7.itemToDelete.id, {
+                  // Optional config object
+                });
+              case 3:
+                _this7.showDeleteDialog = false;
+                _this7.itemToDelete = null;
+                _this7.nextPage();
+                _context2.next = 10;
+                break;
+              case 8:
+                _context2.prev = 8;
+                _context2.t0 = _context2["catch"](0);
+              case 10:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, null, [[0, 8]]);
+      }))();
+    },
+    pad: function pad(num, size) {
+      num = num.toString();
+      while (num.length < size) {
+        num = "0" + num;
+      }
+      return num;
+    },
+    view: function view($val) {
+      // console.log($item);
+      Inertia.get("/senior_citizens/view", {
+        senior: $val
+      }, {
+        preserveState: true,
+        preserveScroll: true,
+        replace: true
+      });
+    },
+    register: function register($val) {
+      // console.log($item);
+      Inertia.get("/senior_citizens/register", {
+        senior: $val
+      }, {
+        preserveState: true,
+        preserveScroll: true,
+        replace: true
+      });
+    },
+    clean: function clean($val) {
+      if ($val) {
+        $val = $val.replace(/ +(?= )/g, "");
+        $val = $val.replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, " "); // Replaces all spaces with hyphens.
+        $val = $val.replace(/ +(?= )/g, "");
+        return $val;
+      }
+      // Removes special chars.
+    },
+    nextPage: function nextPage() {
+      var _this8 = this;
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
+        var _this8$options, page, itemsPerPage, pageNumber;
+        return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _this8$options = _this8.options, page = _this8$options.page, itemsPerPage = _this8$options.itemsPerPage;
+                pageNumber = page;
+                _context3.next = 4;
+                return axios.get("/api/v1/getGraduations?page=" + pageNumber, {
+                  params: {
+                    'per_page': itemsPerPage,
+                    'graduation': _this8.forms.graduation,
+                    'program': _this8.forms.program,
+                    'campus': _this8.forms.campus,
+                    'designation': _this8.forms.designation,
+                    'signatory': _this8.forms.signatory
+                  }
+                }).then(function (response) {
+                  _this8.graduation_name = response.data.graduation_name;
+                  _this8.headers = response.data.headers;
+                  _this8.table_data = response.data.table_data.data;
+                  _this8.current_page = response.data.table_data.current_page;
+                  _this8.total_pages = response.data.table_data.total_pages;
+                  _this8.total = response.data.table_data.total;
+                });
+              case 4:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }))();
+    }
+  },
+  data: function data() {
+    return _defineProperty({
+      showDeleteDialog: false,
+      itemToDelete: null,
+      editingRow: null,
+      graduation: '',
+      graduation_name: '',
+      forms_data: this.forms,
+      table_data: [],
+      options: {},
+      search: '',
+      // barangay: this.barangay,
+      offSet: true,
+      constituents: Array,
+      barangays: [],
+      sitios: [],
+      filtersBarangay: Array,
+      filtersSitio: Array,
+      current_page: 0,
+      total_pages: 0,
+      total: 0,
+      exportList: [{
+        title: 'Excel'
+      }, {
+        title: 'PDF'
+      }],
+      headers: []
+    }, "constituents", []);
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/components/ProgramTable.vue?vue&type=script&lang=js&":
 /*!*****************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/components/ProgramTable.vue?vue&type=script&lang=js& ***!
@@ -16917,6 +17482,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     birthday: Array,
     pension: Array,
     annualincome: 0,
+    isEditMode: '',
     forms: {
       semester: '',
       campus: '',
@@ -17063,32 +17629,38 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }, 300)
   },
   methods: {
+    editRow: function editRow(item) {
+      this.editingRow = item;
+    },
+    editRowReset: function editRowReset() {
+      this.editingRow = null;
+    },
+    editData: function editData(val, index) {
+      var _this6 = this;
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _this6.editingRow = val;
+                console.log(val.semester);
+                console.log(_this6.editingRow == val);
+                _this6.isEditMode = true;
+                _this6.$emit('childEvent', val, _this6.isEditMode); // Emit the childEvent event with the value
+              case 5:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
     pad: function pad(num, size) {
       num = num.toString();
       while (num.length < size) {
         num = "0" + num;
       }
       return num;
-    },
-    view: function view($val) {
-      // console.log($item);
-      Inertia.get("/senior_citizens/view", {
-        senior: $val
-      }, {
-        preserveState: true,
-        preserveScroll: true,
-        replace: true
-      });
-    },
-    register: function register($val) {
-      // console.log($item);
-      Inertia.get("/senior_citizens/register", {
-        senior: $val
-      }, {
-        preserveState: true,
-        preserveScroll: true,
-        replace: true
-      });
     },
     clean: function clean($val) {
       if ($val) {
@@ -17099,51 +17671,82 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
       // Removes special chars.
     },
-    nextPage: function nextPage() {
-      var _this6 = this;
-      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-        var _this6$options, page, itemsPerPage, pageNumber;
-        return _regeneratorRuntime().wrap(function _callee$(_context) {
+    deleteData: function deleteData(val) {
+      var _this7 = this;
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
           while (1) {
-            switch (_context.prev = _context.next) {
+            switch (_context2.prev = _context2.next) {
               case 0:
-                _this6$options = _this6.options, page = _this6$options.page, itemsPerPage = _this6$options.itemsPerPage;
+                _context2.prev = 0;
+                _context2.next = 3;
+                return axios["delete"]('/api/v1/staffs/' + val, {
+                  // Optional config object
+                });
+              case 3:
+                _this7.showDeleteDialog = false;
+                _this7.itemToDelete = null;
+                _this7.nextPage();
+                _context2.next = 10;
+                break;
+              case 8:
+                _context2.prev = 8;
+                _context2.t0 = _context2["catch"](0);
+              case 10:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, null, [[0, 8]]);
+      }))();
+    },
+    nextPage: function nextPage() {
+      var _this8 = this;
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
+        var _this8$options, page, itemsPerPage, pageNumber;
+        return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _this8$options = _this8.options, page = _this8$options.page, itemsPerPage = _this8$options.itemsPerPage;
                 pageNumber = page;
-                _context.next = 4;
+                _context3.next = 4;
                 return axios.get("/api/v1/getStaff?page=" + pageNumber, {
                   params: {
                     'per_page': itemsPerPage,
-                    'semester': _this6.forms.semester,
-                    'program': _this6.forms.program,
-                    'campus': _this6.forms.campus,
-                    'designation': _this6.forms.designation,
-                    'signatory': _this6.forms.signatory
+                    'semester': _this8.forms.semester,
+                    'program': _this8.forms.program,
+                    'campus': _this8.forms.campus,
+                    'designation': _this8.forms.designation,
+                    'signatory': _this8.forms.signatory
                   }
                 }).then(function (response) {
-                  _this6.semester_name = response.data.semester_name;
-                  _this6.headers = response.data.headers;
-                  _this6.table_data = response.data.table_data.data;
-                  _this6.current_page = response.data.table_data.current_page;
-                  _this6.total_pages = response.data.table_data.total_pages;
-                  _this6.total = response.data.table_data.total;
+                  _this8.semester_name = response.data.semester_name;
+                  _this8.headers = response.data.headers;
+                  _this8.table_data = response.data.table_data.data;
+                  _this8.current_page = response.data.table_data.current_page;
+                  _this8.total_pages = response.data.table_data.total_pages;
+                  _this8.total = response.data.table_data.total;
                 });
               case 4:
               case "end":
-                return _context.stop();
+                return _context3.stop();
             }
           }
-        }, _callee);
+        }, _callee3);
       }))();
     }
   },
   data: function data() {
     return _defineProperty({
+      page: 1,
       semester: '',
       semester_name: '',
       forms_data: this.forms,
       table_data: [],
       options: {},
       search: '',
+      editingRow: null,
       // barangay: this.barangay,
       offSet: true,
       constituents: Array,
@@ -22778,168 +23381,171 @@ __webpack_require__.r(__webpack_exports__);
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("v-sheet", [_c("v-card", {
+  return _c("div", [_c("v-row", [_c("v-col", {
+    staticClass: "mt-2",
     attrs: {
-      elevation: "0"
+      cols: "12",
+      lg: "5"
     }
-  }, [_c("v-container", {
-    staticClass: "grey lighten-5",
-    attrs: {
-      fluid: ""
-    }
-  }, [_c("v-row", {
-    attrs: {
-      wrap: ""
-    }
+  }, [_c("Breadcrumbs", {
+    staticClass: "mb-4"
+  })], 1)], 1), _vm._v(" "), _c("v-row", {
+    staticClass: "container-fluid ml-2 mt-0"
   }, [_c("v-col", {
     attrs: {
       cols: "12",
-      lg: "4"
+      lg: "3"
     }
-  }, [_c("v-card", [_c("v-card-text", {
+  }, [_c("v-card", {
+    staticClass: "rounded-medium pt-1 pb-2 px-2",
+    attrs: {
+      elevation: "2"
+    }
+  }, [_c("v-card-title", {
+    staticClass: "align-end pl-4 pa-2 mt-2 mb-3 rounded white--text elevation-1",
     staticStyle: {
-      "padding-bottom": "10"
+      "margin-left": "-16px",
+      "margin-right": "-16px",
+      "max-height": "50px",
+      background: "linear-gradient(to right, #0d47a1, #0d47a1, #1A237E)"
     }
-  }, [_c("h1", {
-    staticClass: "title desplay-2 black--text text--accent3"
+  }, [_c("span", {
+    staticClass: "font-semibold overline"
   }, [_c("v-icon", {
-    staticClass: "ma-1 mb-2"
-  }, [_vm._v("mdi-account-plus-outline")]), _vm._v("\r\n                        Add Graduation\r\n      \r\n                      ")], 1)]), _vm._v(" "), _c("v-list-item", {
     attrs: {
-      "three-line": ""
+      dark: "",
+      left: ""
     }
-  }, [_c("v-list-item-content", [_c("div", {
-    staticClass: "text-center pb-3"
-  }, [_c("v-form", {
-    ref: "entryForm",
-    attrs: {
-      method: "post",
-      "lazy-validation": ""
-    },
-    on: {
-      submit: function submit($event) {
-        $event.stopPropagation();
-        $event.preventDefault();
-        return _vm.save.apply(null, arguments);
-      }
+  }, [_vm._v(_vm._s(_vm.formIcon))]), _vm._v(_vm._s(_vm.formName))], 1)]), _vm._v(" "), _c("v-card-text", [_c("v-form", {
+    ref: "form",
+    model: {
+      value: _vm.valid,
+      callback: function callback($$v) {
+        _vm.valid = $$v;
+      },
+      expression: "valid"
     }
-  }, [_c("v-text-field", {
-    staticClass: "text-sm-h6 mr-2 ml-2 mb-2 mb-1",
+  }, [_c("label", {
+    staticClass: "black--text font-weight-medium mt-2",
     attrs: {
-      label: "Graduation Name",
-      name: "graduation",
-      type: "text",
-      color: "teal accent-4",
-      dense: ""
+      "for": ""
+    }
+  }, [_vm._v("Description")]), _vm._v(" "), _c("v-text-field", _vm._g({
+    staticClass: "mb-2 text-field-text-size",
+    attrs: {
+      label: "",
+      outlined: "",
+      dense: "",
+      clearable: "",
+      "hide-details": ""
     },
     model: {
-      value: _vm.editedItem.graduation,
+      value: _vm.forms.description,
       callback: function callback($$v) {
-        _vm.$set(_vm.editedItem, "graduation", $$v);
+        _vm.$set(_vm.forms, "description", $$v);
       },
-      expression: "editedItem.graduation"
+      expression: "forms.description"
     }
-  }), _vm._v(" "), _c("v-divider"), _vm._v(" "), _c("v-row", {
-    staticClass: "ma-2 float-right"
-  }, [_c("v-btn", {
+  }, _vm.on)), _vm._v(" "), _c("label", {
+    staticClass: "black--text font-weight-medium mt-2",
     attrs: {
-      color: "blue darken-1",
-      text: "",
-      type: "submit",
-      disabled: _vm.editedItem.name == "" || _vm.editedItem.short_name == "" ? true : false
-    },
-    on: {
-      click: function click($event) {
-        $event.preventDefault();
-        return _vm.save.apply(null, arguments);
-      }
+      "for": ""
     }
-  }, [_vm._v("\r\n                      Save\r\n                    ")])], 1)], 1)], 1)])], 1)], 1)], 1), _vm._v(" "), _c("v-col", {
+  }, [_vm._v("Schedule")]), _vm._v(" "), _c("v-menu", {
+    ref: "menu",
     attrs: {
-      cols: "12",
-      lg: "8"
-    }
-  }, [_c("v-data-table", {
-    staticClass: "elevation-1 pa-6",
-    attrs: {
-      "item-key": "id",
-      loading: _vm.loading,
-      "loading-text": "Loading... Please wait",
-      headers: _vm.headers,
-      items: _vm.graduations,
-      "items-per-page": 5,
-      color: "error"
+      "close-on-content-click": false,
+      "offset-y": "",
+      clearable: ""
     },
     scopedSlots: _vm._u([{
-      key: "item.actions",
+      key: "activator",
       fn: function fn(_ref) {
-        var item = _ref.item;
-        return [_c("v-icon", {
-          staticClass: "mr-2 warning--text",
+        var on = _ref.on;
+        return [_c("v-text-field", _vm._g({
+          staticClass: "mb-2 text-field-text-size",
           attrs: {
-            small: ""
+            label: "",
+            outlined: "",
+            dense: "",
+            clearable: "",
+            "hide-details": "",
+            "prepend-inner-icon": "mdi-calendar"
           },
-          on: {
-            click: function click($event) {
-              return _vm.editItem(item);
-            }
+          model: {
+            value: _vm.forms.schedules,
+            callback: function callback($$v) {
+              _vm.$set(_vm.forms, "schedules", $$v);
+            },
+            expression: "forms.schedules"
           }
-        }, [_vm._v(" mdi-pencil ")]), _vm._v(" "), _c("v-icon", {
-          staticClass: "mr-2 red--text",
-          attrs: {
-            small: ""
-          },
-          on: {
-            click: function click($event) {
-              return _vm.deleteItem(item);
-            }
-          }
-        }, [_vm._v("\r\n                mdi-delete-forever\r\n              ")])];
-      }
-    }])
-  })], 1)], 1), _vm._v(" "), _c("v-snackbar", {
-    attrs: {
-      color: _vm.snackbarColor,
-      right: "",
-      timeout: "5000",
-      outlined: "",
-      top: "",
-      width: "50"
-    },
-    scopedSlots: _vm._u([{
-      key: "action",
-      fn: function fn(_ref2) {
-        var attrs = _ref2.attrs;
-        return [_c("v-btn", _vm._b({
-          attrs: {
-            color: _vm.snackbarColor,
-            text: ""
-          },
-          on: {
-            click: function click($event) {
-              _vm.snackbar = false;
-            }
-          }
-        }, "v-btn", attrs, false), [_c("v-icon", {
-          attrs: {
-            dark: "",
-            left: ""
-          }
-        }, [_vm._v("\r\n          mdi-close\r\n        ")]), _vm._v("close\r\n      ")], 1)];
+        }, on))];
       }
     }]),
     model: {
-      value: _vm.snackbar,
+      value: _vm.menuOpen,
       callback: function callback($$v) {
-        _vm.snackbar = $$v;
+        _vm.menuOpen = $$v;
       },
-      expression: "snackbar"
+      expression: "menuOpen"
+    }
+  }, [_vm._v(" "), _c("v-date-picker", {
+    attrs: {
+      range: "",
+      "no-title": "",
+      outlined: "",
+      color: "primary",
+      clearable: ""
+    },
+    model: {
+      value: _vm.forms.schedules,
+      callback: function callback($$v) {
+        _vm.$set(_vm.forms, "schedules", $$v);
+      },
+      expression: "forms.schedules"
+    }
+  })], 1), _vm._v(" "), _c("v-divider")], 1)], 1), _vm._v(" "), _c("v-card-actions", [_c("v-spacer"), _vm._v(" "), _c("v-btn", {
+    staticClass: "elevation-0 success",
+    attrs: {
+      type: "submit",
+      loading: _vm.formActionLoading,
+      dark: "",
+      success: "",
+      small: ""
+    },
+    on: {
+      click: _vm.submit
     }
   }, [_c("v-icon", {
     attrs: {
       left: ""
     }
-  }, [_vm._v("\r\n          mdi-error\r\n        ")]), _vm._v(_vm._s(_vm.text) + "\r\n\r\n      ")], 1)], 1)], 1)], 1);
+  }, [_vm._v(_vm._s(_vm.formActionIcon))]), _vm._v(" " + _vm._s(_vm.isEditMode ? "Save Changes" : "Save") + "\n                  ")], 1), _vm._v(" "), _c("v-btn", {
+    staticClass: "elevation-0",
+    attrs: {
+      type: "submit",
+      dark: "",
+      outlined: "",
+      small: "",
+      color: "primary"
+    },
+    on: {
+      click: _vm.clearForms
+    }
+  }, [_vm._v("\n                    Cancel\n                  ")])], 1)], 1)], 1), _vm._v(" "), _c("v-col", {
+    attrs: {
+      cols: "12",
+      lg: "9"
+    }
+  }, [_c("Table", {
+    ref: "childComponent",
+    attrs: {
+      forms: _vm.forms
+    },
+    on: {
+      childEvent: _vm.setEditedItem
+    }
+  })], 1)], 1)], 1);
 };
 var staticRenderFns = [];
 render._withStripped = true;
@@ -28538,16 +29144,65 @@ var render = function render() {
       },
       expression: "forms.semester"
     }
-  }), _vm._v(" "), _c("v-divider")], 1)], 1), _vm._v(" "), _c("v-card-actions", [_c("div", {
-    staticClass: "text-center pb-4 ml-3"
+  }), _vm._v(" "), _c("v-divider")], 1)], 1), _vm._v(" "), _vm.isEdit === true ? _c("div", [_c("v-row", {
+    staticClass: "ml-4 mr-10 mb-1 mt-2 pb-4 ml-3"
+  }, [_c("v-col", {
+    staticClass: "ma-0 pa-0 pr-1",
+    attrs: {
+      cols: "6"
+    }
   }, [_c("v-btn", {
     staticClass: "elevation-0 success",
     attrs: {
+      block: "",
       type: "submit",
+      dark: "",
+      width: "100%",
+      loading: _vm.formActionLoading,
+      small: ""
+    },
+    on: {
+      click: _vm.submit
+    }
+  }, [_c("v-icon", {
+    attrs: {
+      left: ""
+    }
+  }, [_vm._v("mdi-content-save-edit")]), _vm._v("Save ")], 1)], 1), _vm._v(" "), _c("v-col", {
+    staticClass: "ma-0 pa-0 pr-1",
+    attrs: {
+      cols: "6"
+    }
+  }, [_c("v-btn", {
+    attrs: {
+      block: "",
+      elevation: "0",
+      outlined: "",
+      color: "primary",
+      small: "",
+      width: "130%"
+    },
+    on: {
+      click: _vm.cancelEdit
+    }
+  }, [_c("v-icon", {
+    attrs: {
+      left: ""
+    }
+  }, [_vm._v("mdi-cancel")]), _vm._v("Cancel")], 1)], 1)], 1)], 1) : _c("v-card-actions", [_c("v-row", {
+    staticClass: "mr-10 mb-1 mt-0 pt-0 pb-4 ml-3"
+  }, [_c("v-col", {
+    staticClass: "pa-0 mr-6",
+    attrs: {
+      cols: "5"
+    }
+  }, [_c("v-btn", {
+    staticClass: "elevation-0 success",
+    attrs: {
       dark: "",
       success: "",
       small: "",
-      "min-width": "40%"
+      "min-width": "100%"
     },
     on: {
       click: function click($event) {
@@ -28558,13 +29213,17 @@ var render = function render() {
     attrs: {
       left: ""
     }
-  }, [_vm._v("mdi-account-plus")]), _vm._v("  Create\n                  ")], 1), _vm._v(" "), _c("v-btn", {
+  }, [_vm._v("mdi-account-plus")]), _vm._v("  Create\n                  ")], 1)], 1), _vm._v(" "), _c("v-col", {
+    staticClass: "ma-0 pa-0 pr-1",
+    attrs: {
+      cols: "5"
+    }
+  }, [_c("v-btn", {
     staticClass: "elevation-0 default",
     attrs: {
-      type: "submit",
       dark: "",
       small: "",
-      "min-width": "40%"
+      "min-width": "100%"
     },
     on: {
       click: function click($event) {
@@ -28575,14 +29234,19 @@ var render = function render() {
     attrs: {
       left: ""
     }
-  }, [_vm._v("mdi-content-copy")]), _vm._v(" Copy Prev\n                  ")], 1)], 1)])], 1)], 1), _vm._v(" "), _c("v-col", {
+  }, [_vm._v("mdi-content-copy")]), _vm._v(" Copy Prev\n                  ")], 1)], 1)], 1)], 1)], 1)], 1), _vm._v(" "), _c("v-col", {
     attrs: {
       cols: "12",
       lg: "9"
     }
   }, [_c("Table", {
+    ref: "childComponent",
     attrs: {
-      forms: _vm.forms
+      forms: _vm.forms,
+      isEditMode: _vm.isEditMode
+    },
+    on: {
+      childEvent: _vm.setEditedItem
     }
   })], 1)], 1)], 1);
 };
@@ -38831,6 +39495,198 @@ render._withStripped = true;
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/components/GraduationTable.vue?vue&type=template&id=54cf1ee0&scoped=true&":
+/*!******************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/components/GraduationTable.vue?vue&type=template&id=54cf1ee0&scoped=true& ***!
+  \******************************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", [_c("v-card", {
+    staticClass: "pt-1"
+  }, [_c("v-card-title", {
+    staticClass: "align-end pl-4 pa-2 mt-2 mb-3 rounded white--text elevation-1",
+    staticStyle: {
+      "margin-left": "-8px",
+      "margin-right": "-8px",
+      "max-height": "50px",
+      background: "linear-gradient(to right, #0d47a1, #0d47a1, #1A237E)"
+    }
+  }, [_c("span", {
+    staticClass: "font-semibold"
+  }, [_c("v-icon", {
+    attrs: {
+      dark: "",
+      left: ""
+    }
+  }, [_vm._v("mdi-list-box")]), _vm._v("GRADUATIONS")], 1)]), _vm._v(" "), _c("v-data-table", {
+    staticClass: "elevation-0 mt-1 font-light pa-0 font-sans text-uppercase mx-4",
+    attrs: {
+      headers: _vm.headers,
+      items: _vm.table_data,
+      "items-per-page": 10,
+      page: _vm.current_page,
+      pageCount: _vm.total_pages,
+      "server-items-length": _vm.total,
+      options: _vm.options,
+      dense: ""
+    },
+    on: {
+      "update:options": function updateOptions($event) {
+        _vm.options = $event;
+      }
+    },
+    scopedSlots: _vm._u([{
+      key: "item.id",
+      fn: function fn(_ref) {
+        var item = _ref.item;
+        return [_c("span", {
+          staticClass: "font-weight-bold"
+        }, [_vm._v(_vm._s(item.prefix) + _vm._s(_vm.pad(item.id, 5)))])];
+      }
+    }, {
+      key: "item",
+      fn: function fn(_ref2) {
+        var item = _ref2.item,
+          index = _ref2.index;
+        return [_c("tr", {
+          "class": {
+            "blue darken-3 white--text elevation-11 flex px-4": _vm.editingRow === item
+          }
+        }, _vm._l(_vm.headers, function (header) {
+          return _c("td", {
+            key: header.text,
+            staticStyle: {
+              "font-size": "12px"
+            }
+          }, [header.value === "actions" ? _c("v-menu", {
+            staticClass: "mr-12",
+            attrs: {
+              transition: "slide-y-transition",
+              left: "",
+              "content-class": "elevation-1 subtitle-2 text-xs",
+              "offset-y": _vm.offSet
+            },
+            scopedSlots: _vm._u([{
+              key: "activator",
+              fn: function fn(_ref3) {
+                var on = _ref3.on,
+                  attrs = _ref3.attrs;
+                return [_c("v-btn", _vm._g(_vm._b({
+                  staticClass: "text--black darken-3 font-weight-light",
+                  attrs: {
+                    depressed: "",
+                    icon: ""
+                  }
+                }, "v-btn", attrs, false), on), [_c("v-icon", {
+                  "class": {
+                    "white--text": _vm.editingRow === item
+                  },
+                  attrs: {
+                    "x-small": ""
+                  }
+                }, [_vm._v("\n               mdi-cogs\n               ")])], 1)];
+              }
+            }], null, true)
+          }, [_vm._v(" "), _c("v-list", {
+            attrs: {
+              width: "180",
+              nav: ""
+            }
+          }, [_c("v-list-item", {
+            staticClass: "blue--text",
+            attrs: {
+              link: "",
+              "active-class": "blue--text text--accent-4 font-weight-bold"
+            },
+            on: {
+              click: function click($event) {
+                return _vm.editData(item);
+              }
+            }
+          }, [_c("v-icon", {
+            staticClass: "mr-2 blue--text",
+            attrs: {
+              small: ""
+            }
+          }, [_vm._v("mdi-account-edit")]), _vm._v("Edit\n               ")], 1), _vm._v(" "), _c("v-list-item", {
+            staticClass: "red--text",
+            attrs: {
+              link: "",
+              "active-class": "orange--text text--accent-4 font-weight-bold"
+            },
+            on: {
+              click: function click($event) {
+                return _vm.confirmDelete(item);
+              }
+            }
+          }, [_c("v-icon", {
+            staticClass: "mr-2 red--text",
+            attrs: {
+              small: ""
+            }
+          }, [_vm._v("mdi-delete-circle-outline")]), _vm._v("Delete\n               ")], 1)], 1)], 1) : _vm._e(), _vm._v(" "), header.value === "id" ? _c("span", {
+            staticClass: "font-weight-bold"
+          }, [_vm._v(_vm._s(item.prefix) + _vm._s(_vm.pad(item.id, 5)))]) : _c("span", [_vm._v(_vm._s(item[header.value]))])], 1);
+        }), 0)];
+      }
+    }])
+  }), _vm._v(" "), _c("v-dialog", {
+    attrs: {
+      persistent: "",
+      width: "400"
+    },
+    model: {
+      value: _vm.showDeleteDialog,
+      callback: function callback($$v) {
+        _vm.showDeleteDialog = $$v;
+      },
+      expression: "showDeleteDialog"
+    }
+  }, [_c("v-card", {
+    staticClass: "pt-1"
+  }, [_c("v-card-title", {
+    staticClass: "align-center ma-2 mt-0 pa-2 rounded white--red elevation-0"
+  }, [_c("v-icon", {
+    staticClass: "red--text text--lighten-1",
+    attrs: {
+      left: ""
+    }
+  }, [_vm._v("mdi-delete-circle")]), _vm._v(" Delete Item\n        ")], 1), _vm._v(" "), _c("v-card-text", [_vm._v("\n          Are you sure you want to delete this item?"), _c("br"), _vm._v("\n          ("), _c("i", [_vm._v(_vm._s(_vm.itemToDelete ? "Description: " + _vm.itemToDelete.description : ""))]), _vm._v(")\n        ")]), _vm._v(" "), _c("v-card-actions", [_c("v-spacer"), _vm._v(" "), _c("v-btn", {
+    attrs: {
+      "elevation-0": "",
+      color: "primary",
+      outlined: ""
+    },
+    on: {
+      click: function click($event) {
+        _vm.showDeleteDialog = false;
+      }
+    }
+  }, [_vm._v("Cancel")]), _vm._v(" "), _c("v-btn", {
+    attrs: {
+      "elevation-0": "",
+      color: "red",
+      dark: ""
+    },
+    on: {
+      click: _vm.deleteData
+    }
+  }, [_vm._v("Delete")])], 1)], 1)], 1)], 1)], 1);
+};
+var staticRenderFns = [];
+render._withStripped = true;
+
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/components/ProgramTable.vue?vue&type=template&id=d27f016c&scoped=true&":
 /*!***************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/components/ProgramTable.vue?vue&type=template&id=d27f016c&scoped=true& ***!
@@ -38894,16 +39750,14 @@ var render = function render() {
           index = _ref2.index;
         return [_c("tr", {
           "class": {
-            "blue darken-3 white--text": _vm.editingRow === item
-          },
-          on: {
-            click: function click($event) {
-              return _vm.editRow(index);
-            }
+            "blue darken-3 white--text elevation-11 flex px-4": _vm.editingRow === item
           }
         }, _vm._l(_vm.headers, function (header) {
           return _c("td", {
-            key: header.text
+            key: header.text,
+            staticStyle: {
+              "font-size": "12px"
+            }
           }, [header.value === "actions" ? _c("v-menu", {
             staticClass: "mr-12",
             attrs: {
@@ -39088,16 +39942,14 @@ var render = function render() {
           index = _ref2.index;
         return [_c("tr", {
           "class": {
-            "blue darken-3 white--text": _vm.editingRow === item
-          },
-          on: {
-            click: function click($event) {
-              return _vm.editRow(index);
-            }
+            "blue darken-3 white--text elevation-11 flex px-4": _vm.editingRow === item
           }
         }, _vm._l(_vm.headers, function (header) {
           return _c("td", {
-            key: header.text
+            key: header.text,
+            staticStyle: {
+              "font-size": "12px"
+            }
           }, [header.value === "actions" ? _c("v-menu", {
             staticClass: "mr-12",
             attrs: {
@@ -39282,12 +40134,7 @@ var render = function render() {
           index = _ref2.index;
         return [_c("tr", {
           "class": {
-            "blue darken-3 white--text": _vm.editingRow === item
-          },
-          on: {
-            click: function click($event) {
-              return _vm.editRow(index);
-            }
+            "blue darken-3 white--text elevation-11 flex px-4": _vm.editingRow === item
           }
         }, _vm._l(_vm.headers, function (header) {
           return _c("td", {
@@ -39469,81 +40316,90 @@ var render = function render() {
       }
     },
     scopedSlots: _vm._u([{
-      key: "item.id",
+      key: "item",
       fn: function fn(_ref) {
-        var item = _ref.item;
-        return [_c("span", {
-          staticClass: "font-weight-bold"
-        }, [_vm._v(_vm._s(item.prefix) + _vm._s(_vm.pad(item.id, 5)))])];
-      }
-    }, {
-      key: "item.actions",
-      fn: function fn(_ref2) {
-        var item = _ref2.item;
-        return [[_c("v-menu", {
-          staticClass: "mr-12",
-          attrs: {
-            transition: "slide-y-transition",
-            left: "",
-            "content-class": "elevation-1 subtitle-2 text-xs",
-            "offset-y": _vm.offSet
-          },
-          scopedSlots: _vm._u([{
-            key: "activator",
-            fn: function fn(_ref3) {
-              var on = _ref3.on,
-                attrs = _ref3.attrs;
-              return [_c("v-btn", _vm._g(_vm._b({
-                staticClass: "text--black darken-3 font-weight-light",
-                attrs: {
-                  depressed: "",
-                  icon: ""
-                }
-              }, "v-btn", attrs, false), on), [_c("v-icon", {
-                attrs: {
-                  "x-small": ""
-                }
-              }, [_vm._v("\n               mdi-cogs\n               ")])], 1)];
+        var item = _ref.item,
+          index = _ref.index;
+        return [_c("tr", {
+          "class": {
+            "blue darken-3 white--text elevation-11 flex px-4": _vm.editingRow === item
+          }
+        }, _vm._l(_vm.headers, function (header) {
+          return _c("td", {
+            key: header.text,
+            staticStyle: {
+              "font-size": "12px"
             }
-          }], null, true)
-        }, [_vm._v(" "), _c("v-list", {
-          attrs: {
-            width: "180",
-            nav: ""
-          }
-        }, [_c("v-list-item", {
-          staticClass: "blue--text",
-          attrs: {
-            link: "",
-            "active-class": "blue--text text--accent-4 font-weight-bold"
-          },
-          on: {
-            click: function click($event) {
-              return _vm.register(item.id);
+          }, [header.value === "actions" ? _c("v-menu", {
+            staticClass: "mr-12",
+            attrs: {
+              transition: "slide-y-transition",
+              left: "",
+              "content-class": "elevation-1 subtitle-2 text-xs",
+              "offset-y": _vm.offSet
+            },
+            scopedSlots: _vm._u([{
+              key: "activator",
+              fn: function fn(_ref2) {
+                var on = _ref2.on,
+                  attrs = _ref2.attrs;
+                return [_c("v-btn", _vm._g(_vm._b({
+                  staticClass: "text--black darken-3 font-weight-light",
+                  attrs: {
+                    depressed: "",
+                    icon: ""
+                  }
+                }, "v-btn", attrs, false), on), [_c("v-icon", {
+                  "class": {
+                    "white--text": _vm.editingRow === item
+                  },
+                  attrs: {
+                    "x-small": ""
+                  }
+                }, [_vm._v("\n               mdi-cogs\n               ")])], 1)];
+              }
+            }], null, true)
+          }, [_vm._v(" "), _c("v-list", {
+            attrs: {
+              width: "180",
+              nav: ""
             }
-          }
-        }, [_c("v-icon", {
-          staticClass: "mr-2 blue--text",
-          attrs: {
-            small: ""
-          }
-        }, [_vm._v("mdi-account-edit")]), _vm._v("Edit\n               ")], 1), _vm._v(" "), _c("v-list-item", {
-          staticClass: "red--text",
-          attrs: {
-            link: "",
-            "active-class": "orange--text text--accent-4 font-weight-bold"
-          },
-          on: {
-            click: function click($event) {
-              return _vm.view(item.id);
+          }, [_c("v-list-item", {
+            staticClass: "blue--text",
+            attrs: {
+              link: "",
+              "active-class": "blue--text text--accent-4 font-weight-bold"
+            },
+            on: {
+              click: function click($event) {
+                return _vm.editData(item, index);
+              }
             }
-          }
-        }, [_c("v-icon", {
-          staticClass: "mr-2 red--text",
-          attrs: {
-            small: ""
-          }
-        }, [_vm._v("mdi-delete-circle-outline")]), _vm._v("Delete\n               ")], 1)], 1)], 1)]];
+          }, [_c("v-icon", {
+            staticClass: "mr-2 blue--text",
+            attrs: {
+              small: ""
+            }
+          }, [_vm._v("mdi-account-edit")]), _vm._v("Edit\n               ")], 1), _vm._v(" "), _c("v-list-item", {
+            staticClass: "red--text",
+            attrs: {
+              link: "",
+              "active-class": "orange--text text--accent-4 font-weight-bold"
+            },
+            on: {
+              click: function click($event) {
+                return _vm.confirmDelete(item, index);
+              }
+            }
+          }, [_c("v-icon", {
+            staticClass: "mr-2 red--text",
+            attrs: {
+              small: ""
+            }
+          }, [_vm._v("mdi-delete-circle-outline")]), _vm._v("Delete\n               ")], 1)], 1)], 1) : _vm._e(), _vm._v(" "), header.value === "id" ? _c("span", {
+            staticClass: "font-weight-bold"
+          }, [_vm._v(_vm._s(item.prefix) + _vm._s(_vm.pad(item.id, 5)))]) : _c("span", [_vm._v(_vm._s(item[header.value]))])], 1);
+        }), 0)];
       }
     }])
   })], 1)], 1);
@@ -40410,6 +41266,25 @@ exports.push([module.i, "\nhtml body div#app div div#inspire.v-application.v-app
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/GraduationsComponent.vue?vue&type=style&index=0&id=cf088dba&lang=css&":
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/GraduationsComponent.vue?vue&type=style&index=0&id=cf088dba&lang=css& ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.text-field-text-size {\r\n  font-size: 14px;\n}\r\n", ""]);
+
+// exports
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/ProgramsComponent.vue?vue&type=style&index=0&id=8135ae1a&lang=css&":
 /*!*****************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/ProgramsComponent.vue?vue&type=style&index=0&id=8135ae1a&lang=css& ***!
@@ -40543,6 +41418,25 @@ exports.push([module.i, "\n.v-text-field--outlined[data-v-9bb77838] fieldset {\n
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/components/GraduationTable.vue?vue&type=style&index=0&id=54cf1ee0&scoped=true&lang=css&":
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/components/GraduationTable.vue?vue&type=style&index=0&id=54cf1ee0&scoped=true&lang=css& ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.v-text-field--outlined[data-v-54cf1ee0] fieldset {\n  border-color: #e4e7ea;\n}\n.v-text-field[data-v-54cf1ee0] input {\n    height: 32px;\n}\n.form-control[data-v-54cf1ee0]{\n    height: 36px;\n}\n.edited-row[data-v-54cf1ee0] {\n  background-color: #eeeeee;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/components/ProgramTable.vue?vue&type=style&index=0&id=d27f016c&scoped=true&lang=css&":
 /*!************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/components/ProgramTable.vue?vue&type=style&index=0&id=d27f016c&scoped=true&lang=css& ***!
@@ -40631,7 +41525,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.v-text-field--outlined[data-v-6b4ffe5e] fieldset {\n  border-color: #e4e7ea;\n}\n.v-text-field[data-v-6b4ffe5e] input {\n    height: 32px;\n}\n.form-control[data-v-6b4ffe5e]{\n    height: 36px;\n}\n", ""]);
+exports.push([module.i, "\n.v-text-field--outlined[data-v-6b4ffe5e] fieldset {\n  border-color: #e4e7ea;\n}\n.v-text-field[data-v-6b4ffe5e] input {\n    height: 32px;\n}\n.form-control[data-v-6b4ffe5e]{\n    height: 36px;\n}\n.v-pagination.v-pagination--flat .v-pagination__item[data-v-6b4ffe5e] {\n  box-shadow: none;\n}\n", ""]);
 
 // exports
 
@@ -40778,6 +41672,36 @@ options.transform = transform
 options.insertInto = undefined;
 
 var update = __webpack_require__(/*! ../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/GraduationsComponent.vue?vue&type=style&index=0&id=cf088dba&lang=css&":
+/*!************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/GraduationsComponent.vue?vue&type=style&index=0&id=cf088dba&lang=css& ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./GraduationsComponent.vue?vue&type=style&index=0&id=cf088dba&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/GraduationsComponent.vue?vue&type=style&index=0&id=cf088dba&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
 
 if(content.locals) module.exports = content.locals;
 
@@ -40974,6 +41898,36 @@ if(false) {}
 
 
 var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./CreateSignatoryTable.vue?vue&type=style&index=0&id=9bb77838&scoped=true&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/components/CreateSignatoryTable.vue?vue&type=style&index=0&id=9bb77838&scoped=true&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/components/GraduationTable.vue?vue&type=style&index=0&id=54cf1ee0&scoped=true&lang=css&":
+/*!*******************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/components/GraduationTable.vue?vue&type=style&index=0&id=54cf1ee0&scoped=true&lang=css& ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./GraduationTable.vue?vue&type=style&index=0&id=54cf1ee0&scoped=true&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/components/GraduationTable.vue?vue&type=style&index=0&id=54cf1ee0&scoped=true&lang=css&");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -41274,6 +42228,7 @@ __webpack_require__.r(__webpack_exports__);
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+
 
 
 
@@ -42554,7 +43509,9 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _GraduationsComponent_vue_vue_type_template_id_cf088dba___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./GraduationsComponent.vue?vue&type=template&id=cf088dba& */ "./resources/js/components/admin/GraduationsComponent.vue?vue&type=template&id=cf088dba&");
 /* harmony import */ var _GraduationsComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./GraduationsComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/admin/GraduationsComponent.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _GraduationsComponent_vue_vue_type_style_index_0_id_cf088dba_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./GraduationsComponent.vue?vue&type=style&index=0&id=cf088dba&lang=css& */ "./resources/js/components/admin/GraduationsComponent.vue?vue&type=style&index=0&id=cf088dba&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
 
 
 
@@ -42562,7 +43519,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
   _GraduationsComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _GraduationsComponent_vue_vue_type_template_id_cf088dba___WEBPACK_IMPORTED_MODULE_0__["render"],
   _GraduationsComponent_vue_vue_type_template_id_cf088dba___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
@@ -42591,6 +43548,22 @@ component.options.__file = "resources/js/components/admin/GraduationsComponent.v
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_GraduationsComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./GraduationsComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/GraduationsComponent.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_GraduationsComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/GraduationsComponent.vue?vue&type=style&index=0&id=cf088dba&lang=css&":
+/*!*************************************************************************************************************!*\
+  !*** ./resources/js/components/admin/GraduationsComponent.vue?vue&type=style&index=0&id=cf088dba&lang=css& ***!
+  \*************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_GraduationsComponent_vue_vue_type_style_index_0_id_cf088dba_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./GraduationsComponent.vue?vue&type=style&index=0&id=cf088dba&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/GraduationsComponent.vue?vue&type=style&index=0&id=cf088dba&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_GraduationsComponent_vue_vue_type_style_index_0_id_cf088dba_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_GraduationsComponent_vue_vue_type_style_index_0_id_cf088dba_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_GraduationsComponent_vue_vue_type_style_index_0_id_cf088dba_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_GraduationsComponent_vue_vue_type_style_index_0_id_cf088dba_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
 
 /***/ }),
 
@@ -45981,6 +46954,93 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/pages/components/GraduationTable.vue":
+/*!***********************************************************!*\
+  !*** ./resources/js/pages/components/GraduationTable.vue ***!
+  \***********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _GraduationTable_vue_vue_type_template_id_54cf1ee0_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./GraduationTable.vue?vue&type=template&id=54cf1ee0&scoped=true& */ "./resources/js/pages/components/GraduationTable.vue?vue&type=template&id=54cf1ee0&scoped=true&");
+/* harmony import */ var _GraduationTable_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./GraduationTable.vue?vue&type=script&lang=js& */ "./resources/js/pages/components/GraduationTable.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _GraduationTable_vue_vue_type_style_index_0_id_54cf1ee0_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./GraduationTable.vue?vue&type=style&index=0&id=54cf1ee0&scoped=true&lang=css& */ "./resources/js/pages/components/GraduationTable.vue?vue&type=style&index=0&id=54cf1ee0&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _GraduationTable_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _GraduationTable_vue_vue_type_template_id_54cf1ee0_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _GraduationTable_vue_vue_type_template_id_54cf1ee0_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "54cf1ee0",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/pages/components/GraduationTable.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/pages/components/GraduationTable.vue?vue&type=script&lang=js&":
+/*!************************************************************************************!*\
+  !*** ./resources/js/pages/components/GraduationTable.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_GraduationTable_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./GraduationTable.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/components/GraduationTable.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_GraduationTable_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/pages/components/GraduationTable.vue?vue&type=style&index=0&id=54cf1ee0&scoped=true&lang=css&":
+/*!********************************************************************************************************************!*\
+  !*** ./resources/js/pages/components/GraduationTable.vue?vue&type=style&index=0&id=54cf1ee0&scoped=true&lang=css& ***!
+  \********************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_GraduationTable_vue_vue_type_style_index_0_id_54cf1ee0_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./GraduationTable.vue?vue&type=style&index=0&id=54cf1ee0&scoped=true&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/components/GraduationTable.vue?vue&type=style&index=0&id=54cf1ee0&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_GraduationTable_vue_vue_type_style_index_0_id_54cf1ee0_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_GraduationTable_vue_vue_type_style_index_0_id_54cf1ee0_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_GraduationTable_vue_vue_type_style_index_0_id_54cf1ee0_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_GraduationTable_vue_vue_type_style_index_0_id_54cf1ee0_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
+
+/***/ }),
+
+/***/ "./resources/js/pages/components/GraduationTable.vue?vue&type=template&id=54cf1ee0&scoped=true&":
+/*!******************************************************************************************************!*\
+  !*** ./resources/js/pages/components/GraduationTable.vue?vue&type=template&id=54cf1ee0&scoped=true& ***!
+  \******************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_GraduationTable_vue_vue_type_template_id_54cf1ee0_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!../../../../node_modules/vue-loader/lib??vue-loader-options!./GraduationTable.vue?vue&type=template&id=54cf1ee0&scoped=true& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/components/GraduationTable.vue?vue&type=template&id=54cf1ee0&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_GraduationTable_vue_vue_type_template_id_54cf1ee0_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_GraduationTable_vue_vue_type_template_id_54cf1ee0_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/pages/components/ProgramTable.vue":
 /*!********************************************************!*\
   !*** ./resources/js/pages/components/ProgramTable.vue ***!
@@ -46625,7 +47685,13 @@ var routes = [{
     path: 'graduations',
     beforeEnter: isADMIN,
     component: _components_admin_GraduationsComponent__WEBPACK_IMPORTED_MODULE_23__["default"],
-    name: 'Graduations'
+    name: 'Graduations',
+    meta: {
+      breadcrumb: {
+        label: 'Graduations',
+        parent: 'admin'
+      }
+    }
   }, {
     path: 'purposes',
     beforeEnter: isADMIN,

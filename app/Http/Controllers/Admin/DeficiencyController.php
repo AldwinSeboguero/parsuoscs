@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Student;
 use App\Deficiency; 
 use App\Staff;
+use App\Semester;
+
 use App\Clearance;
 use App\ClearanceRequest;
 use App\SignatoryV2;
@@ -48,6 +50,24 @@ class DeficiencyController extends Controller
                     ],200);
             }
            else{
+                // dd('isNotAdmin');
+                $semester = Semester::orderByDesc('id')->first();
+                $latest_signatory_ids = SignatoryV2::where('user_id', Auth::user()->id)
+                    ->where('semester_id', $semester->id)
+                    ->get(['program_id', 'designee_id', 'semester_id','campus_id','purpose_id'])
+                    ->toArray();
+                // dd(SignatoryV2::where('user_id', Auth::user()->id)
+                // ->where('semester_id', $semester->id)
+                // ->get(['program_id', 'designee_id', 'semester_id','campus_id']));
+                $program_ids = array_column($latest_signatory_ids, 'program_id');
+                $designee_ids = array_column($latest_signatory_ids, 'designee_id');
+                $campus_ids = array_column($latest_signatory_ids, 'campus_id');
+                $purpose_ids = array_column($latest_signatory_ids, 'purpose_id');
+    
+    
+                $signatory_ids = SignatoryV2::whereIn('program_id', $program_ids)->whereIn('designee_id', $designee_ids)->whereIn('campus_id', $campus_ids)
+                // ->whereIn('purpose_id', $purpose_ids)
+                    ->get(['id']);
                 return response()->json([
                 'deficiencies' => new DeficiencyCollection(Deficiency::orderBy('completed')
                 ->orderByDesc('id')
@@ -55,9 +75,10 @@ class DeficiencyController extends Controller
                 ->with('semester')
                 ->with('student')
                 ->with('purpose')   
-                ->whereIn('signatory_id',SignatoryV2::where('user_id',Auth::user()->id)->get('id')) 
                 ->with('signatory')
                 ->with('signatory.user')  
+                ->whereIn('signatory_id',$signatory_ids) 
+
                 ->paginate($per_page)) 
                 ],200);
                 }
@@ -84,6 +105,23 @@ class DeficiencyController extends Controller
             $clearance->status = 0;
             $clearance->save();
         }
+        $semester = Semester::orderByDesc('id')->first();
+        $latest_signatory_ids = SignatoryV2::where('user_id', Auth::user()->id)
+            ->where('semester_id', $semester->id)
+            ->get(['program_id', 'designee_id', 'semester_id','campus_id','purpose_id'])
+            ->toArray();
+        // dd(SignatoryV2::where('user_id', Auth::user()->id)
+        // ->where('semester_id', $semester->id)
+        // ->get(['program_id', 'designee_id', 'semester_id','campus_id']));
+        $program_ids = array_column($latest_signatory_ids, 'program_id');
+        $designee_ids = array_column($latest_signatory_ids, 'designee_id');
+        $campus_ids = array_column($latest_signatory_ids, 'campus_id');
+        $purpose_ids = array_column($latest_signatory_ids, 'purpose_id');
+
+
+        $signatory_ids = SignatoryV2::whereIn('program_id', $program_ids)->whereIn('designee_id', $designee_ids)->whereIn('campus_id', $campus_ids)
+        // ->whereIn('purpose_id', $purpose_ids)
+            ->get(['id']);
         return response()->json([
             'deficiencies' => new DeficiencyCollection(Deficiency::orderBy('completed')
             ->orderByDesc('id')
@@ -91,7 +129,8 @@ class DeficiencyController extends Controller
             ->with('semester')
             ->with('student')
             ->with('purpose')   
-            ->whereIn('signatory_id',SignatoryV2::where('user_id',Auth::user()->id)->get('id')) 
+            ->whereIn('signatory_id',$signatory_ids) 
+
            
             ->paginate(10)) 
             ],200);
@@ -146,6 +185,11 @@ class DeficiencyController extends Controller
                 ],200); 
             }
             else{
+                dd('isNotAdmin');
+                $semester = Semester::orderByDesc('id')->first();
+                $latest_signatory_ids = SignatoryV2::where('user_id', Auth::user()->id)
+                    ->where('semester_id', $semester->id)
+                    ->get('id');
                 return response()->json([
                     'deficiencies' => new DeficiencyCollection(Deficiency::orderBy('completed')
                     ->with('designee')
@@ -160,8 +204,7 @@ class DeficiencyController extends Controller
                         $q->where('student_number', 'ILIKE', '%' . $id . '%');
                     })  
                      ->with('purpose')  
-                     ->whereIn('signatory_id',SignatoryV2::where('user_id',Auth::user()->id)->get('id'))
-                   
+                     ->whereIn('signatory_id',$latest_signatory_ids)->get('id')
                     ->paginate(10)),
                     ],200); 
             }

@@ -13,9 +13,10 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
-            ClearancesPurposeSemesterSeeder::class,
-            Purpose::class,
-            SemesterSeeder::class,
+            // ClearancesPurposeSemesterSeeder::class,
+            // Purpose::class,
+            // SemesterSeeder::class,
+            RemoveStaff::class,
         ]);
     }
 }

@@ -466,6 +466,7 @@ export default {
         axios.get(`/api/v1/colleges`,{
                   params: { 
                     'campus': val,
+                    'byPass': true,
                   },
                 }).then((response) => {
               this.colleges = response.data.colleges;
@@ -578,7 +579,11 @@ export default {
       console.log(val)
       this.editedForms = val;
       this.isEditMode = true;
-      this.forms = this.editedForms;
+      this.forms =  { ...this.editedForms };
+      this.forms.college_id = this.colleges.find(signatory => signatory.id === this.editedForms.college_id);
+      this.forms.campus_id = this.campuses.find(signatory => signatory.id === this.editedForms.campus_id);
+      this.forms.program_id = this.programs.find(signatory => signatory.id === this.editedForms.program_id);
+
       this.formName = 'Update';
       this.formIcon = 'mdi-file-edit';
     },

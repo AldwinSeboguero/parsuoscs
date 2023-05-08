@@ -23,6 +23,7 @@ import VueParticlesBg from "particles-bg-vue";
 import VueCompositionAPI from '@vue/composition-api'
 import VueApexCharts from 'vue-apexcharts'
 import VueBreadcrumbs from 'vue-2-breadcrumbs';
+
 // import '@mdi/font/css/materialdesignicons.css';
 // import VueConfirmDialog from 'vue-confirm-dialog'
 

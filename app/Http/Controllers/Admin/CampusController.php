@@ -5,6 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Campus;
+use App\College;
+use App\SignatoryV2;
+use Illuminate\Support\Facades\Auth; 
+
 class CampusController extends Controller
 {
     /**
@@ -12,10 +16,13 @@ class CampusController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        return response()->json(['campuses'=> Campus::all()],200);
-    }
+        public function index(Request $request)
+        {
+            return response()->json(['campuses'=> Campus::when(!Auth::user()->hasRole("admin") && !$request->byPass, function($q) use($request){
+                $q->whereIn('id',SignatoryV2::where('user_id',Auth::user()->id)->where('semester_id','>=',8)->distinct('campus')->get('campus_id'));
+            })
+            ->get()],200);
+        }
 
     /**
      * Show the form for creating a new resource.
