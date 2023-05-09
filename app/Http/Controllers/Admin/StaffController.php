@@ -427,7 +427,7 @@ class StaffController extends Controller
         if($isForAllInCollege){
             if($designation && $campus && $signatory && $purpose && $semester && $order){
                 $hasSignatory = 0;
-                $hasSignatory = SignatoryV2::when($campus, function($q) use($campus){
+                $hasSignatory = SignatoryV2::when($campus, function($q) use($campus){   
                     $q->where('campus_id', $campus);
                 })
                 ->when($semester, function($q) use($semester){

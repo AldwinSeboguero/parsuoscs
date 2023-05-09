@@ -73,14 +73,14 @@ class ClearanceRequest extends JsonResource
             'name' => $this->student->name,
             'student_number' => $this->student->student_number,
             'program' => $this->student->program->short_name,
-            'staff' => $this->signatory ? $this->signatory->name : '',
+            'staff' => $this->signatory ? $this->signatory->user->name : '',
             // 'deficiencies' => $this->student,
             // 'approved_at' => $this->approved_at ? $this->approved_at->format('M d, Y g:i A') : null,
             'approved_at' => $this->approved_at ? $this->approved_at->format('M d, Y g:i A') : null,
             'request_at' => $this->requested_at ? $this->requested_at->format('M d, Y g:i A') : null,
             'purpose' => json_decode(json_decode($this->purpose)->purpose)->name.' '.
             json_decode(json_decode($this->purpose)->purpose)->description, 
-            'interval' => "Working hours interval: $hours hours and $minutes minutes, $working_days working days",
+            // 'interval' => "Working hours interval: $hours hours and $minutes minutes, $working_days working days",
             
         ];
      
