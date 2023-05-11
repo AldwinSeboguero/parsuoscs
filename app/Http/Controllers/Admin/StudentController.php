@@ -257,23 +257,23 @@ class StudentController extends Controller
             }
            
         })
-        ->when(!$campus_id, function ($q) use ($campus_id){
-            if(!Auth::user()->hasRole("admin")){
-                $semester = Semester::orderByDesc('id')->first();
-                $latest_signatory_ids = SignatoryV2::where('user_id', Auth::user()->id)
-                    ->where('semester_id', $semester->id)
-                    ->get('campus_id');
-                $q->whereHas('program',function($q) use($latest_signatory_ids){
-                    $q->whereIn('campus_id',$latest_signatory_ids);
-                });
-            }
-            else{
-                $q->whereHas('program',function($q) use($campus_id){
-                    $q->where('campus_id',$campus_id);
-                });
-            }
+        // ->when(!$campus_id, function ($q) use ($campus_id){
+        //     if(!Auth::user()->hasRole("admin")){
+        //         $semester = Semester::orderByDesc('id')->first();
+        //         $latest_signatory_ids = SignatoryV2::where('user_id', Auth::user()->id)
+        //             ->where('semester_id', $semester->id)
+        //             ->get('campus_id');
+        //         $q->whereHas('program',function($q) use($latest_signatory_ids){
+        //             $q->whereIn('campus_id',$latest_signatory_ids);
+        //         });
+        //     }
+        //     else{
+        //         // $q->whereHas('program',function($q) use($campus_id){
+        //         //     $q->where('campus_id',$campus_id);
+        //         // });
+        //     }
            
-        })
+        // })
         ->when($college_id, function ($q) use ($college_id){
             $q->whereHas('program',function($q) use($college_id){
                 $q->where('college_id',$college_id);
