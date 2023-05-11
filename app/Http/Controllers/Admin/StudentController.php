@@ -231,6 +231,7 @@ class StudentController extends Controller
 
 
         // dd('isNotAdmin');
+        // dd($request);
 
         $students =  new StudentCollection(Student::orderByDesc('updated_at')
         ->when($student_id, function ($q) use ($student_id){

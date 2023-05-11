@@ -56,7 +56,7 @@ class ActiveClearanceController extends Controller
                                                 ->get();
                                 return [
                                     'signatory_id' => $inner->id,
-                                    'designee' => $inner->name,
+                                    'designee' => $inner->user->name,
                                     'office' => $inner->designee->name,
                                     'status' => $cr->first() ? $cr->first()->status : 0,   
                                     'approved_at' => $cr->first() ? ($cr->first()->approved_at ? $cr->first()->approved_at->toFormattedDateString() :  '') : '',
@@ -226,7 +226,7 @@ class ActiveClearanceController extends Controller
                                                 ->get();
                                 return [
                                     'signatory_id' => $inner->id,
-                                    'designee' => $inner->name,
+                                    'designee' => $inner->user->name,
                                     'office' => $inner->designee->name,
                                     'status' => $cr->first() ? $cr->first()->status : 0,   
                                     'clearanceRequest_id' => $cr->first() ? $cr->first()->token : '',   
@@ -303,7 +303,7 @@ class ActiveClearanceController extends Controller
                                                 ->get();
                                 return [
                                     'signatory_id' => $inner->id,
-                                    'designee' => $inner->name,
+                                    'designee' => $inner->user->name,
                                     'office' => $inner->designee->name,
                                     'status' => $cr->first() ? $cr->first()->status : 0,   
                                     'clearanceRequest_id' => $cr->first() ? $cr->first()->token : '',   
