@@ -603,7 +603,7 @@ export default {
         this.formActionLoading = true;
         const data = {
           student_id: this.clean(this.forms.student_id),
-          name: this.clean(this.forms.name),
+          name: this.forms.name,
           email: this.forms.email,
           college_id: this.forms.college_id,
           campus_id: this.forms.campus_id,
