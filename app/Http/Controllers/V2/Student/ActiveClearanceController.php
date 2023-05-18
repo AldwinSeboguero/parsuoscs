@@ -31,7 +31,22 @@ class ActiveClearanceController extends Controller
         $student = Student::where('user_id', Auth::user()->id)->first();
         $activeClearancePurpose = StudentPurposeSetup::where('user_id',$student->user_id)->first();
         $countApproved = 0;
+        // $s = SignatoryV2::orderBy('order')
+        // ->distinct('order')
+        // ->where('campus_id', $student->program->campus_id)
+        // ->where('college_id', $student->program->college_id)
+        // ->where('program_id', $student->program_id)
+        // ->whereHas('purpose', function($query) use($activeClearancePurpose){
+        //     $query->when($activeClearancePurpose, function($inner) use($activeClearancePurpose){
+        //         $inner->where('purpose',json_decode($activeClearancePurpose->purpose->purpose)->name)
+        //         ->where('semester_id', $activeClearancePurpose->purpose->semester_id);
+        //     });
+        // })
+        // ->get();
+        // dd($s);
         $signatories  = SignatoryV2::orderBy('order')
+                        ->distinct('order')
+
                         ->where('campus_id', $student->program->campus_id)
                         ->where('college_id', $student->program->college_id)
                         ->where('program_id', $student->program_id)
@@ -43,7 +58,8 @@ class ActiveClearanceController extends Controller
                         })
                         ->get()->map(function($inner) use($activeClearancePurpose,$student,$countApproved){
                             if($activeClearancePurpose){
-                               $cr = ClearanceRequestV2::where('purpose_id',$activeClearancePurpose->purpose_id)
+                               $cr = ClearanceRequestV2::orderByDesc('approved_at')
+                                                ->where('purpose_id',$activeClearancePurpose->purpose_id)
                                                 ->where('designee_id',$inner->designee_id)
                                                 ->where('signatory_id',$inner->id)
                                                 ->where('student_id',$student->id)
@@ -58,6 +74,8 @@ class ActiveClearanceController extends Controller
                                     'signatory_id' => $inner->id,
                                     'designee' => $inner->user->name,
                                     'office' => $inner->designee->name,
+                                    'request_id' => $cr->first() ? $cr->first()->id : 0,   
+
                                     'status' => $cr->first() ? $cr->first()->status : 0,   
                                     'approved_at' => $cr->first() ? ($cr->first()->approved_at ? $cr->first()->approved_at->toFormattedDateString() :  '') : '',
                                     'requestCount' => $cr ? $cr->count() : 0 ,
@@ -126,6 +144,7 @@ class ActiveClearanceController extends Controller
 
 
         $signatories  = SignatoryV2::orderBy('order')
+        ->distinct('order')
                        
                         ->where('campus_id', $student->program->campus_id)
                         
@@ -203,6 +222,8 @@ class ActiveClearanceController extends Controller
         $purpose = $activeClearancePurpose ? json_decode($activeClearancePurpose->purpose->purpose)->name.' '.json_decode($activeClearancePurpose->purpose->purpose)->description : null;
 		
         $signatories  = SignatoryV2::orderBy('order')
+        ->distinct('order')
+
                         ->where('campus_id', $student->program->campus_id)
                         ->where('college_id', $student->program->college_id)
                         ->where('program_id', $student->program_id)
@@ -280,6 +301,8 @@ class ActiveClearanceController extends Controller
         $purpose = $activeClearancePurpose ? json_decode($purposeClearance->purpose)->name.' '.json_decode($purposeClearance->purpose)->description : null;
 		// dd($purpose);
         $signatories  = SignatoryV2::orderBy('order')
+        ->distinct('order')
+
                         ->where('campus_id', $student->program->campus_id)
                         ->where('college_id', $student->program->college_id)
                         ->where('program_id', $student->program_id)

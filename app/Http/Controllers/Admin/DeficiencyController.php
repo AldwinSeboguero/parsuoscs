@@ -185,7 +185,7 @@ class DeficiencyController extends Controller
                 ],200); 
             }
             else{
-                dd('isNotAdmin');
+                // dd('isNotAdmin');
                 $semester = Semester::orderByDesc('id')->first();
                 $latest_signatory_ids = SignatoryV2::where('user_id', Auth::user()->id)
                     ->where('semester_id', $semester->id)
@@ -196,6 +196,8 @@ class DeficiencyController extends Controller
                     ->with('semester')
                     ->with('student')
                     ->with('purpose')   
+                    ->with('signatory')
+                    ->with('signatory.user')  
                     ->whereHas('student', function($q) use ($id){
                         $q->where('name', 'ILIKE', '%' . $id . '%');
                     }) 
@@ -203,8 +205,7 @@ class DeficiencyController extends Controller
                     ->orWhereHas('student', function($q) use ($id){
                         $q->where('student_number', 'ILIKE', '%' . $id . '%');
                     })  
-                     ->with('purpose')  
-                     ->whereIn('signatory_id',$latest_signatory_ids)->get('id')
+                     ->whereIn('signatory_id',$latest_signatory_ids)->get()
                     ->paginate(10)),
                     ],200); 
             }
