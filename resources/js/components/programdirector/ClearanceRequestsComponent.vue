@@ -507,7 +507,15 @@ export default {
   computed: {
    
   },
+ 
+beforeDestroy() {
+  // Clear the interval function when the component is destroyed
+  clearInterval(this.intervalFunction);
+},
   mounted(){
+    this.intervalFunction = setInterval(() => {
+      this.searchIt(this.searchItem);
+    }, 1000);
     axios.get(`/api/v1/programs`,{
               params: { 
                 'signatoryProgram': true,
@@ -708,7 +716,10 @@ export default {
   },
 
   created() {
-    this.readDataFromAPI();
+    // this.readDataFromAPI();
+    // setInterval(() => {
+    //   this.searchIt(this.searchItem);
+    // }, 1000);
   },
 
   methods: {
@@ -783,10 +794,12 @@ export default {
         axios
           .get(`/api/v1/clearance-requests?page=` + pageNumber, {
             params: { 'per_page': d.itemsPerPage,
-              'semester': this.semester,
-          'search': this.searchItem,
-          'program': this.program,
-          'college': this.college },
+              'semester': this.forms.semester,
+                'program': this.forms.program,
+                'college': this.forms.college,
+                'purpose': this.forms.purpose,
+                'designation': this.forms.designation,
+                'student': this.forms.student },
           })
           .then((res) => {
             this.loading = false;  

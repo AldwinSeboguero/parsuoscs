@@ -13283,8 +13283,15 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     }), _ref;
   },
   computed: {},
+  beforeDestroy: function beforeDestroy() {
+    // Clear the interval function when the component is destroyed
+    clearInterval(this.intervalFunction);
+  },
   mounted: function mounted() {
     var _this = this;
+    this.intervalFunction = setInterval(function () {
+      _this.searchIt(_this.searchItem);
+    }, 1000);
     axios.get("/api/v1/programs", {
       params: {
         'signatoryProgram': true
@@ -13481,7 +13488,10 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     deep: true
   },
   created: function created() {
-    this.readDataFromAPI();
+    // this.readDataFromAPI();
+    // setInterval(() => {
+    //   this.searchIt(this.searchItem);
+    // }, 1000);
   },
   methods: {
     clearForms: function clearForms() {
@@ -13557,10 +13567,12 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         axios.get("/api/v1/clearance-requests?page=" + pageNumber, {
           params: {
             'per_page': d.itemsPerPage,
-            'semester': this.semester,
-            'search': this.searchItem,
-            'program': this.program,
-            'college': this.college
+            'semester': this.forms.semester,
+            'program': this.forms.program,
+            'college': this.forms.college,
+            'purpose': this.forms.purpose,
+            'designation': this.forms.designation,
+            'student': this.forms.student
           }
         }).then(function (res) {
           _this9.loading = false;

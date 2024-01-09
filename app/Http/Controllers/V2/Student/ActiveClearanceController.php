@@ -21,6 +21,7 @@ use App\ClearanceRequestV2;
 use App\SubmitClearance; 
 use App\Clearance;
 use App\ClearancePurpose;
+use App\ClearanceSchedule;
 use Illuminate\Support\Carbon;
 use PDF;
 
@@ -99,18 +100,31 @@ class ActiveClearanceController extends Controller
         }
         $dateSubmitted = false;
         $clearance  = '';
+        $clearance_schedule ='';
         if($activeClearancePurpose ){
             $clearance = Clearance::where('purpose_id',$activeClearancePurpose->purpose_id)->get()->first();
             $dateSubmitted = SubmitClearance::where('clearance_id', Clearance::where('purpose_id',$activeClearancePurpose->purpose_id)->get()->first()->id)->get()->first();
+            $clearance_schedule =ClearanceSchedule::where('semester_id', $activeClearancePurpose->purpose->semester['id'])
+                                    ->where('college_id', $student->program->college->id)
+                                    ->first();
+            if(!$clearance_schedule){
+                $clearance_schedule =ClearanceSchedule::where('semester_id', $activeClearancePurpose->purpose->semester['id'])
+                                    ->whereNull('college_id')
+                                    ->first();
+            }
         }
         return response()->json([
             // 'staff' => SignatoryV2::find(20720),
             // 'student' => $student,
             // 'now' => $activeClearancePurpose->purpose->semester->from >= now()->format('Y-m-d'),
             // 'now2' => $activeClearancePurpose->purpose->semester->to >= now()->format('Y-m-d') ,
-            'isOpen' => $activeClearancePurpose ? 
+            // 'clearance_schedule' => ClearanceSchedule::where('semester_id', $activeClearancePurpose->purpose->semester['id'])
+            //                         ->where('college_id', $student->program->college->id)
+            //                         ->first()
+            //                         ->from,
+            'isOpen' => $activeClearancePurpose && $clearance_schedule? 
             (json_decode($activeClearancePurpose->purpose->purpose)->name == "Enrollment" ?
-                $activeClearancePurpose->purpose->semester->from <= now()->format('Y-m-d') && $activeClearancePurpose->purpose->semester->to >= now()->format('Y-m-d') 
+                $clearance_schedule->from <= now()->format('Y-m-d') && $clearance_schedule->to >= now()->format('Y-m-d') 
                 : true )
                 : false,
             'purpose' =>$activeClearancePurpose ? json_decode($activeClearancePurpose->purpose->purpose)->name.' '.json_decode($activeClearancePurpose->purpose->purpose)->description : null,
